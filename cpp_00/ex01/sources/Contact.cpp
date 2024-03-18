@@ -6,11 +6,15 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/15 12:13:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/19 00:32:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+
+// void PhoneBook::replaceContact() {
+	
+// }
 
 void PhoneBook::addContact() {
     if (currentIndex >= MAX_CONTACTS) {

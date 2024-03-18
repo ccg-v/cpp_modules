@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/15 12:26:59 by ccarrace          #+#    #+#              #
-#    Updated: 2024/03/15 19:13:53 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/03/19 00:16:45 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 CC 			= 	c++
 NAME 		= 	phonebook
-FLAGS 		=	-Wall -Wextra -Werror -std=c++98
+FLAGS 		=	-Wall -Wextra -Werror -std=c++98 -g
 
 # --- Folders ---------------------------------------------------------------- #
 
@@ -29,24 +29,39 @@ INCLUDES	=	-I $(INC_DIR)
 # --- Files ------------------------------------------------------------------ #
 
 SRC_FILES	=	Accessors.cpp Contact.cpp PhoneBook.cpp
-SRC			=	
-
-# --- Macros ----------------------------------------------------------------- #
-
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)
-DEP_FILES	=	$(SRC_FILES:.cpp=.d)
+DEP_FILES	=	$(OBJ_FILES:.cpp=.d)
+
+# --- Files full paths ------------------------------------------------------- #
+
+SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))	
+OBJ			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+DEP			=	$(addprefix $(OBJ_DIR), $(DEP_FILES))
 
 # --- Compilation rules ------------------------------------------------------ #
 
-all:
-			$(MAKE) $(NAME)
+all: $(NAME)
 
-$(NAME): 	$(OBJ_FILES)
-			$(CC) $(FLAGS) $(INCLUDES) $(OBJ_FILES) -o @
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $@
 
-%.o: %.c Makefile
-			$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR) Makefile
+	$(CC) $(FLAGS) $(INCLUDES) -MD -c $< -o $@
 
 -include $(DEP_FILES)
 
-#
+$(OBJ_DIR):
+			mkdir -p $(OBJ_DIR)
+
+# --- Cleaning rules ---------------------------------------------------------- #
+
+clean:
+	rm -f $(OBJ) $(DEP)
+	rm -rf $(OBJ_DIR)
+
+fclean: clean
+	rm -f $(NAME)
+
+re:	fclean all
+
+.PHONY:	all clean fclean re

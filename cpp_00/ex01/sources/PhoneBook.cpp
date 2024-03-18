@@ -6,20 +6,11 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:50:48 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/14 20:52:24 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/19 00:18:37 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-
-// void PhoneBook::addContact() {
-// 	currentIndex = 1;
-// 	std::cout << "Contact should be added now" << std::endl;
-// }
-
-// void PhoneBook::searchContact() {
-// 	std::cout << "Search of contact should be executed now" << std::endl;
-// }
 
 int main() {
     PhoneBook phonebook;
