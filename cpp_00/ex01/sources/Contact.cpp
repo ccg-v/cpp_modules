@@ -6,47 +6,52 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/19 00:32:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:25:33 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-// void PhoneBook::replaceContact() {
-	
-// }
-
 void PhoneBook::addContact() {
-    if (currentIndex >= MAX_CONTACTS) {
-        std::cout << "Phonebook is full. Cannot add more contacts." << std::endl;
-        return;
-    }
-
+	
     Contact newContact;
 	std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
+
+    if (currentIndex == MAX_CONTACTS) {
+        // Overwrite the oldest contact at index 0 with the new contact
+        std::cout << "Phonebook is full. The oldest contact will be replaced." << std::endl;
+		getContactDetails(newContact);
+        contacts[0] = newContact;  // Directly overwrite the oldest contact
+    } else {
+        // Existing logic to store new contact in the next available slot
+		getContactDetails(newContact);
+        contacts[currentIndex++] = newContact;
+    }
+    std::cout << "Contact added successfully!" << std::endl;
+}
+
+void PhoneBook::getContactDetails(Contact &newContact) {
+	std:: string firstName, lastName, nickname, phoneNumber, darkestSecret;
 
     std::cout << "Enter First Name: ";
     std::cin >> firstName;
     newContact.setFirstName(firstName);
 
-    std::cout << "Enter Last Name: ";
-    std::cin >> lastName;
-    newContact.setLastName(lastName);
+	std::cout << "Enter Last Name: ";
+	std::cin >> lastName;
+	newContact.setLastName(lastName);
 
-    std::cout << "Enter Nickname: ";
-    std::cin >> nickname;
-    newContact.setNickname(nickname);
+	std::cout << "Enter Nickname: ";
+	std::cin >> nickname;
+	newContact.setNickname(nickname);
 
-    std::cout << "Enter Phone Number: ";
-    std::cin >> phoneNumber;
-    newContact.setPhoneNumber(phoneNumber);
+	std::cout << "Enter Phone Number: ";
+	std::cin >> phoneNumber;
+	newContact.setPhoneNumber(phoneNumber);
 
-    std::cout << "Enter Darkest Secret: ";
-    std::cin >> darkestSecret;
-    newContact.setDarkestSecret(darkestSecret);
-
-	contacts[currentIndex++] = newContact;
-    std::cout << "Contact added successfully!" << std::endl;
+	std::cout << "Enter Darkest Secret: ";
+	std::cin >> darkestSecret;
+	newContact.setDarkestSecret(darkestSecret);	
 }
 
 void PhoneBook::searchContact() {

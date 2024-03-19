@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/19 00:27:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:19:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ public:
 
     void addContact();
     void searchContact();
+	void getContactDetails(Contact &newContact);
 	std::string formatAndTruncate(const std::string& str) const;
 
 };
