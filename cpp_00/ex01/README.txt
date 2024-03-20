@@ -6,3 +6,5 @@ Phone Number must be numeric?
 Accept full commands: add, search, exit
 Makefile
 Leaks
+
+DON'T FORGET TO SET MAX_CONTACTS TO 8 !!!!!
