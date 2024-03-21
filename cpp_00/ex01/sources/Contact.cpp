@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/21 17:12:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/21 20:38:37 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,25 @@ void PhoneBook::getContactDetails(Contact &newContact) {
     std::cout << "Enter First Name: ";
     std::cin.ignore(); // Clear input buffer
     std::getline(std::cin, firstName);
-    newContact.setFirstName(firstName);
+    newContact.setFirstName(trimBlankSpaces(firstName));
 
 	std::cout << "Enter Last Name: ";
 	std::cin >> lastName;
-	newContact.setLastName(lastName);
-
-    
+	newContact.setLastName(trimBlankSpaces(lastName));
 
 	std::cout << "Enter Nickname: ";
-	std::cin >> nickname;
-	newContact.setNickname(nickname);
+    std::cin.ignore();
+	std::getline(std::cin, nickname);
+	newContact.setNickname(trimBlankSpaces(nickname));
 
 	std::cout << "Enter Phone Number: ";
 	std::cin >> phoneNumber;
-	newContact.setPhoneNumber(phoneNumber);
+	newContact.setPhoneNumber(trimBlankSpaces(phoneNumber));
 
 	std::cout << "Enter Darkest Secret: ";
-	std::cin >> darkestSecret;
-	newContact.setDarkestSecret(darkestSecret);	
+    std::cin.ignore();
+	std::getline(std::cin, darkestSecret);
+	newContact.setDarkestSecret(trimBlankSpaces(darkestSecret));	
 }
 
 /*
@@ -120,8 +120,19 @@ void PhoneBook::searchContact() {
 
 }
 
+// Trim leading and trailing blank spaces in the fields values
+std::string PhoneBook::trimBlankSpaces(const std::string &str) const {
+    int start = 0, end = str.length() - 1;
+
+    while (start <= end && str[start] == ' ')
+        start++;
+    while (end >= start && str[end] == ' ')
+        end--;
+    return str.substr(start, end - start + 1);
+}
+
 // Truncate and format the string if it is longer than the column width
-std::string PhoneBook::formatAndTruncate(const std::string& str) const {
+std::string PhoneBook::formatAndTruncate(const std::string &str) const {
     if (str.length() > 10) {
         return str.substr(0, 9) + ".";
     } else {
