@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/20 21:41:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:12:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void PhoneBook::getContactDetails(Contact &newContact) {
 	std:: string firstName, lastName, nickname, phoneNumber, darkestSecret;
 
     std::cout << "Enter First Name: ";
-    std::cin >> firstName;
+    std::cin.ignore(); // Clear input buffer
+    std::getline(std::cin, firstName);
     newContact.setFirstName(firstName);
 
 	std::cout << "Enter Last Name: ";
 	std::cin >> lastName;
 	newContact.setLastName(lastName);
+
+    
 
 	std::cout << "Enter Nickname: ";
 	std::cin >> nickname;
