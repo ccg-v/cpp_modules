@@ -6,11 +6,21 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/21 20:38:37 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:13:57 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+
+bool isNumeric(const std::string& str) {
+    for (size_t i = 0; i < str.length(); ++i) {
+        if (!std::isdigit(str[i])) {
+            return false; // Non-digit character found
+        }
+    }
+    return true; // All characters are digits
+}
+
 
 void PhoneBook::addContact() {
 
@@ -34,7 +44,8 @@ void PhoneBook::addContact() {
 
 
 void PhoneBook::getContactDetails(Contact &newContact) {
-	std:: string firstName, lastName, nickname, phoneNumber, darkestSecret;
+	std:: string firstName, lastName, nickname, darkestSecret;
+	long phoneNumber;
 
     std::cout << "Enter First Name: ";
     std::cin.ignore(); // Clear input buffer
@@ -52,7 +63,26 @@ void PhoneBook::getContactDetails(Contact &newContact) {
 
 	std::cout << "Enter Phone Number: ";
 	std::cin >> phoneNumber;
-	newContact.setPhoneNumber(trimBlankSpaces(phoneNumber));
+	newContact.setPhoneNumber(phoneNumber);
+
+    // bool validPhoneNumber = false;
+    // do {
+    //     std::cout << "Enter Phone Number: ";
+    //     std::cin >> phoneNumber;
+
+    //     if (isNumeric(phoneNumber)) {
+    //         // Input contains only digits
+    //         newContact.setPhoneNumber(phoneNumber);
+    //         validPhoneNumber = true;
+    //     } else {
+    //         std::cout << "Invalid input. Please enter a numeric value." << std::endl;
+    //     }
+
+    //     // Clear input buffer
+    //     std::cin.clear();
+    //     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // } while (!validPhoneNumber);
 
 	std::cout << "Enter Darkest Secret: ";
     std::cin.ignore();
