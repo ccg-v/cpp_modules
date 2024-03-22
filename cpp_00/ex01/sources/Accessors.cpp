@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:31:22 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/21 21:27:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/22 20:25:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ std::string Contact::getNickname() const {
     return nickname;
 }
 
-long Contact::getPhoneNumber() const {
+std::string Contact::getPhoneNumber() const {
     return phoneNumber;
 }
 
@@ -48,7 +48,7 @@ void Contact::setNickname(const std::string &nickname) {
     this->nickname = nickname;
 }
 
-void Contact::setPhoneNumber(const long phoneNumber) {
+void Contact::setPhoneNumber(const std::string &phoneNumber) {
     this->phoneNumber = phoneNumber;
 }
 void Contact::setDarkestSecret(const std::string &darkestSecret) {
