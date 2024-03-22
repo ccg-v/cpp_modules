@@ -6,17 +6,30 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/22 21:37:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:09:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
+/*
+ * hasOnlyBlankSpaces()
+ *
+ * Returns true if the input has only blank spaces.
+ * 
+ * After writing my function, I discovered there is an specific method of the
+ * 'std::string' class in C++ called 'find_first_not_of()' that is used to find
+ * the position of the first character in the string that is not equal to a 
+ * specified character or a set of characters:
+ * 
+ * 		bool PhoneBook::hasOnlyBlankSpaces(const std::string &str) {
+ * 			return str.find_first_not_of(' ') == std::string::npos;
+ *		}
+ */
 bool hasOnlyBlankSpaces(const std::string &str) {
 	for (size_t i = 0; i < str.length(); ++i) {
-		if (str[i] != ' ') {
+		if (str[i] != ' ')
 			return false;
-		}
 	}
 	return true;
 }
@@ -86,8 +99,6 @@ void PhoneBook::getContactDetails(Contact &newContact) {
     }
     newContact.setDarkestSecret(trimBlankSpaces(darkestSecret));
 }
-
-
 
 /*
  *	searchContact()
