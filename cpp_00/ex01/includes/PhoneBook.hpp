@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/21 19:38:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/24 19:10:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHONEBOOK_HPP
 
 #include <iostream>
-#include <cctype> 	// for std::toupper in PhoneBook.cpp
+#include <cctype> 	// for toupper(), isdigit() in PhoneBook.cpp
 #include <string>
 #include "Contact.hpp"
 

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/22 22:09:10 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/24 19:31:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 bool hasOnlyBlankSpaces(const std::string &str) {
 	for (size_t i = 0; i < str.length(); ++i) {
 		if (str[i] != ' ')
+			return false;
+	}
+	return true;
+}
+
+bool areAllDigits(const std::string &str) {
+	for (size_t i = 0; i < str.length(); ++i) {
+		if (!isdigit(str[i]))
 			return false;
 	}
 	return true;
@@ -89,6 +97,10 @@ void PhoneBook::getContactDetails(Contact &newContact) {
         std::cout << "Phone Number cannot be empty. Please enter again: ";
         std::getline(std::cin, phoneNumber);
     }
+	while (!areAllDigits(phoneNumber)) {
+		std::cout << "Phone Number must contain only digits. Please enter again: ";
+		std::getline(std::cin, phoneNumber);
+	}
     newContact.setPhoneNumber(trimBlankSpaces(phoneNumber));
 
     std::cout << "Enter Darkest Secret: ";
