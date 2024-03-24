@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/22 20:21:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:11:38 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@
 class Contact {
 
 public:
-	// Constructor declaration
-	/*Contact(const std::string &firstName, \
-			const std::string &lastName, \
-			const std::string &nickname, \
-			const std::string &phoneNumber, \
-			const std::string &darkestSecret);*/
 	
 	// getters declaration
 	std::string getFirstName() const;

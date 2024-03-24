@@ -1,46 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*   add_contact.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 19:55:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/24 19:31:25 by ccarrace         ###   ########.fr       */
+/*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
+/*   Updated: 2024/03/24 21:28:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-/*
- * hasOnlyBlankSpaces()
- *
- * Returns true if the input has only blank spaces.
- * 
- * After writing my function, I discovered there is an specific method of the
- * 'std::string' class in C++ called 'find_first_not_of()' that is used to find
- * the position of the first character in the string that is not equal to a 
- * specified character or a set of characters:
- * 
- * 		bool PhoneBook::hasOnlyBlankSpaces(const std::string &str) {
- * 			return str.find_first_not_of(' ') == std::string::npos;
- *		}
- */
-bool hasOnlyBlankSpaces(const std::string &str) {
-	for (size_t i = 0; i < str.length(); ++i) {
-		if (str[i] != ' ')
-			return false;
-	}
-	return true;
-}
-
-bool areAllDigits(const std::string &str) {
-	for (size_t i = 0; i < str.length(); ++i) {
-		if (!isdigit(str[i]))
-			return false;
-	}
-	return true;
-}
+static bool hasOnlyBlankSpaces(const std::string &str);
+static bool areAllDigits(const std::string &str);
+static std::string trimBlankSpaces(const std::string &str);
+static void getContactDetails(Contact &newContact);
 
 void PhoneBook::addContact() {
 
@@ -62,7 +37,7 @@ void PhoneBook::addContact() {
     std::cout << "Contact added successfully!" << std::endl;
 }
 
-void PhoneBook::getContactDetails(Contact &newContact) {
+void getContactDetails(Contact &newContact) {
     std::string firstName, lastName, nickname, darkestSecret;
     std::string phoneNumber;
 
@@ -113,67 +88,61 @@ void PhoneBook::getContactDetails(Contact &newContact) {
 }
 
 /*
- *	searchContact()
+ * hasOnlyBlankSpaces()
  *
- *	1. Warn if search is not possible because there no contacts were added yet
- *	2. If possible, display the list of contacts formatted as subject demands:
- * 		- a list header separated by pipes
- *		- each contact in a new line
- *		- the width of each columnn must be 10 characters, if the field value is
- *			longer it must be shown truncated and last character replaced by '.'
- *	3. Prompt the user for the index of the contact to display
- *		- check if the input is valid (from 0 to 7)
- *	4. Display the information of the selected contact
+ * Returns true if the input has only blank spaces.
+ * 
+ * After writing my function, I discovered there is an specific method of the
+ * 'std::string' class in C++ called 'find_first_not_of()' that is used to find
+ * the position of the first character in the string that is not equal to a 
+ * specified character or a set of characters:
+ * 
+ * 		bool hasOnlyBlankSpaces(const std::string &str) {
+ * 			return str.find_first_not_of(' ') == std::string::npos;
+ *		}
  */
+bool hasOnlyBlankSpaces(const std::string &str) {
+	for (size_t i = 0; i < str.length(); ++i) {
+		if (str[i] != ' ')
+			return false;
+	}
+	return true;
+}
 
-void PhoneBook::searchContact() {
-	
-    if (currentIndex == 0) {
-        std::cout << "Phonebook is empty. No contacts to search." << std::endl;
-        return ;
-    }
-
-    std::cout << std::setw(10) << "Index" << "|"
-              << std::setw(10) << "First Name" << "|"
-              << std::setw(10) << "Last Name" << "|"
-              << std::setw(10) << "Nickname" << "|" << std::endl;
-
-    for (int i = 0; i < currentIndex; ++i) {
-        std::cout << std::setw(10) << i << "|"
-                  << std::setw(10) << formatAndTruncate(contacts[i].getFirstName()) << "|"
-                  << std::setw(10) << formatAndTruncate(contacts[i].getLastName()) << "|"
-                  << std::setw(10) << formatAndTruncate(contacts[i].getNickname()) << "|" << std::endl;
-    }
-
-	int index;
-    bool validIndex = false;
-    do {
-        std::cout << "Enter the index of the contact to display (0-7): ";
-		// std::cin >> index; // Getting index value here causes strange behavior
-
-        if (!(std::cin >> index) || index < 0 || index >= currentIndex) {
-            // Clear the error state and discard invalid input (see note below)
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid index. Please try again." << std::endl;
-            validIndex = false;
-        } else {
-            validIndex = true;
-        }
-    } while (!validIndex);
-
-    std::cout << std::endl << "Contact number " << index << " information:" << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    std::cout << "First Name: " << contacts[index].getFirstName() << std::endl;
-    std::cout << "Last Name: " << contacts[index].getLastName() << std::endl;
-    std::cout << "Nickname: " << contacts[index].getNickname() << std::endl;
-    std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
-    std::cout << "Darkest Secret: " << contacts[index].getDarkestSecret() << std::endl;
-
+/* 
+ * areAllDigits()
+ * 
+ * Checks if all characters in a string are digits.
+ * 
+ * A more concise solution using 'find_if_not()' function from <algorithm> library.
+ * 
+ * 		#include <algorithm>
+ * 
+ * 		bool areAllDigits(const std::string &str) {
+ * 			return std::find_if_not(str.begin(), str.end(), ::isdigit) == str.end();
+ * 		}
+ * 
+ * It takes a 'start iterator' and an 'end iterator' (the beginning and end of the
+ * range), and a 'unary predicate function' that is used to evaluate whether an 
+ * element meets a certain condition. In this context it is searching for the first
+ * character in the string that is not a digit:
+ * 		- If it does not find any character, the function returns an iterator pointing 
+ * 			to the end of the string. 
+ * 		- If it finds a non-digit character, it returns an iterator pointing to that
+ * 			character.
+ * The iterator returned by 'find_if_not()' is compared to the end of the string. If 
+ * they are equal it means that all characters in the string are digits.
+ */
+bool areAllDigits(const std::string &str) {
+	for (size_t i = 0; i < str.length(); ++i) {
+		if (!isdigit(str[i]))
+			return false;
+	}
+	return true;
 }
 
 // Trim leading and trailing blank spaces in the fields values
-std::string PhoneBook::trimBlankSpaces(const std::string &str) const {
+std::string trimBlankSpaces(const std::string &str) {
     int start = 0, end = str.length() - 1;
 
     while (start <= end && str[start] == ' ')
@@ -181,15 +150,6 @@ std::string PhoneBook::trimBlankSpaces(const std::string &str) const {
     while (end >= start && str[end] == ' ')
         end--;
     return str.substr(start, end - start + 1);
-}
-
-// Truncate and format the string if it is longer than the column width
-std::string PhoneBook::formatAndTruncate(const std::string &str) const {
-    if (str.length() > 10) {
-        return str.substr(0, 9) + ".";
-    } else {
-        return str;
-    }
 }
 
 /*

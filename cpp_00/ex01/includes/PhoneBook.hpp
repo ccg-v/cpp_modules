@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/24 19:10:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:26:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ public:
 
     void addContact();
     void searchContact();
-	void getContactDetails(Contact &newContact);
-	std::string formatAndTruncate(const std::string& str) const;
-	std::string trimBlankSpaces(const std::string &str) const;
+	// void getContactDetails(Contact &newContact);
+	// std::string formatAndTruncate(const std::string& str) const;
+	// std::string trimBlankSpaces(const std::string &str) const;
 
 };
 
