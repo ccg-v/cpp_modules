@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/24 22:15:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:04:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void PhoneBook::addContact() {
 
     if (currentIndex == MAX_CONTACTS) {
         // Overwrite the oldest contact based on currentIndex
-        std::cout << "Phonebook is full. The oldest contact at index " \
-			<< replaceIndex << " will be replaced." << std::endl;
+        std::cout << "Phonebook is full. The oldest contact (index " \
+			<< replaceIndex << ") will be replaced." << std::endl;
         getContactDetails(newContact);
         contacts[replaceIndex] = newContact;  // Overwrite the oldest contact
 		replaceIndex = (replaceIndex + 1) % MAX_CONTACTS;
@@ -43,7 +43,7 @@ void getContactDetails(Contact &newContact) {
     std::string phoneNumber;
 
     std::cout << "Enter First Name: ";
-    std::cin.ignore(); // Clear input buffer
+    // std::cin.ignore(); // Clear input buffer
     std::getline(std::cin, firstName);
     while (firstName.empty() || hasOnlyBlankSpaces(firstName) == true) {
         std::cout << "First Name cannot be empty. Please enter again: ";
@@ -145,8 +145,18 @@ void PhoneBook::searchContact() {
     std::cout << "Nickname: " << contacts[index].getNickname() << std::endl;
     std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
     std::cout << "Darkest Secret: " << contacts[index].getDarkestSecret() << std::endl;
+	std::cin.ignore(); // Consume leftover newline (see note below)
 
 }
+/* About std::cin.ignore() in line 148:
+ *   -	When the user enters the index in 'searchContact' a newline character is left
+ * 		in the input buffer after pressing Enter
+ *   -	After displayin the contact's info the program returns to the main menu's
+ * 		'std::getline(std::cin, input)
+ *   -	'getline' immediately captures the newline, resulting in an empty input string
+ *   -	The 'if (input.empty())' condition in the main menu evaluates to true, leading
+ * 		to the prompt 'Invalid command. Please try again'.
+ */
 
 /*
  * hasOnlyBlankSpaces()
@@ -229,12 +239,3 @@ std::string formatAndTruncate(const std::string &str) {
         return str;
     }
 }
-
-/*
- * (about cin.clear and cin.ignore)
- * When you enter a non-integer value (a character, for instance), std::cin enters 
- * a fail state, and the input buffer remains in an invalid state.  Afterward, when 
- * you attempt to read from std::cin again, it fails immediately due to the invalid 
- * state, and the loop iterates without prompting the user for input again. Instead,
- * it reuses the previous (invalid) input, causing the unexpected behavior.
- */
