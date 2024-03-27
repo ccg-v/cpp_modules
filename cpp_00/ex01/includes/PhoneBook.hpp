@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/27 20:54:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:52:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include <iostream>
 #include <cctype> 	// for toupper(), isdigit() in PhoneBook.cpp
 #include <string>
+#include <cstdlib>
 #include "Contact.hpp"
 
 class PhoneBook {
 
 private:
 	// Array to hold the contacts
-	static const int MAX_CONTACTS = 8;
+	static const int MAX_CONTACTS = 3;
 	int	currentIndex;
 	int	replaceIndex;
 

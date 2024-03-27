@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/15 12:26:59 by ccarrace          #+#    #+#              #
-#    Updated: 2024/03/24 22:14:40 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/03/27 21:12:34 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ INCLUDES	=	-I $(INC_DIR)
 
 # --- Files ------------------------------------------------------------------ #
 
-SRC_FILES	=	Accessors.cpp Contact.cpp PhoneBook.cpp
+SRC_FILES	=	Accessors.cpp Contact.cpp PhoneBook.cpp Utils.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)
 DEP_FILES	=	$(OBJ_FILES:.cpp=.d)
 
