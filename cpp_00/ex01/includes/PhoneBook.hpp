@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 17:19:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 21:53:12 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ private:
 public:
     // Constructor
 	Contact	contacts[MAX_CONTACTS];
-    PhoneBook() : currentIndex(0) {} // Initialize currentIndex to 0
+    PhoneBook() : currentIndex(0), replaceIndex(0) {} // Initialize currentIndex to 0
 
     void addContact();
     void searchContact();

@@ -6,12 +6,12 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/15 12:26:59 by ccarrace          #+#    #+#              #
-#    Updated: 2024/03/28 21:06:32 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/03/28 21:23:44 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # --- Variables -------------------------------------------------------------- #
-
+ 
 CC 			= 	c++
 NAME 		= 	phonebook
 FLAGS 		=	-Wall -Wextra -Werror -std=c++98 -g
