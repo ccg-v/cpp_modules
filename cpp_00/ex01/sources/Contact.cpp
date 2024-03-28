@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 20:27:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:10:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void getInput(Contact& newContact, const std::string& prompt, void (Contact::*se
 }
 
 /*
- * fillContact()
+ * getContactDetails()
  *
  * For each field to fill, the function sends
  * 	-	the Contact instance, 
@@ -64,7 +64,6 @@ int getContactDetails(Contact &newContact) {
 void PhoneBook::addContact() {
 
     Contact newContact;
-    std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
 
     if (currentIndex == MAX_CONTACTS) {
         // Overwrite the oldest contact based on currentIndex
@@ -74,11 +73,12 @@ void PhoneBook::addContact() {
         contacts[replaceIndex] = newContact;  // Overwrite the oldest contact
 		replaceIndex = (replaceIndex + 1) % MAX_CONTACTS;
     } else {
-        // Existing logic to store new contact in the next available slot
+        // Store new contact in the next available slot of the array
         getContactDetails(newContact);
         contacts[currentIndex++] = newContact;
     }
     std::cout << std::endl << "Contact added successfully!" << std::endl;
+	
 }
 
 /*
@@ -162,7 +162,7 @@ void PhoneBook::searchContact() {
 
 //     std::cout << "Enter First Name: ";
 //     std::getline(std::cin, firstName);
-// 	if (std::cin.eof()) {
+// 		if (std::cin.eof()) {
 //         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
 //         exit(1);
 //     }
@@ -174,11 +174,11 @@ void PhoneBook::searchContact() {
 
 //     std::cout << "Enter Last Name: ";	
 //     std::getline(std::cin, lastName);
-// 	if (std::cin.eof()) {
+// 		if (std::cin.eof()) {
 //         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
 //         exit(1);
 //     }
-// 	while (lastName.empty() || hasOnlyBlankSpaces(lastName) == true) {
+// 		while (lastName.empty() || hasOnlyBlankSpaces(lastName) == true) {
 //         std::cout << "Last Name cannot be empty. Please enter again: ";
 //         std::getline(std::cin, lastName);
 //     }
@@ -186,7 +186,7 @@ void PhoneBook::searchContact() {
 
 //     std::cout << "Enter Nickname: ";
 //     std::getline(std::cin, nickname);
-// 	if (std::cin.eof()) {
+// 		if (std::cin.eof()) {
 //         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
 //         exit(1);
 //     }
@@ -198,7 +198,7 @@ void PhoneBook::searchContact() {
 
 //     std::cout << "Enter Phone Number: ";
 //     std::getline(std::cin, phoneNumber);
-// 	if (std::cin.eof()) {
+// 		if (std::cin.eof()) {
 //         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
 //         exit(1);
 //     }
@@ -214,7 +214,7 @@ void PhoneBook::searchContact() {
 
 //     std::cout << "Enter Darkest Secret: ";
 //     std::getline(std::cin, darkestSecret);
-// 	if (std::cin.eof()) {
+// 		if (std::cin.eof()) {
 //         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
 //         exit(1);
 //     }
