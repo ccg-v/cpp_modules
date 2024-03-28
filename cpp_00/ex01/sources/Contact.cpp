@@ -6,12 +6,60 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/27 22:34:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:02:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include "Utils.hpp"
+
+/*
+ * getInput()
+ * 
+ * 	-	Asks the user to provide the new contact's information, field by field, 
+ * 		checking every time that the input is neither an empty string (user just 
+ * 		pressed Enter) nor blank space/s.
+ * 	-	Checks that the phone number has only digits and prompts again if needed
+ * 	-	If at any time an EOF (ctrl + D) is received, the function avoids an 
+ * 		endless loop providing a clean exit instead.
+ */
+void getInput(Contact& newContact, const std::string& prompt, void (Contact::*setter)(const std::string&)) {
+    std::string input;
+    do {
+        std::cout << prompt;
+        std::getline(std::cin, input);
+        if (std::cin.eof()) {
+            std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+            exit(1);
+        }
+        if (input.empty() || hasOnlyBlankSpaces(input)) {
+            std::cout << "Input cannot be empty." << std::endl;
+        } else if (setter == &Contact::setPhoneNumber && !areAllDigits(input)) {
+            std::cout << "Phone Number must contain only digits. Please enter again." << std::endl;
+        }
+    } while (input.empty() || hasOnlyBlankSpaces(input) || (setter == &Contact::setPhoneNumber && !areAllDigits(input)));
+    (newContact.*setter)(trimBlankSpaces(input));
+}
+
+/*
+ * fillContact()
+ *
+ * For each field to fill, the function sends
+ * 	-	the Contact instance, 
+ * 	-	the prompt to display,
+ * 	-	and a pointer to the corresponding setter function
+ */
+int getContactDetails(Contact &newContact) {
+
+    getInput(newContact, "Enter First Name: ", &Contact::setFirstName);
+    getInput(newContact, "Enter Last Name: ", &Contact::setLastName);
+    getInput(newContact, "Enter Nickname: ", &Contact::setNickname);
+    getInput(newContact, "Enter Phone Number: ", &Contact::setPhoneNumber);
+    getInput(newContact, "Enter Darkest Secret: ", &Contact::setDarkestSecret);
+
+    return 0;
+
+}
 
 void PhoneBook::addContact() {
 
@@ -31,59 +79,6 @@ void PhoneBook::addContact() {
         contacts[currentIndex++] = newContact;
     }
     std::cout << std::endl << "Contact added successfully!" << std::endl;
-}
-
-void getContactDetails(Contact &newContact) {
-    std::string firstName, lastName, nickname, darkestSecret;
-    std::string phoneNumber;
-
-    std::cout << "Enter First Name: ";
-    std::getline(std::cin, firstName);
-	            if (std::cin.eof()) {
-                std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
-                exit(1);
-            }
-    while (firstName.empty() || hasOnlyBlankSpaces(firstName) == true) {
-        std::cout << "First Name cannot be empty. Please enter again: ";
-        std::getline(std::cin, firstName);
-    }
-    newContact.setFirstName(trimBlankSpaces(firstName));
-
-    std::cout << "Enter Last Name: ";	
-    std::getline(std::cin, lastName);
-    while (lastName.empty() || hasOnlyBlankSpaces(lastName) == true) {
-        std::cout << "Last Name cannot be empty. Please enter again: ";
-        std::getline(std::cin, lastName);
-    }
-    newContact.setLastName(trimBlankSpaces(lastName));
-
-    std::cout << "Enter Nickname: ";
-    std::getline(std::cin, nickname);
-    while (nickname.empty() || hasOnlyBlankSpaces(nickname) == true) {
-        std::cout << "Nickname cannot be empty. Please enter again: ";
-        std::getline(std::cin, nickname);
-    }
-    newContact.setNickname(trimBlankSpaces(nickname));
-
-    std::cout << "Enter Phone Number: ";
-    std::getline(std::cin, phoneNumber);
-    while (phoneNumber.empty() || hasOnlyBlankSpaces(phoneNumber) == true) {
-        std::cout << "Phone Number cannot be empty. Please enter again: ";
-        std::getline(std::cin, phoneNumber);
-    }
-	while (!areAllDigits(phoneNumber)) {
-		std::cout << "Phone Number must contain only digits. Please enter again: ";
-		std::getline(std::cin, phoneNumber);
-	}
-    newContact.setPhoneNumber(trimBlankSpaces(phoneNumber));
-
-    std::cout << "Enter Darkest Secret: ";
-    std::getline(std::cin, darkestSecret);
-    while (darkestSecret.empty() || hasOnlyBlankSpaces(darkestSecret) == true) {
-        std::cout << "Darkest Secret cannot be empty. Please enter again: ";
-        std::getline(std::cin, darkestSecret);
-    }
-    newContact.setDarkestSecret(trimBlankSpaces(darkestSecret));
 }
 
 /*
@@ -155,3 +150,77 @@ void PhoneBook::searchContact() {
  *   -	The 'if (input.empty())' condition in the main menu evaluates to true, leading
  * 		to the prompt 'Invalid command. Please try again'.
  */
+
+/*
+ * OLD getContactDetails() 
+ *
+ * TOO LONG AND REPETITIVE!!!
+ */
+// void getContactDetails(Contact &newContact) {
+//     std::string firstName, lastName, nickname, darkestSecret;
+//     std::string phoneNumber;
+
+//     std::cout << "Enter First Name: ";
+//     std::getline(std::cin, firstName);
+// 	if (std::cin.eof()) {
+//         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+//         exit(1);
+//     }
+//     while (firstName.empty() || hasOnlyBlankSpaces(firstName) == true) {
+//         std::cout << "First Name cannot be empty. Please enter again: ";
+//         std::getline(std::cin, firstName);
+//     }
+//     newContact.setFirstName(trimBlankSpaces(firstName));
+
+//     std::cout << "Enter Last Name: ";	
+//     std::getline(std::cin, lastName);
+// 	if (std::cin.eof()) {
+//         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+//         exit(1);
+//     }
+// 	while (lastName.empty() || hasOnlyBlankSpaces(lastName) == true) {
+//         std::cout << "Last Name cannot be empty. Please enter again: ";
+//         std::getline(std::cin, lastName);
+//     }
+//     newContact.setLastName(trimBlankSpaces(lastName));
+
+//     std::cout << "Enter Nickname: ";
+//     std::getline(std::cin, nickname);
+// 	if (std::cin.eof()) {
+//         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+//         exit(1);
+//     }
+//     while (nickname.empty() || hasOnlyBlankSpaces(nickname) == true) {
+//         std::cout << "Nickname cannot be empty. Please enter again: ";
+//         std::getline(std::cin, nickname);
+//     }
+//     newContact.setNickname(trimBlankSpaces(nickname));
+
+//     std::cout << "Enter Phone Number: ";
+//     std::getline(std::cin, phoneNumber);
+// 	if (std::cin.eof()) {
+//         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+//         exit(1);
+//     }
+//     while (phoneNumber.empty() || hasOnlyBlankSpaces(phoneNumber) == true) {
+//         std::cout << "Phone Number cannot be empty. Please enter again: ";
+//         std::getline(std::cin, phoneNumber);
+//     }
+// 	while (!areAllDigits(phoneNumber)) {
+// 		std::cout << "Phone Number must contain only digits. Please enter again: ";
+// 		std::getline(std::cin, phoneNumber);
+// 	}
+//     newContact.setPhoneNumber(trimBlankSpaces(phoneNumber));
+
+//     std::cout << "Enter Darkest Secret: ";
+//     std::getline(std::cin, darkestSecret);
+// 	if (std::cin.eof()) {
+//         std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+//         exit(1);
+//     }
+//     while (darkestSecret.empty() || hasOnlyBlankSpaces(darkestSecret) == true) {
+//         std::cout << "Darkest Secret cannot be empty. Please enter again: ";
+//         std::getline(std::cin, darkestSecret);
+//     }
+//     newContact.setDarkestSecret(trimBlankSpaces(darkestSecret));
+// }
