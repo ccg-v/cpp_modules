@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 21:08:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/27 21:52:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:19:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class PhoneBook {
 
 private:
 	// Array to hold the contacts
-	static const int MAX_CONTACTS = 3;
+	static const int MAX_CONTACTS = 8;
 	int	currentIndex;
 	int	replaceIndex;
 
@@ -34,9 +34,6 @@ public:
 
     void addContact();
     void searchContact();
-	// void getContactDetails(Contact &newContact);
-	// std::string formatAndTruncate(const std::string& str) const;
-	// std::string trimBlankSpaces(const std::string &str) const;
 
 };
 

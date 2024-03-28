@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 01:02:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:39:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 void getInput(Contact& newContact, const std::string& prompt, void (Contact::*setter)(const std::string&)) {
     std::string input;
     do {
-        std::cout << prompt;
+        std::cout << prompt << std::endl;
         std::getline(std::cin, input);
         if (std::cin.eof()) {
             std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
