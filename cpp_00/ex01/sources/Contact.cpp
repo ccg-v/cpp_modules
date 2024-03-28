@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 23:10:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:26:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ int getContactDetails(Contact &newContact) {
 
 }
 
+/*
+ * addContact()
+ * 
+ * Only eight contacts can be stored in the array. When a new contact is added:
+ *  - 	if phonebook is not full, the new contact will be stored in the first
+ * 		free slot of the array
+ *  -	if phonebook is full, the new contact will overwrite the oldest one
+ */
 void PhoneBook::addContact() {
 
     Contact newContact;
