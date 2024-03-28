@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 12:39:17 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:27:42 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void PhoneBook::searchContact() {
 	int index;
     bool validIndex = false;
     do {
-        std::cout << "Enter the index of the contact to display: ";
+        std::cout << "Enter the index of the contact to display: " << std::endl;
 		// std::cin >> index; // Getting index value here causes strange behavior
 
         if (!(std::cin >> index) || index < 0 || index >= currentIndex) {
