@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/28 23:26:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:56:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@
  * 	-	If at any time an EOF (ctrl + D) is received, the function avoids an 
  * 		endless loop providing a clean exit instead.
  */
-void getInput(Contact& newContact, const std::string& prompt, void (Contact::*setter)(const std::string&)) {
+void getInput(Contact &newContact, const std::string &prompt, void (Contact::*setter)(const std::string&)) {
     std::string input;
     do {
         std::cout << prompt << std::endl;
         std::getline(std::cin, input);
-        if (std::cin.eof()) {
-            std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
-            exit(1);
-        }
+
+		exitIfEOF(std::cin);
         if (input.empty() || hasOnlyBlankSpaces(input)) {
             std::cout << "Input cannot be empty." << std::endl;
         } else if (setter == &Contact::setPhoneNumber && !areAllDigits(input)) {
@@ -68,6 +66,11 @@ int getContactDetails(Contact &newContact) {
  *  - 	if phonebook is not full, the new contact will be stored in the first
  * 		free slot of the array
  *  -	if phonebook is full, the new contact will overwrite the oldest one
+ * We cannot reset 'currentIndex' to zero when the array is full because we 
+ * need it in 'searchContact()' to display the whole list of contacts by index.
+ * So we need 'replaceIndex' to keep track of the oldest contact, that is, the
+ * array's slot where we are going to store the new contact when the phonebook
+ * is full
  */
 void PhoneBook::addContact() {
 
@@ -104,7 +107,7 @@ void PhoneBook::addContact() {
  */
 
 void PhoneBook::searchContact() {
-	
+    
     if (currentIndex == 0) {
         std::cout << "Phonebook is empty. No contacts to search." << std::endl;
         return ;
@@ -122,14 +125,13 @@ void PhoneBook::searchContact() {
                   << std::setw(10) << formatAndTruncate(contacts[i].getNickname()) << "|" << std::endl;
     }
 
-	int index;
+    int index;
     bool validIndex = false;
     do {
         std::cout << "Enter the index of the contact to display: " << std::endl;
-		// std::cin >> index; // Getting index value here causes strange behavior
 
+        exitIfEOF(std::cin);
         if (!(std::cin >> index) || index < 0 || index >= currentIndex) {
-            // Clear the error state and discard invalid input (see note below)
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid index. Please try again." << std::endl;
@@ -146,9 +148,10 @@ void PhoneBook::searchContact() {
     std::cout << "Nickname: " << contacts[index].getNickname() << std::endl;
     std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
     std::cout << "Darkest Secret: " << contacts[index].getDarkestSecret() << std::endl;
-	std::cin.ignore(); // Consume leftover newline (see note below)
+    std::cin.ignore(); // Consume leftover newline (see note below)
 
 }
+
 /* About std::cin.ignore() in line 148:
  *   -	When the user enters the index in 'searchContact' a newline character is left
  * 		in the input buffer after pressing Enter

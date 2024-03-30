@@ -6,11 +6,12 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:50:48 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/27 21:27:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:36:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+#include "Utils.hpp"
 
 int main() {
     PhoneBook phonebook;
@@ -25,12 +26,7 @@ int main() {
         std::cout << " > Press E to (E)xit phonebook" << std::endl;
 
 		std::getline(std::cin, input);
-        if (input.empty()) {
-            if (std::cin.eof()) {
-                std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
-                break;
-            }
-        }
+		exitIfEOF(std::cin);
 
 		// Convert input to uppercase for case-insensitive comparison
 		for (size_t i = 0; i < input.length(); ++i) {

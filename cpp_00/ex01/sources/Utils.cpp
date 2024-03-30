@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 21:10:21 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/27 21:27:01 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/03/31 00:08:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  * hasOnlyBlankSpaces()
  *
- * Returns true if the input has only blank spaces.
+ * Returns true if the input has only blank spaces or tabs.
  * 
  * After writing my function, I discovered there is an specific method of the
  * 'std::string' class in C++ called 'find_first_not_of()' that is used to find
@@ -28,7 +28,7 @@
  */
 bool hasOnlyBlankSpaces(const std::string &str) {
 	for (size_t i = 0; i < str.length(); ++i) {
-		if (str[i] != ' ')
+		if (str[i] != ' ' && str[i] != '\t')
 			return false;
 	}
 	return true;
@@ -74,9 +74,9 @@ bool areAllDigits(const std::string &str) {
 std::string trimBlankSpaces(const std::string &str) {
     int start = 0, end = str.length() - 1;
 
-    while (start <= end && str[start] == ' ')
+    while (start <= end && (str[start] == ' ' || str[start] == '\t'))
         start++;
-    while (end >= start && str[end] == ' ')
+    while (end >= start && (str[end] == ' ' || str[end] == '\t'))
         end--;
     return str.substr(start, end - start + 1);
 }
@@ -91,5 +91,16 @@ std::string formatAndTruncate(const std::string &str) {
         return str.substr(0, 9) + ".";
     } else {
         return str;
+    }
+}
+ /*
+  * exitIfEOF
+  *
+  * Catches the EOF when the user enters a Ctrl+D and exits the function
+  */
+void exitIfEOF(std::istream &input) {
+    if (input.eof()) {
+        std::cout << std::endl << "EOF received. Exiting Phonebook. Goodbye!" << std::endl;
+        exit(1);
     }
 }
