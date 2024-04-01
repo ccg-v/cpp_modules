@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 21:10:21 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/31 00:08:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:36:38 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,18 @@ std::string trimBlankSpaces(const std::string &str) {
     while (end >= start && (str[end] == ' ' || str[end] == '\t'))
         end--;
     return str.substr(start, end - start + 1);
+}
+
+/*
+ * replaceTabsWithSpaces
+ *
+ * Replaces any tab WITHIN THE INPUT with a blank space
+ */
+void replaceTabsWithSpaces(std::string &str) {
+    for (size_t i = 0; i < str.length(); ++i) {
+        if (str[i] == '\t')
+            str[i] = ' ';
+    }
 }
 
 /*

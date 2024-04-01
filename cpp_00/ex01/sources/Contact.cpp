@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/03/30 23:56:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:40:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void getInput(Contact &newContact, const std::string &prompt, void (Contact::*se
             std::cout << "Phone Number must contain only digits. Please enter again." << std::endl;
         }
     } while (input.empty() || hasOnlyBlankSpaces(input) || (setter == &Contact::setPhoneNumber && !areAllDigits(input)));
+
+	replaceTabsWithSpaces(input);
     (newContact.*setter)(trimBlankSpaces(input));
 }
 
