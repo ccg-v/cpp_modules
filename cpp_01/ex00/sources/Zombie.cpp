@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 23:17:16 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/02 23:43:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:54:44 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void Zombie::setName(const std::string &name) {
  */
 void Zombie::announce(void) {
 
-	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << std::endl << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 	
 }
 
@@ -52,6 +52,6 @@ void Zombie::announce(void) {
  */
 Zombie::~Zombie() {
 
-	std::cout << "Destructor called for " << name << "!" << std::endl;
+	std::cout << "Destructor called for " << name << "!" << std::endl << std::endl;
 
 }
