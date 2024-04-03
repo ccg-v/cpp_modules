@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 23:17:16 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/03 20:54:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:31:50 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
  *
  * Accessor to set the value of Zombie class private member Name
  */
-void Zombie::setName(const std::string &name) {
+// void Zombie::setName(const std::string &name) {
 
-    this->name = name;
+//     this->name = name;
 
-}
+// }
 
 /*
  *	announce()
@@ -35,6 +35,17 @@ void Zombie::announce(void) {
 
 	std::cout << std::endl << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 	
+}
+
+/*
+ *  Zombie()
+ *
+ * The constructor. Assigns the parameter 'name' to the member variable 'name'.
+ */
+Zombie::Zombie(const std::string &name) {
+
+    this->name = name;
+
 }
 
 /*

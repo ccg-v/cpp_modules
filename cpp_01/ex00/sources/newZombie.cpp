@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 19:29:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/02 23:18:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:36:14 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
  */
 Zombie *newZombie(std::string name) {
 
-	Zombie *newZombiePtr = new Zombie;
+	Zombie *newZombiePtr = new Zombie(name);
 
-	newZombiePtr->setName(name);
+	/* 	No need of setter now I defined a constructor that receives the name
+		as a parameter */
+	// newZombiePtr->setName(name); 
 	
 	return newZombiePtr;
 	

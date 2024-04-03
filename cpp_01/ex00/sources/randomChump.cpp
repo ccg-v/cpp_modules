@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 23:15:13 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/02 23:17:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:35:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
  */
 void randomChump(std::string name) {
 
-	Zombie newZombie;
+	Zombie newZombie(name);
 
-	newZombie.setName(name);
+	/* No need of setter now I defined a constructor that receives the name
+		as a parameter */
+	// newZombie.setName(name);
 	newZombie.announce();
 
 }
