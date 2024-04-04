@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:02:02 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/01 22:40:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:48:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,18 @@ void getInput(Contact &newContact, const std::string &prompt, void (Contact::*se
     } while (input.empty() || hasOnlyBlankSpaces(input) || (setter == &Contact::setPhoneNumber && !areAllDigits(input)));
 
 	replaceTabsWithSpaces(input);
-    (newContact.*setter)(trimBlankSpaces(input));
+    // (newContact.*setter)(trimBlankSpaces(input));
+	if (setter == &Contact::setFirstName) {
+  		newContact.setFirstName(trimBlankSpaces(input));
+	} else if (setter == &Contact::setLastName) {
+		newContact.setLastName(trimBlankSpaces(input));
+	} else if (setter == &Contact::setNickname) {
+		newContact.setNickname(trimBlankSpaces(input));
+	} else if (setter == &Contact::setPhoneNumber) {
+		newContact.setPhoneNumber(trimBlankSpaces(input));
+	} else if (setter == &Contact::setDarkestSecret) {
+		newContact.setDarkestSecret(trimBlankSpaces(input));
+	}
 }
 
 /*
