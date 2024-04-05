@@ -1,2 +1,4 @@
-1. Why non-default constructor prints numbered zombies if the std::cout uses 'name', not 'uniqueName'?
-2. Still some red underlines in VS though the program works
+# cpp 01 - ex01
+<p align="center">
+	<img src="assets/cpp01_ex01.png" />
+</p>
