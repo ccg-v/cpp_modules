@@ -6,25 +6,31 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:34:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/07 23:36:34 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/08 23:55:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef WEAPON_HPP
+# define WEAPON_HPP
 
 #include <iostream>
 
 Class Weapon {
 
 	private:
-		std::string type;
+		std::string	type;
 
 	public:
-		// Constructor initializer list syntax:
-		Weapon(std::string const &newType) : type(newType) {}
+		//	Constructor initializer list syntax:
+		Weapon(std::string const &newType);
 
+		//	Member functions
 		std::string const	&getType() const;
-		void 				setType(const std::string &newType);
+		void setType(std::string const &newType);
 		
 };
+
+#endif
 
 /* 
  * Each time a new Weapon object is instanciated, a type of weapon must be 

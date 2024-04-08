@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Weapon.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 20:33:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/08 23:29:40 by ccarrace         ###   ########.fr       */
+/*   Created: 2024/04/08 23:48:56 by ccarrace          #+#    #+#             */
+/*   Updated: 2024/04/08 23:54:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Weapon.hpp"
 
-int main()
-{
-	{
-		Weapon club = Weapon("crude spiked club");
+//	Constructor implementation
+Weapon::Weapon(std::string const &newType) : type(newType) {}
 
-		HumanA bob("Bob", club);
-		bob.attack();
-		club.setType("some other type of club");
-		bob.attack();
-	}
-	{
-		Weapon club = Weapon("crude spiked club");
+std::string const &Weapon::getType() const {
+	return type;
+}
 
-		HumanB jim("Jim");
-		jim.setWeapon(club);
-		jim.attack();
-		club.setType("some other type of club");
-		jim.attack();
-	}
-	return 0;
+void Weapon::setType(std::string const &newType) {
+	type = newType;
 }
