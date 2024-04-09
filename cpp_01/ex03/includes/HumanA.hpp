@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:03:26 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/09 22:55:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:24:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class	HumanA {
 		// std::string	getName() const;
 
 		//	Member function that displays attacker's name and weapon used
-		void	attack(void);
+		void	attack();
 
 };
 

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:05:27 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/09 23:48:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:24:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class	HumanB {
 		void	setWeapon(Weapon &currentWeapon);
 			
 		// member function that displays attacker's name and weapon used
-		void	attack(void);
+		void	attack();
 		
 };
 
