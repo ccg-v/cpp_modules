@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:48:56 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/10 00:12:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:36:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 Weapon::Weapon(std::string const &newType) {
 	type = newType;
 }
-
-//	Destructor
-// Weapon::~Weapon() {}
 
 /* --- Accessors ------------------------------------------------------------ */
 
