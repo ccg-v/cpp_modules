@@ -6,10 +6,13 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:33:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/08 23:29:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:53:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Weapon.hpp"
+#include "HumanA.hpp"
+#include "HumanB.hpp"
 
 int main()
 {

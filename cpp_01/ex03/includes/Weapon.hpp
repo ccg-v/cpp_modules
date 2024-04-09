@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:34:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/08 23:55:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:55:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 #include <iostream>
 
-Class Weapon {
+
+class Weapon {
 
 	private:
 		std::string	type;

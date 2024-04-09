@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:03:26 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/08 23:46:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/09 22:55:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,27 @@
 #ifndef HUMANA_HPP
 # define HUMANA_HPP
 
-Class	HumanA {
+#include <string>
+#include "Weapon.hpp"
+
+class	HumanA {
 
 	private:
 		std::string	attackerName;
-		Weapon		currentWeapon;
+		Weapon		&weapon;
 
 	public:
 		//	Constructor declaration (new instances must have name and weapon)
-		HumanA(const std::string &attackerName, Weapon &currentWeapon);
+		HumanA(std::string const &attackerName, Weapon &weapon);
 
 		//	Destructor declaration
 		~HumanA();
 
-		//	Getter for attacker's name
-		std::string getAttackerName() const;
-
-		//	Getter for current weapon
-		std::string	getCurrentWeapon() const;
+		// //	Getter for attacker's name
+		// std::string	getName() const;
 
 		//	Member function that displays attacker's name and weapon used
-		void attack(void);
+		void	attack(void);
 
 };
 
