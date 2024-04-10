@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:33:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/10 00:04:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/10 20:02:07 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,20 @@ int main()
 		club.setType("some other type of club");
 		jim.attack();
 	}
-	return 0;
+
+	// {
+	// 	Weapon knife = Weapon("cutter");
+	// 	HumanA bob("Bob", knife);
+
+	// 	bob.attack();
+	// 	knife.setType("swiss pocket knife");
+	// 	bob.attack();	
+	// }
+	// {
+	// 	HumanB jim("Jim");
+		
+	// 	jim.attack();
+	// }	
+	// return 0;
+
 }
