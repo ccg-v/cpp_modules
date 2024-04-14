@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:58:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/13 00:50:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:15:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	main(int argc, char **argv) {
 		return -1;
 	}
 
-	std::ifstream inputFile(argv[1]);
-	// inputFile.open(argv[1], std::ifstream::in);
-	if (!inputFile.is_open()) {
-		std::cout << "Error opening input file" << std::endl;
-		return -1;
-	}
-
 	std::string	fileName = argv[1];
 	std::string str1 = argv[2];
 	std::string	str2 = argv[3];
+
+	//	Declare an input file stream object for reading and try to open it
+	std::ifstream inputFile(fileName);	// (1)
+	if (!inputFile.is_open()) {			// (2)
+		std::cout << "Error opening input file" << std::endl;
+		return -1;
+	}
 
 	//	Build the name of the new file (extension must be replaced)
 	std::string newFileName;
@@ -44,50 +44,66 @@ int	main(int argc, char **argv) {
 	else
 		newFileName = fileName.substr(0, found) + ".replace";
 
-	//	Declares an output file stream object named outputFile 
-	//	and attempts to open a file named newFileName for writing
-	// 	When you create an instance of std::ofstream, like in the line 
-	//			std::ofstream outputFile(newFileName);
-	//	it doesn't directly create a new file. Instead, it prepares an 
-	//	output stream object (outputFile in this case) that is associated 
-	//	with a file, which in this case is specified by the newFileName.
-	//	The file is created when you actually write data to the stream 
-	//	(using outputFile << data;), or in the case of std::ofstream, if 
-	//	the file doesn't exist, it will be created when you try to open 
-	//	it for writing.
-	//	So, in short, that line prepares an output stream object associated 
-	//	with a file (newFileName), but it doesn't actually create the file 
-	//	until you perform some output operation on the stream or explicitly 
-	//	call outputFile.open(newFileName);.
-	//
-	//	When you create an 'std:ofstream' object with a file as an argument
-	//	it automatically opens the file associated with that filename
-
+	// Declare an output file stream object for writing and try to open it
 	std::ofstream outputFile(newFileName);
-	// outputFile.open(newFileName);
-	if (!outputFile.is_open()) {
+	if (!outputFile.is_open()) {		// (2)
 		std::cout << "Error opening output file" << std::endl;
 		return 1;
 	}
 
 	//	Copies the content of inputFile in outputFile, replacing str1 occurences
-	//	with str2
-	//	std::string::size_type is specifically defined by the std::string class 
-	//	and is tailored to represent sizes or positions within strings. On most
-	//	platforms ando with most compilers 'size_t' and 'std::string::size_type'
-	//	are likely to be the same. using std::string::size_type provides a clear
-	//	indication that the variable is intended for use with std::string objects.
-	std::string	line;
-	while (std::getline(inputFile, line)) {
-		std::string::size_type	pos = 0;
-		while ((pos = line.find(str1, pos)) != std::string::npos) {
-			line = line.substr(0, pos) + str2 + line.substr(pos + str1.length());
-			pos += str2.length();
-		}
-		outputFile << line << std::endl;
-	}
+	//	with str2. Partial occurrences are ignored.
+    std::string line;
+    while (std::getline(inputFile, line)) {
+        std::string::size_type pos = 0;
+        while ((pos = line.find(str1, pos)) != std::string::npos) {
+			// Check if character next to occurrence found is a newline, a blank space 
+			// or a punctuation sign
+			if (pos + str1.length() == line.length() 
+					|| (line[pos + str1.length()] == ' ' 
+					|| std::ispunct(line[pos + str1.length()]))) {
+                line = line.substr(0, pos) + str2 + line.substr(pos + str1.length());
+                pos += str2.length(); // Increment by the length of the replacement string
+            } else {
+                pos += str1.length(); // Move past the found occurrence
+            }
+        }
+        outputFile << line << std::endl;
+    }
 	
 	inputFile.close();
 	outputFile.close();
 	return 0;
 }
+
+/*
+ *	(1)	std::ifstream 
+ *		It's a special class to perform input/output operations on the associated files.
+ *		It doesn't directly create a new file. Instead, it prepares q i/o stream object
+ *		that will be associated with a existing or new file. 
+ *		
+ *	(2)	ifstream::open
+ *			void open (const char *filename, ios_base::openmode mode = ios_base::in)
+ *		Opens 'filename', associating it with the stream object. 
+ *		Argument 'mode' specifies the opening mode ('in'/'out' for input/output operations)
+ *
+ *		Ex:	std::ifstream inputFile();
+ *			inputFile.open(fileName, std::ifstream::in);
+ *			if(inputFile.isOpen()) {
+ *				(...) }
+ *
+ *		Notice that when a stream object is created with a file as argument, the file is
+ *		automatically opened (if it exists) or created (if it doesn't). 
+ *		Obviously, in this case calling 'open' function is redundant and will fail.
+ *		
+ *			std::ifstream inputFile(fileName);
+ *			if(inputFile.isOpen()) {
+ *				(...) }
+ *
+ *	(3)	std::string::size_type 
+ *		Is a type specifically defined by the std::string class and is tailored to 
+ *		represent sizes or positions within strings. On most platforms ando with most 
+ *		compilers 'size_t' and 'std::string::size_type' are likely to be the same. 
+ *		However, using std::string::size_type provides a clear indication that the 
+ *		variable is intended for use with std::string objects.
+ */
