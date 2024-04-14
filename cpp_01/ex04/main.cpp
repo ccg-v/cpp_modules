@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:58:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/14 14:15:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/14 21:52:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	main(int argc, char **argv) {
 	std::string	str2 = argv[3];
 
 	//	Declare an input file stream object for reading and try to open it
-	std::ifstream inputFile(fileName);	// (1)
-	if (!inputFile.is_open()) {			// (2)
+	std::ifstream ifs(fileName);	// (1)
+	if (!ifs.is_open()) {			// (2)
 		std::cout << "Error opening input file" << std::endl;
 		return -1;
 	}
@@ -45,16 +45,17 @@ int	main(int argc, char **argv) {
 		newFileName = fileName.substr(0, found) + ".replace";
 
 	// Declare an output file stream object for writing and try to open it
-	std::ofstream outputFile(newFileName);
-	if (!outputFile.is_open()) {		// (2)
+	std::ofstream ofs(newFileName);
+	if (!ofs.is_open()) {		// (2)
 		std::cout << "Error opening output file" << std::endl;
 		return 1;
 	}
 
 	//	Copies the content of inputFile in outputFile, replacing str1 occurences
-	//	with str2. Partial occurrences are ignored.
+	//	with str2. Only integral occurrences are replaced, those that are part 
+	//	of a longer word are ignored.
     std::string line;
-    while (std::getline(inputFile, line)) {
+    while (std::getline(ifs, line)) {
         std::string::size_type pos = 0;
         while ((pos = line.find(str1, pos)) != std::string::npos) {
 			// Check if character next to occurrence found is a newline, a blank space 
@@ -68,11 +69,11 @@ int	main(int argc, char **argv) {
                 pos += str1.length(); // Move past the found occurrence
             }
         }
-        outputFile << line << std::endl;
+        ofs << line << std::endl;
     }
 	
-	inputFile.close();
-	outputFile.close();
+	ifs.close();
+	ofs.close();
 	return 0;
 }
 
