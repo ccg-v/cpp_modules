@@ -17,12 +17,11 @@
 
 <p>The point of the exercise is to determine in what case it's better to allocate the zombies on the stack or heap</p>
 
-<p>'*newZombie()' returns a pointer to the Zombie object. This means it can be used outside of the function scope, so it must be allocated on the heap. Instead, the instance of Zombie created in 'randomChump' cannot be used outside of the function, it must be allocated on the stack memory.</p>
+
 
 <details>
-  <summary>Click to reveal spoiler</summary>
+  <summary style="color: blue;">Click for hint</summary>
   
-  Spoiler content goes here.
+<p>'*newZombie()' returns a pointer to the Zombie object. This means it can be used outside of the function scope, so it must be allocated on the heap. Instead, the instance of Zombie created in 'randomChump' cannot be used outside of the function, it must be allocated on the stack memory.</p>
   
-  This content will be hidden until the user clicks on the summary above.
 </details>
