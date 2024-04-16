@@ -21,7 +21,7 @@
 <details>
   <summary>Click here for hint</summary>
 <p></p> 
-<p><i>The exercise aims to demonstrate the difference between allocating objects on the stack and on the heap in C++. When creating a Zombie object using the newZombie() function, a pointer to the Zombie is returned, allowing it to be accessed outside the function scope. Thus, it's allocated on the heap using dynamic memory allocation.</i></p>
+<p style="color: red;"><i>The exercise aims to demonstrate the difference between allocating objects on the stack and on the heap in C++. When creating a Zombie object using the newZombie() function, a pointer to the Zombie is returned, allowing it to be accessed outside the function scope. Thus, it's allocated on the heap using dynamic memory allocation.</i></p>
 
 <p><i>On the other hand, when creating a Zombie object with the randomChump() function, it's used solely within the function and isn't needed outside of it. Therefore, it's allocated on the stack, utilizing automatic memory allocation.</i></p>
   
