@@ -1,6 +1,6 @@
 <h1>cpp 01 - ex00</h1>
 
-<h2>TARGET</h2>
+<h2>Target</h2>
 <p>Demonstrate the key concepts of dynamic memory allocation (heap) and stack allocation for creating and using zombie objects.</p>
 
 <h2>Subject</h2>
