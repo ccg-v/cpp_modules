@@ -3,7 +3,7 @@
 <h2>TARGET</h2>
 <p>Demonstrate the key concepts of dynamic memory allocation (heap) and stack allocation for creating and using zombie objects.</p>
 
-<h3>SUBJECT</h3>
+<h2>Subject</h2>
 <ol>
   <li>
     <p>Implement a Zombie class that holds the zombie's name and a function to announce himself</p>
