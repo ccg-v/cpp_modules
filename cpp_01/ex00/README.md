@@ -12,7 +12,8 @@
   <li>
     <p>Create two zombies using a different function for each:</p>
     <pre><code>Zombie *newZombie( std::string name);
-	<br>void randomChump( std::string name );</code></pre>
+	
+	void randomChump( std::string name );</code></pre>
   </li>
 </ol>
 
