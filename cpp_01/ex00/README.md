@@ -12,15 +12,15 @@
   <li>
     <p>Create two zombies using a different function for each:</p>
     <pre><code>Zombie *newZombie( std::string name);
-	
-	void randomChump( std::string name );</code></pre>
+	void randomChump( std::string name );
+	</code></pre>
   </li>
 </ol>
 
 <p>The point of the exercise is to determine in what case it's better to allocate the zombies on the stack or heap</p>
 
 <details>
-  <summary style="color: blue;">Click for hint</summary>
+  <summary>Click here for hint</summary>
   
 <p>"The exercise aims to demonstrate the difference between allocating objects on the stack and on the heap in C++. When creating a Zombie object using the newZombie() function, a pointer to the Zombie is returned, allowing it to be accessed outside the function scope. Thus, it's allocated on the heap using dynamic memory allocation.</p>
 
