@@ -11,9 +11,8 @@
   </li>
   <li>
     <p>Create two zombies using a different function for each:</p>
-    <pre><code>Zombie *newZombie( std::string name);
-	void randomChump( std::string name );
-	</code></pre>
+    <pre><code>Zombie *newZombie( std::string name);</code></pre>
+	<pre><code>void randomChump( std::string name );</code></pre>
   </li>
 </ol>
 
@@ -22,8 +21,8 @@
 <details>
   <summary>Click here for hint</summary>
   
-<p>"The exercise aims to demonstrate the difference between allocating objects on the stack and on the heap in C++. When creating a Zombie object using the newZombie() function, a pointer to the Zombie is returned, allowing it to be accessed outside the function scope. Thus, it's allocated on the heap using dynamic memory allocation.</p>
+<p>_The exercise aims to demonstrate the difference between allocating objects on the stack and on the heap in C++. When creating a Zombie object using the newZombie() function, a pointer to the Zombie is returned, allowing it to be accessed outside the function scope. Thus, it's allocated on the heap using dynamic memory allocation._</p>
 
-<p>On the other hand, when creating a Zombie object with the randomChump() function, it's used solely within the function and isn't needed outside of it. Therefore, it's allocated on the stack, utilizing automatic memory allocation.</p>
+<p>_On the other hand, when creating a Zombie object with the randomChump() function, it's used solely within the function and isn't needed outside of it. Therefore, it's allocated on the stack, utilizing automatic memory allocation._</p>
   
 </details>
