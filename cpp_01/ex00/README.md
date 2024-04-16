@@ -5,9 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hidden Section Example</title>
 <style>
-  /* Hide the spoiler section by default */
-  #spoiler {
+  /* Hide the spoiler content by default */
+  .spoiler-content {
     display: none;
+  }
+  
+  /* Style for the spoiler checkbox */
+  .spoiler-checkbox {
+    display: none;
+  }
+  
+  /* Style for the spoiler label */
+  .spoiler-label {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  /* Style for the spoiler content when revealed */
+  .spoiler-checkbox:checked + .spoiler-label + .spoiler-content {
+    display: block;
   }
 </style>
 </head>
@@ -15,26 +32,15 @@
 
 <h1>Hidden Section Example</h1>
 
-<!-- Button to toggle the visibility of the spoiler section -->
-<button onclick="toggleSpoiler()">Show Spoiler</button>
+<!-- Checkbox to toggle the visibility of the spoiler content -->
+<input type="checkbox" id="spoiler-checkbox" class="spoiler-checkbox">
+<label for="spoiler-checkbox" class="spoiler-label">Show Spoiler</label>
 
-<!-- Hidden spoiler section -->
-<div id="spoiler">
+<!-- Hidden spoiler content -->
+<div class="spoiler-content">
   <h2>Spoiler Alert!</h2>
-  <p>This is the hidden content that the user can reveal by clicking the button.</p>
+  <p>This is the hidden content that the user can reveal by clicking the label.</p>
 </div>
-
-<script>
-  // JavaScript function to toggle the visibility of the spoiler section
-  function toggleSpoiler() {
-    var spoiler = document.getElementById("spoiler");
-    if (spoiler.style.display === "none") {
-      spoiler.style.display = "block";
-    } else {
-      spoiler.style.display = "none";
-    }
-  }
-</script>
 
 </body>
 </html>
