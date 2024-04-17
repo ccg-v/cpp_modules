@@ -1,7 +1,7 @@
 <h1>Exercise 01: Moar Brainz!</h1>
 
 <h2>Target</h2>
-<p>Learn to allocate an array of objects and initialize them.</p>
+<p>Learn how to allocate an array of objects and initialize them all.</p>
 
 <h2>Subject</h2>
 <p>Time to create a horde of Zombies!</p>
