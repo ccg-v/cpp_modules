@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:58:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/17 21:20:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:22:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv) {
 		return 1;
 	}
 
-	//	Copies the content of inputFile in outputFile, replacing str1 occurences
+	//	Copy the content of inputFile in outputFile, replacing str1 occurences
 	//	with str2. Only integral occurrences are replaced, those that are part 
 	//	of a longer word are ignored.
     std::string line;
