@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:05:27 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/10 00:24:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:33:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 class	HumanB {
 
 	private:
-		std::string	attackerName;
-		Weapon		*currentWeapon;
+		std::string	_attackerName;
+		Weapon		*_currentWeapon;
 
 	public:
 		//	Constructor declaration (new instances must have name but not weapon)

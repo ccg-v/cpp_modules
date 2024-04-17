@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:03:26 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/10 00:24:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:43:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,15 @@
 class	HumanA {
 
 	private:
-		std::string	attackerName;
-		Weapon		&weapon;
+		std::string	_attackerName;
+		Weapon		&_currentWeapon;
 
 	public:
 		//	Constructor declaration (new instances must have name and weapon)
-		HumanA(std::string const &attackerName, Weapon &weapon);
+		HumanA(std::string const &attackerName, Weapon &currentWeapon);
 
 		//	Destructor declaration
 		~HumanA();
-
-		// //	Getter for attacker's name
-		// std::string	getName() const;
 
 		//	Member function that displays attacker's name and weapon used
 		void	attack();
