@@ -11,7 +11,7 @@
 <p>Implement your own tests to ensure your zombieHorde() function works as expected. Try to call announce() for each one of the zombies.</p>
 <p>Don’t forget to delete all the zombies and check for memory leaks.</p>
 
-<h2>Pseudocode flow chart</h2>
+<h2>Pseudocode flowchart</h2>
 <p align="center">
 	<img src="assets/cpp01_ex01.png" />
 </p>
