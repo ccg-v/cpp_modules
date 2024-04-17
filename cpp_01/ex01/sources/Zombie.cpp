@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:15:45 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/05 22:12:37 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:22:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ Zombie::Zombie (const std::string &name) {
  *
  *  -	Allocates memory for an array of zombies of size received as parameter
  *  -	Initializes each zombie with the name received as a parameter
- *  -	Returns a pointer to the firss
+ *  -	Returns a pointer to the first zombie;
  */
 Zombie	*zombieHorde( int N, std::string name ) {
 	
