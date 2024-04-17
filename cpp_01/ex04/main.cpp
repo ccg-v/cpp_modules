@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:58:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/14 21:52:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:20:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv) {
 /*
  *	(1)	std::ifstream 
  *		It's a special class to perform input/output operations on the associated files.
- *		It doesn't directly create a new file. Instead, it prepares q i/o stream object
+ *		It doesn't directly create a new file. Instead, it prepares a i/o stream object
  *		that will be associated with a existing or new file. 
  *		
  *	(2)	ifstream::open
@@ -102,9 +102,9 @@ int	main(int argc, char **argv) {
  *				(...) }
  *
  *	(3)	std::string::size_type 
- *		Is a type specifically defined by the std::string class and is tailored to 
- *		represent sizes or positions within strings. On most platforms ando with most 
+ *		Is a type specifically defined by the 'std::string' class and is tailored to 
+ *		represent sizes or positions within strings. On most platforms and with most 
  *		compilers 'size_t' and 'std::string::size_type' are likely to be the same. 
- *		However, using std::string::size_type provides a clear indication that the 
+ *		However, using 'std::string::size_type' provides a clear indication that the 
  *		variable is intended for use with std::string objects.
  */
