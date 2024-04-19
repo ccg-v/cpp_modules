@@ -10,8 +10,8 @@
   <p>Private members:</p>
 </li>
   <li>
-    <p>	- An integer to store the fixed-point number value.
-    	- A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.</p>
+    <p>	- An integer to store the fixed-point number value.</p>
+    <p>	- A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.</p>
   </li>
 <li>
   <p>Public members:</p>
@@ -23,4 +23,4 @@
      <p>A destructor</p>
      <p>A member function int getRawBits( void ) const; that returns the raw value of the fixed-point value.</p>
      <p>A member function void setRawBits( int const raw ); that sets the raw value of the fixed-point number.</p>
-  </li>
+  </li></ol>
