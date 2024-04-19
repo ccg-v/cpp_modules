@@ -6,9 +6,9 @@
 <h2>Subject</h2>
 <p>Create a class in Orthodox Canonical Form that represents a fixed-point number:</p>
 
-<li>
+<ol><li>
   <p>Private members:</p>
-</li>
+</li></ol>
   <li>
     <p>An integer to store the fixed-point number value.</p>
     <p>A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.</p>
