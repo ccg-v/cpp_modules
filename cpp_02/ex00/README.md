@@ -9,10 +9,8 @@
 <li>
   <p>Private members:</p>
 </li>
-  <li>
     <p>	- An integer to store the fixed-point number value.</p>
     <p>	- A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.</p>
-  </li>
 <li>
   <p>Public members:</p>
 </li>
