@@ -1,7 +1,7 @@
 <h1>Exercise 00: My First Class in Orthodox Canonical Form</h1>
 
 <h2>Target</h2>
-<p>Learn about the Orthodox Canonical Form for classes, and the fixed-point numbers,/p>
+<p>Learn about the Orthodox Canonical Form for classes, and the fixed-point numbers</p>
 
 <h2>Subject</h2>
 <p>Create a class in Orthodox Canonical Form that represents a fixed-point number:</p>
