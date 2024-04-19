@@ -6,7 +6,7 @@
 <h2>Subject</h2>
 <p>Create a class in Orthodox Canonical Form that represents a fixed-point number:</p>
 
-<ol><li>
+<li>
   <p>Private members:</p>
 </li>
   <li>
@@ -17,10 +17,10 @@
   <p>Public members:</p>
 </li>
   <li>
-     <p>A default constructor that initializes the fixed-point number value to 0.</p>
-     <p>A copy constructor.</p>
-     <p>A copy assignment operator overload.</p>
-     <p>A destructor</p>
-     <p>A member function int getRawBits( void ) const; that returns the raw value of the fixed-point value.</p>
-     <p>A member function void setRawBits( int const raw ); that sets the raw value of the fixed-point number.</p>
-  </li></ol>
+     <p> - A default constructor that initializes the fixed-point number value to 0.</p>
+     <p> - A copy constructor.</p>
+     <p> - A copy assignment operator overload.</p>
+     <p> - A destructor</p>
+     <p> - A member function int getRawBits( void ) const; that returns the raw value of the fixed-point value.</p>
+     <p> - A member function void setRawBits( int const raw ); that sets the raw value of the fixed-point number.</p>
+  </li>
