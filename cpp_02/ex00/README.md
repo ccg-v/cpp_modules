@@ -26,3 +26,26 @@ The standard C++98 and before OCF consists of four member functions:
 * **Destructor:** Called when an object is destroyed to clean up any resource it holds.
 
 C++11 and later include two additional member functions, a Move Constructor and a Move Assignement Operator, but we are focusing on C++98 standard for now.
+
+Here's an example of OCF:
+```
+class Person {
+private:
+    std::string name; // name of the person
+    int age; // age of the person
+public:
+    // default constructor
+    Person() : name(""), age(0) {}
+
+    // copy constructor
+    Person(const Person& other) : name(other.name), age(other.age) {}
+
+    // assignment operator
+    Person& operator=(const Person& other) {
+        if (this != &other) { // avoid self-assignment
+            name = other.name;
+            age = other.age;
+        }
+        return *this;
+    }
+```
