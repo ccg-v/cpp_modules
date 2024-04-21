@@ -24,4 +24,5 @@ The standard C++98 and before OCF consists of four member functions:
 * **Copy Constructor:** Creates a new object that is a copy of an existing object.
 * **Copy Assignment Operator:** Assigns the value of one object to another existing object.
 * **Destructor:** Called when an object is destroyed to clean up any resource it holds.
+
 C++11 and later include two additional member functions, a Move Constructor and a Move Assignement Operator, but we are focusing on C++98 standard for now.
