@@ -61,4 +61,12 @@ Person p1("Alice", 30);
 Person p2;
 p2 = p1;	// Copy assignment operator is called here to assign p1's data to p2
 ```
-The difference is that <u>the copy constructor creates a new copy, while the copy assignment operator modifies an existing object</u>
+The difference is that _the copy constructor creates a new copy, while the copy assignment operator modifies an existing object_. 
+The provided code example defines a custom copy assignment operator because calling it explicitly is not needed. However, an explicit call would be:
+```
+Person p1("Alice", 30);
+Person p2;
+
+// Explicit call to copy assignment operator using member function syntax
+p2 = p1.operator=(p1);
+```
