@@ -16,3 +16,9 @@ Create a class in Orthodox Canonical Form that represents a fixed-point number:
   * A destructor.
   * A member function int getRawBits( void ) const; that returns the raw value of the fixed-point value.
   * A member function void setRawBits( int const raw ); that sets the raw value of the fixed-point number.
+
+  ## Theory
+  The Ortodox Canonical Form (OCF) is a set of guidelines for defining well-behaved and predictable classes in C++. It ensures the class will be easily used and integrated in other code. 
+  This is what the OCF entails:
+  * <h5>Default constructor:</h5> A constructor that initializes an object with default values if no arguments are provided.
+  * 
