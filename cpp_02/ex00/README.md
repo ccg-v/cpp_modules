@@ -70,3 +70,6 @@ Person p2;
 // Explicit call to copy assignment operator using member function syntax
 p2 = p1.operator=(p1);
 ```
+In this scenario, we:
+1. Access the `operator=` function of the `p1` object using the dot operator (.).
+2. Pass `p1` itself as the argument to the `operator=`. This triggers the copy assignment functionality, but within the context of the `p1` object.
