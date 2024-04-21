@@ -38,9 +38,9 @@ public:
     Person() : name(""), age(0) {}
 
     // copy constructor
-    Person(const Person& other) : name(other.name), age(other.age) {}
+    Person(const Person& source) : name(source.name), age(source.age) {}
 
-    // assignment operator
+    // copy assignment operator
     Person& operator=(const Person& other) {
         if (this != &other) { // avoid self-assignment
             name = other.name;
@@ -49,3 +49,16 @@ public:
         return *this;
     }
 ```
+- The Default Constructor ensures private members are initialized with default values.
+- The Copy Constructor provides a mechanism to create a new 'Person' instance as a copy of an existing one ('source'), maintaining data integrity and separation between objects.
+```
+Person p1("Alice", 30);
+Person p2 = p1;	// Copy Constructor is called here to create p2 as a copy of p1
+```
+- The Copy Assignment Operator modifies an existing object to become a copy of another object of the same class.
+```
+Person p1("Alice", 30);
+Person p2;
+p2 = p1;	// Copy assignment operator is called here to assign p1's data to p2
+```
+The difference is that <u>the copy constructor creates a new copy, while the copy assignment operator modifies an existing object</u>
