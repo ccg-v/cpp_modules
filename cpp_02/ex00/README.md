@@ -77,4 +77,5 @@ In this scenario, we:
 When a copy assignment operator is not explicitly defined, the compiler provides a default one. This default operator tipically performs a **shallow copy**, meaning it copies the values of the member variables of the source object to the corresponding member variables of the target object. For simple classes with primitive data types (like `int`, `double`) this shallow copy might be sufficient. However, the default copy assignment operator might not be suitable in some scenarios. For example:
 * If your class has pointers to dynamically allocated memory, a shallow copy would only copy the pointer value, not the actual data it points to. This can lead to memory leaks or dangling pointers.
 * You might have specific logic for copying resources associated with the class that the default operator wouldn't handle.
+
 Instead, the overload operator allows you to customize the copying behavior for the class, you can perform a **deep copy** (copying any dynamically allocated memory) or implement other logic as needed.
