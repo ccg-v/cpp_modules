@@ -20,5 +20,5 @@ Create a class in Orthodox Canonical Form that represents a fixed-point number:
 ## Theory
 The Ortodox Canonical Form (OCF) is a set of guidelines for defining well-behaved and predictable classes in C++. It ensures the class will be easily used and integrated in other code. 
 This is what the OCF entails:
-* _Default constructor:_ A constructor that initializes an object with default values if no arguments are provided.
+* ###Default constructor:### A constructor that initializes an object with default values if no arguments are provided.
 * 
