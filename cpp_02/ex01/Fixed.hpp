@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/24 00:06:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/25 23:49:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 class	Fixed {
 
 	private:
-		int					_fixedPoint;
+		int					_fixedPointNbr;
 		static const int	_fractionalBits = 8;
 
 	public:
 
-	/*	Orthodox Canonical Form		*/
+	/*	--- Orthodox Canonical Form	---	*/
 		//	Default constructor			
 		Fixed( void );
 
@@ -36,11 +36,15 @@ class	Fixed {
 		//	Destructor
 		~Fixed( void );
 
-	/*	Constructor overloads		*/
-		Fixed( int const intNbr);
+	/*	---	Constructor overloads -----	*/
+		Fixed( int const intNbr );
 		Fixed( const floatNbr );
+	
+	/*	---	Operator overloads --------	*/
+		// Fixed& operator<
 
-		/*	Methods						*/
+
+	/*	--- Methods -------------------	*/
 		int		getRawBits( void ) const;
 		void	setRawBits( int const raw);
 
