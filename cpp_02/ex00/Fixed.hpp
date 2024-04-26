@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:04:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/23 23:27:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:49:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class Fixed {
 
 	private:
-		int					_fixedPoint;
+		int					_raw;
 		static const int	_fractionalBits = 8;
 	
 	public:
