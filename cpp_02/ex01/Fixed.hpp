@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/25 23:49:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/27 00:31:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 #include <iostream>
 
-class	Fixed {
+class Fixed {
 
 	private:
-		int					_fixedPointNbr;
+		int					_raw;
+		int					_fixedPointValue;
 		static const int	_fractionalBits = 8;
 
 	public:
@@ -28,7 +29,7 @@ class	Fixed {
 		Fixed( void );
 
 		//	Copy constructor
-		Fixed(const Fixed& source)
+		Fixed(const Fixed& source);
 
 		//	Copy assignment operator
 		Fixed& operator=(const Fixed& source);
@@ -38,7 +39,7 @@ class	Fixed {
 
 	/*	---	Constructor overloads -----	*/
 		Fixed( int const intNbr );
-		Fixed( const floatNbr );
+		Fixed( float const floatNbr );
 	
 	/*	---	Operator overloads --------	*/
 		// Fixed& operator<
@@ -51,4 +52,8 @@ class	Fixed {
 		float	toFloat( void ) const;
 		int		toInt( void ) const;
 
-}
+};
+
+std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr );
+
+#endif
