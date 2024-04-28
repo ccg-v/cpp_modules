@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 21:05:41 by ccarrace          #+#    #+#              #
-#    Updated: 2024/04/23 21:06:43 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/04/28 12:17:41 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,12 @@ NAME 		= 	fixed.out
 
 # --- Compiler --------------------------------------------------------------- #
 CC 			= 	c++
-FLAGS 		=	-Wall -Wextra -Werror -std=c++98 -g
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
 
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	Fixed.cpp main.cpp 
-OBJ_FILES	=	$(SRC_FILES:.cpp=.o)
+OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
+DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 
 # --- Build rules ------------------------------------------------------------ #
 all: $(NAME) 
@@ -27,6 +28,8 @@ all: $(NAME)
 # --- Object build rules ----------------------------------------------------- #
 %.o:%.cpp
 	$(CC) $(FLAGS) -c $< -o $@
+
+-include $(DEP_FILES)	
 
 # --- Program build rules ---------------------------------------------------- #
 $(NAME): $(OBJ_FILES) Makefile
@@ -36,6 +39,9 @@ $(NAME): $(OBJ_FILES) Makefile
 
 clean:
 	rm -f $(OBJ_FILES)
+	rm -f $(DEP_FILES)
+	rm -f expected_output.txt
+	rm -f test_output.log
 
 fclean: clean
 	rm -f $(NAME)
