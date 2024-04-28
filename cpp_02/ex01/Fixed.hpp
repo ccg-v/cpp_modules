@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/28 14:28:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:08:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ class Fixed {
 		Fixed( int const intNbr );
 		Fixed( float const floatNbr );
 
-		friend std::ostream& operator<<(std::ostream& os, const Fixed& fixed_nbr);
-
 	/*	--- Methods -------------------	*/
 		int		getRawBits( void ) const;
 		void	setRawBits( int const raw);
@@ -52,7 +50,7 @@ class Fixed {
 };
 
 // Output stream operator overload (needed for outputting 'Fixed' objects to a stream)
-// std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ); // (2)
+std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ); // (2)
 
 #endif
 
@@ -70,18 +68,19 @@ class Fixed {
  *		of the fixed-point number, and the fractional bits (determined by the 
  *		'_fractionalBits' constant) represent the fractional part.
  *
- * (2)	The Output Stream Operator (operator<<) is part of the C++ language and it is
- * 		used in many output operations, e.g:
+ * (2)	The Output Stream Operator (operator<<) is part of the C++ language and it
+ * 		is used in many output operations, e.g:
  * 			int x = 5;
  * 			std::cout << x; // Default implementation of operator << for integers
  * 
- * 		But this default implementation does not know how to handle my 'Fixed' class
- * 		so I need to implement my own implementation defining a specific function. 
- * 		Since the function needs access to the private members of the 'Fixed' class
- * 		to output its state, it is often declared as 'friend' function inside the 
- * 		class.
+ * 		But this default implementation does not know how to handle 'Fixed' class
+ * 		so I need to create my own implementation defining a specific function. 
+ * 		This function is not a member of 'Fixed' class so it can't be declared 
+ * 		within. Instead, to let it access to the class private members and output 
+ * 		its state, we have two ways:
  * 
- * 		However, the subject does not allow to use the 'friend' keyword so I have to 
- * 		declare the prototype of the function outside the class, and the function 
- * 		must access to class members through the 'getRawBits()' accessor.
+ * 		a.  Declare it as 'friend' function inside the class. However, the subject 
+ * 			does not allow to use the 'friend' keyword.
+ * 		b.	Declare the prototype of the function outside the class, and let the
+ * 			function access to class members through the 'getRawBits()' accessor.
  */
