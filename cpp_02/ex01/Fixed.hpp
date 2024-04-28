@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/28 13:40:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:51:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Fixed {
 		//	Copy constructor
 		Fixed(const Fixed& source);
 
-		//	Copy assignment operator
+		//	Copy assignment orawperator
 		Fixed& operator=(const Fixed& source);
 
 		//	Destructor
