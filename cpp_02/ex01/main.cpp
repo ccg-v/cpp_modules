@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:49:18 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/28 22:58:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/28 23:02:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int main( void ) {
 
 	Fixed a;
 	Fixed const b( 10 );
-	Fixed const c( 42.42f );
+	Fixed const c( 42.42f );	// (1)
 	Fixed const d( b );
 
-	a = Fixed( 1234.4321f );
+	a = Fixed( 1234.4321f );	// (1)
 
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
