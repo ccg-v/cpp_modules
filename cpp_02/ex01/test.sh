@@ -1,12 +1,18 @@
 #!/bin/bash
 
-./a.out > test_output.log
+# Check if 'expected_output.txt' exists
+if [ ! -e "expected_output.txt" ]; then
+    echo "Error: 'expected_output.txt' not found"
+    exit 1
+fi
+
+./fixed.out > test_output.log
 # Compare the test output with the provided logs using diff
 diff test_output.log expected_output.txt
 
 # Check the exit code of diff
 if [ $? -eq 0 ]; then
-	echo -e "\e[32mPASSED\e[0m"   # Print PASSED in green
+	echo -e "\033[0;32mPASSED\033[0m"	# print PASSED in green
 else
-	echo -e "\e[31mFAILED\e[0m"   # Print FAILED in red
+	echo -e "\033[0;31mFAILED\033[0m"   # Print FAILED in red
 fi

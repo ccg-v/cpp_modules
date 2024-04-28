@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:13:14 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/27 01:33:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:03:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,25 @@ Fixed::~Fixed( void ) {
 Fixed::Fixed( const int _raw ) {
 	std::cout << "Int constructor called" << std::endl;
 	int scaleFactor = 1 << this->_fractionalBits;
-	// this->_fixedPointValue = _raw / scaleFactor;
 	this->_raw = _raw * scaleFactor;
-	std::cout << "\tInteger " << _raw << " = fixed-point number " << this->_raw << std::endl;
 }
 
 //	Float to Fixed constructor
 Fixed::Fixed( const float _raw ) {
 	std::cout << "Float constructor called" << std::endl;
 	int scaleFactor = 1 << this->_fractionalBits;
-	// this->_fixedPointValue = (_raw * scaleFactor);
 	this->_raw = roundf(_raw * scaleFactor);
-	std::cout << "\tFloat-point number " << _raw << " = fixed-point number " << this->_raw << std::endl;
 }
 
 /* --- Class public methods ------------------------------------------------- */
 
 int	Fixed::getRawBits( void ) const {
-	std::cout << "getRawBits member function called" << std::endl;
+	// std::cout << "getRawBits member function called" << std::endl;
 	return this->_raw;
 }
 
 void	Fixed::setRawBits( int const raw) {
-	std::cout << "setRawBits member function called" << std::endl;
+	// std::cout << "setRawBits member function called" << std::endl;
 	this->_raw = raw;
 }
 
