@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/01 02:17:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/01 02:52:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Fixed {
 
 	/*	--- Orthodox Canonical Form	----------------------------------------- */
 		//	Default constructor			
-		Fixed( void );
+		Fixed( void );cd
 
 		//	Copy constructor
 		Fixed(const Fixed& source);
