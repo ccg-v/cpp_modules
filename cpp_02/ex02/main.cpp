@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:28:46 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/01 02:21:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:48:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int main() {
     Fixed a(5.23f);
     Fixed b(3.45f);
     Fixed c(a);
+	int d(1);
+	Fixed e(1);
 
     std::cout << "a: " << a << std::endl;
     std::cout << "b: " << b << std::endl;
@@ -50,5 +52,11 @@ int main() {
 	std::cout << "a - b = " << (a - b) << std::endl;
 	std::cout << "a * b = " << (a * b) << std::endl;
 	std::cout << "a / b = " << (a / b) << std::endl;
+
+	std::cout << d++ << std::endl;
+	std::cout << d << std::endl;
+	std::cout << e++ << std::endl;
+	std::cout << e << std::endl;	
+
     return 0;
 }

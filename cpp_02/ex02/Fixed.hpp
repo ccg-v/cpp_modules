@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/01 02:52:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:45:50 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Fixed {
 
 	/*	--- Orthodox Canonical Form	----------------------------------------- */
 		//	Default constructor			
-		Fixed( void );cd
+		Fixed( void );
 
 		//	Copy constructor
 		Fixed(const Fixed& source);
@@ -61,9 +61,9 @@ class Fixed {
 		Fixed	operator/( const Fixed& source );
 
 		// // Increment and decrement operators
-		// Fixed	operator++( int );
+		Fixed&	operator++( void );	// prefix increment operator
+		Fixed	operator++( int );	// postfix increment operator (3)
 		// Fixed	operator--( int );
-		// Fixed&	operator++( void );
 		// Fixed&	operator--( void );
 
 
@@ -110,4 +110,9 @@ std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ); // (2)
  * 			does not allow to use the 'friend' keyword.
  * 		b.	Declare the prototype of the function outside the class, and let the
  * 			function access to class members through the 'getRawBits()' accessor.
+ *
+ *	(3)	In the postfix increment operator (operator++(int)), the 'int' parameter 
+ *		serves as a dummy parameter. It's a convention in C++ for distinguishing
+ *		the postfix increment operator from the prefix increment operator 
+ *		(operator++())
  */
