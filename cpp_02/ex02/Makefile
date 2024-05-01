@@ -1,0 +1,51 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/28 10:12:26 by ccarrace          #+#    #+#              #
+#    Updated: 2024/04/28 12:17:42 by ccarrace         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# --- Program name ----------------------------------------------------------- #
+NAME 		= 	fixed.out
+
+# --- Compiler --------------------------------------------------------------- #
+CC 			= 	c++
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
+
+# --- Files ------------------------------------------------------------------ #
+SRC_FILES	=	Fixed.cpp main.cpp 
+OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
+DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
+
+# --- Build rules ------------------------------------------------------------ #
+all: $(NAME) 
+
+# --- Object build rules ----------------------------------------------------- #
+%.o:%.cpp
+	$(CC) $(FLAGS) -c $< -o $@
+
+-include $(DEP_FILES)
+
+# --- Program build rules ---------------------------------------------------- #
+$(NAME): $(OBJ_FILES) Makefile
+	$(CC) $(FLAGS) $(OBJ_FILES) -o $@
+
+# --- Cleaning rules --------------------------------------------------------- #
+
+clean:
+	rm -f $(OBJ_FILES)
+	rm -f $(DEP_FILES)
+	rm -f expected_output.txt
+	rm -f test_output.log
+	
+fclean: clean
+	rm -f $(NAME) 
+
+re:	fclean all
+
+.PHONY:	all clean fclean re
