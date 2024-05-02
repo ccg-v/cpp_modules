@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 22:47:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/01 20:45:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/02 23:26:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,24 @@ class Fixed {
 
 	/*	--- Operators overloads --------------------------------------------- */
 		//	Comparison operators
-		bool	operator>( const Fixed& source );
-		bool	operator<( const Fixed& source );
-		bool	operator>=( const Fixed& source );
-		bool	operator<=( const Fixed& source );
-		bool	operator==( const Fixed& source );
-		bool	operator!=( const Fixed& source );
+		bool	operator>( const Fixed& source ) const;
+		bool	operator<( const Fixed& source ) const;
+		bool	operator>=( const Fixed& source ) const;
+		bool	operator<=( const Fixed& source ) const;
+		bool	operator==( const Fixed& source ) const;
+		bool	operator!=( const Fixed& source ) const;
 
 		//	Arithmetic operators
-		Fixed	operator+( const Fixed& source );
-		Fixed	operator-( const Fixed& source );
-		Fixed	operator*( const Fixed& source );
-		Fixed	operator/( const Fixed& source );
+		Fixed	operator+( const Fixed& source ) const;
+		Fixed	operator-( const Fixed& source ) const;
+		Fixed	operator*( const Fixed& source ) const;
+		Fixed	operator/( const Fixed& source ) const;
 
 		// // Increment and decrement operators
 		Fixed&	operator++( void );	// prefix increment operator
 		Fixed	operator++( int );	// postfix increment operator (3)
-		// Fixed	operator--( int );
-		// Fixed&	operator--( void );
+		Fixed	operator--( int );
+		Fixed&	operator--( void );
 
 
 	/*	--- Methods --------------------------------------------------------- */
@@ -74,6 +74,11 @@ class Fixed {
 		float	toFloat( void ) const;
 		int		toInt( void ) const;
 
+		static Fixed &min ( Fixed& a, Fixed& b);
+		static Fixed &max ( Fixed& a, Fixed& b);
+		static const Fixed &min ( const Fixed& a, const Fixed& b);
+		static const Fixed &max ( const Fixed& a, const Fixed& b);
+		
 };
 
 // Output stream operator overload (needed for outputting 'Fixed' objects to a stream)

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:13:14 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/02 20:55:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/02 23:28:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,27 @@ Fixed::Fixed( const float _raw ) {
 /* --- Operator overloads --------------------------------------------------- */
 
 //	Comparison operators
-bool	Fixed::operator>( const Fixed& source ) {
+bool	Fixed::operator>( const Fixed& source ) const {
 	return (this->getRawBits() > source.getRawBits());
 }
 
-bool	Fixed::operator<( const Fixed& source ) {
+bool	Fixed::operator<( const Fixed& source ) const {
 	return (this->getRawBits() < source.getRawBits());
 }
 
-bool	Fixed::operator>=( const Fixed& source ) {
+bool	Fixed::operator>=( const Fixed& source ) const {
 	return (this->getRawBits() >= source.getRawBits());
 }
 
-bool	Fixed::operator<=( const Fixed& source ) {
+bool	Fixed::operator<=( const Fixed& source ) const {
 	return (this->getRawBits() <= source.getRawBits());
 }
 
-bool	Fixed::operator==( const Fixed& source ) {
+bool	Fixed::operator==( const Fixed& source ) const {
 	return (this->getRawBits() == source.getRawBits());
 }
 
-bool	Fixed::operator!=( const Fixed& source ) {
+bool	Fixed::operator!=( const Fixed& source ) const {
 	return (this->getRawBits() != source.getRawBits());
 }
 
@@ -80,19 +80,19 @@ bool	Fixed::operator!=( const Fixed& source ) {
 //		standard addition operators (+, -, * and /) defined for float-point
 //		numbers in C++.
 //
-Fixed Fixed::operator+(const Fixed &source) {
+Fixed Fixed::operator+(const Fixed &source) const {
 	return (Fixed(toFloat() + source.toFloat()));
 }
 
-Fixed Fixed::operator-(const Fixed &source) {
+Fixed Fixed::operator-(const Fixed &source) const {
 	return (Fixed(toFloat() - source.toFloat()));	
 }
 
-Fixed Fixed::operator*(const Fixed &source) {
+Fixed Fixed::operator*(const Fixed &source) const {
 	return (Fixed(toFloat() * source.toFloat()));
 }
 
-Fixed Fixed::operator/(const Fixed &source) {
+Fixed Fixed::operator/(const Fixed &source) const {
 	return (Fixed(toFloat() / source.toFloat()));
 }
 
@@ -106,6 +106,17 @@ Fixed Fixed::operator++( int ) {	// Implementation of the postfix increment oper
     Fixed temp(*this); 				// 	- create a copy of the current object
     operator++();           		// 	- increment the _raw member variable
     return temp;      				// 	- return the copy of the original object
+}
+
+Fixed &Fixed::operator--( void ) {	// Implementation of the prefix increment operator (--x)
+	this->_raw--;
+	return (*this);
+}
+
+Fixed Fixed::operator--( int ) {	// Implementation of the postfix increment operator (x--)
+    Fixed temp(*this);
+    operator--();
+    return temp;
 }
 
 /* --- Class public methods ------------------------------------------------- */
@@ -132,6 +143,22 @@ std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ) {
     return os;
 }
 
+Fixed &Fixed::min ( Fixed& a, Fixed& b) {
+	return (a < b ? a : b);
+}
+
+const Fixed &Fixed::min ( const Fixed& a, const Fixed& b) {
+	return (a < b ? a : b);
+}
+
+Fixed &Fixed::max ( Fixed& a, Fixed& b) {
+	return (a > b ? a : b);
+}
+
+const Fixed &Fixed::max ( const Fixed& a, const Fixed& b) {
+	return (a > b ? a : b);
+}
+
 /*
  *	(1)	The subject says that "the increment/decrement operators will increase or
  *		decrease the fixed-point value from the smallest representable ε such as
@@ -144,7 +171,9 @@ std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ) {
  *		the binary representation for the smallest representable ε is:
  *								00000000.00000001
  * 		This binary value represents a fixed-point increment of 1/256, which is
- * 		approximately equal to 0.00390625
+ * 		approximately equal to 0.00390625. So when you increment a fixed-point by
+ * 		1 using the increment operator, you are effectively adding this smallest
+ * 		representable ε to the value.
  * 
  *	(2)	In the postfix increment operator (operator++(int)), the 'int' parameter 
  *		serves as a dummy parameter. It's a convention in C++ for distinguishing
