@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:13:14 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/01 20:43:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:55:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ Fixed Fixed::operator/(const Fixed &source) {
 	return (Fixed(toFloat() / source.toFloat()));
 }
 
-//	Increment and decrement operators
+//	Increment and decrement operators (1)
 Fixed &Fixed::operator++( void ) {	// Implementation of the prefix increment operator (++x)
 	this->_raw++;
 	return (*this);
 }
 
-Fixed Fixed::operator++( int ) {	// Implementation of the postfix increment operator (x++) (1)
+Fixed Fixed::operator++( int ) {	// Implementation of the postfix increment operator (x++) (2)
     Fixed temp(*this); 				// 	- create a copy of the current object
     operator++();           		// 	- increment the _raw member variable
     return temp;      				// 	- return the copy of the original object
@@ -133,7 +133,20 @@ std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ) {
 }
 
 /*
- *	(1)	In the postfix increment operator (operator++(int)), the 'int' parameter 
+ *	(1)	The subject says that "the increment/decrement operators will increase or
+ *		decrease the fixed-point value from the smallest representable ε such as
+ *		1 + ε > 1". What does this mean?
+ *
+ *		In fixed-point arithmetic, the smallest representable increment (ε) is
+ *		determined by the number of fractional bits (the precision). This smallest
+ *		increment represents the smallest change in value that can be represented
+ *		by the fixed-point format. For example, with a fractional part of 8 bits,
+ *		the binary representation for the smallest representable ε is:
+ *								00000000.00000001
+ * 		This binary value represents a fixed-point increment of 1/256, which is
+ * 		approximately equal to 0.00390625
+ * 
+ *	(2)	In the postfix increment operator (operator++(int)), the 'int' parameter 
  *		serves as a dummy parameter. It's a convention in C++ for distinguishing
  *		the postfix increment operator from the prefix increment operator 
  *		(operator++())
