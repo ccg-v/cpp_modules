@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:13:14 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/02 23:28:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:45:37 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,12 @@ std::ostream& operator<<( std::ostream& os, const Fixed& fixed_nbr ) {
 }
 
 Fixed &Fixed::min ( Fixed& a, Fixed& b) {
+	// std::cout << "\n(Non const function called)" << std::endl;
 	return (a < b ? a : b);
 }
 
 const Fixed &Fixed::min ( const Fixed& a, const Fixed& b) {
+	// std::cout << "\n(Const function called)" << std::endl;
 	return (a < b ? a : b);
 }
 

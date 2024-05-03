@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:28:46 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/02 23:40:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:46:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main( void ) {
 	return 0;
 }
 
-// /*	My own tests	*/
+/*	My own tests	*/
 // int main() {
 	
 //     Fixed a(5.23f);
@@ -38,11 +38,11 @@ int	main( void ) {
 // 	Fixed e(1);
 
 // 	std::cout << "--- Values -------------------------------------------- " << std::endl;
-//     std::cout << "a: " << a << std::endl;
-//     std::cout << "b: " << b << std::endl;
-//     std::cout << "c: " << c << std::endl;
-// 	std::cout << "d: " << d << std::endl;
-// 	std::cout << "e: " << e << std::endl
+//     std::cout << "Fixed   a: " << a << std::endl;
+//     std::cout << "Fixed   b: " << b << std::endl;
+//     std::cout << "Fixed   c: " << c << std::endl;
+// 	std::cout << "Integer d: " << d << std::endl;
+// 	std::cout << "Fixed   e: " << e << std::endl
 //  			  << std::endl;
 
 // 	std::cout << "--- Comparison operators ------------------------------ " << std::endl;		  
@@ -65,10 +65,10 @@ int	main( void ) {
 // 	std::cout << "Integer d pre incremented (++d) in 1          : " << ++d << std::endl;
 // 	std::cout << "Fixed-point e pre incremented (++e) in 1      : " << ++e << std::endl
 // 			  << std::endl;	
-// 	std::cout << "Integer d post decremented (d++) in 1         : " << d-- << std::endl;
-// 	std::cout << "Integer d after post decrement (d++) in 1     : " << d << std::endl;
-// 	std::cout << "Fixed-point e post decremented (e++) in 1     :" << e-- << std::endl;
-// 	std::cout << "Fixed-point e after post decrement (e++) in 1 : " << e << std::endl
+// 	std::cout << "Integer d post decremented (d--) in 1         : " << d-- << std::endl;
+// 	std::cout << "Integer d after post decrement (d--) in 1     : " << d << std::endl;
+// 	std::cout << "Fixed-point e post decremented (e--) in 1     : " << e-- << std::endl;
+// 	std::cout << "Fixed-point e after post decrement (e--) in 1 : " << e << std::endl
 // 			  << std::endl;	
 
 // 	std::cout << "--- Min/max member functions -------------------------- " << std::endl; 
@@ -77,8 +77,12 @@ int	main( void ) {
 // 	std::cout << "Comparing a and b, min is " << minValue 
 // 			  << " and max is " << maxValue << std::endl;
 
-// 	std::cout << "Address of min value is   : " << &Fixed::min( a, b ) << std::endl;
-// 	std::cout << "Reference of min value is : " << (void *)&Fixed::min( a, b ) << std::endl;
+// 	// To test whether the const or the non-const min/max function is called, 
+// 	//		1. Set 'a' and 'b' to const in main()
+// 	//		2. Uncomment the following line in const min() and/or max() implementation:
+// 	// 				std::cout << "\n(Const function called)" << std::endl;
+// 	//		3. Uncomment the following line in non const min() and/or max() implementation:
+// 	// 				std::cout << "\n(Non const function called)" << std::endl;
 	
 //     return 0;
 // }
