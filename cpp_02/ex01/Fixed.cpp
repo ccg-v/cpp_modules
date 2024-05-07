@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:13:14 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/28 11:03:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:18:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ Fixed::~Fixed( void ) {
 /* --- Constructor overloads ------------------------------------------------ */
 
 //	Integer to Fixed constructor
-Fixed::Fixed( const int _raw ) {
+Fixed::Fixed( const int raw ) {
 	std::cout << "Int constructor called" << std::endl;
 	int scaleFactor = 1 << this->_fractionalBits;
-	this->_raw = _raw * scaleFactor;
+	this->_raw = raw * scaleFactor;
 }
 
 //	Float to Fixed constructor
-Fixed::Fixed( const float _raw ) {
+Fixed::Fixed( const float raw ) {
 	std::cout << "Float constructor called" << std::endl;
 	int scaleFactor = 1 << this->_fractionalBits;
-	this->_raw = roundf(_raw * scaleFactor);
+	this->_raw = roundf(raw * scaleFactor);
 }
 
 /* --- Class public methods ------------------------------------------------- */
