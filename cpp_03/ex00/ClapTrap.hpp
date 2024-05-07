@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:27:42 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/06 00:24:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/08 01:06:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ public:
 	
 	//	Setters
 	void		setName ( std::string name );
-	void		setAttackDamage( std::string name );
+	void		setAttackDamage( int attackDamage );
+	void		setHitPoints( int hitPoints);
 	
 		//	Getters
 	std::string	getName ( void );

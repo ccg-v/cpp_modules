@@ -6,13 +6,13 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/06 01:08:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/08 01:15:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-int	nbr_generator( void );
+int	dice( void );
 
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
@@ -63,18 +63,12 @@ void	ClapTrap::setName( std::string name ) {
 	this->_name = name;
 };
 
-void	ClapTrap::setAttackDamage( std::string name ) {
+void	ClapTrap::setAttackDamage( int attackDamage ) {
+	this->_attackDamage = attackDamage;
+};
 
-    // std::random_device rd;
-    // std::mt19937 gen(rd());
-    // std::uniform_int_distribution<> dis(0, 9);
-
-    // int random_number = dis(gen);
-	// this->_attackDamage = random_number;
-    // std::cout << name << " attack dammage is " << getAttackDamage() << std::endl;
-	std::cout << "\t" << name << std::endl;
-	int amount = nbr_generator();
-	takeDamage(amount);
+void	ClapTrap::setHitPoints( int hitPoints) {
+	this->_hitPoints = hitPoints;
 };
 
 //	Getters
@@ -97,27 +91,44 @@ int	ClapTrap::getAttackDamage ( void ) {
 /* --- Member functions ----------------------------------------------------- */
 
 void 	ClapTrap::attack( const std::string& target ) {
-	setAttackDamage(target);
-	// int amount = nbr_generator();
-	// takeDamage(amount);
-	std::cout << "\tClapTrap " << getName() << " attacks " << target
+
+	int	dice_roll = dice();
+	std::cout << "\tDice roll is " << dice_roll << std::endl;
+	if (dice_roll == 0) {
+		std::cout << "\t" << getName() << " quickly repairs himself instead of attacking"
+				  << std::endl;
+		beRepaired(10);
+		std::cout << "\t" << getName() << " now has " << getHitPoints() << " hitpoints"
+				  << std::endl;
+	}
+	else {
+		setAttackDamage(dice_roll);
+		std::cout << "\t" << getName() << " attacks " << target
 			  << ", causing " << getAttackDamage() << " points of damage!"
 			  << std::endl;
+	}
 };
 
 void	ClapTrap::takeDamage( unsigned int amount ) {
-	std::cout << "\t" << getName() << " launches an attack level " << amount 
-			  << std::endl;
+	this->_hitPoints = this->_hitPoints - amount;
+	if (this->_hitPoints > 0)
+		std::cout << "\t" << getName() << " has " << this->_hitPoints << " hitpoints" << std::endl;
+	else
+		std::cout << "\t" << getName() << " died!!!" << std::endl;
 };
-// void	beRepaired( unsigned int amount ) {};
+
+void	ClapTrap::beRepaired( unsigned int amount ) {
+	this->_hitPoints = amount;
+	this->_energyPoints = this->_energyPoints - 1;
+};
 
 /* --- Non-class functions --------*/
 
-int	nbr_generator( void ) {
+int	dice( void ) {
 	
 	std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 9);
+    std::uniform_int_distribution<> dis(0, 6);
 
     int random_number = dis(gen);
 	
