@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:48:49 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/08 18:23:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:48:46 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int main(void) {
 
-    ClapTrap    ClapTrap1("Attacker");
-    ClapTrap    ClapTrap2("Defender");
+	std::string Player1 = "Attacker";
+	std::string Player2 = "Defender";
     std::string winner;
+    ClapTrap    ClapTrap1(Player1);
+    ClapTrap    ClapTrap2(Player2);
+
 
     while (ClapTrap1.getHitPoints() > 0 && ClapTrap2.getHitPoints() > 0) {
         
@@ -31,7 +34,7 @@ int main(void) {
         }
 
         std::cout << std::endl;
-        ClapTrap1.attack("Defender");
+        ClapTrap1.attack(Player2);
         ClapTrap2.takeDamage(ClapTrap1.getAttackDamage());
 
         if (ClapTrap1.getHitPoints() <= 0 || ClapTrap2.getHitPoints() <= 0)
@@ -45,7 +48,7 @@ int main(void) {
         }
 
         std::cout << std::endl;
-        ClapTrap2.attack("Attacker");
+        ClapTrap2.attack(Player1);
         ClapTrap1.takeDamage(ClapTrap2.getAttackDamage());
         
     }
@@ -57,7 +60,7 @@ int main(void) {
     
     if (winner != "") {
         std::cout << std::endl;
-        std::cout << winner << " won the battle!" << std::endl;
+        std::cout << winner << " won the battle!!!" << std::endl;
         std::cout << std::endl;
     }
     
