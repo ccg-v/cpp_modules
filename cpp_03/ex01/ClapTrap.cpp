@@ -1,0 +1,159 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
+/*   Updated: 2024/05/09 00:45:27 by ccarrace         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ClapTrap.hpp"
+
+int		dice( void );
+void	display_score( std::string name, int hitPoints, int energyPoints);
+
+/* --- Orthodox Canonical Form ---------------------------------------------- */
+
+//	Default constructor
+ClapTrap::ClapTrap( void ) 
+	: _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+	std::cout << "\tDefault constructor has been called."
+			  << std::endl;
+};
+
+//	Copy constructor
+ClapTrap::ClapTrap( const ClapTrap &source ) {
+	*this = source;
+	std::cout << "\tA new ClapTrap called '" << getName() << "' has been copied." 
+			  << std::endl;
+}
+
+//	Default destructor
+ClapTrap::~ClapTrap( void ) {
+	std::cout << "\tThe ClapTrap unit called '" << getName() << "' has been destroyed." 
+			  << std::endl;
+}
+
+//	Operator assignment overload
+ClapTrap	&ClapTrap::operator=( const ClapTrap &source ) {
+	if (this == &source)
+		return (*this);
+	_hitPoints = source._hitPoints;
+	_energyPoints = source._energyPoints;
+	_attackDamage = source._attackDamage;
+	return (*this);
+}
+
+/* --- Constructor overload ------------------------------------------------- */
+
+ClapTrap::ClapTrap( std::string& name )
+	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+	std::cout << "\tA ClapTrap unit called '" << _name << "' has been constructed."
+			  << std::endl;
+}
+
+/* --- Accessors ------------------------------------------------------------ */
+
+//	Setters
+void	ClapTrap::setName( std::string name ) {
+	this->_name = name;
+};
+
+void	ClapTrap::setHitPoints( int hitPoints) {
+	this->_hitPoints = hitPoints;
+};
+
+void	ClapTrap::setAttackDamage( int attackDamage ) {
+	this->_attackDamage = attackDamage;
+};
+
+//	Getters
+std::string	ClapTrap::getName ( void ) {
+	return (_name);
+};
+
+int	ClapTrap::getHitPoints( void ) {
+	return (_hitPoints);
+};
+
+int	ClapTrap::getEnergyPoints( void ) {
+	return (_energyPoints);
+};
+
+int	ClapTrap::getAttackDamage ( void ) {
+	return (_attackDamage);
+};
+
+/* --- Member functions ----------------------------------------------------- */
+
+void 	ClapTrap::attack( const std::string& target ) {
+
+	if (this->_energyPoints <= 0) {
+		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
+				  << std::endl;
+	} else {
+
+		int	dice_roll = dice();
+		std::cout << "Turn for " << getName() <<", dice roll is " << dice_roll 
+				  << std::endl;
+
+		if(dice_roll == 0) {
+			beRepaired(10);
+			setAttackDamage(dice_roll);
+		} else {
+			setAttackDamage(dice_roll);
+			this->_energyPoints = this->_energyPoints - 1;
+			std::cout << getName() << " attacks " << target << ", causing " 
+					<< getAttackDamage() << " points of damage!"
+					<< std::endl;
+			display_score(getName(), this->_hitPoints, this->_energyPoints);			
+		}
+	}
+}
+
+void	ClapTrap::takeDamage( unsigned int amount ) {
+
+	this->_hitPoints = this->_hitPoints - amount;
+	display_score(getName(), this->_hitPoints, this->_energyPoints);
+
+	if (this->_hitPoints <= 0)
+		std::cout << getName() << " died!!!" << std::endl;
+};
+
+void	ClapTrap::beRepaired( unsigned int amount ) {
+
+	std::cout << getName() << " quickly repairs himself instead of attacking"
+			  << std::endl;
+	this->_hitPoints = amount;
+	this->_energyPoints = this->_energyPoints - 1;
+	display_score(getName(), this->_hitPoints, this->_energyPoints);
+};
+
+/* --- Non-class functions -------------------------------------------------- */
+
+int	dice( void ) {
+	
+	std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 6);
+
+    int random_number = dis(gen);
+	
+	return (random_number);
+	return (0);
+}
+
+void	display_score( std::string name, int hitPoints, int energyPoints) {
+
+	if (energyPoints < 0)
+		energyPoints = 0;
+	if (hitPoints < 0)
+		hitPoints = 0;	
+	std::cout << name << " score: " 
+			  << hitPoints << " hit points / "
+			  << energyPoints << " energy points"
+			  << std::endl;
+}
