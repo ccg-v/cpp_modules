@@ -6,34 +6,34 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/08 01:15:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:24:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-int	dice( void );
+int		dice( void );
+void	display_score( std::string name, int hitPoints, int energyPoints);
 
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
 ClapTrap::ClapTrap( void ) 
 	: _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << "Default 'CL4P-TP General Purpose Robot' model has been constructed. "
-				 "Default score points for future new units have been set."
+	std::cout << "\tDefault constructor has been called."
 			  << std::endl;
 };
 
 //	Copy constructor
 ClapTrap::ClapTrap( const ClapTrap &source ) {
 	*this = source;
-	std::cout << "A new ClapTrap COPY called " << getName() << " has been constructed." 
+	std::cout << "\tA new ClapTrap called '" << getName() << "' has been copied." 
 			  << std::endl;
 }
 
 //	Default destructor
 ClapTrap::~ClapTrap( void ) {
-	std::cout << "A ClapTrap unit called " << getName() << " has been destroyed." 
+	std::cout << "\tThe ClapTrap unit called '" << getName() << "' has been destroyed." 
 			  << std::endl;
 }
 
@@ -52,7 +52,7 @@ ClapTrap	&ClapTrap::operator=( const ClapTrap &source ) {
 
 ClapTrap::ClapTrap( std::string name )
 	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << "A new ClapTrap unit called " << _name << " has been constructed."
+	std::cout << "\tA ClapTrap unit called '" << _name << "' has been constructed."
 			  << std::endl;
 }
 
@@ -63,12 +63,12 @@ void	ClapTrap::setName( std::string name ) {
 	this->_name = name;
 };
 
-void	ClapTrap::setAttackDamage( int attackDamage ) {
-	this->_attackDamage = attackDamage;
-};
-
 void	ClapTrap::setHitPoints( int hitPoints) {
 	this->_hitPoints = hitPoints;
+};
+
+void	ClapTrap::setAttackDamage( int attackDamage ) {
+	this->_attackDamage = attackDamage;
 };
 
 //	Getters
@@ -92,37 +92,47 @@ int	ClapTrap::getAttackDamage ( void ) {
 
 void 	ClapTrap::attack( const std::string& target ) {
 
-	int	dice_roll = dice();
-	std::cout << "\tDice roll is " << dice_roll << std::endl;
-	if (dice_roll == 0) {
-		std::cout << "\t" << getName() << " quickly repairs himself instead of attacking"
+	if (this->_energyPoints <= 0) {
+		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
 				  << std::endl;
-		beRepaired(10);
-		std::cout << "\t" << getName() << " now has " << getHitPoints() << " hitpoints"
-				  << std::endl;
+	} else {
+
+		int	dice_roll = dice();
+		std::cout << "Dice roll is " << dice_roll << std::endl;
+
+		if(dice_roll == 0) {
+			beRepaired(10);
+			setAttackDamage(dice_roll);
+		} else {
+			setAttackDamage(dice_roll);
+			this->_energyPoints = this->_energyPoints - 1;
+			std::cout << getName() << " attacks " << target << ", causing " 
+					<< getAttackDamage() << " points of damage!"
+					<< std::endl;
+			display_score(getName(), this->_hitPoints, this->_energyPoints);			
+		}
 	}
-	else {
-		setAttackDamage(dice_roll);
-		std::cout << "\t" << getName() << " attacks " << target
-			  << ", causing " << getAttackDamage() << " points of damage!"
-			  << std::endl;
-	}
-};
+}
 
 void	ClapTrap::takeDamage( unsigned int amount ) {
+
 	this->_hitPoints = this->_hitPoints - amount;
-	if (this->_hitPoints > 0)
-		std::cout << "\t" << getName() << " has " << this->_hitPoints << " hitpoints" << std::endl;
-	else
-		std::cout << "\t" << getName() << " died!!!" << std::endl;
+	display_score(getName(), this->_hitPoints, this->_energyPoints);
+
+	if (this->_hitPoints <= 0)
+		std::cout << getName() << " died!!!" << std::endl;
 };
 
 void	ClapTrap::beRepaired( unsigned int amount ) {
+
+	std::cout << getName() << " quickly repairs himself instead of attacking"
+			  << std::endl;
 	this->_hitPoints = amount;
 	this->_energyPoints = this->_energyPoints - 1;
+	display_score(getName(), this->_hitPoints, this->_energyPoints);
 };
 
-/* --- Non-class functions --------*/
+/* --- Non-class functions -------------------------------------------------- */
 
 int	dice( void ) {
 	
@@ -133,4 +143,16 @@ int	dice( void ) {
     int random_number = dis(gen);
 	
 	return (random_number);
+}
+
+void	display_score( std::string name, int hitPoints, int energyPoints) {
+
+	if (energyPoints < 0)
+		energyPoints = 0;
+	if (hitPoints < 0)
+		hitPoints = 0;	
+	std::cout << name << " score: " 
+			  << hitPoints << " hit points / "
+			  << energyPoints << " energy points"
+			  << std::endl;
 }
