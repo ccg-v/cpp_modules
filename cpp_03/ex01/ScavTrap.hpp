@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:59:45 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/08 23:11:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:05:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 	
 	ScavTrap( void );								//	Default constructor
-	ScavTrap( const ScavTrap& source );				//	Copy constructor
-	ScavTrap& operator=( const ScavTrap& source );	//	Copy assignment operator
-	~ScavTrap();									//	Default destructor
+	ScavTrap( const ScavTrap &source );				//	Copy constructor
+	ScavTrap &operator=( const ScavTrap &source );	//	Copy assignment operator
+	~ScavTrap( void );									//	Default destructor
 	
 	/* --- Constructor overload --------------------------------------------- */
 
-	ScavTrap( std::string name );
+	ScavTrap( const std::string &name );
 
 	/* --- Member functions ------------------------------------------------- */
 
-	void 	attack( const std::string& target );
+	void 	attack( const std::string &target );
 	void 	guardGate( void );	
 };
 

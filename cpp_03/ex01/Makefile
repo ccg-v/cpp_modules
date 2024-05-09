@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/28 10:12:26 by ccarrace          #+#    #+#              #
-#    Updated: 2024/05/08 23:38:45 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/05/09 20:12:27 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC 			= 	c++
 FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
 
 # --- Files ------------------------------------------------------------------ #
-SRC_FILES	=	ScavTrap.cpp main.cpp 
+SRC_FILES	=	ClapTrap.cpp ScavTrap.cpp main.cpp 
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
 DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 
