@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/09 00:45:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:01:33 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	display_score( std::string name, int hitPoints, int energyPoints);
 
 //	Default constructor
 ClapTrap::ClapTrap( void ) 
-	: _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+	: _name("Default_ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
 	std::cout << "\tDefault constructor has been called."
 			  << std::endl;
 };
@@ -41,6 +41,7 @@ ClapTrap::~ClapTrap( void ) {
 ClapTrap	&ClapTrap::operator=( const ClapTrap &source ) {
 	if (this == &source)
 		return (*this);
+	_name = source._name;
 	_hitPoints = source._hitPoints;
 	_energyPoints = source._energyPoints;
 	_attackDamage = source._attackDamage;
@@ -49,7 +50,7 @@ ClapTrap	&ClapTrap::operator=( const ClapTrap &source ) {
 
 /* --- Constructor overload ------------------------------------------------- */
 
-ClapTrap::ClapTrap( std::string& name )
+ClapTrap::ClapTrap( const std::string& name )
 	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
 	std::cout << "\tA ClapTrap unit called '" << _name << "' has been constructed."
 			  << std::endl;
@@ -97,12 +98,12 @@ void 	ClapTrap::attack( const std::string& target ) {
 	} else {
 
 		int	dice_roll = dice();
-		std::cout << "Turn for " << getName() <<", dice roll is " << dice_roll 
-				  << std::endl;
+		// std::cout << "Turn for " << getName() <<", dice roll is " << dice_roll 
+		// 		  << std::endl;
 
-		if(dice_roll == 0) {
+		if(dice_roll == 6) {
 			beRepaired(10);
-			setAttackDamage(dice_roll);
+			setAttackDamage(0);
 		} else {
 			setAttackDamage(dice_roll);
 			this->_energyPoints = this->_energyPoints - 1;
@@ -124,26 +125,30 @@ void	ClapTrap::takeDamage( unsigned int amount ) {
 };
 
 void	ClapTrap::beRepaired( unsigned int amount ) {
-
+	if (this->_energyPoints > 0) {
 	std::cout << getName() << " quickly repairs himself instead of attacking"
 			  << std::endl;
 	this->_hitPoints = amount;
 	this->_energyPoints = this->_energyPoints - 1;
 	display_score(getName(), this->_hitPoints, this->_energyPoints);
+	} else {
+		std::cout << getName() << " can't repair himself because he has no energy points!"
+				  << std::endl;
+	}
 };
 
 /* --- Non-class functions -------------------------------------------------- */
 
 int	dice( void ) {
 	
-	std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 6);
+	// std::random_device rd;
+    // std::mt19937 gen(rd());
+    // std::uniform_int_distribution<> dis(0, 6);
 
-    int random_number = dis(gen);
+    // int random_number = dis(gen);
 	
-	return (random_number);
-	return (0);
+	// return random_number;
+	return 0;
 }
 
 void	display_score( std::string name, int hitPoints, int energyPoints) {
