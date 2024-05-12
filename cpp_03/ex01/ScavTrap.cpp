@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 14:36:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:53:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ ScavTrap::ScavTrap( void ) : ClapTrap() {
 	_hitPoints = 100;
 	_energyPoints = 50;
 	_attackDamage = 20;
-	std::cout << "Default ScavTrap constructor has been called." << std::endl;
+	std::cout << "[ScavTrap constructor called] Default ScavTrap constructor has been called." 
+			  << std::endl;
 }
 
 //	Copy constructor
@@ -31,7 +32,8 @@ ScavTrap::ScavTrap( const ScavTrap &source ) : ClapTrap(source) {
 
 //	Default destructor
 ScavTrap::~ScavTrap( void ) {
-	std::cout << "\tThe ScavTrap unit called '" << getName() << "' has been destroyed." 
+	std::cout << "\t[ScavTrap destructor called] The ScavTrap unit called '" 
+			  << getName() << "' has been destroyed." 
 			  << std::endl;
 }
 
@@ -52,7 +54,8 @@ ScavTrap::ScavTrap( const std::string &name ) : ClapTrap(name) {
 	_hitPoints = 100;
 	_energyPoints = 50;
 	_attackDamage = 20;
-	std::cout << "\tA ScavTrap unit called '" << _name << "' has been constructed."
+	std::cout << "\t[ScavTrap constructor overload called] A ScavTrap unit called '" 
+			  << _name << "' has been constructed."
 			  << std::endl;
 }
 
@@ -67,6 +70,7 @@ void 	ScavTrap::attack( const std::string& target ) {
 	if (getEnergyPoints() <= 0) {
 		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
 				  << std::endl;
+		guardGate();
 		display_score(getName(), getHitPoints(), getEnergyPoints());
 	} else {
 	
@@ -83,11 +87,11 @@ void 	ScavTrap::attack( const std::string& target ) {
 			std::cout << getName() << " attacks " << target << ", causing " 
 					<< getAttackDamage() << " points of damage!"
 					<< std::endl;
-			display_score(getName(), getHitPoints(), getEnergyPoints());			
+			display_score(getName(), getHitPoints(), getEnergyPoints());	
 		}
 	}
 }
 
 void	ScavTrap::guardGate(void) {
-	std::cout << "ScavTrap " << getName() << " is now in Gate keeper mode." << std::endl;
+		std::cout << getName() << " is now in Gate keeper mode." << std::endl;
 }

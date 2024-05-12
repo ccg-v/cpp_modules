@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 14:36:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:54:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	display_score( std::string name, int hitPoints, int energyPoints);
 //	Default constructor
 ClapTrap::ClapTrap( void ) 
 	: _name("Default_ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << "\tDefault ClapTrap constructor has been called."
+	std::cout << "\t[ClapTrap constructor called] Default ClapTrap constructor has been called."
 			  << std::endl;
 };
 
@@ -33,7 +33,8 @@ ClapTrap::ClapTrap( const ClapTrap &source ) {
 
 //	Default destructor
 ClapTrap::~ClapTrap( void ) {
-	std::cout << "\tThe ClapTrap unit called '" << getName() << "' has been destroyed." 
+	std::cout << "\t[Claptrap destructor called] The ClapTrap unit called '" << getName() 
+			  << "' has been destroyed." 
 			  << std::endl;
 }
 
@@ -52,7 +53,8 @@ ClapTrap	&ClapTrap::operator=( const ClapTrap &source ) {
 
 ClapTrap::ClapTrap( const std::string& name )
 	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << "\tA ClapTrap unit called '" << _name << "' has been constructed."
+	std::cout << "\t[ClapTrap constructor overload called] A ClapTrap unit called '" 
+			  << _name << "' has been constructed."
 			  << std::endl;
 }
 

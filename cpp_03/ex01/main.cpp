@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 14:38:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:52:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int main(void) {
     ClapTrap    ClapTrap(Player1);
     ScavTrap    ScavTrap(Player2);
 
+	std::cout << std::endl;
 	std::cout << "Clap hit points / energy points / attack damage: "
 			  << ClapTrap.getHitPoints() << "\t" << ClapTrap.getEnergyPoints() << "\t" << ClapTrap.getAttackDamage() 
 			  << std::endl;
@@ -93,6 +94,12 @@ int main(void) {
         std::cout << winner << " won the battle!!!" << std::endl;
         std::cout << std::endl;
     }
-    
+	
+	// Set ScavTrap in Guard mode if winner
+	if (winner == Player2) {
+		ScavTrap.guardGate();
+		std::cout << std::endl;
+	}
+
     return 0;
 }
