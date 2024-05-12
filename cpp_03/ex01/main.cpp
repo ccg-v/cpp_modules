@@ -6,25 +6,29 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 13:36:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:38:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
 
-// int main( void ) {
-// 	ScavTrap a;
+/* 	This main simulates a battle between a ClapTrap and a ScavTrap. Due to the 
+	subject requirements the attackDamage of boths fighters must be constant, so
+	it will always be 0 for ClapTrap and 20 for ScavTrap. Thus, the combat will
+	always be the same: ClapTrap will never hurt ScavTrap, while ScavTrap will 
+	kill ClapTrap with one sole attack (ClapTrap's has just 10 hit points).
 
-// 	return 0;
-// }
+	To make it more real, I have added a 'dice()' function that randomly assigns
+	a value from 0 to 6 to 'attackDamage' in each attack. If 'attackDamage' is 0
+	or 6 no damage is caused to enemy, but at least value 6 allows the attacker 
+	to repair himself.
 
-/* In case you want to see a real battle simulation, we need to set a random
-	number to attackDamage instead of the constant mandatory value. This means:
+	To enable this kind of combat simulation:
 	
-	1. In ClapTrap, replace constant 'attackDamage' value 0 with a call to 'dice()'
-		function ('ClapTrap.cpp' line 109)
-	2. In ScavTrap, replace constant 'attackDamage' value 20 with a call to 'dice()'
-		function ('ScavTrap.cpp' line 72)
+	1. In ClapTrap's 'attack()' function, replace constant 'attackDamage' 
+		value 0 with a call to 'dice()' function ('ClapTrap.cpp' line 109)
+	2. In ScavTrap's 'attack()' function, replace constant 'attackDamage' 
+		value 20 with a call to 'dice()' function ('ScavTrap.cpp' line 73)
 */
 
 int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2 ) {

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 13:36:38 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:36:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ ScavTrap::ScavTrap( const std::string &name ) : ClapTrap(name) {
 
 /* --- Member functions ----------------------------------------------------- */
 
+//	To follow the subject and keep the ClapTrap attackDamage value constant, 
+//	set 'attackDamage' to 20.
+//	To simulate a battle, assign to 'attackDamage' the result returned by
+//	'dice()' function, that is, a random integer from 0 to 6
 void 	ScavTrap::attack( const std::string& target ) {
 
 	if (getEnergyPoints() <= 0) {
@@ -65,10 +69,7 @@ void 	ScavTrap::attack( const std::string& target ) {
 				  << std::endl;
 		display_score(getName(), getHitPoints(), getEnergyPoints());
 	} else {
-		//	To follow the subject and keep the ClapTrap attackDamage value constant, 
-		//	set 'attackDamage' to 20.
-		//	To simulate a battle, assign to 'attackDamage' the result returned by
-		//	'dice()' function, that is, a random integer from 0 to 6	
+	
 		int	attackDamage = 20;	//	<- replace HERE!!!
 		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage
 				  << std::endl;

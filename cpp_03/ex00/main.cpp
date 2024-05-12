@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:48:49 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 14:16:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:39:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 	'attackDamage' is 0 or 6 no damage is caused to enemy, but at least
 	value 6 allows the attacker to repair himself.  
 	
-	To enable this kind of combat simulation, in 'ClapTrap.cpp' file replace 
+	To enable this kind of combat simulation, in 'attack()' function replace 
 	the mandatory constant value of 'attackDamage' (0) with a call to 'dice()'
 	(line 103 of 'ClapTrap.cpp' file)
 
