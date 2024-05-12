@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 19:53:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:58:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void 	ScavTrap::attack( const std::string& target ) {
 			std::cout << getName() << " attacks " << target << ", causing " 
 					<< getAttackDamage() << " points of damage!"
 					<< std::endl;
-			display_score(getName(), getHitPoints(), getEnergyPoints());	
+			display_score(getName(), getHitPoints(), getEnergyPoints());Gate	
 		}
 	}
 }
