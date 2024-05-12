@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:27:42 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/09 23:18:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:09:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 class ClapTrap
 {
-private:
+protected:
 	std::string	_name;
 	int			_hitPoints;		// ClapTrap's health in battle
 	int			_energyPoints;	// Energy for repairing/attacking (cost: 1 point/each)

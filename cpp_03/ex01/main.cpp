@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/09 23:58:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:36:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 // 	return 0;
 // }
 
-/* In case you want to see a real battle simulation, uncomment the following main
-    and don't forget to uncomment the following in 'ClapTrap.cpp' file:
-
-    1. The dice() function in 'ClapTrap.cpp' file 
-    2. The line that prints the result of the dice roll (line 101)
+/* In case you want to see a real battle simulation, we need to set a random
+	number to attackDamage instead of the constant mandatory value. This means:
+	
+	1. In ClapTrap, replace constant 'attackDamage' value 0 with a call to 'dice()'
+		function ('ClapTrap.cpp' line 109)
+	2. In ScavTrap, replace constant 'attackDamage' value 20 with a call to 'dice()'
+		function ('ScavTrap.cpp' line 72)
 */
 
 int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2 ) {
@@ -41,16 +43,16 @@ int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2
 
 int main(void) {
 
-	std::string Player1 = "Clappy";
-	std::string Player2 = "Scavy";
+	std::string Player1 = "Clap";
+	std::string Player2 = "Scav";
     std::string winner;
     ClapTrap    ClapTrap(Player1);
     ScavTrap    ScavTrap(Player2);
 
-	std::cout << "Clappy hit points / energy points / attack damage: "
+	std::cout << "Clap hit points / energy points / attack damage: "
 			  << ClapTrap.getHitPoints() << "\t" << ClapTrap.getEnergyPoints() << "\t" << ClapTrap.getAttackDamage() 
 			  << std::endl;
-	std::cout << "Scavvy hit points / energy points / attack damage: "
+	std::cout << "Scav hit points / energy points / attack damage: "
 			  << ScavTrap.getHitPoints() << "\t" << ScavTrap.getEnergyPoints() << "\t" << ScavTrap.getAttackDamage() 
 			  << std::endl;
 

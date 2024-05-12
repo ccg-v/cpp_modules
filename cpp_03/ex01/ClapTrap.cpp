@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/09 23:31:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:35:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	ClapTrap::setHitPoints( int hitPoints) {
 	this->_hitPoints = hitPoints;
 };
 
-void	ClapTrap::setEnergyPoints( int hitPoints) {
-	this->_hitPoints = hitPoints;
+void	ClapTrap::setEnergyPoints( int energyPoints) {
+	this->_energyPoints = energyPoints;
 };
 
 void	ClapTrap::setAttackDamage( int attackDamage ) {
@@ -99,17 +99,22 @@ void 	ClapTrap::attack( const std::string& target ) {
 	if (this->_energyPoints <= 0) {
 		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
 				  << std::endl;
+		display_score(getName(), getHitPoints(), getEnergyPoints());
 	} else {
 
-		int	dice_roll = dice();
-		std::cout << "Turn for " << getName() <<", dice roll is " << dice_roll 
+		//	To follow the subject and keep the ClapTrap attackDamage value constant, 
+		//	set 'attackDamage' to 0.
+		//	To simulate a battle, assign to 'attackDamage' the result returned by
+		//	'dice()' function, that is, a random integer from 0 to 6	
+		int	attackDamage = 0;	//	<-- replace HERE!!
+		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage 
 				  << std::endl;
 
-		if(dice_roll == 6) {
+		if(attackDamage == 6) {
 			beRepaired(10);
 			setAttackDamage(0);
 		} else {
-			setAttackDamage(dice_roll);
+			setAttackDamage(attackDamage);
 			this->_energyPoints = this->_energyPoints - 1;
 			std::cout << getName() << " attacks " << target << ", causing " 
 					<< getAttackDamage() << " points of damage!"
@@ -152,7 +157,6 @@ int	ClapTrap::dice( void ) {
     int random_number = dis(gen);
 	
 	return random_number;
-	// return 0;
 }
 
 void	ClapTrap::display_score( std::string name, int hitPoints, int energyPoints) {
