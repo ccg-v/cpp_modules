@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/09 14:32:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:20:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ int	ClapTrap::getAttackDamage ( void ) {
 
 /* --- Member functions ----------------------------------------------------- */
 
+//	To follow the subject and keep the ClapTrap attackDamage value constant, 
+//	set 'attackDamage' to 0.
+//	To simulate a battle, assign to 'attackDamage' the result returned by
+//	'dice()' function, that is, a random integer from 0 to 6
 void 	ClapTrap::attack( const std::string& target ) {
 
 	if (this->_energyPoints <= 0) {
@@ -97,15 +101,15 @@ void 	ClapTrap::attack( const std::string& target ) {
 				  << std::endl;
 	} else {
 
-		int	dice_roll = dice();
-		// std::cout << "Turn for " << getName() <<", dice roll is " << dice_roll 
-		// 		  << std::endl;
+		int	attackDamage = 0;	//	<- replace HERE!!!
+		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage 
+				  << std::endl;
 
-		if(dice_roll == 6) {
+		if(attackDamage == 6) {
 			beRepaired(10);
 			setAttackDamage(0);
 		} else {
-			setAttackDamage(dice_roll);
+			setAttackDamage(attackDamage);
 			this->_energyPoints = this->_energyPoints - 1;
 			std::cout << getName() << " attacks " << target << ", causing " 
 					<< getAttackDamage() << " points of damage!"
@@ -141,14 +145,13 @@ void	ClapTrap::beRepaired( unsigned int amount ) {
 
 int	dice( void ) {
 	
-	// std::random_device rd;
-    // std::mt19937 gen(rd());
-    // std::uniform_int_distribution<> dis(0, 6);
+	std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 6);
 
-    // int random_number = dis(gen);
+    int random_number = dis(gen);
 	
-	// return random_number;
-	return 0;
+	return random_number;
 }
 
 void	display_score( std::string name, int hitPoints, int energyPoints) {
