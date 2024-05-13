@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:59:45 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 23:48:54 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:30:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 
-class DiamondTrap : public ScavTrap, public FragTrap	// (1)
+class DiamondTrap : public virtual ScavTrap, public virtual FragTrap	// (1)
 {
 private:
 	std::string	_name;
+	
 public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 	
 	DiamondTrap( void );								//	Default constructor
-	DiamondTrap( const DiamondTrap &source );				//	Copy constructor
+	DiamondTrap( const DiamondTrap &source );			//	Copy constructor
 	DiamondTrap &operator=( const DiamondTrap &source );	//	Copy assignment operator
 	~DiamondTrap( void );								//	Default destructor
 	

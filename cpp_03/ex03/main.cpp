@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/13 00:51:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:43:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,46 +47,61 @@ int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2
 
 int main(void) {
 
-	std::string Player1 = "Clap";
-	std::string Player2 = "Diamond";
+	std::string Player1 = "Diam";
+	std::string Player2 = "Frag";
     std::string winner;
-    ClapTrap    ClapTrap(Player1);
-    DiamondTrap   DiamondTrap(Player2);
+    DiamondTrap	DiamondTrap(Player1);
+    FragTrap	FragTrap(Player2);
+
+	std::string Player3 = "Scav";
+	ScavTrap	ScavTrap(Player3);
+	std::string Player4 = "Clap";
+	ClapTrap	ClapTrap(Player4);
 
 	std::cout << std::endl;
-	std::cout << getName() << " hit points / energy points / attack damage: "
+
+	std::cout << ClapTrap.getName() << " hit points / energy points / attack damage: "
 			  << ClapTrap.getHitPoints() << "\t" << ClapTrap.getEnergyPoints() << "\t" << ClapTrap.getAttackDamage() 
 			  << std::endl;
-	std::cout << getName() << " hit points / energy points / attack damage: "
-			  << DiamondTrap.getHitPoints() << "\t" << DiamondTrap.getEnergyPoints() << "\t" << DiamondTrap.getAttackDamage() 
+	std::cout << ScavTrap.getName() << " hit points / energy points / attack damage: "
+			  << ScavTrap.getHitPoints() << "\t" << ScavTrap.getEnergyPoints() << "\t" << ScavTrap.getAttackDamage() 
 			  << std::endl;
 
-    while (ClapTrap.getHitPoints() > 0 && DiamondTrap.getHitPoints() > 0) {
+	std::cout << DiamondTrap.getName() << " hit points / energy points / attack damage: "
+			  << DiamondTrap.getHitPoints() << "\t" << DiamondTrap.getEnergyPoints() << "\t" << DiamondTrap.getAttackDamage() 
+			  << std::endl;
+	std::cout << FragTrap.getName() << " hit points / energy points / attack damage: "
+			  << FragTrap.getHitPoints() << "\t" << FragTrap.getEnergyPoints() << "\t" << FragTrap.getAttackDamage() 
+			  << std::endl;
+	return 0;
+
+
+    while (FragTrap.getHitPoints() > 0 && DiamondTrap.getHitPoints() > 0) {
         
         // Player1's turn
-        if (checkPointsLevels(ClapTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
-                ClapTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
+        if (checkPointsLevels(FragTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
+                FragTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
             break;
 
         std::cout << std::endl;
-        ClapTrap.attack(Player2);
-        DiamondTrap.takeDamage(ClapTrap.getAttackDamage());
+        DiamondTrap.attack(Player2);
+        FragTrap.takeDamage(DiamondTrap.getAttackDamage());
 
         // Player2's turn
-        if (checkPointsLevels(ClapTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
-                ClapTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
+        if (checkPointsLevels(FragTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
+                FragTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
             break;
 
         std::cout << std::endl;
-        DiamondTrap.attack(Player1);
-        ClapTrap.takeDamage(DiamondTrap.getAttackDamage());
+        FragTrap.attack(Player1);
+        DiamondTrap.takeDamage(FragTrap.getAttackDamage());
     }
 
     // Find winner's name after battle (loop) ends
-    if (ClapTrap.getHitPoints() <= 0 && DiamondTrap.getHitPoints() > 0)
+    if (FragTrap.getHitPoints() <= 0 && DiamondTrap.getHitPoints() > 0)
         winner = DiamondTrap.getName();
-    else if (DiamondTrap.getHitPoints() <= 0 && ClapTrap.getHitPoints() > 0)
-        winner = ClapTrap.getName();
+    else if (DiamondTrap.getHitPoints() <= 0 && FragTrap.getHitPoints() > 0)
+        winner = FragTrap.getName();
     
     // Announce winner's name (only in case battle doesn't end in a draw)
     if (winner != "") {
@@ -96,7 +111,7 @@ int main(void) {
     }
 	
 	// Set DiamondTrap in Guard mode if winner
-	if (winner == Player2) {
+	if (winner == Player1) {
 		DiamondTrap.whoAmI();
 		std::cout << std::endl;
 	}
