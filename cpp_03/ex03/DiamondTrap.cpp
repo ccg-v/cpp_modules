@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/13 23:47:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/14 23:53:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
-DiamondTrap::DiamondTrap( void ) : ClapTrap() {
+DiamondTrap::DiamondTrap( void ) : ClapTrap("Default"), ScavTrap(), FragTrap() {
 	_name = "Default_DiamondTrap";
 	_hitPoints = FragTrap::_hitPoints;
 	_energyPoints = ScavTrap::_energyPoints;
@@ -51,11 +51,11 @@ DiamondTrap &DiamondTrap::operator=( const DiamondTrap &source ) {
 
 /* --- Constructor overload ------------------------------------------------- */
 
-DiamondTrap::DiamondTrap( const std::string &name ) : ClapTrap(name) {
-	ClapTrap::_name = name + "_clap_name";
+DiamondTrap::DiamondTrap( const std::string &name ) : ClapTrap(name), ScavTrap(), FragTrap() {
+	// ClapTrap::_name = name + "_clap_name";
 	_name = name;
-	_hitPoints = FragTrap::_hitPoints;
 	_energyPoints = ScavTrap::_energyPoints;
+	_hitPoints = FragTrap::_hitPoints;
 	_attackDamage = FragTrap::_attackDamage;
 	std::cout << "\t[DiamondTrap constructor overload called] A DiamondTrap unit called '" 
 			  << this->_name << "' has been constructed."
@@ -65,11 +65,11 @@ DiamondTrap::DiamondTrap( const std::string &name ) : ClapTrap(name) {
 /* --- Member functions ----------------------------------------------------- */
 
 void	DiamondTrap::attack( const std::string &target ) {
-	FragTrap::attack(target);
+	ScavTrap::attack(target);
 }
 
 void	DiamondTrap::whoAmI(void) {
-	std::cout <<  getName() << " says: Listen to me! I am " << _name 
-			  << ", my ClapTrap name is " << ClapTrap::_name << " and I am invincible!!!!!" 
+	std::cout <<  getName() << " says: I am " << _name 
+			  << "and my ClapTrap name is " << ClapTrap::_name
 			  << std::endl;
 }

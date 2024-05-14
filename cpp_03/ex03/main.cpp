@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/13 21:43:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:36:24 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ int main(void) {
 
 	std::string Player1 = "Diam";
 	std::string Player2 = "Frag";
-    std::string winner;
-    DiamondTrap	DiamondTrap(Player1);
-    FragTrap	FragTrap(Player2);
-
 	std::string Player3 = "Scav";
-	ScavTrap	ScavTrap(Player3);
 	std::string Player4 = "Clap";
+    std::string winner;
+
 	ClapTrap	ClapTrap(Player4);
+	ScavTrap	ScavTrap(Player3);
+    FragTrap	FragTrap(Player2);
+	DiamondTrap	DiamondTrap(Player1);
 
 	std::cout << std::endl;
 
@@ -67,14 +67,14 @@ int main(void) {
 			  << ScavTrap.getHitPoints() << "\t" << ScavTrap.getEnergyPoints() << "\t" << ScavTrap.getAttackDamage() 
 			  << std::endl;
 
-	std::cout << DiamondTrap.getName() << " hit points / energy points / attack damage: "
-			  << DiamondTrap.getHitPoints() << "\t" << DiamondTrap.getEnergyPoints() << "\t" << DiamondTrap.getAttackDamage() 
-			  << std::endl;
 	std::cout << FragTrap.getName() << " hit points / energy points / attack damage: "
 			  << FragTrap.getHitPoints() << "\t" << FragTrap.getEnergyPoints() << "\t" << FragTrap.getAttackDamage() 
 			  << std::endl;
-	return 0;
-
+	std::cout << DiamondTrap.getName() << " hit points / energy points / attack damage: "
+			  << DiamondTrap.getHitPoints() << "\t" << DiamondTrap.getEnergyPoints() << "\t" << DiamondTrap.getAttackDamage() 
+			  << std::endl;
+			  	
+return 0;
 
     while (FragTrap.getHitPoints() > 0 && DiamondTrap.getHitPoints() > 0) {
         

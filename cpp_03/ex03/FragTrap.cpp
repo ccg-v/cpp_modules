@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 20:47:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/14 23:26:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 //	Default constructor
 FragTrap::FragTrap( void ) : ClapTrap() {
-	_hitPoints = 100;
-	_energyPoints = 100;
-	_attackDamage = 30;
+	_hitPoints = 444;
+	_energyPoints = 555;
+	_attackDamage = 666;
 	std::cout << "[FragTrap constructor called] Default FragTrap constructor has been called." 
 			  << std::endl;
 }
@@ -51,9 +51,9 @@ FragTrap &FragTrap::operator=( const FragTrap &source ) {
 /* --- Constructor overload ------------------------------------------------- */
 
 FragTrap::FragTrap( const std::string &name ) : ClapTrap(name) {
-	_hitPoints = 100;
-	_energyPoints = 100;
-	_attackDamage = 30;
+	_hitPoints = 777;
+	_energyPoints = 888;
+	_attackDamage = 999;
 	std::cout << "\t[FragTrap constructor overload called] A FragTrap unit called '" 
 			  << _name << "' has been constructed."
 			  << std::endl;
