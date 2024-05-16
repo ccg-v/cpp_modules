@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/14 23:53:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:55:36 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ DiamondTrap::DiamondTrap( void ) : ClapTrap("Default"), ScavTrap(), FragTrap() {
 	_hitPoints = FragTrap::_hitPoints;
 	_energyPoints = ScavTrap::_energyPoints;
 	_attackDamage = FragTrap::_attackDamage;
-	std::cout << "[DiamondTrap constructor called] Default DiamondTrap constructor has been called." 
+	std::cout << "\t[DiamondTrap constructor called] Default DiamondTrap constructor has been called." 
 			  << std::endl;
 }
 
@@ -52,10 +52,9 @@ DiamondTrap &DiamondTrap::operator=( const DiamondTrap &source ) {
 /* --- Constructor overload ------------------------------------------------- */
 
 DiamondTrap::DiamondTrap( const std::string &name ) : ClapTrap(name), ScavTrap(), FragTrap() {
-	// ClapTrap::_name = name + "_clap_name";
 	_name = name;
-	_energyPoints = ScavTrap::_energyPoints;
 	_hitPoints = FragTrap::_hitPoints;
+	_energyPoints = ScavTrap::_energyPoints;
 	_attackDamage = FragTrap::_attackDamage;
 	std::cout << "\t[DiamondTrap constructor overload called] A DiamondTrap unit called '" 
 			  << this->_name << "' has been constructed."
@@ -68,8 +67,12 @@ void	DiamondTrap::attack( const std::string &target ) {
 	ScavTrap::attack(target);
 }
 
-void	DiamondTrap::whoAmI(void) {
-	std::cout <<  getName() << " says: I am " << _name 
-			  << "and my ClapTrap name is " << ClapTrap::_name
+std::string	DiamondTrap::getClapTrapName( void ) {
+	return ClapTrap::getName() + "_clap_name";
+}
+
+void	DiamondTrap::whoAmI( void ) {
+	std::cout <<  "Who am I, you ask? I am " << _name
+			  << " and my ClapTrap name is " << getClapTrapName()
 			  << std::endl;
 }

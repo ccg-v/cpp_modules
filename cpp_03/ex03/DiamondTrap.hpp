@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:59:45 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/14 23:53:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:49:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 
-class DiamondTrap : public ScavTrap, public FragTrap	// (1)
+class DiamondTrap : public virtual ScavTrap, public virtual FragTrap	// (1)
 {
 private:
 	std::string	_name;
@@ -35,8 +35,9 @@ public:
 
 	/* --- Member functions ------------------------------------------------- */
 
-	void 	attack( const std::string &target );
-	void 	whoAmI( void );	
+	void 		attack( const std::string &target );
+	std::string	getClapTrapName( void );
+	void 		whoAmI( void );	
 };
 
 #endif

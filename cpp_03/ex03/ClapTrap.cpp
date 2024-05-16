@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 20:47:54 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:19:34 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ int	ClapTrap::getAttackDamage ( void ) const {
 
 /* --- Member functions ----------------------------------------------------- */
 
-//	To follow the subject and keep the ClapTrap attackDamage value constant, 
-//	set 'attackDamage' to 0.
 //	To simulate a battle, assign to 'attackDamage' the result returned by
 //	'dice()' function, that is, a random integer from 0 to 6
 void 	ClapTrap::attack( const std::string& target ) {
@@ -108,12 +106,12 @@ void 	ClapTrap::attack( const std::string& target ) {
 		display_score(getName(), getHitPoints(), getEnergyPoints());
 	} else {
 	
-		int	attackDamage = 0;	//	<-- replace HERE!!
-		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage 
+		int	attackDamage = getAttackDamage();	//	<-- replace HERE!!
+		std::cout << ", attackDamage is " << attackDamage 
 				  << std::endl;
 
 		if(attackDamage == 6) {
-			beRepaired(10);
+			beRepaired(getHitPoints());
 			setAttackDamage(0);
 		} else {
 			setAttackDamage(attackDamage);

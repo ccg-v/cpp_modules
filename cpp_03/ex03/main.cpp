@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/14 21:36:24 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:54:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,24 @@ int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2
 
 int main(void) {
 
-	std::string Player1 = "Diam";
-	std::string Player2 = "Frag";
-	std::string Player3 = "Scav";
-	std::string Player4 = "Clap";
+	std::string Player1 = "Clap";
+	std::string Player2 = "Scav";
+	std::string Player3 = "Frag";
+	std::string Player4 = "Diam";
     std::string winner;
 
-	ClapTrap	ClapTrap(Player4);
-	ScavTrap	ScavTrap(Player3);
-    FragTrap	FragTrap(Player2);
-	DiamondTrap	DiamondTrap(Player1);
+	ClapTrap	ClapTrap(Player1);
+	ScavTrap	ScavTrap(Player2);
+    FragTrap	FragTrap(Player3);
+	DiamondTrap	DiamondTrap(Player4);
 
 	std::cout << std::endl;
 
 	std::cout << ClapTrap.getName() << " hit points / energy points / attack damage: "
 			  << ClapTrap.getHitPoints() << "\t" << ClapTrap.getEnergyPoints() << "\t" << ClapTrap.getAttackDamage() 
 			  << std::endl;
+
+
 	std::cout << ScavTrap.getName() << " hit points / energy points / attack damage: "
 			  << ScavTrap.getHitPoints() << "\t" << ScavTrap.getEnergyPoints() << "\t" << ScavTrap.getAttackDamage() 
 			  << std::endl;
@@ -70,30 +72,49 @@ int main(void) {
 	std::cout << FragTrap.getName() << " hit points / energy points / attack damage: "
 			  << FragTrap.getHitPoints() << "\t" << FragTrap.getEnergyPoints() << "\t" << FragTrap.getAttackDamage() 
 			  << std::endl;
+
 	std::cout << DiamondTrap.getName() << " hit points / energy points / attack damage: "
 			  << DiamondTrap.getHitPoints() << "\t" << DiamondTrap.getEnergyPoints() << "\t" << DiamondTrap.getAttackDamage() 
 			  << std::endl;
-			  	
-return 0;
+
+	// // Accessing base class variables from derived class to show that the values have been replaced
+	// std::cout << std::endl;
+	// std::cout << DiamondTrap.ClapTrap::getName() << " hit points / energy points / attack damage: "
+	// 		  << DiamondTrap.ClapTrap::getHitPoints() << "\t" << DiamondTrap.ClapTrap::getEnergyPoints() << "\t" << DiamondTrap.ClapTrap::getAttackDamage() 
+	// 		  << std::endl;
+
+	// std::cout << DiamondTrap.ScavTrap::getName() << " hit points / energy points / attack damage: "
+	// 		  << DiamondTrap.ScavTrap::getHitPoints() << "\t" << DiamondTrap.ScavTrap::getEnergyPoints() << "\t" << DiamondTrap.ScavTrap::getAttackDamage() 
+	// 		  << std::endl;
+
+	// std::cout << DiamondTrap.FragTrap::getName() << " hit points / energy points / attack damage: "
+	// 		  << DiamondTrap.FragTrap::getHitPoints() << "\t" << DiamondTrap.FragTrap::getEnergyPoints() << "\t" << DiamondTrap.FragTrap::getAttackDamage() 
+	// 		  << std::endl;	
+
+	// std::cout << DiamondTrap.getName() << " hit points / energy points / attack damage: "
+	// 		  << DiamondTrap.FragTrap::getHitPoints() << "\t" << DiamondTrap.ScavTrap::getEnergyPoints() << "\t" << DiamondTrap.FragTrap::getAttackDamage() 
+	// 		  << std::endl;
+
+// return 0;
 
     while (FragTrap.getHitPoints() > 0 && DiamondTrap.getHitPoints() > 0) {
         
         // Player1's turn
         if (checkPointsLevels(FragTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
-                FragTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
+                FragTrap.getEnergyPoints(), DiamondTrap.ScavTrap::getEnergyPoints()) < 0)
             break;
 
         std::cout << std::endl;
-        DiamondTrap.attack(Player2);
+        DiamondTrap.attack(Player3);
         FragTrap.takeDamage(DiamondTrap.getAttackDamage());
 
         // Player2's turn
         if (checkPointsLevels(FragTrap.getHitPoints(), DiamondTrap.getHitPoints(), 
-                FragTrap.getEnergyPoints(), DiamondTrap.getEnergyPoints()) < 0)
+                FragTrap.getEnergyPoints(), DiamondTrap.ScavTrap::getEnergyPoints()) < 0)
             break;
 
         std::cout << std::endl;
-        FragTrap.attack(Player1);
+        FragTrap.attack(Player4);
         DiamondTrap.takeDamage(FragTrap.getAttackDamage());
     }
 
@@ -110,11 +131,12 @@ return 0;
         std::cout << std::endl;
     }
 	
-	// Set DiamondTrap in Guard mode if winner
-	if (winner == Player1) {
-		DiamondTrap.whoAmI();
-		std::cout << std::endl;
-	}
-
+	// Display the ClapTrap's personal messages
+	// ScavTrap.guardGate();
+	DiamondTrap.ScavTrap::guardGate();
+	// FragTrap.highFivesGuys();
+	DiamondTrap.FragTrap::highFivesGuys();
+	DiamondTrap.whoAmI();
+	
     return 0;
 }
