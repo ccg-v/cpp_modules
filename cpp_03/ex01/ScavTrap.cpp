@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 19:58:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:25:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,35 @@ ScavTrap::ScavTrap( const std::string &name ) : ClapTrap(name) {
 //	set 'attackDamage' to 20.
 //	To simulate a battle, assign to 'attackDamage' the result returned by
 //	'dice()' function, that is, a random integer from 0 to 6
-void 	ScavTrap::attack( const std::string& target ) {
+// void 	ScavTrap::attack( const std::string& target ) {
 
-	if (getEnergyPoints() <= 0) {
-		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
-				  << std::endl;
-		guardGate();
-		display_score(getName(), getHitPoints(), getEnergyPoints());
-	} else {
+// 	if (getEnergyPoints() <= 0) {
+// 		std::cout << getName() << " ran out of energy, he can't either attack or repair himself!"
+// 				  << std::endl;
+// 		guardGate();
+// 		display_score(getName(), getHitPoints(), getEnergyPoints());
+// 	} else {
 	
-		int	attackDamage = 20;	//	<- replace HERE!!!
-		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage
-				  << std::endl;
+// 		int	attackDamage = 20;	//	<- replace HERE!!!
+// 		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage
+// 				  << std::endl;
 
-		if(attackDamage == 6) {
-			beRepaired(100);
-			setAttackDamage(0);
-		} else {
-			setAttackDamage(attackDamage);
-			setEnergyPoints(getEnergyPoints() - 1);
-			std::cout << getName() << " attacks " << target << ", causing " 
-					<< getAttackDamage() << " points of damage!"
-					<< std::endl;
-			display_score(getName(), getHitPoints(), getEnergyPoints());Gate	
-		}
-	}
+// 		if(attackDamage == 6) {
+// 			beRepaired(100);
+// 			setAttackDamage(0);
+// 		} else {
+// 			setAttackDamage(attackDamage);
+// 			setEnergyPoints(getEnergyPoints() - 1);
+// 			std::cout << getName() << " attacks " << target << ", causing " 
+// 					<< getAttackDamage() << " points of damage!"
+// 					<< std::endl;
+// 			display_score(getName(), getHitPoints(), getEnergyPoints());Gate	
+// 		}
+// 	}
+// }
+
+void 	ScavTrap::attack( const std::string& target ) {
+	ClapTrap::attack( target );
 }
 
 void	ScavTrap::guardGate(void) {

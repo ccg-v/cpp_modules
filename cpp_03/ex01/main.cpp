@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 19:52:17 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:23:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,9 @@
 	or 6 no damage is caused to enemy, but at least value 6 allows the attacker 
 	to repair himself.
 
-	To enable this kind of combat simulation:
-	
-	1. In ClapTrap's 'attack()' function, replace constant 'attackDamage' 
-		value 0 with a call to 'dice()' function ('ClapTrap.cpp' line 109)
-	2. In ScavTrap's 'attack()' function, replace constant 'attackDamage' 
-		value 20 with a call to 'dice()' function ('ScavTrap.cpp' line 73)
+	To enable this kind of combat simulation, in ClapTrap.cpp 'attack()' function 
+	make sure you replace the getter 'getAttackDamage()' with a call to 'dice()' 
+	function (ClapTrap.cpp file, line 111)
 */
 
 int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2 ) {
