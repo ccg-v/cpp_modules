@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 20:45:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:13:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int main(void) {
     FragTrap    FragTrap(Player2);
 
 	std::cout << std::endl;
-	std::cout << "Clap hit points / energy points / attack damage: "
+	std::cout << ClapTrap.getName() << " hit points / energy points / attack damage: "
 			  << ClapTrap.getHitPoints() << "\t" << ClapTrap.getEnergyPoints() << "\t" << ClapTrap.getAttackDamage() 
 			  << std::endl;
-	std::cout << "Scav hit points / energy points / attack damage: "
+	std::cout << FragTrap.getName() << " hit points / energy points / attack damage: "
 			  << FragTrap.getHitPoints() << "\t" << FragTrap.getEnergyPoints() << "\t" << FragTrap.getAttackDamage() 
 			  << std::endl;
 
