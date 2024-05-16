@@ -6,29 +6,25 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:53:15 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/17 00:54:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:04:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
-/* 	This main simulates a battle between a ClapTrap and a FragTrap. Due to the 
-	subject requirements the attackDamage of boths fighters must be constant, so
-	it will always be 0 for ClapTrap and 20 for FragTrap. Thus, the combat will
-	always be the same: ClapTrap will never hurt FragTrap, while FragTrap will 
-	kill ClapTrap with one sole attack (ClapTrap's has just 10 hit points).
+/* 	This main simulates a battle between two different ClapTrap types. Due to 
+	subject requirements the attackDamage of boths fighters must be constant. 
+	Thus, the combat will always be the same, lasting until the weaker claptrap 
+	runs out of hit points.
 
 	To make it more real, I have added a 'dice()' function that randomly assigns
 	a value from 0 to 6 to 'attackDamage' in each attack. If 'attackDamage' is 0
 	or 6 no damage is caused to enemy, but at least value 6 allows the attacker 
 	to repair himself.
 
-	To enable this kind of combat simulation:
-	
-	1. In ClapTrap's 'attack()' function, replace constant 'attackDamage' 
-		value 0 with a call to 'dice()' function ('ClapTrap.cpp' line 109)
-	2. In FragTrap's 'attack()' function, replace constant 'attackDamage' 
-		value 30 with a call to 'dice()' function ('FragTrap.cpp' line 73)
+	To enable this kind of combat simulation, in ClapTrap.cpp 'attack()' function 
+	make sure you replace the getter 'getAttackDamage()' with a call to 'dice()' 
+	function (ClapTrap.cpp file, line 109)
 */
 
 int checkPointsLevels ( int hitPts1, int hitPts2, int energyPts1, int energyPts2 ) {
