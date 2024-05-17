@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/16 23:57:23 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:09:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ FragTrap::FragTrap( const std::string &name ) : ClapTrap(name) {
 /* --- Member functions ----------------------------------------------------- */
 
 void 	FragTrap::attack( const std::string& target ) {
-	std::cout << "Turn for " << getName();
 	ClapTrap::attack( target );
 }
 
