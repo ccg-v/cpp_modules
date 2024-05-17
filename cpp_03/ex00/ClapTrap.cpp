@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 10:45:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/12 14:41:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:46:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ void 	ClapTrap::attack( const std::string& target ) {
 				  << std::endl;
 	} else {
 
-		int	attackDamage = 0;	//	<- replace HERE!!!
+		int	attackDamage = dice();	//	<- replace HERE!!!
 		std::cout << "Turn for " << getName() <<", attackDamage is " << attackDamage 
 				  << std::endl;
 
 		if(attackDamage == 6) {
-			beRepaired(10);
+			beRepaired(getHitPoints());
 			setAttackDamage(0);
 		} else {
 			setAttackDamage(attackDamage);
