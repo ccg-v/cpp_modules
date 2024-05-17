@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 23:23:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/17 19:42:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:00:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ ScavTrap::ScavTrap( const std::string &name ) : ClapTrap(name) {
 /* --- Member functions ----------------------------------------------------- */
 
 void 	ScavTrap::attack( const std::string& target ) {
-	std::cout << "Turn for " << getName() << std::endl;
 	ClapTrap::attack( target );
 }
 
