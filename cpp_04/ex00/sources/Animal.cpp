@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 21:43:57 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/18 01:37:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:08:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
-Animal::Animal( void ) : _type("Default") {
+Animal::Animal( void ) : _type("Undefined") {
 	std::cout << "\t[Animal default constructor called]" << std::endl;
 };
 
@@ -54,3 +54,9 @@ Animal::Animal ( const std::string &type ) : _type(type) {
 std::string	Animal::getType( void ) {
 	return _type;
 };
+
+/* --- Methods -------------------------------------------------------------- */
+
+void Animal::makeSound( std::string sound) {
+	std::cout << getType() << " says: " << sound << std::endl;
+}

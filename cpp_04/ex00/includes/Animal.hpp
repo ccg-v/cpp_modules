@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 21:35:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/18 01:24:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:22:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@ public:
 
 	/* --- Accessors -------------------------------------------------------- */
 
-	std::string	getType( void );
+	std::string	getType( void ) const;
+
+	/* --- Methods ---------------------------------------------------------- */
+
+	virtual void	makeSound(std::string sound) const;	//	(1)
 };
 
 #endif
+
+/*	(1)	Declaring the function as 'virtual' makes the class an 'abstract class'.
+ *		This will require derived classes to provide their own implementation of
+ *		the function (derived classes will have to override the virtual methods)
+ */
