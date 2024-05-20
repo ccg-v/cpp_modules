@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/19 21:39:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:35:36 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ Dog::~Dog( void ) {
 /* --- Member methods ------------------------------------------------------- */
 
 void	Dog::makeSound( void ) const {
-	std::cout << getType () << " barks: 'Woof, woof!'" << std::endl;
+	std::cout << "\t" << getType () << " barks: 'Woof, woof!'" << std::endl;
 }

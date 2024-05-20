@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 02:17:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:35:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ Cat::~Cat( void ) {
 /* --- Member methods ------------------------------------------------------- */
 
 void	Cat::makeSound( void ) const {
-	std::cout << getType () << " meows: 'Meeeeeow!'" << std::endl;
+	std::cout << "\t" << getType () << " meows: 'Meeeeeow!'" << std::endl;
 }

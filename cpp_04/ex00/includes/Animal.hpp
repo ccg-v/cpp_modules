@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 21:35:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 01:21:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:08:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 	Animal( void );								//	Default constructor
 	Animal( const Animal &source);				//	Copy constructor
 	Animal &operator=( const Animal &source );	//	Operator assignment overload
-	virtual ~Animal( void );					//	Default destructor
+	virtual ~Animal( void );					//	Default destructor	(2)
 
 	
 	/* --- Constructor overload --------------------------------------------- */
@@ -47,4 +47,9 @@ public:
 /*	(1)	Declaring the function as 'virtual' makes the class an 'abstract class'.
  *		This will require derived classes to provide their own implementation of
  *		the function (derived classes will have to override the virtual methods)
+ *
+ * 	(2)	Declaring the base class destructor as 'virtual' allows to delete derived
+ * 		class objects through base class pointers and do proper clean up. If we
+ * 		don't set it as 'virtual', the derived class destructor will not be called,
+ * 		thus the object will not be properly cleaned.
  */
