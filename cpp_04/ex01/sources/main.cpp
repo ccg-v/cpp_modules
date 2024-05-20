@@ -6,13 +6,12 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 00:45:23 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 12:30:54 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 23:26:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 #include "Cat.hpp"
-#include "WrongCat.hpp"
 
 int	main( void ) {
 	std::cout << std::endl << "Creating Animal objects:" << std::endl << std::endl;
@@ -29,17 +28,6 @@ int	main( void ) {
 	delete c;	//	(1)
 	delete b;
 	delete a;
-
-	std::cout << std::endl << "Creating WrongAnimal objects:" << std::endl << std::endl;
-	const WrongAnimal *d = new WrongAnimal();
-	const WrongAnimal *e = new WrongCat();
-
-	std::cout << std::endl << "Testing WrongAnimal objects:" << std::endl << std::endl;
-	d->makeSound(); // will output the default WrongAnimal sound
-	e->makeSound();	// will ALSO output the default WrongAnimal sound
-	std::cout << std::endl << "Deleting WrongAnimal objects:" << std::endl << std::endl;
-	delete e;
-	delete d;
 
 	return 0;
 }
