@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   WrongCat.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:31:19 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/19 21:28:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 01:29:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-# define DOG_HPP
+#ifndef WRONGCAT_HPP
+# define WRONGCAT_HPP
 
-#include "Animal.hpp"
+#include "WrongAnimal.hpp"
 
-class	Dog : public Animal {
+class	WrongCat : public WrongAnimal {
 
 public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 
-	Dog( void );						//	Default constructor
-	Dog( const Dog &source);			//	Copy constructor
-	Dog &operator=( const Dog &source);	//	Operator assignment overload
-	~Dog( void );						//	Default destructor
+	WrongCat( void );								//	Default constructor
+	WrongCat( const WrongCat &source);				//	Copy constructor
+	WrongCat &operator=( const WrongCat &source);	//	Operator assignment overload
+	~WrongCat( void );								//	Default destructor
 
 	/* --- Constructor overload --------------------------------------------- */
 
-	// Dog( const std::string &type );
+	// WrongCat( const std::string &type );
 
 	/* --- Methods ---------------------------------------------------------- */
 	void	makeSound( void ) const;

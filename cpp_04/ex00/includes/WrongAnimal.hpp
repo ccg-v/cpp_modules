@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   wrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 21:35:50 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 01:21:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 01:22:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-# define ANIMAL_HPP
+#ifndef WRONGANIMAL_HPP
+# define WRONGANIMAL_HPP
 
 #include <iostream>
 
-class Animal
+class WrongAnimal
 {
 protected:
 	std::string _type;
@@ -23,15 +23,15 @@ protected:
 public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 
-	Animal( void );								//	Default constructor
-	Animal( const Animal &source);				//	Copy constructor
-	Animal &operator=( const Animal &source );	//	Operator assignment overload
-	virtual ~Animal( void );					//	Default destructor
+	WrongAnimal( void );									//	Default constructor
+	WrongAnimal( const WrongAnimal &source);				//	Copy constructor
+	WrongAnimal &operator=( const WrongAnimal &source );	//	Operator assignment overload
+	~WrongAnimal( void );									//	Default destructor
 
 	
 	/* --- Constructor overload --------------------------------------------- */
 
-	Animal( const std::string &type );
+	WrongAnimal( const std::string &type );
 
 	/* --- Accessors -------------------------------------------------------- */
 
@@ -39,12 +39,12 @@ public:
 
 	/* --- Methods ---------------------------------------------------------- */
 
-	virtual void	makeSound( void ) const;	//	(1)
+	void	makeSound( void ) const;	//	(1)
 };
 
 #endif
 
-/*	(1)	Declaring the function as 'virtual' makes the class an 'abstract class'.
- *		This will require derived classes to provide their own implementation of
- *		the function (derived classes will have to override the virtual methods)
+/*	(1)	In this case the function is 'non-virtual'. This means any derived
+ *		class will inherit the base's function implementation, losing any
+ *		chance to override it
  */

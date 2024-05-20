@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Cat.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:31:19 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/19 21:28:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/20 00:19:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-# define DOG_HPP
+#ifndef CAT_HPP
+# define CAT_HPP
 
 #include "Animal.hpp"
 
-class	Dog : public Animal {
+class	Cat : public Animal {
 
 public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 
-	Dog( void );						//	Default constructor
-	Dog( const Dog &source);			//	Copy constructor
-	Dog &operator=( const Dog &source);	//	Operator assignment overload
-	~Dog( void );						//	Default destructor
+	Cat( void );						//	Default constructor
+	Cat( const Cat &source);			//	Copy constructor
+	Cat &operator=( const Cat &source);	//	Operator assignment overload
+	~Cat( void );						//	Default destructor
 
 	/* --- Constructor overload --------------------------------------------- */
 
-	// Dog( const std::string &type );
+	// Cat( const std::string &type );
 
 	/* --- Methods ---------------------------------------------------------- */
 	void	makeSound( void ) const;
