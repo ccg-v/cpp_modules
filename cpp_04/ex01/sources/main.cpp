@@ -6,23 +6,36 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 00:45:23 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 23:26:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 00:33:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 #include "Cat.hpp"
 
+int	countIdeas( std::string ideas_arr) {
+	return sizeof(ideas_arr) / sizeof(ideas_arr[0]);
+}
+
+
 int	main( void ) {
 	std::cout << std::endl << "Creating Animal objects:" << std::endl << std::endl;
 	const Animal *a = new Animal(); 
 	const Animal *b = new Dog();
 	const Animal *c = new Cat();
+	Cat *moon = new Cat();
 
 	std::cout << std::endl << "Testing Animal objects:" << std::endl << std::endl;
 	a->makeSound();	// will output the default animal sound
 	b->makeSound();	// will output the dog sound
 	c->makeSound();	// will output the cat sound
+
+	std::cout << moon->getType() << " moon's first idea is " << moon->getBrain()->getIdea(0)
+			  << std::endl;
+	const Cat *cCat = dynamic_cast<const Cat *>(c);
+	std::cout << cCat->getType() << " c's first idea is " << cCat->getBrain()->getIdea(1)
+			  << std::endl;
+	// std::cout << c->getType() << " c first idea is " << c->getBrain()->getIdea(0) << std::endl;
 
 	std::cout << std::endl << "Deleting Animal objects:" << std::endl << std::endl;
 	delete c;	//	(1)

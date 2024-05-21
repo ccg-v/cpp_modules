@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/21 00:10:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:31:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ Cat::~Cat( void ) {
 	std::cout << "\t[Cat default destructor called] " 
 			  << getType() << " has been destructed"
 			  << std::endl;
+}
+
+/* --- Accessors ------------------------------------------------------------ */
+
+Brain *Cat::getBrain( void ) const {
+	return _brain;
 }
 
 /* --- Member methods ------------------------------------------------------- */

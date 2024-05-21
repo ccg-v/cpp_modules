@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:31:19 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/21 00:02:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:31:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ public:
 	Cat &operator=( const Cat &source);	//	Operator assignment overload
 	~Cat( void );						//	Default destructor
 
+	/* --- Accessors -------------------------------------------------------- */
+
+	Brain *getBrain( void ) const;
+
 	/* --- Methods ---------------------------------------------------------- */
+	
 	void	makeSound( void ) const;
 
 };

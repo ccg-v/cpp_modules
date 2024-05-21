@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:51:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 23:27:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:12:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include "Animal.hpp"
 
 class Brain {
-
-private:
-	std::string	_ideas[100];
 	
 public:
 	/* --- Orthodox Canonical Form ------------------------------------------ */
@@ -30,6 +27,18 @@ public:
 	Brain &operator=( const Brain &source);	//	Operator assignment overload
 	~Brain( void );							//	Default destructor
 
+	/* --- Accessors -------------------------------------------------------- */
+
+	std::string	const 	&getIdea( int index ) const;
+	void				setIdea( int index, std::string const &idea);
+
+	/* --- Static members --------------------------------------------------- */
+
+	static int const	nbr_ideas = 100;
+
+private:
+
+	std::string	_ideas[nbr_ideas];
 };
 
 #endif

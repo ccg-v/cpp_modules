@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:29:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 23:52:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:38:24 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,13 @@ Brain &Brain::operator=( const Brain &source ) {
 Brain::~Brain( void ) {
 	std::cout << "\t[Brain Destructor called]" << std::endl;
 };
+
+/* --- Accessors ------------------------------------------------------------ */
+
+std::string	const &Brain::getIdea( int index ) const {
+	return _ideas[index];
+}
+
+void	Brain::setIdea( int index, std::string const &idea) {
+	_ideas[index] = idea;
+}
