@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:29:55 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/22 20:12:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:32:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 //	Default constructor
 Brain::Brain( void ) {
 	std::cout << "\t[Brain Default Constructor called]" << std::endl;
-	std::stringstream ss;
+	std::stringstream ss("");
 	for (int i = 0; i < 100; i++) {
 		ss << i;	//	Append 'i' to the streamstring (but still remains as integer)
-		_ideas[i] = "idea_" + ss.str();	// Here stringstream is converted to string
+		std::string temp = ss.str();
+		_ideas[i] = "idea_" + temp;	// Here stringstream is converted to string
+		ss.str("");
 	}
 };
 

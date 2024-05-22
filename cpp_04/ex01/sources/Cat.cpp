@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/22 20:26:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:52:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ Cat &Cat::operator=( const Cat &source ) {
 	if (this == &source)
 		return *this;
 	_type = source._type;
+	_brain = new Brain(*source._brain);
 	return *this;
 }
 

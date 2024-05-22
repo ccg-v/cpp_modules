@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/22 20:27:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:39:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ Dog &Dog::operator=( const Dog &source ) {
 //	Default destructor
 Dog::~Dog( void ) {
 	delete _brain;
-	std::cout << "\t[Dog default destructor called]" 
+	std::cout << "\t[Dog default destructor called] " 
 			  << getType() << " has been destructed"
 			  << std::endl;
 }
