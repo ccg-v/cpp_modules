@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 00:45:23 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/22 14:15:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:23:57 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ int	main( void ) {
 	// const Cat *cCat = dynamic_cast<const Cat *>(c);
 	// std::cout << cCat->getType() << " c's first idea is " << cCat->getBrain()->getIdea(1)
 	// 		  << std::endl;
-	std::cout << dynamic_cast<const Cat *>(c)->getType() << " c's first idea is " << dynamic_cast<const Cat *>(c)->getBrain()->getIdea(1)
+	std::cout << dynamic_cast<const Cat *>(c)->getType() << " c's first idea is " 
+			  << dynamic_cast<const Cat *>(c)->getBrain()->getIdea(1)
 			  << std::endl;
+
+	
 
 	std::cout << std::endl << "Deleting Animal objects:" << std::endl << std::endl;
 	delete c;	//	(1)
