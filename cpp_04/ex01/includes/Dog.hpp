@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:31:19 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 23:58:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:45:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ public:
 	Dog &operator=( const Dog &source);	//	Operator assignment overload
 	~Dog( void );						//	Default destructor
 
+	/* --- Accessors -------------------------------------------------------- */
+
+	Brain	*getBrain( void ) const;
+
 	/* --- Methods ---------------------------------------------------------- */
+	
 	void	makeSound( void ) const;
 
 };

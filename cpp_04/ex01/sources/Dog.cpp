@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 21:43:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:27:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 //	Default constructor
 Dog::Dog( void ) : Animal("Dog") {
+	_type = "Dog";
+	_brain = new Brain;
 	std::cout << "\t[Dog default constructor called]" << std::endl;
 }
 
@@ -41,13 +43,11 @@ Dog::~Dog( void ) {
 			  << std::endl;
 }
 
-/* --- Constructor overload ------------------------------------------------- */
+/* --- Accessors ------------------------------------------------------------ */
 
-// Dog::Dog( const std::string &type) : Animal(type) {
-// 	std::cout << "[Dog overload constructor called]" 
-// 			  << getType() << " has been constructed"
-// 			  << std::endl;
-// }
+Brain	*Dog::getBrain( void ) const {
+	return _brain;
+}
 
 /* --- Member methods ------------------------------------------------------- */
 
