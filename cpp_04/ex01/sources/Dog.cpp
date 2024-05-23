@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/23 18:51:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:12:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form --------------------------------------------- */
 
 //	Default constructor
-Dog::Dog( void ) {	//	(1)
+Dog::Dog( void ) : Animal() {	//	(1)
 	std::cout << "\t[Dog default constructor called]" << std::endl;
 	_type = "Dog";
 	_brain = new Brain;
