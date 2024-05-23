@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/20 12:35:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:00:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 /* --- Orthodox Canonical Form --------------------------------------------- */
 
 //	Default constructor
-Cat::Cat( void ) : Animal("Cat") {
+Cat::Cat( void ) : Animal() {
 	std::cout << "\t[Cat default constructor called]" << std::endl;
+	_type = "Cat";
 }
 
 //	Copy constructor
@@ -39,14 +40,6 @@ Cat::~Cat( void ) {
 			  << getType() << " has been destructed"
 			  << std::endl;
 }
-
-/* --- Constructor overload ------------------------------------------------- */
-
-// Cat::Cat( const std::string &type) : Animal(type) {
-// 	std::cout << "[Cat overload constructor called]" 
-// 			  << getType() << " has been constructed"
-// 			  << std::endl;
-// }
 
 /* --- Member methods ------------------------------------------------------- */
 
