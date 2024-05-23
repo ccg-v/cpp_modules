@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 00:45:23 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/23 14:30:15 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:27:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include "Cat.hpp"
 
 #define NUMBER_OF_ANIMALS 4
+
+void	AnimalArrayTest();
+void	DeepCopyTest();
+
+int	main( void ) {
+	AnimalArrayTest();
+	DeepCopyTest();
+}
 
 void	AnimalArrayTest() {
 
@@ -52,85 +60,75 @@ void	displayIdeas( Dog *animalName ) {
 	std::cout << std::endl;	
 }
 
-void	BrainTest() {
+void	DeepCopyTest() {
 
 	std::cout << std::endl 
-			  << "/* --- Brain test ------------------------------------------------- */"
+			  << "/* --- Deep Copy test --------------------------------------------- */"
 			  << std::endl << std::endl;;
 
-	Dog *Snoopy = new Dog();
+	std::cout << std::endl << "Creating a new object..." << std::endl << std::endl;	
 
-	std::cout << std::endl << Snoopy->getType() << " Snoopy has " << Snoopy->getBrain()->nbr_ideas 
-			<< " ideas in his brain:" << std::endl << std::endl;
-	for (int i = 0; i < Snoopy->getBrain()->nbr_ideas; i++) {
-		std::cout << Snoopy->getBrain()->getIdea(i) << "\t"; 
+	Dog *Tapon = new Dog();
+
+	std::cout << std::endl << Tapon->getType() << " Tapon has been created with " 
+			<< Tapon->getBrain()->nbr_ideas << " ideas in his brain:" 
+			<< std::endl << std::endl;
+	for (int i = 0; i < Tapon->getBrain()->nbr_ideas; i++) {
+		std::cout << Tapon->getBrain()->getIdea(i) << "\t"; 
 	}
 	std::cout << std::endl;
 	std::cout << std::endl << "Let's train him a bit and see what he learned: " << std::endl;
-	Snoopy->getBrain()->setIdea(0, "Sit? Why should I?.");
-	Snoopy->getBrain()->setIdea(1, "Away, away? What do you mean?.");
-	Snoopy->getBrain()->setIdea(2, "Leave it? It's mine! I found it!!.");
-	displayIdeas( Snoopy );
+	Tapon->getBrain()->setIdea(0, "Sit? Why should I?.");
+	Tapon->getBrain()->setIdea(1, "Away, away? What do you mean?.");
+	Tapon->getBrain()->setIdea(2, "Leave it? It's mine! I found it!!.");
+	displayIdeas( Tapon );
 
-	std::cout << std::endl << "Make a copy of Snoopy to check that the ideas are inherited: "
+	std::cout << std::endl << "Make a copy of Tapon to check that the ideas are inherited: "
 			  << std::endl << std::endl;
-	Dog *SnoopyCopy = new Dog(*Snoopy);
-	displayIdeas( SnoopyCopy );
+	Dog *TaponCopy = new Dog(*Tapon);
+	displayIdeas( TaponCopy );
 
 	std::cout << std::endl;
-	std::cout << std::endl << "Some more training for Snoopy and see if he improves: " << std::endl;
-	Snoopy->getBrain()->setIdea(0, "I have to obey if I want that treat.");
-	Snoopy->getBrain()->setIdea(1, "I don't have to disturb humans when they are eating.");
-	Snoopy->getBrain()->setIdea(2, "I must not take everything I find on the ground.");	
-	displayIdeas( Snoopy );
+	std::cout << std::endl << "Some more training for Tapon and see if he improves: " << std::endl;
+	Tapon->getBrain()->setIdea(0, "I have to obey if I want that treat.");
+	Tapon->getBrain()->setIdea(1, "I don't have to disturb humans when they are eating.");
+	Tapon->getBrain()->setIdea(2, "I must not take everything I find on the ground.");	
+	displayIdeas( Tapon );
 
 	std::cout << std::endl;
 	std::cout << std::endl << "Check that the ideas of the copy haven't changed: " << std::endl;
-	displayIdeas( SnoopyCopy );
-	
+	displayIdeas( TaponCopy );
+
+	std::cout << std::endl;
+	std::cout << std::endl << "Delete objects: " << std::endl;
+	delete Tapon;
+	delete TaponCopy;
+
 }
-
-int	main( void ) {
-	AnimalArrayTest();
-	BrainTest();
-}
-
-// int	main( void ) {
-// 	std::cout << std::endl << "Creating Animal objects:" << std::endl << std::endl;
-// 	const Animal *Undefined = new Animal(); 
-// 	const Animal *Sun = new Dog();
-// 	Cat *Moon = new Cat();
-	
-
-// 	std::cout << std::endl << "Testing Animal objects:" << std::endl << std::endl;
-// 	Undefined->makeSound();	// will output the default animal sound
-// 	Moon->makeSound();	// will output the dog sound
-// 	Sun->makeSound();	// will output the cat sound
-
-// 	std::cout << Moon->getType() << " Moon's first idea is " << Moon->getBrain()->getIdea(0)
-// 			  << std::endl;
-// 	std::cout << dynamic_cast<const Dog *>(Sun)->getType() << " Sun's first idea is " 
-// 			  << dynamic_cast<const Dog *>(Sun)->getBrain()->getIdea(0)
-// 			  << std::endl;
-
-// 	std::cout << std::endl << "Deleting Animal objects:" << std::endl << std::endl;
-// 	delete Sun;	//	(1)
-// 	delete Moon;
-// 	delete Undefined;
-
-// 	return 0;
-// }
 
 /*
- *	(1)	The best practice is to delete objects in the reverse order of their 
- *		creation:
+ *	A Dog (or a Cat) can be created as an Animal:
  *
- *		- Dependency Management: If objects have dependencies (e.g., one object
- *			holds a pointer to another), deleting in reverse order ensures that
- *			dependent objects are deleted before the objects they depend on, 
- *			preventing access to invalid memory.
+ *		const Animal *Undefined = new Animal(); 
+ *		const Animal *Tapon = new Dog();
  *
- *		- Avoiding Dangling Pointers: By deleting in reverse order, you reduce 
- *			the risk of having pointers that reference already-deleted objects.
+ *	and it's members have to be called as usual:
+ *
+ * 		std::cout << Moon->getType() << " Moon's first idea is " << Moon->getBrain()->getIdea(0)
+ *			  	  << std::endl;
+ *
+ * 	But a Dog can also be straigthly instantiated:
+ *
+ *		Dog *Tapon = new Dog();
+ *
+ * 	In this case, to access its members we will need to downcast the object to tell the compiler
+ * 	which Animal are we talking about:
+ * 
+ * 		std::cout << dynamic_cast<const Dog *>(Sun)->getType() << " Sun's first idea is " 
+ * 				  << dynamic_cast<const Dog *>(Sun)->getBrain()->getIdea(0)
+ * 				  << std::endl;
+ * 
+ * 	Anyway, it's generally preferable to design your classes and interfaces in such a way that 
+ * 	you don't need to perform dynamic casts.
  */
 

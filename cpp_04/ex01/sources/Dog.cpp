@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/23 14:47:14 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:51:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ Dog::Dog( const Dog &source) : Animal(source) {
 //	Operator assignment overload
 Dog &Dog::operator=( const Dog &source ) {
 	std::cout << "\t[Dog copy assignment operator called]" << std::endl;	
-	if (this != &source)
-	{
+	if (this != &source) {
 		this->_type = source._type;
-		if (this->_brain != NULL)
-			delete this->_brain;
 		this->_brain = new Brain(*source._brain);
 	}
 	return (*this);

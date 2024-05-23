@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:31:19 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/22 18:30:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:26:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 	Cat( void );						//	Default constructor
 	Cat( const Cat &source);			//	Copy constructor
 	Cat &operator=( const Cat &source);	//	Operator assignment overload
-	~Cat( void );						//	Default destructor
+	virtual ~Cat( void );						//	Default destructor
 
 	/* --- Accessors -------------------------------------------------------- */
 
