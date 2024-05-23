@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:37:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/05/23 20:30:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:14:42 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form --------------------------------------------- */
 
 //	Default constructor	
-Cat::Cat( void ) {	//	(1)
+Cat::Cat( void ) : AAnimal() {	//	(1)
 	std::cout << "\t[Cat default constructor called]" << std::endl;
 	_type = "Cat";
 	_brain = new Brain;
