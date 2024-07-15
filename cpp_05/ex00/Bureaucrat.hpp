@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/15 23:04:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/16 00:20:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ class Bureaucrat {
 		Bureaucrat& operator=( const Bureaucrat& source );	// Copy assignment operator
 		~Bureaucrat ( void );								// Destructor
 
+		/* --- Constructor overload ----------------------------------------- */
+		
+
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
@@ -52,6 +55,10 @@ class Bureaucrat {
 		class 	GradeTooLowException;
 		
 };
+
+/* Non-member functions */
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
 
 #endif
 
