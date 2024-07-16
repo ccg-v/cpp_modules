@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/16 00:20:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:37:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,40 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
-# include <random>
+# include <string>
 
 class Bureaucrat {
 
 	private:
 
-		std::string const	_name;
+		const std::string	_name;
 		int					_grade;
 
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		Bureaucrat ( void );								// Default constructor
+		Bureaucrat ( std::string& name, int grade );		// Default constructor (2)
 		Bureaucrat ( const Bureaucrat& source );			// Copy constructor
 		Bureaucrat& operator=( const Bureaucrat& source );	// Copy assignment operator
 		~Bureaucrat ( void );								// Destructor
 
-		/* --- Constructor overload ----------------------------------------- */
-		
-
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
-		std::string	getName ( void ) const;	// (1)
-		int			getGrade ( void ) const;
+		const std::string&	getName () const;	// (1)
+		int					getGrade () const;
 
-		//	Setters
-		void		setName ( std::string name );
-		void		setGrade ( int grade );
+		//	Setters not needed, name should be constant and grade should be
+		//	modified only through increment/decrement
+		// void		setName ( std::string name );
+		// void		setGrade ( int grade );
 
 		/* --- Member functions --------------------------------------------- */
 		
-		void 	incrementGrade ( Bureaucrat _Bureaucrat );
-		void	decrementGrade ( Bureaucrat _Bureaucrat );
+		void 	incrementGrade ();
+		void	decrementGrade ();
 
-		/* --- Exceptions --------------------------------------------------- */
-		
+		//	Exceptions
 		class	GradeTooHighException;
 		class 	GradeTooLowException;
 		
@@ -93,4 +90,22 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
  * 		1. The function doesn't modify the Bureaucrat object.
  * 		2. It properly reflects that getName is just accessing data, not changing 
  * 			anything.
+ */
+
+/*
+ *	(2) Take/pass a string by value...?
+
+ *			Bureaucrat ( std::string name, int grade );
+ *			const std::string	getName () const;
+
+ *		...or by reference?
+
+ *			Bureaucrat ( std::string& name, int grade );
+ *			const std::string&	getName () const;
+ *
+ * 		By value a copy of the string is created when the function is called. If the
+ * 		string is long, copying it can be expensive in terms of time and memory.
+ * 		By reference no copy is made, saving time and memory.
+ * 			- Use pass-by-value for small, built-in types (like int, char, etc.).
+ *			- Use const reference for larger objects or user-defined types.
  */
