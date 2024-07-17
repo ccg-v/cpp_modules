@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/16 21:37:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:34:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ class Bureaucrat {
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		Bureaucrat ( std::string& name, int grade );		// Default constructor (2)
+		Bureaucrat ( );										// Default constructor (2)
 		Bureaucrat ( const Bureaucrat& source );			// Copy constructor
 		Bureaucrat& operator=( const Bureaucrat& source );	// Copy assignment operator
 		~Bureaucrat ( void );								// Destructor
 
+		Bureaucrat ( const std::string& name, int grade );	// Parametrized constructor
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
@@ -44,12 +45,19 @@ class Bureaucrat {
 
 		/* --- Member functions --------------------------------------------- */
 		
-		void 	incrementGrade ();
-		void	decrementGrade ();
+		void 	incrementGrade ( int grade );
+		void	decrementGrade ( int grade );
 
-		//	Exceptions
-		class	GradeTooHighException;
-		class 	GradeTooLowException;
+		//	Exceptions (3)
+    	class GradeTooHighException : public std::exception {
+    		public:
+        		virtual const char* what() const throw();
+    	};
+
+    	class GradeTooLowException : public std::exception {
+    		public:
+        		virtual const char* what() const throw();
+    	};
 		
 };
 
@@ -103,9 +111,37 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
  *			Bureaucrat ( std::string& name, int grade );
  *			const std::string&	getName () const;
  *
- * 		By value a copy of the string is created when the function is called. If the
- * 		string is long, copying it can be expensive in terms of time and memory.
+ * 		By value a copy of the string is created when the function is called. If
+ * 		the string is long, copying it can take too much time and memory.
  * 		By reference no copy is made, saving time and memory.
  * 			- Use pass-by-value for small, built-in types (like int, char, etc.).
  *			- Use const reference for larger objects or user-defined types.
+ */
+
+/*
+ *	(3) Exceptions in C++ are objects, not functions. They are designed to be
+ *		thrown and caught, carrying information about the error. Using classes
+ *		allows you to inherit from std::exception, which is the standard base
+ *		class forexceptions in C++. Classes can hold more information about the
+ *		error if needed.
+ *
+ *		1. public std::exception:
+ *			This is not a parameter, it's inheritance syntax.
+ *			It means your exception classes inherit from std::exception, which
+ *			is the standard base class for exceptions in C++. This inheritance
+ *			goes in the class declaration in the header file.
+ *
+ *		2. virtual keyword:
+ *			Used in the header to indicate that this function can be overridden
+ *			in derived classes. It's good practice when inheriting from 
+ *			std::exception.
+ *
+ * 		3. const throw():
+ *			const means the function doesn't modify the object.
+ *			throw() is a deprecated exception specification indicating the
+ *			function doesn't throw exceptions itself.
+ *
+ * 		In the .cpp file we will define the what() function for each exception
+ * 		class. In .cpp file the Bureaucrat:: prefix is necessary because these
+ * 		are nested classes.
  */

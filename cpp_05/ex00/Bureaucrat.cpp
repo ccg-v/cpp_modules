@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/17 00:20:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/18 00:22:57 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 /* --- Orthodox Canonical Form implementation ------------------------------- */
 
 //	Default constructor
-Bureaucrat::Bureaucrat ( std::string& name, int grade )
-	: _name("Unknown"), _grade(150) {
+Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 	std::cout << "Default constructor called" << std::endl;
 }
 
@@ -34,10 +33,10 @@ Bureaucrat::Bureaucrat ( const Bureaucrat& source ) {
 }
 
 //	Copy assignment operator
-Bureaucrat	&Bureaucrat::operator= ( const Bureaucrat& source ) {
+Bureaucrat	&Bureaucrat::operator=( const Bureaucrat& source ) {
 	if (this == &source)
 		return (*this);
-	this->_name = source._name;
+	// this->_name = source._name; // No name assignment because it is const
 	this->_grade = source._grade;
 	return (*this);
 }
@@ -46,6 +45,12 @@ Bureaucrat	&Bureaucrat::operator= ( const Bureaucrat& source ) {
 Bureaucrat::~Bureaucrat ( void ) {
 	std::cout << "Bureaucrat " << getName() << " destroyed by default destructor"
 			  << std::endl;
+}
+
+//	Parameterized constructor
+Bureaucrat::Bureaucrat ( const std::string& name, int grade )
+	: _name(name), _grade(grade) {
+	std::cout << "Parameterized constructor called" << std::endl;
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -60,29 +65,24 @@ int	Bureaucrat::getGrade() const {
 
 /* --- Member functions ----------------------------------------------------- */
 
-void	Bureaucrat::incrementGrade () {
-	if (this->_grade <= 150 && this->_grade > 1)
-		this->_grade++;
-	else
-		throw GradeTooLowException();
-}
-
-void	Bureaucrat::decrementGrade () {
-	if (this->_grade >= 1 && this->_grade < 150)
-		this->_grade--;
+void	Bureaucrat::incrementGrade (int grade) {
+	if ((_grade - grade) > 1)
+		this->_grade -= grade;
 	else
 		throw GradeTooHighException();
 }
 
-void	GradeTooHighException () {
-
+void	Bureaucrat::decrementGrade (int grade) {
+	if ((_grade + grade) < 150)
+		this->_grade += grade;
+	else
+		throw GradeTooLowException();
 }
 
-void Bureaucrat::safeIncrement() {
-    try {
-        this->incrementGrade();
-    } catch (const GradeTooHighException& e) {
-        std::cerr << "Cannot increment: " << e.what() << std::endl;
-    }
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+    return "Grade is too high";
 }
 
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+    return "Grade is too low";
+}
