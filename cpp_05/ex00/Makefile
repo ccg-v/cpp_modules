@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/07/18 00:23:49 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/07/18 21:31:57 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	bureaucrat.out
 
 # --- Compiler --------------------------------------------------------------- #
 CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98
 
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	Bureaucrat.cpp main.cpp 
