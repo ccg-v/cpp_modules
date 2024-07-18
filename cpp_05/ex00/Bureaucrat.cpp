@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/18 00:22:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:34:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ Bureaucrat::~Bureaucrat ( void ) {
 
 //	Parameterized constructor
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
-	: _name(name), _grade(grade) {
+	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
+	if (grade < 1)
+		throw GradeTooHighException();
+	else if (grade > 150)
+		throw GradeTooLowException();
+	_grade = grade;
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -85,4 +90,9 @@ const char* Bureaucrat::GradeTooHighException::what() const throw() {
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
     return "Grade is too low";
+}
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
+    os << b.getName() << ", bureaucrat grade " << b.getGrade();
+    return os;
 }
