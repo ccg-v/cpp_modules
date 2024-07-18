@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/17 23:34:10 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:09:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ class Bureaucrat {
 		int					getGrade () const;
 
 		//	Setters not needed, name should be constant and grade should be
-		//	modified only through increment/decrement
-		// void		setName ( std::string name );
-		// void		setGrade ( int grade );
+		//	modified only through increment()/decrement()
 
 		/* --- Member functions --------------------------------------------- */
 		
@@ -61,8 +59,9 @@ class Bureaucrat {
 		
 };
 
-/* Non-member functions */
+/* --- Non-member functions ------------------------------------------------- */
 
+//	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
 
 #endif

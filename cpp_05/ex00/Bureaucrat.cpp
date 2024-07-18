@@ -6,17 +6,9 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/18 20:34:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:54:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//	1. If class is written in OCF, do I have to define a default constructor 
-//		although it is not needed?
-//	2. Exception functions are classes or void functions?
-//	3. Correct name is 'copy assignment operator' or 'operator assignment overload'?
-//	4. Why copy assignment operator is different? Bureaucrat &Bureaucrat::(...) instead
-//		of Bureaucrat::Bureaucrat ()
-//	5. Semicolon trailing all OCF functions?
 
 #include "Bureaucrat.hpp"
 
@@ -84,6 +76,7 @@ void	Bureaucrat::decrementGrade (int grade) {
 		throw GradeTooLowException();
 }
 
+// Exceptions
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
     return "Grade is too high";
 }
@@ -92,6 +85,7 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
     return "Grade is too low";
 }
 
+//	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
     os << b.getName() << ", bureaucrat grade " << b.getGrade();
     return os;
