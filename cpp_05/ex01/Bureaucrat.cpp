@@ -6,11 +6,12 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/18 23:55:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/20 00:20:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 /* --- Orthodox Canonical Form implementation ------------------------------- */
 
@@ -76,6 +77,14 @@ void	Bureaucrat::decrementGrade (int grade) {
 		throw GradeTooLowException();
 }
 
+void	Bureaucrat::signForm (Form& form) {
+	if (form.getIsSigned() == true)
+		std::cout << "\t" << _name << " signed " << form.getFormName() << std::endl;
+	else
+		std::cout << "\t" << _name << " is not authorized to sign " 
+		<< form.getFormName() << std::endl;
+}
+
 // Exceptions
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
     return "Grade is too high";
@@ -87,6 +96,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-    os << b.getName() << ", bureaucrat grade " << b.getGrade();
+    os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
     return os;
 }
