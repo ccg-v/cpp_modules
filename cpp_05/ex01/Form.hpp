@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 13:27:36 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:56:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,29 @@ std::ostream& operator<<(std::ostream& os, const Form& f);
 #endif
 
 /*
- *	(1) Unlike Bureaucrat.hpp, where adding a forward declaration of Form.hpp
- *		was enough, here we need to include the full definition of the class
- *		because the forward declaration only tells the compiler that Bureaucrat
- *		is a class but it doesn't provide the full definition needed to use its
- *		methods. 
- */
+ *	(1) Including the Form.hpp header file in Bureaucrat.hpp is an alternative
+ *		to adding a forward declaration, and it would indeed make the Form class 
+ *		known to Bureaucrat. However, this approach can lead to circular 
+ *		dependencies if Form.hpp also includes Bureaucrat.hpp. To avoid this 
+ *		issue, the best practice is to use a forward declaration where possible,
+ *		especially when you only need to declare a pointer or reference to a class.
+ *
+ *		Here's the rationale:
+ *
+ *		Forward Declaration:
+ *			Use a forward declaration if you only need to refer to the class in
+ *			your header file (e.g., for method parameters, return types, or member
+ *			pointers/references). This avoids circular dependencies and can reduce
+ *			compile times because it prevents unnecessary inclusion of headers.
+ *
+ *		Including Headers:
+ *			Include the header file if you need the full definition of the class
+ *			in the header file (e.g., for member variables that are objects of
+ *			that class).
+ *
+ *		Given that signForm only needs a reference to Form, a forward declaration 
+ *		is sufficient and preferable. However, if you include Form.hpp, you need
+ *		to ensure it does not lead to circular dependencies.
+ *
+ * 		See opposite case in 'Bureaucrat.hpp' footnote (1).
+*/
