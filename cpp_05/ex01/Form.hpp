@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/19 23:55:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:27:36 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,12 @@ class	Form {
     	class GradeTooLowException : public std::exception {
     		public:
         		virtual const char* what() const throw();
-    	};				
+    	};
+
+    	class IsAlreadySignedException : public std::exception {
+    		public:
+        		virtual const char* what() const throw();
+    	};			
 };
 
 /* --- Non-member functions ------------------------------------------------- */

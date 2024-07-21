@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/20 00:20:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:20:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ Bureaucrat	&Bureaucrat::operator=( const Bureaucrat& source ) {
 
 //	Default destructor
 Bureaucrat::~Bureaucrat ( void ) {
-	std::cout << "Bureaucrat " << getName() << " destroyed by default destructor"
+	std::cout << "Bureaucrat " << this->getName() << " destroyed by default destructor"
 			  << std::endl;
 }
 
@@ -77,12 +77,18 @@ void	Bureaucrat::decrementGrade (int grade) {
 		throw GradeTooLowException();
 }
 
-void	Bureaucrat::signForm (Form& form) {
-	if (form.getIsSigned() == true)
-		std::cout << "\t" << _name << " signed " << form.getFormName() << std::endl;
-	else
-		std::cout << "\t" << _name << " is not authorized to sign " 
-		<< form.getFormName() << std::endl;
+void Bureaucrat::signForm(Form& form) {
+    try {
+        form.beSigned(*this);
+		std::cout << "\t" << _name << " (grade " << _grade << ") signed form "
+				  << form.getFormName() << " (grade " << form.getGradeToSign()
+				  << " needed)" << std::endl;
+    } catch (const std::exception& e) {
+		std::cout << "\t" << _name << " (grade " << _grade
+				  << ") couldn't sign form " << form.getFormName()
+				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
+				  << e.what() << std::endl;
+    }
 }
 
 // Exceptions
@@ -96,6 +102,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-    os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
+    os << "\t" << b.getName() << ", bureaucrat grade: " << b.getGrade();
     return os;
 }

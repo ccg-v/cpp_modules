@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/20 00:20:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:29:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,11 @@ int	Form::getGradeToExecute() const {
 /* --- Member functions ---------------------------------------------------- */	
 
 void	Form::beSigned ( Bureaucrat bureaucrat ) {
-	std::cout << "\tOfficer grade = " << bureaucrat.getGrade() 
-		<< " : Grade needed to sign = " << this->getGradeToSign() << std::endl;
-	if (bureaucrat.getGrade() <= this->getGradeToSign())
-		this->_isSigned = true;
-	else
+	if (_isSigned == true)
+		throw IsAlreadySignedException();
+	if (bureaucrat.getGrade() > getGradeToSign())
 		throw GradeTooLowException();
+	_isSigned = true;
 }
 
 //	Exceptions
@@ -95,11 +94,13 @@ const char* Form::GradeTooLowException::what() const throw() {
     return "Grade is too low";
 }
 
+const char* Form::IsAlreadySignedException::what() const throw() {
+    return "Form is already signed";
+}
+
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Form& f) {
-    // os << f.getFormName() << " couldn't sign form " << f.getFormName() 
-	// 	<< ": officer is not authorized" << std::endl;
-    os << "\tForm: " << f.getFormName() << ", Signed: " << f.getIsSigned()
+    os << "\tForm " << f.getFormName() << ", Signed: " << f.getIsSigned()
        << ", Grade to Sign: " << f.getGradeToSign()
        << ", Grade to Execute: " << f.getGradeToExecute();
     return os;
