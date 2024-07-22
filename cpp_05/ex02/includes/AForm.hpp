@@ -6,16 +6,37 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 20:21:12 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:12:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
- *	In this exercise, the abstract base class (AForm) ensures that all forms 
- *	(ShrubberyCreationForm, RobotomyRequestForm, and PresidentialPardonForm)
- *	implement the execute method. This provides a clear contract that any 
- *	concrete form must follow, thus enabling polymorphism and ensuring
- *	consistency in how forms are handled.
+ *	AForm class must be abstract. This means that:
+ *
+ *		- 	It cannot be instantiated directly.
+ *		- 	It is designed to be a base class.
+ *		-	It typically contains at least one pure virtual function.
+ *
+ * 	Virtual Function:
+ * 
+ *		-	Declared with the keyword virtual.
+ *		-	CAN BE OVERRIDEN IN DERIVED CLASSES.
+ *		-	Enables polymorphism.
+ *
+ *	Pure Virtual Function:
+ *
+ *		-	Declared with virtual and assigned = 0.	<--- !!!
+ *		-	MUST BE OVERRIDEN IN DERIVED CLASSES.
+ *		-	Makes the class abstract.
+ *
+ *	Virtual Destructor in Base Class:
+
+ *		By declaring the destructor in the base class as virtual, it ensures that
+ *		when delete is called on a pointer to the base class, the destructor of
+ *		the derived class is also invoked. This allows for proper cleanup of
+ *		resources allocated by the derived class.
+ *		With a virtual destructor, the destructors are called in the correct order:
+ *		first the derived class's destructor, then the base class's destructor.
  */
 
 #ifndef AFORM_HPP
@@ -41,7 +62,8 @@ class	AForm {
 		AForm ( );									//	Default constructor
 		AForm ( const AForm& source );				//	Copy constructor
 		AForm &operator=( const AForm& source );	//	Copy assignment operator
-		~AForm ( );									//	Default destructor
+		virtual ~AForm ( );							//	Default destructor
+
 		AForm ( const std::string& formName, const int gradeToSign,
 			const int gradeToExecute );			//	Parameterized constructor
 
@@ -55,7 +77,8 @@ class	AForm {
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void	beSigned ( Bureaucrat bureaucrat );
+		void			beSigned ( Bureaucrat bureaucrat );
+		virtual void	execute ( Bureaucrat const & executor ) const = 0;	// (2)
 
 		//	Exceptions (3)
     	class GradeTooHighException : public std::exception {
@@ -71,7 +94,8 @@ class	AForm {
     	class IsAlreadySignedException : public std::exception {
     		public:
         		virtual const char* what() const throw();
-    	};			
+    	};
+
 };
 
 /* --- Non-member functions ------------------------------------------------- */
@@ -108,3 +132,14 @@ std::ostream& operator<<(std::ostream& os, const AForm& f);
  *
  * 		See opposite case in 'Bureaucrat.hpp' footnote (1).
 */
+
+/*
+ *	(2)	virtual void	execute ( Bureaucrat const & executor ) const = 0;
+ *		
+ *		The first 'const' ensures that the executor object passed to the execute 
+ *		method cannot be modified, providing safety and clarity that the function
+ *		will not alter the state of the executor.
+ *
+ * 		The final 'const' indicates that the execute method does not modify the 
+ * 		object (or any of its member variables) on which it is called.
+ */
