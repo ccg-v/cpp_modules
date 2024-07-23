@@ -80,6 +80,14 @@ void	AForm::beSigned ( Bureaucrat bureaucrat ) {
 	_isSigned = true;
 }
 
+void	AForm::execute(Bureaucrat const & executor) const {
+	if (!this->getIsSigned())
+		throw IsNotSignedException();
+	if (executor.getGrade() > this->getGradeToExecute())
+		throw GradeTooLowException();
+	this->performAction();
+}
+
 //	Exceptions
 const char* AForm::GradeTooHighException::what() const throw() {
     return "Grade is too high";
@@ -90,7 +98,11 @@ const char* AForm::GradeTooLowException::what() const throw() {
 }
 
 const char* AForm::IsAlreadySignedException::what() const throw() {
-    return "AForm is already signed";
+    return "Form is already signed";
+}
+
+const char* AForm::IsNotSignedException::what() const throw() {
+    return "Form is not signed";
 }
 
 //	Insertion operator (<<) overload

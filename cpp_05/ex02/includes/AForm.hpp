@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/22 21:12:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:23:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
  *		-	Makes the class abstract.
  *
  *	Virtual Destructor in Base Class:
-
+ *
  *		By declaring the destructor in the base class as virtual, it ensures that
  *		when delete is called on a pointer to the base class, the destructor of
  *		the derived class is also invoked. This allows for proper cleanup of
@@ -77,8 +77,8 @@ class	AForm {
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void			beSigned ( Bureaucrat bureaucrat );
-		virtual void	execute ( Bureaucrat const & executor ) const = 0;	// (2)
+		void	beSigned ( Bureaucrat bureaucrat );
+		void	execute ( Bureaucrat const & executor ) const;	// (2)
 
 		//	Exceptions (3)
     	class GradeTooHighException : public std::exception {
@@ -96,6 +96,14 @@ class	AForm {
         		virtual const char* what() const throw();
     	};
 
+    	class IsNotSignedException : public std::exception {
+    		public:
+        		virtual const char* what() const throw();
+    	};
+
+	protected:
+
+		virtual void performAction() const = 0;	//	(3)
 };
 
 /* --- Non-member functions ------------------------------------------------- */
@@ -142,4 +150,15 @@ std::ostream& operator<<(std::ostream& os, const AForm& f);
  *
  * 		The final 'const' indicates that the execute method does not modify the 
  * 		object (or any of its member variables) on which it is called.
+ */
+
+/*
+ *	(3)	protected:
+ *			virtual void performAction() const = 0;
+ *
+ * 		- 'protected' to ensure that the function is only accessible within the
+ * 			class itself, its derived classes, and friends.
+ * 		- 'virtual' so that the function CAN be overriden in the derived classes
+ * 		- 'pure virtual' (' = 0') so that the function MUST be overriden in the 
+ * 			derived classes
  */

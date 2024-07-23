@@ -6,11 +6,15 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:21:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/23 00:47:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/24 00:27:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
+#include <iostream>
+#include <fstream>
+#include <cstdlib>	//	std::rand()
+#include <ctime>    // For std::time
 
 /* --- Orthodox Canonical Form implementation ------------------------------- */
 
@@ -40,6 +44,103 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationF
 ShrubberyCreationForm::~ShrubberyCreationForm() {
 	std::cout << "ShrubberyCreationForm default destructor called" << std::endl;
 }
+
+
+// Parameterized constructor
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
+    : AForm("ShrubberyCreationForm", 145, 137), _target(target) {
+    std::cout << "ShrubberyCreationForm parameterized constructor called" << std::endl;
+}
+
+
+/* --- Member functions ----------------------------------------------------- */
+
+void	ShrubberyCreationForm::performAction() const {
+	std::ofstream ofs((_target + "_shrubbery").c_str(), std::ios::app); // convert std::string to const *char
+	if (ofs) {
+		std::srand(std::time(0));
+		int	treeChoice = std::rand() % 3;
+		if (treeChoice == 0)
+			ofs << _tree1;
+		else if (treeChoice ==1)
+			ofs << _tree2;
+		else
+			ofs << _tree3;
+	}
+	ofs.close();
+}
+
+/* --- Static member variables initialization ------------------------------- */
+
+const std::string	ShrubberyCreationForm::_tree1 =
+	"\n"
+	"	                 ...\n"                  
+	"	         .....,,;:::,.',.\n"             
+	"	      .';cllllooooolc::cc;.\n"           
+	"	    .,:cooddxxxxxxkxdddoodlcc;'.\n"      
+	"	  .';::lloodxxxkkkOkkkkkkxkxxddl.\n"     
+	"	 .,:clccccllodxdoddoodkOOOOOOkxxo;\n"     
+	"	 .';:looooooddl:ldddddxxddxxxkkkkl'\n"    
+	"	..,;;:lcclloodllxxxxxxxxdxxxxxxxkdc,.\n"  
+	"	..,;;,;c:cllodxxkkxxkkdkkkOO0Oxccxd:'.\n"
+	"	  .....';:lc:lollooxOOkxddddkkd;''',,.\n"
+	"	      .,,,::.'cdddxdc;;cc:;'':l:.\n"     
+	"	      ........',ldd;\n"                  
+	"	                ,oo'\n"                  
+	"	                ;xd,\n"                  
+	"___|___..__|/_ ....ckkc.... __.__.||.____\n"
+	"\n";
+
+const std::string	ShrubberyCreationForm::_tree2 =
+	"\n"
+	"                     ...\n"                    
+	"                    ;oc'\n"                  
+	"                   .okko.\n"                 
+	"                   ;kkkk:\n"                 
+	"                   :kkkkl.\n"                
+	"                  .oxkkOd.\n"                
+	"                  ;xkkkkx;\n"                
+	"                  ;kOkkkk:\n"                
+	"                 .cxxkkkkc\n"                
+	"                 'dkxkkkkl.\n"               
+	"                 'dxxxxxko.\n"               
+	"                 ,xxxxkxxd'\n"               
+	"                 :xxkkkkkxl.\n"              
+	"                .dkxkkkkkkx;\n"              
+	"                .oxxxkkkxxxl.\n"             
+	"                ;ddxxxkkkxx:\n"              
+	"               .okxxkxxxxxx;\n"              
+	"               .oddxxxxxkkk:\n"              
+	"               .lddxxxxkkkd'\n"              
+	"               .oxxxxxxxxxo.\n"              
+	"               .oxxxxxxxxkl.\n"              
+	"               .okxxxxxxkkc\n"               
+	"                :kkxxkOOx:.\n"               
+	"                 :kOdool'v\n"                 
+	"                  .;,.\n"                    
+	"                    ..\n"                    
+	"                    ..\n"                    
+	"__.__..____|/______ .. ____.._.____|/____\n"
+	"\n";
+
+const std::string	ShrubberyCreationForm::_tree3 =
+	"\n"
+	"                  ..         .\n"          
+	"       ..'','...';:;'''''. .',,.\n"        
+	"      ';,:c:,.',col:;;,,,'.';::'.\n"       
+	"   ...,,;::lc;,;cdc;;;:;,;;;:c;,'.\n"      
+	"  ,::;,,,;ldxoc;;c:;:::;;:::cc:;;,.\n"     
+	" .;:;,''.,oxko;,;:c::cc;;:ccclc:cc;.\n"    
+	"  ',;,'..;oxxc;,,;:clc:;::c:clcccc:.\n"    
+	"  .,,,;;:lldkd:;clccooc:clllc::loc:,.\n"   
+	"  .;,:cccclxxl;:llcloolcodlol;:lodc:;.\n"  
+	"  .,';;,'.',;. .,;;looollc;::;;;:cc:,..\n" 
+	"  ......        ..':ldx:...........,..\n"  
+	"                  .cdkd.     .     ..\n"   
+	"                  .,ldx;\n"                
+	"                   .:coc.\n"               
+	"__..|/...___..______.....________/.___||_\n"
+	"\n";
 
 /*
  *	(1) Initialization list vs. Copy assignment (*this = source)
@@ -77,4 +178,28 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
  *	it is designed for reassigning an existing object's state. When used correctly, it is
  *	a safe and essential part of managing objects, especially when dealing with dynamic
  *	resources or complex states. 
+ */
+
+/*
+ *	(2) The std::string and char* (C-style strings) represent strings in C++ but in
+ *		different ways and with different features. Key differences:
+ *
+ *		1. Memory Management:
+ *
+ *		 - std::string manages its own memory, reducing the risk of memory-related errors.
+ *    	 - char* requires explicit memory management, increasing the risk of memory-related
+ * 				errors.
+ *
+ *		2. Functionality:
+ *
+ *		 - std::string has a rich set of member functions for string manipulation.
+ *		 - char* relies on C-style string manipulation functions, which are more limited
+ *				and prone to errors.
+ *
+ *		3. Safety:
+ *
+ *		 - std::string provides bounds checking and automatic memory management, making 
+ *				it safer.
+ *		 - char* does not provide bounds checking and requires manual memory management, 
+ *				making it more error-prone.
  */

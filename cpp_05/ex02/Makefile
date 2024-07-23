@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/07/21 20:12:43 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/07/24 00:24:40 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ INCLUDES	=	-I $(INC_DIR)
 
 # --- Files ------------------------------------------------------------------ #
 
-SRC_FILES	=	Bureaucrat.cpp AForm.cpp main.cpp 
+SRC_FILES	=	Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp main.cpp 
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o treated as literal strings
 DEP_FILES	=	$(SRC_FILES:.cpp=.d)	
 
@@ -64,6 +64,7 @@ $(NAME): $(OBJ) Makefile
 clean:
 	rm -f $(OBJ) $(DEP)
 	rm -rf $(OBJ_DIR)
+	rm -f *_shrubbery
 	
 fclean: clean
 	rm -f $(NAME) 
