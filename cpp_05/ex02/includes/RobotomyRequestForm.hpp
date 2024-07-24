@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:25:11 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/22 22:52:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:13:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ class	RobotomyRequestForm : public AForm {
 		//	Parameterized constructor
 		RobotomyRequestForm(const std::string & target);
 
+	protected:
+
 		/* --- Member functions --------------------------------------------- */
 	
-		void	execute(Bureaucrat const & executor) const;
+		void	performAction() const;
 };
 
 #endif

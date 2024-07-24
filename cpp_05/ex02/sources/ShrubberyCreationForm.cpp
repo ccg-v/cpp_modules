@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:21:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/24 00:27:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:32:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 	std::cout << "ShrubberyCreationForm default destructor called" << std::endl;
 }
 
+/* --- Parameterized constructor -------------------------------------------- */
 
-// Parameterized constructor
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
     : AForm("ShrubberyCreationForm", 145, 137), _target(target) {
     std::cout << "ShrubberyCreationForm parameterized constructor called" << std::endl;
@@ -68,26 +68,30 @@ void	ShrubberyCreationForm::performAction() const {
 			ofs << _tree3;
 	}
 	ofs.close();
+	std::cout << "\t" << _target << " ShrubberyCreationForm has been executed (grade "
+			  << getGradeToExecute() << " needed)" << std::endl;
+	std::cout << "\tPermission to create " << _target << " granted, check "
+			  << _target << "_shrubbery document" << std::endl;		  
 }
 
 /* --- Static member variables initialization ------------------------------- */
 
 const std::string	ShrubberyCreationForm::_tree1 =
 	"\n"
-	"	                 ...\n"                  
-	"	         .....,,;:::,.',.\n"             
-	"	      .';cllllooooolc::cc;.\n"           
-	"	    .,:cooddxxxxxxkxdddoodlcc;'.\n"      
-	"	  .';::lloodxxxkkkOkkkkkkxkxxddl.\n"     
-	"	 .,:clccccllodxdoddoodkOOOOOOkxxo;\n"     
-	"	 .';:looooooddl:ldddddxxddxxxkkkkl'\n"    
-	"	..,;;:lcclloodllxxxxxxxxdxxxxxxxkdc,.\n"  
-	"	..,;;,;c:cllodxxkkxxkkdkkkOO0Oxccxd:'.\n"
-	"	  .....';:lc:lollooxOOkxddddkkd;''',,.\n"
-	"	      .,,,::.'cdddxdc;;cc:;'':l:.\n"     
-	"	      ........',ldd;\n"                  
-	"	                ,oo'\n"                  
-	"	                ;xd,\n"                  
+	"                     ...\n"                  
+	"              .....,,;:::,.',.\n"             
+	"          .';cllllooooolc::cc;.\n"           
+	"       .,:cooddxxxxxxkxdddoodlcc;'.\n"      
+	"     .';::lloodxxxkkkOkkkkkkxkxxddl.\n"     
+	"    .,:clccccllodxdoddoodkOOOOOOkxxo;\n"     
+	"    .';:looooooddl:ldddddxxddxxxkkkkl'\n"    
+	"   ..,;;:lcclloodllxxxxxxxxdxxxxxxxkdc,.\n"  
+	"   ..,;;,;c:cllodxxkkxxkkdkkkOO0Oxccxd:'.\n"
+	"     .....';:lc:lollooxOOkxddddkkd;''',,.\n"
+	"         .,,,::.'cdddxdc;;cc:;'':l:.\n"     
+	"         ........',ldd;\n"                  
+	"                   ,oo'\n"                  
+	"                   ;xd,\n"                  
 	"___|___..__|/_ ....ckkc.... __.__.||.____\n"
 	"\n";
 
@@ -117,10 +121,10 @@ const std::string	ShrubberyCreationForm::_tree2 =
 	"               .okxxxxxxkkc\n"               
 	"                :kkxxkOOx:.\n"               
 	"                 :kOdool'v\n"                 
-	"                  .;,.\n"                    
-	"                    ..\n"                    
-	"                    ..\n"                    
-	"__.__..____|/______ .. ____.._.____|/____\n"
+	"                  .;,|\n"                    
+	"                    ||\n"                    
+	"                    :|\n"                    
+	"__.__..____|/______ || ____.._.____|/____\n"
 	"\n";
 
 const std::string	ShrubberyCreationForm::_tree3 =

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:24:59 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/22 22:51:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:14:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ class	PresidentialPardonForm : public AForm {
 		//	Parameterized constructor
 		PresidentialPardonForm( const std::string & target);
 
+	protected:
+
 		/* --- Member functions --------------------------------------------- */
 
-		void	execute(Bureaucrat const & executor) const;
+		void	performAction() const;
 };
 
 #endif

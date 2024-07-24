@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:25:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/23 21:17:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:20:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class ShrubberyCreationForm : public AForm {
 	
 		std::string _target;
 
-		//	Static member variables for tree designs
+		//	Static member variables for tree designs (1)
 		static const	std::string _tree1;
 		static const	std::string _tree2;
 		static const	std::string _tree3;
@@ -50,3 +50,15 @@ class ShrubberyCreationForm : public AForm {
 };
 
 #endif
+
+/*
+ *	(1)	Making the tree designs static ensures that these large, constant strings
+ *		are stored efficiently and shared across all instances of the class, 
+ *		maintaining data integrity and reducing memory usage.
+ *
+ *		Static member variables in a class are initialized before any objects of 
+ *		the class are created and are stored in a fixed location in memory. This
+ *		means that the tree designs are stored in their static variables when the 
+ *		program is compiled, and they are available before any instance of
+ *		ShrubberyCreationForm is created.
+ */

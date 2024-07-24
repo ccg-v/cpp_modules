@@ -81,11 +81,27 @@ void	AForm::beSigned ( Bureaucrat bureaucrat ) {
 }
 
 void	AForm::execute(Bureaucrat const & executor) const {
-	if (!this->getIsSigned())
-		throw IsNotSignedException();
-	if (executor.getGrade() > this->getGradeToExecute())
-		throw GradeTooLowException();
-	this->performAction();
+	try {
+		if (!this->getIsSigned())
+			throw IsNotSignedException();
+		if (executor.getGrade() > this->getGradeToExecute())
+		{
+			std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade()
+				  << ") couldn't sign form " << getFormName()
+				  << " (grade " << getGradeToExecute() << " needed)" << ": ";		
+			throw GradeTooLowException();
+		} 
+		std::cout << "\t" << executor.getName() <<  " (grade " << executor.getGrade()
+				  << ") executed form " << getFormName()
+				  << " (grade " << getGradeToExecute() << " needed)" << std::endl;
+		this->performAction();
+    } catch (const AForm::GradeTooLowException &e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const AForm::IsNotSignedException &e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 //	Exceptions
