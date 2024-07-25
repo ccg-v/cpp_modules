@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/07/24 23:52:37 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/07/25 20:33:52 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,12 @@ INCLUDES	=	-I $(INC_DIR)
 
 # --- Files ------------------------------------------------------------------ #
 
-SRC_FILES	=	Bureaucrat.cpp AForm.cpp main.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp
+SRC_FILES	=	Bureaucrat.cpp \
+				AForm.cpp \
+				main.cpp \
+				ShrubberyCreationForm.cpp \
+				RobotomyRequestForm.cpp \
+				PresidentialPardonForm.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o treated as literal strings
 DEP_FILES	=	$(SRC_FILES:.cpp=.d)	
 

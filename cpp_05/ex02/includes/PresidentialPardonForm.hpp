@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:24:59 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/24 21:14:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:06:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class	PresidentialPardonForm : public AForm {
 
 		std::string	_target;
 
-	private:
+	public:
 
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
