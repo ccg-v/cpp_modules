@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/28 21:03:38 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:16:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ Bureaucrat::~Bureaucrat ( void ) {
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
-	if (grade < 1)
-		throw GradeTooHighException();
-	else if (grade > 150)
-		throw GradeTooLowException();
-	_grade = grade;
+	try {
+		_grade = grade;
+		if (grade < 1)
+			throw GradeTooHighException();
+		else if (grade > 150)
+			throw GradeTooLowException();
+	} catch (const std::exception& e) {
+        std::cerr << "\tError creating bureaucrat " << name << " with grade "
+		<< grade << ": " << e.what() << std::endl;
+    }
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -89,6 +94,7 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-    os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
-    return os;
+	if (b.getGrade() > 0 && b.getGrade() <= 150)
+    	os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
+	return os;
 }
