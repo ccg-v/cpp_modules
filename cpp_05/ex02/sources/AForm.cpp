@@ -98,10 +98,6 @@ void	AForm::execute(Bureaucrat const & executor) const {
 				  << ") executed form " << getFormName()
 				  << " (grade " << getGradeToExecute() << " needed)" << std::endl;
 		this->performAction();
-    // } catch (const AForm::GradeTooLowException &e) {
-    //     std::cerr << e.what() << std::endl;
-    // } catch (const AForm::IsNotSignedException &e) {
-    //     std::cerr << "Caught exception: " << e.what() << std::endl;
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
     }

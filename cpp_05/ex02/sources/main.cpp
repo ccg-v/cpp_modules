@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/25 21:27:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 01:23:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int main() {
 
 /* --- Instances ------------------------------------------------------------ */
 
-    std::cout << std::endl;
-	std::cout << "/* --- Instances ----------------------------------------- /*"
-			  << std::endl << std::endl;
+    std::cout << std::endl
+		<< "/* --- Instances --------------------------------------------- /*\n"
+		<< std::endl;
 
 	std::cout << std::endl;
     std::cout << low_officer << std::endl;
@@ -42,9 +42,9 @@ int main() {
 
 /* --- ShrubberyCreationForm process ---------------------------------------- */
 
-    std::cout << std::endl;
-	std::cout << "/* --- ShrubberyCreationForm process (145, 137) ---------- /*"
-			  << std::endl << std::endl;
+    std::cout << std::endl
+		<< "/* --- ShrubberyCreationForm process (145, 137) -------------- /*\n"
+		<< std::endl;
 
 	low_officer.signForm(shrubbery_form);
 	medium_officer.signForm(shrubbery_form);
@@ -53,9 +53,9 @@ int main() {
 
 /* --- RobotomyRequestForm process ------------------------------------------ */
 
-    std::cout << std::endl;
-	std::cout << "/* --- RobotomyRequestForm process (72, 45) -------------- /*"
-	<< std::endl << std::endl;
+    std::cout << std::endl
+		<< "/* --- RobotomyRequestForm process (72, 45) ------------------ /*\n"
+		<< std::endl;
 
 	low_officer.signForm(robotomy_form);
 	medium_officer.signForm(robotomy_form);
@@ -66,9 +66,9 @@ int main() {
 
 /* --- PresidentialPardonForm process --------------------------------------- */
 
-    std::cout << std::endl;
-	std::cout << "/* --- PresidentialPardonForm process (25, 5) ------------ /*"
-	<< std::endl << std::endl;
+    std::cout << std::endl
+		<< "/* --- PresidentialPardonForm process (25, 5) ---------------- /*\n"
+		<< std::endl;
 
 	low_officer.signForm(pardon_form);
 	medium_officer.signForm(pardon_form);
