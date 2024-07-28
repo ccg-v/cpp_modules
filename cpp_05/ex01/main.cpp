@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/28 23:45:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:28:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main() {
 
     Bureaucrat b2("Carol", 120);
     std::cout << b2 << std::endl;
-    Form f2("F-110", 110, 50);
+    Form f2("F-90", 90, 50);
     std::cout << f2 << std::endl;
     b2.signForm(f2);
 
@@ -40,19 +40,18 @@ int main() {
 
 	Bureaucrat b3;
 	std::cout << b3 << std::endl;
-	Form f3("F-120", 120, 50);
+	Form f3("F-80", 80, 50);
 	std::cout << f3 << std::endl;
 	b3.signForm(f3);
 
 	std::cout << std::endl
-	<< "/* --- Default form attempt --------------------------------------- /*";
+	<< "/* --- Default form signature attempt ----------------------------- /*";
     std::cout << std::endl;
 
-	Bureaucrat b4("Paul", 50);
-	std::cout << b4 << std::endl;
+	std::cout << b2 << std::endl;
 	Form f4;
 	std::cout << f4 << std::endl;
-	b4.signForm(f4);
+	b2.signForm(f4);
 	std::cout << std::endl;
 
 	std::cout << std::endl
@@ -63,7 +62,7 @@ int main() {
 	std::cout << b5 << std::endl;
 	Bureaucrat b6("Alice",10);
 	std::cout << b6 << std::endl;
-	Form f5("F-130", 130, 50);
+	Form f5("F-70", 70, 50);
 	std::cout << f5 << std::endl;
 	b5.signForm(f5);
 	b6.signForm(f5);
@@ -74,12 +73,12 @@ int main() {
 	
 	Bureaucrat b7("Paul", 50);
 	std::cout << b7 << std::endl;
-	Form f6("F-140", 140, 50);
+	Form f6("F-60", 60, 50);
 	std::cout << f6 << std::endl;
-	Form f7("F-150", 150, 50);
+	Form f7("F-50", 50, 40);
 	std::cout << f7 << std::endl;
-	b5.signForm(f6);
-	b6.signForm(f7);
+	b7.signForm(f6);
+	b7.signForm(f7);
 
     std::cout << std::endl;	
     return 0;

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 13:29:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:30:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
-Form::Form () : _formName("Default"), _isSigned(false), _gradeToSign(100),
-				_gradeToExecute(50) {
+Form::Form () : _formName("Default"), _isSigned(false), _gradeToSign(150),
+				_gradeToExecute(150) {
 	std::cout << "Default form constructor called" << std::endl;
 }
 
@@ -78,8 +78,8 @@ int	Form::getGradeToExecute() const {
 /* --- Member functions ---------------------------------------------------- */	
 
 void	Form::beSigned ( Bureaucrat bureaucrat ) {
-	if (_isSigned == true)
-		throw IsAlreadySignedException();
+	// if (_isSigned == true)
+	// 	throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
 		throw GradeTooLowException();
 	_isSigned = true;
