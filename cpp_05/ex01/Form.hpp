@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 19:56:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:10:19 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ class	Form {
 
 		void	beSigned ( Bureaucrat bureaucrat );
 
-		//	Exceptions (3)
+		//	Exceptions (2)
     	class GradeTooHighException : public std::exception {
     		public:
         		virtual const char* what() const throw();
@@ -101,4 +101,22 @@ std::ostream& operator<<(std::ostream& os, const Form& f);
  *		to ensure it does not lead to circular dependencies.
  *
  * 		See opposite case in 'Bureaucrat.hpp' footnote (1).
-*/
+ */
+
+/*
+ *	(2) All custom exceptions should be derived from std::exception or a class
+ *		that itself derives from std::exception. This ensures that these exception
+ *		can be caught using a catch block for std::exception.
+ *
+ *			try {
+ *				// Some code that might throw your custom exceptions
+ *			} catch (const std::exception& e) {
+ *				// This will catch any exception derived from std::exception,
+ *				// including custom ones
+ *				std::cerr << "Exception caught: " << e.what() << std::endl;
+ *			}
+ *
+ *		Custom exceptions  inherit from std::exception, which means they can be
+ *		caught as std::exception& e, and they override the what() method to 
+ *		provide custom error messages.
+ */

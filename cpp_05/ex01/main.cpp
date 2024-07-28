@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 14:37:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/28 23:45:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int main() {
 
-    std::cout << std::endl;
-	std::cout << "/* --- Valid bureaucrat signature ---------- /*" << std::endl;
+    std::cout << std::endl
+	<< "/* --- Valid bureaucrat signature ------------------------------- /*\n";
     std::cout << std::endl;
 	
     Bureaucrat b1("Bob", 1);
@@ -24,8 +24,8 @@ int main() {
     std::cout << f1 << std::endl;
     b1.signForm(f1);
     
-    std::cout << std::endl;
-	std::cout << "/* --- Invalid bureaucrat attempt ---------- /*" << std::endl;
+    std::cout << std::endl
+	<< "/* --- Invalid bureaucrat signature attempt --------------------- /\n*";
     std::cout << std::endl;
 
     Bureaucrat b2("Carol", 120);
@@ -34,18 +34,20 @@ int main() {
     std::cout << f2 << std::endl;
     b2.signForm(f2);
 
+    std::cout << std::endl
+	<< "/* --- Default bureaucrat signature attempt --------------------- /*\n";
     std::cout << std::endl;
-	std::cout << "/* --- Default bureaucrat attempt ---------- /*" << std::endl;
-    std::cout << std::endl;
+
 	Bureaucrat b3;
 	std::cout << b3 << std::endl;
 	Form f3("F-120", 120, 50);
 	std::cout << f3 << std::endl;
 	b3.signForm(f3);
 
-	std::cout << std::endl;
-	std::cout << "/* --- Default form attempt ---------------- /*" << std::endl;
+	std::cout << std::endl
+	<< "/* --- Default form attempt --------------------------------------- /*";
     std::cout << std::endl;
+
 	Bureaucrat b4("Paul", 50);
 	std::cout << b4 << std::endl;
 	Form f4;
@@ -53,9 +55,10 @@ int main() {
 	b4.signForm(f4);
 	std::cout << std::endl;
 
-	std::cout << std::endl;
-	std::cout << "/* --- Form signed by several officers ----- /*" << std::endl;
+	std::cout << std::endl
+	<< "/* --- Form signed by several officers ---------------------------- /*";
     std::cout << std::endl;
+
 	Bureaucrat b5("Ted", 50);
 	std::cout << b5 << std::endl;
 	Bureaucrat b6("Alice",10);
@@ -65,9 +68,10 @@ int main() {
 	b5.signForm(f5);
 	b6.signForm(f5);
 
-	std::cout << std::endl;
-	std::cout << "/* --- Forms signed by officer ------------- /*" << std::endl;
+	std::cout << std::endl
+	<< "/* --- Officer signs several forms------------------------------- /*\n";
     std::cout << std::endl;
+	
 	Bureaucrat b7("Paul", 50);
 	std::cout << b7 << std::endl;
 	Form f6("F-140", 140, 50);
