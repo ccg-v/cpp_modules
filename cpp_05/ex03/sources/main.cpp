@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/27 00:18:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:28:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int main() {
 
 	newShrubberyForm = intern_guy.makeForm("ShrubberyCreationForm", "Forest");
 	low_officer.signForm(*newShrubberyForm);
-	newShrubberyForm->execute(low_officer);
-	newShrubberyForm->execute(medium_officer);
+	low_officer.executeForm(*newShrubberyForm);
+	medium_officer.executeForm(*newShrubberyForm);
 	delete newShrubberyForm;
     std::cout << std::endl;
 
@@ -61,8 +61,9 @@ int main() {
 	newRobotomyForm = intern_guy.makeForm("RobotomyRequestForm", "Marvin the Paranoid Android");
 	low_officer.signForm(*newRobotomyForm);
 	medium_officer.signForm(*newRobotomyForm);
-	newRobotomyForm->execute(medium_officer);
-	newRobotomyForm->execute(high_officer);
+	low_officer.executeForm(*newRobotomyForm);
+	medium_officer.executeForm(*newRobotomyForm);
+	high_officer.executeForm(*newRobotomyForm);
 	delete newRobotomyForm;
     std::cout << std::endl;
 
@@ -75,9 +76,9 @@ int main() {
 	low_officer.signForm(*newPardonForm);
 	medium_officer.signForm(*newPardonForm);
 	high_officer.signForm(*newPardonForm);
-	newPardonForm->execute(low_officer);
-	newPardonForm->execute(medium_officer);
-	newPardonForm->execute(high_officer);
+	low_officer.executeForm(*newPardonForm);
+	medium_officer.executeForm(*newPardonForm);
+	high_officer.executeForm(*newPardonForm);
 	delete newPardonForm;
     std::cout << std::endl;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/24 19:56:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:25:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	Bureaucrat::decrementGrade (int grade) {
 		throw GradeTooLowException();
 }
 
-void Bureaucrat::signForm(AForm& form) {
+void	Bureaucrat::signForm(AForm& form) {
     try {
         form.beSigned(*this);
 		std::cout << "\t" << _name << " (grade " << _grade << ") signed form "
@@ -89,6 +89,20 @@ void Bureaucrat::signForm(AForm& form) {
 				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
 				  << e.what() << std::endl;
     }
+}
+
+void	Bureaucrat::executeForm(AForm const & form){
+	try {
+		form.execute(*this);
+	// std::cout << "\t[Bureaucrat::executeForm]: " << _name << " (grade " << _grade << ") executed form "
+	// 			  << form.getFormName() << " (grade " << form.getGradeToSign()
+	// 			  << " needed)" << std::endl;		
+	} catch (const std::exception& e)  {
+		std::cout << "\t2[Bureaucrat::executeForm]: " << _name << " (grade " << _grade
+				  << ") couldn't execute form " << form.getFormName()
+				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
+				  << e.what() << std::endl;		
+	}
 }
 
 // Exceptions

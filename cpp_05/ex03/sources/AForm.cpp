@@ -89,15 +89,16 @@ void	AForm::execute(Bureaucrat const & executor) const {
 		}
 		if (executor.getGrade() > this->getGradeToExecute())
 		{
-			std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade()
+		std::cout << "\t[AForm::execute]: " << executor.getName() << " (grade " << executor.getGrade()
 				  << ") couldn't execute form " << getFormName()
 				  << " (grade " << getGradeToExecute() << " needed)" << ": ";		
 			throw GradeTooLowException();
 		} 
-		std::cout << "\t" << executor.getName() <<  " (grade " << executor.getGrade()
+		std::cout << "\t[AForm::execute]: " << executor.getName() <<  " (grade " << executor.getGrade()
 				  << ") executed form " << getFormName()
 				  << " (grade " << getGradeToExecute() << " needed)" << std::endl;
 		this->performAction();
+		
     // } catch (const AForm::GradeTooLowException &e) {
     //     std::cerr << e.what() << std::endl;
     // } catch (const AForm::IsNotSignedException &e) {
