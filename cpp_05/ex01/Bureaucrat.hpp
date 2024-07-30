@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 19:56:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:17:19 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Bureaucrat {
 		~Bureaucrat ( void );								// Destructor
 
 		Bureaucrat ( const std::string& name, int grade );	// Parametrized constructor
+		
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
@@ -48,7 +49,7 @@ class Bureaucrat {
 		
 		void 	incrementGrade ( int grade );
 		void	decrementGrade ( int grade );
-		void	signForm ( Form& form );
+		void	signForm ( Form & form );
 
 		//	Exceptions (3)
     	class GradeTooHighException : public std::exception {

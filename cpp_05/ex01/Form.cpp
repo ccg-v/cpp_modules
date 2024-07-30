@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/29 00:30:17 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:18:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Form::Form () : _formName("Default"), _isSigned(false), _gradeToSign(150),
 Form::Form ( const Form& source ) : _formName(source._formName),
 	_isSigned(source._isSigned), _gradeToSign(source._gradeToSign),
 	_gradeToExecute(source._gradeToExecute) {
+	std::cout << source._formName << " copy constructor called" << std::endl;
 	*this = source;
 }
 
@@ -32,10 +33,9 @@ Form::Form ( const Form& source ) : _formName(source._formName),
 Form &Form::operator=( const Form& source ) {
 	if (this != &source)
 	{
-		// this->_formName = source._formName;
+		std::cout << source._formName << " copy assignment operator called" << std::endl;
+		//	_formName, _gradeToSign, and _gradeToExecute can't be assigned here (1)
 		this->_isSigned = source._isSigned;
-		// this->_gradeToSign = source._gradeToSign;
-		// this->_gradeToExecute = source._gradeToExecute;
 	}
 	return (*this);
 }
@@ -77,7 +77,7 @@ int	Form::getGradeToExecute() const {
 
 /* --- Member functions ---------------------------------------------------- */	
 
-void	Form::beSigned ( Bureaucrat bureaucrat ) {
+void	Form::beSigned ( Bureaucrat & bureaucrat ) {
 	// if (_isSigned == true)
 	// 	throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
@@ -105,3 +105,12 @@ std::ostream& operator<<(std::ostream& os, const Form& f) {
        << ", Grade to Execute: " << f.getGradeToExecute();
     return os;
 }
+
+/*
+ *	(1)	Const objects can only be initialized, not assigned after construction.
+ *		The copy assignment operator is called on an already constructed object,
+ *		so it can't initialize const members.
+ *		In C++, it's generally not possible to have a useful copy assignment
+ *		operator for classes with const members. The option chosen here is to
+ *		implement a "pseudo" copy assignment that only copies non-const members.
+ */

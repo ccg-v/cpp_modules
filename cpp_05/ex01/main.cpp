@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/29 00:28:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:10:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int main() {
 	b3.signForm(f3);
 
 	std::cout << std::endl
-	<< "/* --- Default form signature attempt ----------------------------- /*";
+	<< "/* --- Default form signature attempt --------------------------- /*\n";
     std::cout << std::endl;
 
 	std::cout << b2 << std::endl;
@@ -55,7 +55,7 @@ int main() {
 	std::cout << std::endl;
 
 	std::cout << std::endl
-	<< "/* --- Form signed by several officers ---------------------------- /*";
+	<< "/* --- Form signed by several officers -------------------------- /*\n";
     std::cout << std::endl;
 
 	Bureaucrat b5("Ted", 50);

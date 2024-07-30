@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/29 00:10:19 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:18:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class	Form {
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void	beSigned ( Bureaucrat bureaucrat );
+		void	beSigned ( Bureaucrat & bureaucrat );
 
 		//	Exceptions (2)
     	class GradeTooHighException : public std::exception {
