@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:18:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:47:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ class	Form {
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		Form ( );								//	Default constructor
-		Form ( const Form& source );			//	Copy constructor
-		Form &operator=( const Form& source );	//	Copy assignment operator
-		~Form ( );								//	Default destructor
+		Form();								//	Default constructor
+		Form(const Form& source);			//	Copy constructor
+		Form &operator=(const Form& source);	//	Copy assignment operator
+		~Form();								//	Default destructor
 
-		Form ( const std::string& formName, const int gradeToSign,
-			const int gradeToExecute );			//	Parameterized constructor
+		Form(const std::string& formName, const int gradeToSign,
+			const int gradeToExecute);			//	Parameterized constructor
 
 		/* --- Accessors ---------------------------------------------------- */
 
 		//	Getters
-		const std::string&	getFormName () const;
-		bool				getIsSigned () const;
-		int					getGradeToSign () const;
+		const std::string&	getFormName() const;
+		bool				getIsSigned() const;
+		int					getGradeToSign() const;
 		int					getGradeToExecute() const;
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void	beSigned ( Bureaucrat & bureaucrat );
+		void	beSigned (Bureaucrat & bureaucrat);
 
 		//	Exceptions (2)
     	class GradeTooHighException : public std::exception {

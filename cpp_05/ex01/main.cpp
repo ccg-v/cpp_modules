@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:10:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:47:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,3 @@ int main() {
 // 	}
 // 	std::cout << std::endl;
 	
-// //	Invalid bureaucrat to sign
-// 	try {
-// 		Bureaucrat b("Gregor", 120);
-// 		std::cout << b << std::endl;
-// 		Form f("F-420", 100, 50);
-// 		std::cout << f << std::endl;
-// 		b.signForm(f);
-// 	} catch (const std::exception& e) {
-// 		std::cerr << "\tError signing form: " << e.what() << std::endl;
-// 	}
-// 	std::cout << std::endl;
-// }

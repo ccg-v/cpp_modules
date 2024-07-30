@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:18:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:47:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ Form::Form ( const Form& source ) : _formName(source._formName),
 	_isSigned(source._isSigned), _gradeToSign(source._gradeToSign),
 	_gradeToExecute(source._gradeToExecute) {
 	std::cout << source._formName << " copy constructor called" << std::endl;
-	*this = source;
 }
 
 //	Copy assignment operator

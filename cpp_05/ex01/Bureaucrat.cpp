@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:18:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:44:34 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Bureaucrat	&Bureaucrat::operator=( const Bureaucrat& source ) {
 }
 
 //	Default destructor
-Bureaucrat::~Bureaucrat ( void ) {
+Bureaucrat::~Bureaucrat () {
 	std::cout << "Bureaucrat " << this->getName() << " destroyed by default destructor"
 			  << std::endl;
 }
