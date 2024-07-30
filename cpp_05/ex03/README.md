@@ -21,6 +21,6 @@ Why Use an Abstract Class?
 * Polymorphism: Abstract classes allow you to define a common interface for all derived classes, enabling polymorphic behavior. This is useful in scenarios where you want to treat different derived classes uniformly.
 
 
-The subject requires to add a 
+The subject requires to add a
 ```execute(Bureaucrat const & executor) const``` 
 member function to the base form and implement a function to execute the form’s action of the concrete classes. **By adding this function as pure virtual we will make the Form class abstract.**
