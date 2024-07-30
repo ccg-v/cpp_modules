@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:23:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:28:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,26 @@ class	AForm {
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		AForm ( );									//	Default constructor
-		AForm ( const AForm& source );				//	Copy constructor
-		AForm &operator=( const AForm& source );	//	Copy assignment operator
-		virtual ~AForm ( );							//	Default destructor
+		AForm();									//	Default constructor
+		AForm(const AForm& source);				//	Copy constructor
+		AForm &operator=(const AForm& source);	//	Copy assignment operator
+		virtual ~AForm();							//	Default destructor
 
-		AForm ( const std::string& formName, const int gradeToSign,
-			const int gradeToExecute );			//	Parameterized constructor
+		AForm(const std::string& formName, const int gradeToSign,
+			const int gradeToExecute);			//	Parameterized constructor
 
 		/* --- Accessors ---------------------------------------------------- */
 
 		//	Getters
-		const std::string&	getFormName () const;
-		bool				getIsSigned () const;
-		int					getGradeToSign () const;
+		const std::string&	getFormName() const;
+		bool				getIsSigned() const;
+		int					getGradeToSign() const;
 		int					getGradeToExecute() const;
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void	beSigned ( Bureaucrat & bureaucrat );
-		void	execute ( Bureaucrat const & executor ) const;	// (2)
+		void	beSigned (Bureaucrat & bureaucrat);
+		void	execute (Bureaucrat const & executor) const;	// (2)
 
 		//	Exceptions (3)
     	class GradeTooHighException : public std::exception {

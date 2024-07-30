@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Intern.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 22:44:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/27 00:45:39 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:38:24 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ Intern::Intern() {
 //	Copy constructor
 Intern::Intern(const Intern & source) {
 	std::cout << "Intern copy constructor called" << std::endl;
-	*this = source;
+	// Currently, there's no instance-specific data to copy
+	(void) source;	// To avoid unused parameter warning
 }
 
 //	Copy assignment operator
 Intern &Intern::operator=(const Intern & source) {
 	std::cout << "Intern copy assignment operator called" << std::endl;
 	if (this == &source) {
+		// Currently, there's nothing to copy
 	}
 	return (*this);
 }

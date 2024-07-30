@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AForm.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/21 13:29:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:32:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ AForm::AForm () : _formName("Default"), _isSigned(false), _gradeToSign(100),
 AForm::AForm ( const AForm& source ) : _formName(source._formName),
 	_isSigned(source._isSigned), _gradeToSign(source._gradeToSign),
 	_gradeToExecute(source._gradeToExecute) {
-	*this = source;
+	std::cout << "AForm copy constructor called" << std::endl;
 }
 
 //	Copy assignment operator
 AForm &AForm::operator=( const AForm& source ) {
+	std::cout << "AForm copy assignment constructor called" << std::endl;
 	if (this != &source)
 		this->_isSigned = source._isSigned;
 	return (*this);
