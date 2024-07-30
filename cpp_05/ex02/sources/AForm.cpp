@@ -72,7 +72,7 @@ int	AForm::getGradeToExecute() const {
 
 /* --- Member functions ---------------------------------------------------- */	
 
-void	AForm::beSigned ( Bureaucrat bureaucrat ) {
+void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
 	if (_isSigned == true)
 		throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
@@ -81,26 +81,14 @@ void	AForm::beSigned ( Bureaucrat bureaucrat ) {
 }
 
 void	AForm::execute(Bureaucrat const & executor) const {
-	try {
-		if (!this->getIsSigned())
-		{
-			std::cout << "\t" << getFormName() << " couldn't be executed: ";
-			throw IsNotSignedException();
-		}
-		if (executor.getGrade() > this->getGradeToExecute())
-		{
-			std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade()
-				  << ") couldn't execute form " << getFormName()
-				  << " (grade " << getGradeToExecute() << " needed)" << ": ";		
-			throw GradeTooLowException();
-		} 
-		std::cout << "\t" << executor.getName() <<  " (grade " << executor.getGrade()
-				  << ") executed form " << getFormName()
-				  << " (grade " << getGradeToExecute() << " needed)" << std::endl;
-		this->performAction();
-    } catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
-    }
+	if (this->getIsSigned() == false)
+		throw IsNotSignedException();
+	if (executor.getGrade() > this->getGradeToExecute())		
+		throw GradeTooLowException();
+	std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade() 
+			  << ") executed form " << getFormName() << " (grade "
+			  << getGradeToSign() << " needed)" << std::endl;
+	this->performAction();
 }
 
 //	Exceptions

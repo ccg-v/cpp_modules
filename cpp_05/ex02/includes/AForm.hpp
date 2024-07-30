@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:21:03 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/23 20:23:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:49:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ class	AForm {
 
 		/* --- Member functions --------------------------------------------- */	
 
-		void	beSigned ( Bureaucrat bureaucrat );
+		void	beSigned ( Bureaucrat & bureaucrat );
 		void	execute ( Bureaucrat const & executor ) const;	// (2)
 
 		//	Exceptions (3)
@@ -142,7 +142,7 @@ std::ostream& operator<<(std::ostream& os, const AForm& f);
 */
 
 /*
- *	(2)	virtual void	execute ( Bureaucrat const & executor ) const = 0;
+ *	(2)	virtual void	execute ( Bureaucrat const & executor ) const;
  *		
  *		The first 'const' ensures that the executor object passed to the execute 
  *		method cannot be modified, providing safety and clarity that the function

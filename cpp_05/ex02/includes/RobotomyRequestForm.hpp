@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:25:11 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/24 21:13:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:21:46 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ class	RobotomyRequestForm : public AForm {
 		//	Default destructor
 		~RobotomyRequestForm();
 		
-		//	Parameterized constructor
+		/* --- Parameterized constructor ------------------------------------ */
+		
 		RobotomyRequestForm(const std::string & target);
 
 	protected:

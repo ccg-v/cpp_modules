@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/29 01:23:58 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:03:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int main() {
 		<< "/* --- Instances --------------------------------------------- /*\n"
 		<< std::endl;
 
-	std::cout << std::endl;
     std::cout << low_officer << std::endl;
 	std::cout << medium_officer << std::endl;
 	std::cout << high_officer << std::endl;
@@ -38,7 +37,6 @@ int main() {
     std::cout << shrubbery_form << std::endl;
     std::cout << robotomy_form << std::endl;
     std::cout << pardon_form << std::endl;
-	std::cout << std::endl;
 
 /* --- ShrubberyCreationForm process ---------------------------------------- */
 
@@ -48,8 +46,8 @@ int main() {
 
 	low_officer.signForm(shrubbery_form);
 	medium_officer.signForm(shrubbery_form);
-	shrubbery_form.execute(low_officer);
-	shrubbery_form.execute(medium_officer);
+	low_officer.executeForm(shrubbery_form);
+	medium_officer.executeForm(shrubbery_form);
 
 /* --- RobotomyRequestForm process ------------------------------------------ */
 
@@ -60,9 +58,9 @@ int main() {
 	low_officer.signForm(robotomy_form);
 	medium_officer.signForm(robotomy_form);
 	high_officer.signForm(robotomy_form);
-	robotomy_form.execute(low_officer);
-	robotomy_form.execute(medium_officer);
-	robotomy_form.execute(high_officer);
+	low_officer.executeForm(robotomy_form);
+	medium_officer.executeForm(robotomy_form);
+	high_officer.executeForm(robotomy_form);
 
 /* --- PresidentialPardonForm process --------------------------------------- */
 
@@ -73,9 +71,9 @@ int main() {
 	low_officer.signForm(pardon_form);
 	medium_officer.signForm(pardon_form);
 	high_officer.signForm(pardon_form);
-	pardon_form.execute(low_officer);
-	pardon_form.execute(medium_officer);
-	pardon_form.execute(high_officer);
+	low_officer.executeForm(pardon_form);
+	medium_officer.executeForm(pardon_form);
+	high_officer.executeForm(pardon_form);
 
     std::cout << std::endl;
     return 0;

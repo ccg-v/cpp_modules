@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:25:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/25 00:20:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:21:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ class ShrubberyCreationForm : public AForm {
 		// Default destructor
 		~ShrubberyCreationForm();
 
-		// Parameterized constructor
+		/* --- Parameterized constructor ------------------------------------ */
+		
 		ShrubberyCreationForm(const std::string& target);
 	
 	protected:
