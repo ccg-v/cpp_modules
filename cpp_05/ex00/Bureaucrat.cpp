@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/28 21:03:38 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:41:01 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 }
 
 //	Copy constructor
-Bureaucrat::Bureaucrat ( const Bureaucrat& source ) {
+Bureaucrat::Bureaucrat ( const Bureaucrat& source ) 
+	: _name(source._name), _grade(source._grade) {
 	std::cout << "Default copy constructor called" << std::endl;
-	*this = source;
 }
 
 //	Copy assignment operator

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+         #
+#    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/07/18 21:31:57 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/07/30 22:41:44 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

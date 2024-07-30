@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 12:41:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:41:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int main() {
 		<< e.what() << std::endl;
 	}
 
-	std::cout << std::endl;
-
 //	Object upgrading
 
 	std::cout << std::endl
@@ -54,8 +52,6 @@ int main() {
 		<< ": " << e.what() << std::endl;
 	}
 
-	std::cout << std::endl;
-
 //	Object downgrading
 
 	std::cout << std::endl
@@ -74,8 +70,6 @@ int main() {
 		std::cerr << "Error downgrading bureaucrat to grade " << grade - decrement
 		<< ": " << e.what() << std::endl;
 	}
-
-	std::cout << std::endl;
 	
 //	Object instantiated with wrong grade (should throw an exception)
 
@@ -103,8 +97,6 @@ int main() {
 		std::cerr << "\tError creating bureaucrat with grade " << grade << ": "
 		<< e.what() << std::endl;
 	}
-
-	std::cout << std::endl;
 
 //	Object with no parameters (should be initialized with default values)
 
