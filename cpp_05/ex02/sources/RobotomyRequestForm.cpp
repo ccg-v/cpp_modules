@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:22:20 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/25 01:08:37 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:07:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ RobotomyRequestForm::RobotomyRequestForm()
 //	Copy constructor
 RobotomyRequestForm::RobotomyRequestForm (const RobotomyRequestForm & source)
 	: AForm(source), _target(source._target) {
-	std::cout << "RobotomyRequestForm copy constructor called" << std::endl;
+		std::cout << "RobotomyRequestForm copy constructor called" << std::endl;
 }
 
 //	Copy assignment operator

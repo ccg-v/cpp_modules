@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 18:14:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:20:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,26 @@ class Bureaucrat {
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		Bureaucrat ( );										// Default constructor (2)
-		Bureaucrat ( const Bureaucrat& source );			// Copy constructor
-		Bureaucrat& operator=( const Bureaucrat& source );	// Copy assignment operator
-		~Bureaucrat ( void );								// Destructor
+		Bureaucrat ();										// Default constructor (2)
+		Bureaucrat (const Bureaucrat& source);				// Copy constructor
+		Bureaucrat& operator=(const Bureaucrat& source);	// Copy assignment operator
+		~Bureaucrat ();										// Destructor
 
-		Bureaucrat ( const std::string& name, int grade );	// Parametrized constructor
+		Bureaucrat (const std::string& name, int grade);	// Parametrized constructor
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
-		const std::string&	getName () const;	// (1)
-		int					getGrade () const;
+		const std::string&	getName() const;	// (1)
+		int					getGrade() const;
 
 		//	Setters not needed, name should be constant and grade should be
 		//	modified only through increment()/decrement() 
 
 		/* --- Member functions --------------------------------------------- */
 		
-		void 	incrementGrade ( int grade );
-		void	decrementGrade ( int grade );
-		void	signForm ( AForm & form );
+		void 	incrementGrade(int grade);
+		void	decrementGrade(int grade);
+		void	signForm (AForm & form);
 		void	executeForm(AForm const & form);
 
 		//	Exceptions (3)

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:00:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:07:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 //	Copy constructor
 Bureaucrat::Bureaucrat(const Bureaucrat& source)
     : _name(source._name), _grade(source._grade) {
-    std::cout << "Bureaucrat copy constructor called" << std::endl;
+    	std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
 
 

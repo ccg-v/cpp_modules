@@ -18,18 +18,19 @@
 //	Default constructor
 AForm::AForm () : _formName("Default"), _isSigned(false), _gradeToSign(100),
 				_gradeToExecute(50) {
-	std::cout << "Default AForm constructor called" << std::endl;
+	std::cout << "AForm default constructor called" << std::endl;
 }
 
 //	Copy constructor
 AForm::AForm ( const AForm& source ) : _formName(source._formName),
 	_isSigned(source._isSigned), _gradeToSign(source._gradeToSign),
 	_gradeToExecute(source._gradeToExecute) {
-	*this = source;
+	std::cout << "AForm copy constructor called" << std::endl;
 }
 
 //	Copy assignment operator
 AForm &AForm::operator=( const AForm& source ) {
+	std::cout << "AForm copy constructor called" << std::endl;
 	if (this != &source)
 		this->_isSigned = source._isSigned;
 	return (*this);

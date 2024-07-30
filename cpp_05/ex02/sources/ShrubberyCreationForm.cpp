@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:21:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 00:58:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:18:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ ShrubberyCreationForm::ShrubberyCreationForm()
 //	Copy constructor (1)
 ShrubberyCreationForm::ShrubberyCreationForm (const ShrubberyCreationForm & source)
 	: AForm(source), _target(source._target) {
-	std::cout << "ShrubberyCreationForm copy constructor called" << std::endl;
+		std::cout << "ShrubberyCreationForm copy constructor called" << std::endl;
 }
 
 //	Copy assignment operator
