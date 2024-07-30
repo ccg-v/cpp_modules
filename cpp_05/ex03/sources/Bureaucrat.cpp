@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 19:23:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:10:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ void	Bureaucrat::signForm(AForm& form) {
 
 void	Bureaucrat::executeForm(AForm const & form){
 	try {
-		form.execute(*this);
-		std::cout << "\t" << _name << " (grade " << _grade << ") executed form "
-					<< form.getFormName() << " (grade " << form.getGradeToSign()
-					<< " needed)" << std::endl;		
+		form.execute(*this);	
 	} catch (const std::exception& e)  {
 		std::cout << "\t" << _name << " (grade " << _grade
 				  << ") couldn't execute form " << form.getFormName()
