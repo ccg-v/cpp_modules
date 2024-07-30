@@ -72,7 +72,7 @@ int	AForm::getGradeToExecute() const {
 
 /* --- Member functions ---------------------------------------------------- */	
 
-void	AForm::beSigned ( Bureaucrat bureaucrat ) {
+void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
 	if (_isSigned == true)
 		throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
@@ -81,11 +81,11 @@ void	AForm::beSigned ( Bureaucrat bureaucrat ) {
 }
 
 void	AForm::execute(Bureaucrat const & executor) const {
-		if (!this->getIsSigned())
-			throw IsNotSignedException();
-		if (executor.getGrade() > this->getGradeToExecute())	
-			throw GradeTooLowException();
-		this->performAction();
+	if (!this->getIsSigned())
+		throw IsNotSignedException();
+	if (executor.getGrade() > this->getGradeToExecute())	
+		throw GradeTooLowException();
+	this->performAction();
 }
 
 //	Exceptions
