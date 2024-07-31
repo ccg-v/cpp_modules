@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 22:44:34 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:09:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ int	Bureaucrat::getGrade() const {
 
 /* --- Member functions ----------------------------------------------------- */
 
-void	Bureaucrat::incrementGrade (int grade) {
-	if ((_grade - grade) > 1)
-		this->_grade -= grade;
+void	Bureaucrat::incrementGrade (int increment) {
+	if ((_grade - increment) >= 1)
+		_grade = _grade - increment;
 	else
 		throw GradeTooHighException();
 }
 
-void	Bureaucrat::decrementGrade (int grade) {
-	if ((_grade + grade) < 150)
-		this->_grade += grade;
+void	Bureaucrat::decrementGrade (int decrement) {
+	if ((_grade + decrement) <= 150)
+		_grade = _grade + decrement;
 	else
 		throw GradeTooLowException();
 }
