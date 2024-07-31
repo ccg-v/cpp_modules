@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/28 20:16:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:09:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 }
 
 //	Copy constructor
-Bureaucrat::Bureaucrat ( const Bureaucrat& source ) {
+Bureaucrat::Bureaucrat ( const Bureaucrat& source )
+	: _name(source._name), _grade(source._grade) {
 	std::cout << "Default copy constructor called" << std::endl;
-	*this = source;
 }
 
 //	Copy assignment operator
@@ -46,11 +46,11 @@ Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
 	try {
-		_grade = grade;
 		if (grade < 1)
 			throw GradeTooHighException();
 		else if (grade > 150)
 			throw GradeTooLowException();
+		_grade = grade;
 	} catch (const std::exception& e) {
         std::cerr << "\tError creating bureaucrat " << name << " with grade "
 		<< grade << ": " << e.what() << std::endl;
@@ -69,16 +69,16 @@ int	Bureaucrat::getGrade() const {
 
 /* --- Member functions ----------------------------------------------------- */
 
-void	Bureaucrat::incrementGrade (int grade) {
-	if ((_grade - grade) > 1)
-		this->_grade -= grade;
+void	Bureaucrat::incrementGrade (int increment) {
+	if ((_grade - increment) >= 1)
+		_grade = _grade - increment;
 	else
 		throw GradeTooHighException();
 }
 
-void	Bureaucrat::decrementGrade (int grade) {
-	if ((_grade + grade) < 150)
-		this->_grade += grade;
+void	Bureaucrat::decrementGrade (int decrement) {
+	if ((_grade + decrement) <= 150)
+		_grade = _grade + decrement;
 	else
 		throw GradeTooLowException();
 }
