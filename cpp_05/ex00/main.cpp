@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 22:41:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:07:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int main() {
 	<< "/* --- Upgrading a bureaucrat -------------------------------------- */"
 	<< std::endl << std::endl;
 	grade = 100;
-	increment = 25;
+	increment = 99;
 
 	try {
 		Bureaucrat a("Gregor", grade);
 		std::cout << a << std::endl;
-		std::cout << "\t" << a.getName() << " has just been promoted!" << std::endl;
+		std::cout << "\t" << a.getName() << " is to be promoted " << increment 
+				  << " grades" << std::endl;
 		a.incrementGrade(increment);
 		std::cout << a << std::endl;
 	} catch (const std::exception& e) {
@@ -58,16 +59,17 @@ int main() {
 	<< "/* --- Downgrading a bureaucrat ------------------------------------ */"
 	<< std::endl << std::endl;
 	grade = 100;
-	decrement = 25;
+	decrement = 50;
 
 	try {
 		Bureaucrat a("Gregor", grade);
 		std::cout << a << std::endl;
-		std::cout << "\t" << a.getName() << " has just been downgraded!" << std::endl;
+		std::cout << "\t" << a.getName() << " is to be downgraded " << increment 
+				  << " grades" << std::endl;
 		a.decrementGrade(decrement);
 		std::cout << a << std::endl;
 	} catch (const std::exception& e) {
-		std::cerr << "Error downgrading bureaucrat to grade " << grade - decrement
+		std::cerr << "Error downgrading bureaucrat to grade " << grade + decrement
 		<< ": " << e.what() << std::endl;
 	}
 	

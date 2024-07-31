@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/28 20:02:23 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:43:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main() {
 	<< std::endl << std::endl;
 
 	grade = 100;
-	increment = 25;
+	increment = 99;
 	Bureaucrat b("Carol", grade);
 
 	std::cout << b << std::endl;
