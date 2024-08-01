@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 22:47:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:21:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int main() {
 	<< "/* --- Valid bureaucrat signature ------------------------------- /*\n";
     std::cout << std::endl;
 	
-    Bureaucrat b1("Bob", 1);
+    Bureaucrat b1("Bob", 1000);
     std::cout << b1 << std::endl;
     Form f1("F-100", 100, 50);
     std::cout << f1 << std::endl;
     b1.signForm(f1);
     
     std::cout << std::endl
-	<< "/* --- Invalid bureaucrat signature attempt --------------------- /\n*";
+	<< "/* --- Invalid bureaucrat signature attempt --------------------- /*\n";
     std::cout << std::endl;
 
     Bureaucrat b2("Carol", 120);
@@ -52,7 +52,6 @@ int main() {
 	Form f4;
 	std::cout << f4 << std::endl;
 	b2.signForm(f4);
-	std::cout << std::endl;
 
 	std::cout << std::endl
 	<< "/* --- Form signed by several officers -------------------------- /*\n";

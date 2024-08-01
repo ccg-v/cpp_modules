@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/01 10:40:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:09:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
 	try {
-		_grade = grade;
 		if (grade < 1)
 			throw GradeTooHighException();
 		else if (grade > 150)
 			throw GradeTooLowException();
+		_grade = grade;
 	} catch (const std::exception& e) {
         std::cerr << "\tError creating bureaucrat " << name << " with grade "
-		<< getGrade() << ": " << e.what() << std::endl;
+		<< grade << ": " << e.what() << std::endl;
     }
 }
 

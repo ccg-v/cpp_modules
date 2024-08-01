@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/31 11:09:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:15:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,31 @@ Bureaucrat::~Bureaucrat () {
 			  << std::endl;
 }
 
+// //	Parameterized constructor
+// Bureaucrat::Bureaucrat ( const std::string& name, int grade )
+// 	: _name(name) {
+// 	std::cout << "Parameterized constructor called" << std::endl;
+// 	if (grade < 1)
+// 		throw GradeTooHighException();
+// 	else if (grade > 150)
+// 		throw GradeTooLowException();
+// 	_grade = grade;
+// }
 //	Parameterized constructor
+
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
-	if (grade < 1)
-		throw GradeTooHighException();
-	else if (grade > 150)
-		throw GradeTooLowException();
-	_grade = grade;
+	try {
+		_grade = grade;
+		if (grade < 1)
+			throw GradeTooHighException();
+		else if (grade > 150)
+			throw GradeTooLowException();
+	} catch (const std::exception& e) {
+        std::cerr << "\tError creating bureaucrat " << name << " with grade "
+		<< getGrade() << ": " << e.what() << std::endl;
+    }
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -86,10 +102,13 @@ void Bureaucrat::signForm(Form& form) {
 				  << form.getFormName() << " (grade " << form.getGradeToSign()
 				  << " needed)" << std::endl;
     } catch (const std::exception& e) {
-		std::cout << "\t" << _name << " (grade " << _grade
-				  << ") couldn't sign form " << form.getFormName()
-				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
-				  << e.what() << std::endl;
+		if(this->getGrade() >=1 && this->getGrade() <= 150
+			&& form.getGradeToSign() >= 1 && form.getGradeToSign() <= 150
+			&& form.getGradeToExecute() >= 1 && form.getGradeToExecute() <= 150)
+			std::cout << "\t" << _name << " (grade " << _grade
+					<< ") couldn't sign form " << form.getFormName()
+					<< " (grade " << form.getGradeToSign() << " needed)" << ": "
+					<< e.what() << std::endl;
     }
 }
 
@@ -104,6 +123,7 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-    os << "\t" << b.getName() << ", bureaucrat grade: " << b.getGrade();
+	if (b.getGrade() >= 1 && b.getGrade() <= 150)
+    	os << "\t" << b.getName() << ", bureaucrat grade: " << b.getGrade();
     return os;
 }

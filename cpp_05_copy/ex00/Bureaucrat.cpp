@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/01 10:40:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:00:36 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 }
 
 //	Copy constructor
-Bureaucrat::Bureaucrat ( const Bureaucrat& source )
+Bureaucrat::Bureaucrat ( const Bureaucrat& source ) 
 	: _name(source._name), _grade(source._grade) {
 	std::cout << "Default copy constructor called" << std::endl;
 }
@@ -45,16 +45,11 @@ Bureaucrat::~Bureaucrat ( void ) {
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
 	std::cout << "Parameterized constructor called" << std::endl;
-	try {
-		_grade = grade;
-		if (grade < 1)
-			throw GradeTooHighException();
-		else if (grade > 150)
-			throw GradeTooLowException();
-	} catch (const std::exception& e) {
-        std::cerr << "\tError creating bureaucrat " << name << " with grade "
-		<< getGrade() << ": " << e.what() << std::endl;
-    }
+	if (grade < 1)
+		throw GradeTooHighException();
+	else if (grade > 150)
+		throw GradeTooLowException();
+	_grade = grade;
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -94,7 +89,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-	if (b.getGrade() > 0 && b.getGrade() <= 150)
-    	os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
-	return os;
+    os << "\t" << b.getName() << ", bureaucrat grade " << b.getGrade();
+    return os;
 }
