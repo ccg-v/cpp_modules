@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/01 11:15:23 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:01:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,16 @@ Bureaucrat::~Bureaucrat () {
 			  << std::endl;
 }
 
-// //	Parameterized constructor
-// Bureaucrat::Bureaucrat ( const std::string& name, int grade )
-// 	: _name(name) {
-// 	std::cout << "Parameterized constructor called" << std::endl;
-// 	if (grade < 1)
-// 		throw GradeTooHighException();
-// 	else if (grade > 150)
-// 		throw GradeTooLowException();
-// 	_grade = grade;
-// }
 //	Parameterized constructor
-
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
-	std::cout << "Parameterized constructor called" << std::endl;
-	try {
-		_grade = grade;
-		if (grade < 1)
-			throw GradeTooHighException();
-		else if (grade > 150)
-			throw GradeTooLowException();
-	} catch (const std::exception& e) {
-        std::cerr << "\tError creating bureaucrat " << name << " with grade "
-		<< getGrade() << ": " << e.what() << std::endl;
-    }
+	std::cout << "Bureaucrat " << getName() << " parameterized constructor called"
+			  << std::endl;
+	if (grade < 1)
+		throw GradeTooHighException();
+	else if (grade > 150)
+		throw GradeTooLowException();
+	_grade = grade;
 }
 
 /* --- Getters -------------------------------------------------------------- */
@@ -96,34 +81,33 @@ void	Bureaucrat::decrementGrade (int decrement) {
 }
 
 void Bureaucrat::signForm(Form& form) {
-    try {
-        form.beSigned(*this);
+
+	form.beSigned(*this);
+
+	if (form.getIsSigned() == true) {
 		std::cout << "\t" << _name << " (grade " << _grade << ") signed form "
-				  << form.getFormName() << " (grade " << form.getGradeToSign()
-				  << " needed)" << std::endl;
-    } catch (const std::exception& e) {
-		if(this->getGrade() >=1 && this->getGrade() <= 150
-			&& form.getGradeToSign() >= 1 && form.getGradeToSign() <= 150
-			&& form.getGradeToExecute() >= 1 && form.getGradeToExecute() <= 150)
-			std::cout << "\t" << _name << " (grade " << _grade
-					<< ") couldn't sign form " << form.getFormName()
-					<< " (grade " << form.getGradeToSign() << " needed)" << ": "
-					<< e.what() << std::endl;
+				<< form.getFormName() << " (grade " << form.getGradeToSign()
+				<< " needed)" << std::endl;
+	} else {
+		std::cout << "\t" << _name << " (grade " << _grade
+				<< ") couldn't sign form " << form.getFormName()
+				<< " (grade " << form.getGradeToSign() << " needed)" << ": " 
+				<< GradeTooLowException().what() << std::endl;
+		throw GradeTooLowException();
     }
 }
 
 // Exceptions
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-    return "Grade is too high";
+    return "Bureaucrat's grade is too high";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-    return "Grade is too low";
+    return "Bureaucrat's grade is too low";
 }
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
-	if (b.getGrade() >= 1 && b.getGrade() <= 150)
-    	os << "\t" << b.getName() << ", bureaucrat grade: " << b.getGrade();
+    os << "\t" << b.getName() << ", bureaucrat grade: " << b.getGrade();
     return os;
 }

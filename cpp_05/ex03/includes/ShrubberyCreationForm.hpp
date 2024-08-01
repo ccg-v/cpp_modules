@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:25:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:29:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:24:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ class ShrubberyCreationForm : public AForm {
 		// Default destructor
 		~ShrubberyCreationForm();
 
-		// Parameterized constructor
+		/* --- Parameterized constructor ------------------------------------ */
+		
 		ShrubberyCreationForm(const std::string& target);
 	
 	protected:

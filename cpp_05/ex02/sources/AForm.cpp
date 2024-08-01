@@ -73,32 +73,41 @@ int	AForm::getGradeToExecute() const {
 
 /* --- Member functions ---------------------------------------------------- */	
 
+//	VERSION WITH TRY-CATCH BLOCK
 void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
 	if (_isSigned == true)
 		throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
-		throw GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	_isSigned = true;
 }
+
+//	// VERSION WITHOUT TRY-CATCH WITHIN BLOCK
+// void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
+// 	// if (_isSigned == true)
+// 	// 	throw IsAlreadySignedException();
+// 	if (bureaucrat.getGrade() <= getGradeToSign())
+// 		_isSigned = true;
+// }
 
 void	AForm::execute(Bureaucrat const & executor) const {
 	if (this->getIsSigned() == false)
 		throw IsNotSignedException();
 	if (executor.getGrade() > this->getGradeToExecute())		
-		throw GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade() 
-			  << ") executed form " << getFormName() << " (grade "
-			  << getGradeToSign() << " needed)" << std::endl;
+			  << ") executed " << getFormName() << " (grade "
+			  << getGradeToExecute() << " needed)" << std::endl;
 	this->performAction();
 }
 
 //	Exceptions
 const char* AForm::GradeTooHighException::what() const throw() {
-    return "Grade is too high";
+    return "Form's grade is too high";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-    return "Grade is too low";
+    return "Form's grade is too low";
 }
 
 const char* AForm::IsAlreadySignedException::what() const throw() {

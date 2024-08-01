@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:23:38 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:39:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:39:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ PresidentialPardonForm::PresidentialPardonForm(const std::string & target)
 /* --- Member functions ----------------------------------------------------- */
 
 void	PresidentialPardonForm::performAction() const {
-	std::cout << "\t" << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+	std::cout << "\n\t" << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }

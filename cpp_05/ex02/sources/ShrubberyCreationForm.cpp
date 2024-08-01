@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:21:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:18:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:39:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ShrubberyCreationForm::performAction() const {
 			ofs << _tree3;
 	}
 	ofs.close();
-	std::cout << "\t" << _target << " ShrubberyCreationForm has been executed (grade "
+	std::cout << "\n\t" << _target << " ShrubberyCreationForm has been executed (grade "
 			  << getGradeToExecute() << " needed)" << std::endl;
 	std::cout << "\tPermission to create " << _target << " granted, check "
 			  << _target << "_shrubbery document" << std::endl;		  

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/01 11:17:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:57:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,18 @@ Form::~Form () {
 			  << std::endl;
 }
 
-// // Parameterized constructor
-// Form::Form(const std::string& formName, const int gradeToSign, const int gradeToExecute)
-//     : _formName(formName), _isSigned(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute) {
-//     std::cout << "Form parameterized constructor called" << std::endl;
-//     if (gradeToSign < 1 || gradeToExecute < 1)
-//         throw GradeTooHighException();
-//     else if (gradeToSign > 150 || gradeToExecute > 150)
-//         throw GradeTooLowException();
-// }
-
 // Parameterized constructor
 Form::Form(const std::string& formName, const int gradeToSign, const int gradeToExecute)
-    	: _formName(formName), _isSigned(false), _gradeToSign(gradeToSign),
-		  _gradeToExecute(gradeToExecute) {
-    std::cout << "Form parameterized constructor called" << std::endl;
-	try {
-		if (gradeToSign < 1 || gradeToExecute < 1)
-			throw GradeTooHighException();
-		else if (gradeToSign > 150 || gradeToExecute > 150)
-			throw GradeTooLowException();
-	} catch (const std::exception & e) {
-
-		std::cerr << "\tError creating form " << formName << " with grades " << gradeToSign
-				  << "/" << gradeToExecute <<": " << e.what() << std::endl;
-	}
+    : _formName(formName), _isSigned(false), _gradeToSign(gradeToSign),
+	  _gradeToExecute(gradeToExecute) {
+    std::cout << "Form " << getFormName() << " parameterized constructor called"
+			  << std::endl;
+    if (gradeToSign < 1 || gradeToExecute < 1) 
+        throw GradeTooHighException();
+    else if (gradeToSign > 150 || gradeToExecute > 150)
+        throw GradeTooLowException();
 }
+
 
 /* --- Getters ------------------------------------------------------------- */
 
@@ -95,18 +81,17 @@ int	Form::getGradeToExecute() const {
 void	Form::beSigned ( Bureaucrat & bureaucrat ) {
 	// if (_isSigned == true)
 	// 	throw IsAlreadySignedException();
-	if (bureaucrat.getGrade() > getGradeToSign())
-		throw GradeTooLowException();
-	_isSigned = true;
+	if (bureaucrat.getGrade() <= getGradeToSign())
+		_isSigned = true;
 }
 
 //	Exceptions
 const char* Form::GradeTooHighException::what() const throw() {
-    return "Grade is too high";
+    return "Form's grade is too high";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-    return "Grade is too low";
+    return "Form's grade is too low";
 }
 
 const char* Form::IsAlreadySignedException::what() const throw() {
@@ -115,14 +100,10 @@ const char* Form::IsAlreadySignedException::what() const throw() {
 
 //	Insertion operator (<<) overload
 std::ostream& operator<<(std::ostream& os, const Form& f) {
-	if (f.getGradeToSign() >= 1 && f.getGradeToSign() <= 150
-		&& f.getGradeToExecute() >= 1 && f.getGradeToExecute() <= 150)
-	{
-		os << "\tForm " << f.getFormName() << ", Signed: " << f.getIsSigned()
-		<< ", Grade to Sign: " << f.getGradeToSign()
-		<< ", Grade to Execute: " << f.getGradeToExecute();
-	}
-	return os;
+    os << "\tForm " << f.getFormName() << ", Signed: " << f.getIsSigned()
+       << ", Grade to Sign: " << f.getGradeToSign()
+       << ", Grade to Execute: " << f.getGradeToExecute();
+    return os;
 }
 
 /*

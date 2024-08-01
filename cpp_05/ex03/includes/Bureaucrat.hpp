@@ -6,13 +6,15 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:38:06 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:28:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:20:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
+# include <iostream>
+# include <string>
 # include "AForm.hpp"
 
 class Bureaucrat {
@@ -25,12 +27,12 @@ class Bureaucrat {
 	public:
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
-		Bureaucrat();										// Default constructor (2)
-		Bureaucrat(const Bureaucrat& source);			// Copy constructor
+		Bureaucrat ();										// Default constructor (2)
+		Bureaucrat (const Bureaucrat& source);				// Copy constructor
 		Bureaucrat& operator=(const Bureaucrat& source);	// Copy assignment operator
-		~Bureaucrat(void);								// Destructor
+		~Bureaucrat ();										// Destructor
 
-		Bureaucrat(const std::string& name, int grade);	// Parametrized constructor
+		Bureaucrat (const std::string& name, int grade);	// Parametrized constructor
 		/* --- Accessors ---------------------------------------------------- */
 		
 		//	Getters
@@ -44,7 +46,7 @@ class Bureaucrat {
 		
 		void 	incrementGrade(int grade);
 		void	decrementGrade(int grade);
-		void	signForm(AForm & form);
+		void	signForm (AForm & form);
 		void	executeForm(AForm const & form);
 
 		//	Exceptions (3)

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 22:44:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:38:24 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 01:00:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ Intern::~Intern() {
 AForm* Intern::makeForm(const std::string & formName, const std::string & target) {
 	for (int i = 0; i < 3; i++) {
 		if (formName == formNamesArray[i]) {
-			std::cout << *this << " has created a " << formName << std::endl; // (2)
+			std::cout << *this << " has created a " << formName << std::endl	// (2)
+					  << std::endl; 
 			return (formFunctionsArray[i](target));
 		}
 	}

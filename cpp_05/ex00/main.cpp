@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/31 11:07:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:49:50 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int main() {
 //	Object creation
 
 	std::cout << std::endl
-	<< "/* --- Creating a bureaucrat --------------------------------------- */"
-	<< std::endl << std::endl;
+			  << "/* --- Creating a bureaucrat ----------------------------- */"
+			  << std::endl;
 	grade = 100;
 
 	try {
@@ -36,8 +36,8 @@ int main() {
 //	Object upgrading
 
 	std::cout << std::endl
-	<< "/* --- Upgrading a bureaucrat -------------------------------------- */"
-	<< std::endl << std::endl;
+			  << "/* --- Upgrading a bureaucrat ---------------------------- */"
+			  << std::endl;
 	grade = 100;
 	increment = 99;
 
@@ -56,8 +56,8 @@ int main() {
 //	Object downgrading
 
 	std::cout << std::endl
-	<< "/* --- Downgrading a bureaucrat ------------------------------------ */"
-	<< std::endl << std::endl;
+			  << "/* --- Downgrading a bureaucrat -------------------------- */"
+			  << std::endl;
 	grade = 100;
 	decrement = 50;
 
@@ -76,8 +76,8 @@ int main() {
 //	Object instantiated with wrong grade (should throw an exception)
 
 	std::cout << std::endl
-	<< "/* --- Creating a wrong bureaucrat  -------------------------------- */"
-	<< std::endl << std::endl;
+			  << "/* --- Creating a wrong bureaucrat  ---------------------- */"
+			  << std::endl;
 	grade = 200;	
 
 	try {
@@ -91,7 +91,6 @@ int main() {
 	std::cout << std::endl;
 
 	grade = 0;
-
 	try {
 		Bureaucrat b("Gregor", grade);
 		std::cout << b << std::endl;
@@ -103,8 +102,8 @@ int main() {
 //	Object with no parameters (should be initialized with default values)
 
 	std::cout << std::endl
-	<< "/* --- Creating a default bureaucrat  ------------------------------ */"
-	<< std::endl << std::endl;
+			  << "/* --- Creating a default bureaucrat  -------------------- */"
+			  << std::endl;
 	
 	try {
 		Bureaucrat b;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AForm.cpp                                          :+:      :+:    :+:   */
+/*   AForm.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:18:40 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:32:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:29:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 //	Default constructor
 AForm::AForm () : _formName("Default"), _isSigned(false), _gradeToSign(100),
 				_gradeToExecute(50) {
-	std::cout << "Default AForm constructor called" << std::endl;
+	std::cout << "AForm default constructor called" << std::endl;
 }
 
 //	Copy constructor
@@ -30,7 +30,7 @@ AForm::AForm ( const AForm& source ) : _formName(source._formName),
 
 //	Copy assignment operator
 AForm &AForm::operator=( const AForm& source ) {
-	std::cout << "AForm copy assignment constructor called" << std::endl;
+	std::cout << "AForm copy constructor called" << std::endl;
 	if (this != &source)
 		this->_isSigned = source._isSigned;
 	return (*this);
@@ -73,32 +73,41 @@ int	AForm::getGradeToExecute() const {
 
 /* --- Member functions ---------------------------------------------------- */	
 
+//	VERSION WITH TRY-CATCH BLOCK
 void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
 	if (_isSigned == true)
 		throw IsAlreadySignedException();
 	if (bureaucrat.getGrade() > getGradeToSign())
-		throw GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	_isSigned = true;
 }
 
+//	// VERSION WITHOUT TRY-CATCH WITHIN BLOCK
+// void	AForm::beSigned ( Bureaucrat & bureaucrat ) {
+// 	// if (_isSigned == true)
+// 	// 	throw IsAlreadySignedException();
+// 	if (bureaucrat.getGrade() <= getGradeToSign())
+// 		_isSigned = true;
+// }
+
 void	AForm::execute(Bureaucrat const & executor) const {
-	if (!this->getIsSigned())
+	if (this->getIsSigned() == false)
 		throw IsNotSignedException();
-	if (executor.getGrade() > this->getGradeToExecute())	
-		throw GradeTooLowException();
-	std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade()
-			  << ") executed form " << getFormName() << " (grade " 
-			  << getGradeToSign() << " needed)" << std::endl;	
+	if (executor.getGrade() > this->getGradeToExecute())		
+		throw Bureaucrat::GradeTooLowException();
+	std::cout << "\t" << executor.getName() << " (grade " << executor.getGrade() 
+			  << ") executed " << getFormName() << " (grade "
+			  << getGradeToExecute() << " needed)" << std::endl;
 	this->performAction();
 }
 
 //	Exceptions
 const char* AForm::GradeTooHighException::what() const throw() {
-    return "Grade is too high";
+    return "Form's grade is too high";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-    return "Grade is too low";
+    return "Form's grade is too low";
 }
 
 const char* AForm::IsAlreadySignedException::what() const throw() {

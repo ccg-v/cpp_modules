@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:24:59 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:29:34 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:20:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ class	PresidentialPardonForm : public AForm {
 		//	Default destructor
 		~PresidentialPardonForm();
 
-		//	Parameterized constructor
+		/* --- Parameterized constructor ------------------------------------ */
+		
 		PresidentialPardonForm( const std::string & target);
 
 	protected:

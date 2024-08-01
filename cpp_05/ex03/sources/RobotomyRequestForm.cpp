@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:22:20 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:39:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:39:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ RobotomyRequestForm::RobotomyRequestForm()
 //	Copy constructor
 RobotomyRequestForm::RobotomyRequestForm (const RobotomyRequestForm & source)
 	: AForm(source), _target(source._target) {
-	std::cout << "RobotomyRequestForm copy constructor called" << std::endl;
+		std::cout << "RobotomyRequestForm copy constructor called" << std::endl;
 }
 
 //	Copy assignment operator
@@ -55,7 +55,7 @@ RobotomyRequestForm::RobotomyRequestForm( const std::string & target)
 void	RobotomyRequestForm::performAction() const {
 	std::srand(std::time(0));
 	int	robotomyResult = std::rand() % 2;
-	std::cout << "\t(((buzzzZZZZ...hummmMMM...rrRROOoBotoMMizzZZinnng...CLONK... ping!)))"
+	std::cout << "\n\t(((buzzzZZZZ...hummmMMM...rrRROOoBotoMMizzZZinnng...CLONK... ping!)))"
 			  << std::endl;
 	if (robotomyResult == 0)
 		std::cout << "\t" << _target << " robotomy process finished succesfully" 

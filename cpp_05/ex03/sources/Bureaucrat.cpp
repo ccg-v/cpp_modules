@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:11:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/31 11:10:24 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:31:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ Bureaucrat::Bureaucrat () : _name("Default"), _grade(150) {
 }
 
 //	Copy constructor
-Bureaucrat::Bureaucrat ( const Bureaucrat& source ) 
-	: _name(source._name), _grade(source._grade) {
-	std::cout << "Bureaucrat copy constructor called" << std::endl;
+Bureaucrat::Bureaucrat(const Bureaucrat& source)
+    : _name(source._name), _grade(source._grade) {
+    	std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
+
 
 //	Copy assignment operator
 Bureaucrat	&Bureaucrat::operator=( const Bureaucrat& source ) {
@@ -42,10 +43,12 @@ Bureaucrat::~Bureaucrat ( void ) {
 			  << std::endl;
 }
 
-//	Parameterized constructor
+/* --- Parameterized constructor -------------------------------------------- */
+
 Bureaucrat::Bureaucrat ( const std::string& name, int grade )
 	: _name(name) {
-	std::cout << "Parameterized constructor called" << std::endl;
+	std::cout << "Bureaucrat " << _name << " parameterized constructor called"
+			  << std::endl;
 	if (grade < 1)
 		throw GradeTooHighException();
 	else if (grade > 150)
@@ -79,38 +82,55 @@ void	Bureaucrat::decrementGrade (int decrement) {
 		throw GradeTooLowException();
 }
 
+//	VERSION WITH TRY-CATCH BLOCK
 void	Bureaucrat::signForm(AForm& form) {
     try {
         form.beSigned(*this);
-		std::cout << "\t" << _name << " (grade " << _grade << ") signed form "
+		std::cout << "\t" << _name << " (grade " << _grade << ") signed "
 				  << form.getFormName() << " (grade " << form.getGradeToSign()
 				  << " needed)" << std::endl;
     } catch (const std::exception& e) {
 		std::cout << "\t" << _name << " (grade " << _grade
-				  << ") couldn't sign form " << form.getFormName()
+				  << ") couldn't sign " << form.getFormName()
 				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
 				  << e.what() << std::endl;
     }
 }
 
-void	Bureaucrat::executeForm(AForm const & form){
+//	// VERSION WITHOUT TRY-CATCH BLOCK
+// void Bureaucrat::signForm(AForm& form) {
+// 	form.beSigned(*this);
+// 	if (form.getIsSigned() == true) {
+// 		std::cout << "\t" << _name << " (grade " << _grade << ") signed form "
+// 				<< form.getFormName() << " (grade " << form.getGradeToSign()
+// 				<< " needed)" << std::endl;
+// 	} else {
+// 		std::cout << "\t" << _name << " (grade " << _grade
+// 				<< ") couldn't sign form " << form.getFormName()
+// 				<< " (grade " << form.getGradeToSign() << " needed)" << ": " 
+// 				<< GradeTooLowException().what() << std::endl;
+// 		// throw GradeTooLowException();
+//     }
+// }
+
+void	Bureaucrat::executeForm(AForm const & form) {
 	try {
-		form.execute(*this);	
-	} catch (const std::exception& e)  {
+		form.execute(*this);
+	} catch (const std::exception & e) {
 		std::cout << "\t" << _name << " (grade " << _grade
-				  << ") couldn't execute form " << form.getFormName()
-				  << " (grade " << form.getGradeToSign() << " needed)" << ": "
-				  << e.what() << std::endl;		
+				  << ") couldn't execute " << form.getFormName()
+				  << " (grade " << form.getGradeToExecute() << " needed)" << ": "
+				  << e.what() << std::endl;
 	}
 }
 
 // Exceptions
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-    return "Grade is too high";
+    return "Bureaucrat's grade is too high";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-    return "Grade is too low";
+    return "Bureaucrat's grade is too low";
 }
 
 //	Insertion operator (<<) overload

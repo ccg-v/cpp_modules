@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/07/30 23:38:54 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 01:07:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,79 +17,109 @@
 #include "Intern.hpp"
 
 int main() {
+    try {
+        std::cout << std::endl
+                  << "/* --- ShrubberyCreationForm process (145, 137) -------------- /*\n"
+                  << std::endl;
 
-	Bureaucrat 	low_officer("assistant Bob", 145);
-	Bureaucrat	medium_officer("executive Carol", 70);
-	Bureaucrat	high_officer("head Boss", 3);
-	Intern		intern_guy;
+        Bureaucrat	low_officer("assistant Bob", 150);
+        Bureaucrat	medium_officer("executive Carol", 70);
+		Intern		intern_guy;
+		AForm*		newShrubberyForm;
 
-	AForm*		newRobotomyForm;
-	AForm*		newShrubberyForm;
-	AForm*		newPardonForm;
-	AForm*		wrongForm;
+		std::cout << std::endl;
+		std::cout << low_officer << std::endl;
+        std::cout << medium_officer << std::endl;
+        std::cout << intern_guy << std::endl;
+		std::cout << std::endl;
 
-/* --- Instances ------------------------------------------------------------ */
+		newShrubberyForm = intern_guy.makeForm("ShrubberyCreationForm", "Forest");
+		
+		std::cout << std::endl;
+        low_officer.signForm(*newShrubberyForm);
+        medium_officer.signForm(*newShrubberyForm);
+        low_officer.executeForm(*newShrubberyForm);
+        medium_officer.executeForm(*newShrubberyForm);
+		std::cout << std::endl;
 
-    std::cout << std::endl;
-	std::cout << "/* --- Instances ----------------------------------------- /*"
-			  << std::endl;
+		delete newShrubberyForm;
+		
+    } catch (const std::exception & e) {
+        std::cout << "\tError: " << e.what() << std::endl;
+    }
 
-	std::cout << std::endl;
-    std::cout << low_officer << std::endl;
-	std::cout << medium_officer << std::endl;
-	std::cout << high_officer << std::endl;
-	std::cout << intern_guy << std::endl;
-	std::cout << std::endl;
+    // RobotomyRequestForm process
+    try {
+        std::cout << std::endl
+                  << "/* --- RobotomyRequestForm process (72, 45) ------------------ /*\n"
+                  << std::endl;
 
-/* --- ShrubberyCreationForm process ---------------------------------------- */
+        Bureaucrat	low_officer("assistant Bob", 150);
+        Bureaucrat	medium_officer("executive Carol", 70);
+        Bureaucrat	high_officer("head Boss", 3);
+		Intern		intern_guy;
+		AForm*		newRobotomyForm;
 
-	std::cout << "/* --- ShrubberyCreationForm process (145, 137) ---------- /*"
-			  << std::endl << std::endl;
+		std::cout << std::endl;
+        std::cout << low_officer << std::endl;
+        std::cout << medium_officer << std::endl;
+        std::cout << high_officer << std::endl;
+        std::cout << intern_guy << std::endl;
+		std::cout << std::endl;
 
-	newShrubberyForm = intern_guy.makeForm("ShrubberyCreationForm", "Forest");
-	low_officer.signForm(*newShrubberyForm);
-	low_officer.executeForm(*newShrubberyForm);
-	medium_officer.executeForm(*newShrubberyForm);
-	delete newShrubberyForm;
-    std::cout << std::endl;
+		newRobotomyForm = intern_guy.makeForm("RobotomyRequestForm", "Marvin the Paranoid Android");
 
-/* --- RobotomyRequestForm process ------------------------------------------ */
+		std::cout << std::endl;
+        low_officer.signForm(*newRobotomyForm);
+        medium_officer.signForm(*newRobotomyForm);
+        high_officer.signForm(*newRobotomyForm);
+        low_officer.executeForm(*newRobotomyForm);
+        medium_officer.executeForm(*newRobotomyForm);
+        high_officer.executeForm(*newRobotomyForm);
+		std::cout << std::endl;
 
-	std::cout << "/* --- RobotomyRequestForm process (72, 45) -------------- /*"
-		<< std::endl << std::endl;
+		delete newRobotomyForm;
 
-	newRobotomyForm = intern_guy.makeForm("RobotomyRequestForm", "Marvin the Paranoid Android");
-	low_officer.signForm(*newRobotomyForm);
-	medium_officer.signForm(*newRobotomyForm);
-	low_officer.executeForm(*newRobotomyForm);
-	medium_officer.executeForm(*newRobotomyForm);
-	high_officer.executeForm(*newRobotomyForm);
-	delete newRobotomyForm;
-    std::cout << std::endl;
+    } catch (const std::exception & e) {
+        std::cout << "\tError: " << e.what() << std::endl;
+    }
 
-/* --- PresidentialPardonForm process --------------------------------------- */
+    // PresidentialPardonForm process
+    try {
+        std::cout << std::endl
+                  << "/* --- PresidentialPardonForm process (25, 5) ---------------- /*\n"
+                  << std::endl;
 
-	std::cout << "/* --- PresidentialPardonForm process (25, 5) ------------ /*"
-	<< std::endl << std::endl;
 
-	newPardonForm = intern_guy.makeForm("PresidentialPardonForm", "Vogon poet");
-	low_officer.signForm(*newPardonForm);
-	medium_officer.signForm(*newPardonForm);
-	high_officer.signForm(*newPardonForm);
-	low_officer.executeForm(*newPardonForm);
-	medium_officer.executeForm(*newPardonForm);
-	high_officer.executeForm(*newPardonForm);
-	delete newPardonForm;
-    std::cout << std::endl;
+        Bureaucrat	low_officer("assistant Bob", 150);
+        Bureaucrat	medium_officer("executive Carol", 70);
+        Bureaucrat	high_officer("head Boss", 3);
+		Intern		intern_guy;
+		AForm*		newPardonForm;
 
-/* --- wrongForm process ---------------------------------------------------- */	
+		std::cout << std::endl;
+        std::cout << low_officer << std::endl;
+        std::cout << medium_officer << std::endl;
+        std::cout << high_officer << std::endl;
+        std::cout << intern_guy << std::endl;
+		std::cout << std::endl;
 
-	std::cout << "/* --- wrongForm process --------------------------------- /*"
-	<< std::endl << std::endl;
+		newPardonForm = intern_guy.makeForm("PresidentialPardonForm", "Vogon poet");
 
-	wrongForm = intern_guy.makeForm("wrongForm", "anyone");
-	delete wrongForm;
+		std::cout << std::endl;
+		low_officer.signForm(*newPardonForm);
+		medium_officer.signForm(*newPardonForm);
+		high_officer.signForm(*newPardonForm);
+		low_officer.executeForm(*newPardonForm);
+		medium_officer.executeForm(*newPardonForm);
+		high_officer.executeForm(*newPardonForm);
+		std::cout << std::endl;
+				
+		delete newPardonForm;
+		
+    } catch (const std::exception & e) {
+        std::cout << "\tError: " << e.what() << std::endl;
+    }
 
-	std::cout << std::endl;
     return 0;
 }
