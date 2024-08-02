@@ -25,13 +25,13 @@ Let's consider a function that takes a string representation of a literal:
 ```void processLiteral(const std::string& literal);```
 
 If you call this function, you're passing in a string that represents a literal, not necessarily a literal that is a string. For example:
-
-```processLiteral("123");       // Represents an integer literal
+```
+processLiteral("123");       // Represents an integer literal
 processLiteral("3.14");      // Represents a floating-point literal
 processLiteral("'a'");       // Represents a character literal
 processLiteral("\"hello\""); // Represents a string literal
-processLiteral("true");      // Represents a boolean literal```
-
+processLiteral("true");      // Represents a boolean literal
+```
 ## Pseudo Literals
 
 In C++, pseudo literals are special values used to represent certain edge cases or special conditions in floating-point arithmetic. They are not numeric values in the usual sense but are part of the floating-point standard to handle cases that cannot be represented by finite floating-point numbers:
