@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/08/02 13:56:23 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/08/02 19:04:14 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME 		= 	bureaucrat.out
 # --- Compiler --------------------------------------------------------------- #
 
 CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -fsanitize=address
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98
 
 # --- Folders ---------------------------------------------------------------- #
 

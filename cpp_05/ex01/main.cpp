@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/02 12:20:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:22:36 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int main() {
     		  << std::endl;
 
 	try {
-		Bureaucrat b5("Ted", 50);
+		Bureaucrat b5("Ted", 150);
 		std::cout << b5 << std::endl;
 		Bureaucrat b6("Alice",10);
 		std::cout << b6 << std::endl;

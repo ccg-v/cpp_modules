@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/02 13:56:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:11:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int main() {
 		high_officer.executeForm(*newPardonForm);
 		std::cout << std::endl;
 				
-		// delete newPardonForm;
+		delete newPardonForm;
 		
     } catch (const std::exception & e) {
         std::cout << "\tError: " << e.what() << std::endl;
