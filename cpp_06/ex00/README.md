@@ -73,3 +73,24 @@ horizontal rule:
 ***
 ---
 ___
+
+To create a table, use pipes and hyphens:
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
+
+Single-line blockquote:
+> This is a blockquote
+
+Multiline blockquote:
+> This is a longer blockquote.
+> It spans multiple lines.
+> You can keep adding lines as needed.
+
+Nested blockquote:
+> This is the first level of quoting.
+>
+> > This is nested blockquote.
+>
+> Back to the first level.
