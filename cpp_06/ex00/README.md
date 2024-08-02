@@ -62,18 +62,5 @@ Collapsible sections:
 Hidden content here
 </details>
 
-Footnotes:
-Here's a sentence with a footnote.[^1]
-
-[!NOTE]
-Highlights information that users should take into account.
-
-
-[!IMPORTANT]
-Crucial information necessary for users to succeed.
-
-
-[!WARNING]
-Critical content demanding immediate user attention due to potential risks.
-
-[^1]This is the footnote
+- [ ] Uncompleted task
+- [x] Completed task
