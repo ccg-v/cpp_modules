@@ -55,3 +55,25 @@ In C++, pseudo literals are special values used to represent certain edge cases 
 	* For 'float': 'nanf'
 	* For 'double': 'nan'
 
+
+Collapsible sections:
+<details>
+<summary>Click to expand</summary>
+Hidden content here
+</details>
+
+Footnotes:
+Here's a sentence with a footnote.1
+
+[!NOTE]
+Highlights information that users should take into account.
+
+
+[!IMPORTANT]
+Crucial information necessary for users to succeed.
+
+
+[!WARNING]
+Critical content demanding immediate user attention due to potential risks.
+
+1.This is the footnote
