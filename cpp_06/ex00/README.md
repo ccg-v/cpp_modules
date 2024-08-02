@@ -55,6 +55,9 @@ In C++, pseudo literals are special values used to represent certain edge cases 
 	* For 'float': 'nanf'
 	* For 'double': 'nan'
 
+This is *italic font*
+This is **bold font**
+This is ~~strikethrough font~~
 
 Collapsible sections:
 <details>
@@ -62,5 +65,11 @@ Collapsible sections:
 Hidden content here
 </details>
 
+Task list:
 - [ ] Uncompleted task
 - [x] Completed task
+
+horizontal rule:
+***
+---
+___
