@@ -26,26 +26,32 @@ Let's consider a function that takes a string representation of a literal:
 
 If you call this function, you're passing in a string that represents a literal, not necessarily a literal that is a string. For example:
 
-```processLiteral("123");       // Represents an integer literal```
-```processLiteral("3.14");      // Represents a floating-point literal```
-```processLiteral("'a'");       // Represents a character literal```
-```processLiteral("\"hello\""); // Represents a string literal```
-```processLiteral("true");      // Represents a boolean literal```
+```processLiteral("123");       // Represents an integer literal
+processLiteral("3.14");      // Represents a floating-point literal
+processLiteral("'a'");       // Represents a character literal
+processLiteral("\"hello\""); // Represents a string literal
+processLiteral("true");      // Represents a boolean literal```
 
 ## Pseudo Literals
 
 In C++, pseudo literals are special values used to represent certain edge cases or special conditions in floating-point arithmetic. They are not numeric values in the usual sense but are part of the floating-point standard to handle cases that cannot be represented by finite floating-point numbers:
 
-1. Infinity ('+inf' and '-inf')
-	* Positive Infinity ('+inf'): Represents a value that is larger than any finite number. This can result from operations like dividing a positive number by zero.
-	* Negative Infinity ('-inf'): Represents a value that is more negative than any finite number. This can result from operations like dividing a negative number by zero.
+1. **Infinity** ('**+inf**' and '**-inf**')
+
+	* **Positive Infinity** ('**+inf**'): Represents a value that is larger than any finite number. This can result from operations like dividing a positive number by zero.
+	* **Negative Infinity** ('**-inf**'): Represents a value that is more negative than any finite number. This can result from operations like dividing a negative number by zero.
+
 	In C++, these are represented in floating-point types as:
+
 	* For 'float': '+inff' and '-inff'
 	* For 'double': '+inf' and '-inf'
-	
-2. NaN (Not-a-Number)
+
+2. **NaN** (**Not-a-Number**)
+
 	Represents a value that is undefined or unrepresentable, especially in floating-point calculations. Operations like '0.0 / 0.0' or the square root of a negative number (in a context where complex numbers are not being used) can produce NaN.
+
 	In C++, these are represented in floating-point types as:
+
 	* For 'float': 'nanf'
 	* For 'double': 'nan'
 
