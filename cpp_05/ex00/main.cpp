@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:05:54 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/01 17:49:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:14:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main() {
 	try {
 		Bureaucrat a("Gregor", grade);
 		std::cout << a << std::endl;
-		std::cout << "\t" << a.getName() << " is to be downgraded " << increment 
+		std::cout << "\t" << a.getName() << " is to be downgraded " << decrement 
 				  << " grades" << std::endl;
 		a.decrementGrade(decrement);
 		std::cout << a << std::endl;
