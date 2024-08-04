@@ -1,7 +1,7 @@
 # Exercise 00: Conversion of scalar types
 
 <details>
-<summary> ## Scalar types </summary>
+<summary><h2> ## Scalar types </h2></summary>
 
 Data types that hold a single value, as opposed to aggregate types like arrays, classes, or structures that can hold multiple values.
 Main categories of scalar types:
