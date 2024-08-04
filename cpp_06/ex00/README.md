@@ -1,6 +1,7 @@
 # Exercise 00: Conversion of scalar types
 
-## Scalar types
+<details>
+<summary> ## Scalar types </summary>
 
 Data types that hold a single value, as opposed to aggregate types like arrays, classes, or structures that can hold multiple values.
 Main categories of scalar types:
@@ -16,6 +17,8 @@ Main categories of scalar types:
 	2.1 int*, char*...: These are pointers to specific types
 	2.2 void: A generic pointer that can hold the address of any data type
 5. Enumerated types (enum)
+
+</details>
 
 ## The function must take as a parameter "a string representation of a C++ literal"
 
@@ -55,6 +58,18 @@ In C++, pseudo literals are special values used to represent certain edge cases 
 	* For 'float': 'nanf'
 	* For 'double': 'nan'
 
-#
+## Exercise's logic
+
+1. **Attributes of the Class**
+
+    Since the class ScalarConverter is designed to be non-instantiable and only needs to perform a conversion based on the provided string literal, it does not require any attributes. The conversion logic can be handled purely through static methods without any need for member variables.
+
+2. **Constructor**
+
+    The constructor should not receive any parameters. Given the class must be non-instantiable, the constructor should be private or protected to prevent instantiation. The string literal should be handled by a static method rather than through the constructor.
+
+3. **Static Method for Conversion**
+
+    The class should provide a static method (likely named convert) that takes the string literal as a parameter. This method will handle the detection of the literal type, conversion to the appropriate scalar types, and output the results.
 
 
