@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/04 23:32:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:24:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,28 @@ private:
 	ScalarConverter();									// Default constructor
 	ScalarConverter(const ScalarConverter & source);	// Copy constructor
 	ScalarConverter & operator=(const ScalarConverter & source);	// Copy assignment operator
+	~ScalarConverter();									// Default destructor
+
+	/* --- Private nember methods ------------------------------------------- */
+
+	static bool	isChar(const std::string & literal);
+	static bool	isInteger(const std::string & literal);
+	static bool	isFloat(const std::string & literal);
+	static bool	isDouble(const std::string & literal);
 
 public:
-	/* --- Orthodox Canonical Form ------------------------------------------ */
 
-	~ScalarConverter();									// Default destructor (1)
+	/* --- Public nember methods -------------------------------------------- */
 
-	/* --- Member methods --------------------------------------------------- */
+	static void	detectType (const std::string & literal);
 
-	static void	convert (const std::string & literal);
+	/* --- Exceptions ------------------------------------------------------- */
+
+	class OutofRange : public std::exception
+	{
+		public:
+			const char *what() const throw();
+	};
 };
 
 #endif
-
-/*
- *	(1) The Default Destructor should be declared as public, even
- *		in non-instantiable classes, to avoid issues with resource
- *		cleanup or when the class is used in static assertions.
- */

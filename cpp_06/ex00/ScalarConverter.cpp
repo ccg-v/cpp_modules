@@ -6,11 +6,13 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/05 00:18:34 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:39:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <cctype>	// isprint(), isdigit();
+#include <limits>	// INT_MIN, INT_MAX
 
 /* --- Orthodox Canonical Form implementation ------------------------------- */
 
@@ -42,12 +44,95 @@ ScalarConverter::~ScalarConverter() {
 
 /* --- Member methods ------------------------------------------------------- */
 
-static void	convert(const std::string & literal) {
-	int	len = literal.length();
-	if (len == 2) {
-		std::cout << literal[0] << std::endl;
-		std::cout << literal[2] << std::endl;
- 		std::cout << "You're on the right track" << std::endl;
-	}
+bool	ScalarConverter::isChar(const std::string & literal) {
+	if (literal.empty())
+		return false;
+	if (literal.length() == 1 && std::isprint(literal[0]) && !std::isdigit(literal[0]))
+		return true;
+	return false;
+}
 
+bool	ScalarConverter::isInteger(const std::string & literal) {
+	size_t	i = 0;
+
+	if (literal.empty())
+		return false;
+	if (literal[0] == '-')
+		i++;
+	while (i < literal.length())
+	{
+		if (!std::isdigit(literal[i]))
+			return false;
+		i++;
+	}
+	return true;
+}
+
+bool	ScalarConverter::isFloat(const std::string & literal) {
+	size_t	i = 0;
+	size_t 	dotCount = 0;
+	size_t	len = literal.length();
+
+	if (literal.empty() || literal[len - 1] != 'f')
+		return false;
+	if (literal[0] == '-')
+		i++;
+	while (i < (len - 1))
+	{
+		if ((literal[i]) == '.')
+			dotCount++;
+		else if (!std::isdigit(literal[i]))
+			return false;
+		i++;
+	}
+	if (dotCount != 1)
+		return false;
+	return true;
+}
+
+bool	ScalarConverter::isDouble(const std::string & literal) {
+	size_t	i = 0;
+	size_t 	dotCount = 0;
+	size_t	len = literal.length();
+
+	if (literal.empty())
+		return false;
+	if (literal[0] == '-')
+		i++;
+	while (i < len)
+	{
+		if ((literal[i]) == '.')
+			dotCount++;
+		else if (!std::isdigit(literal[i]))
+			return false;
+		i++;
+	}
+	if (dotCount != 1)
+		return false;
+	return true;
+}
+
+void	ScalarConverter::detectType(const std::string & literal) {
+	if (isChar(literal)) {
+		std::cout << "Type is char" << std::endl;
+	}
+	if (isInteger(literal)) {
+		std::cout << "Type has integer format" << std::endl;
+		try {
+			int value = std::stoi(literal);
+		} catch (const std::exception & e) {
+			
+		}
+	}
+	if (isFloat(literal)) {
+		std::cout << "Type has float format" << std::endl;
+	}
+	if (isDouble(literal)) {
+		std::cout << "Type has double format" << std::endl;
+	}
+}
+
+const char *ScalarConverter::OutofRange::what() const throw()
+{
+    return "Out of range";
 }
