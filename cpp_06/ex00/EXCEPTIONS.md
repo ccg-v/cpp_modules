@@ -1,30 +1,30 @@
 The type of exception chosen provides meaningful information about the nature of the error beyond just the error message. This information helps in categorizing and understanding the error, which can be crucial for debugging, maintenance, and error handling strategies. Here are some key aspects of the meaningful information provided by the type of exception:
-1. Error Context and Nature
+## 1. Error Context and Nature
 
 The exception type gives insight into what went wrong:
 
-* std::range_error: Indicates that a value was out of the allowable range.
-* std::invalid_argument: Signals that an argument passed to a function is invalid.
-* std::overflow_error: Suggests that an arithmetic overflow occurred.
-* std::underflow_error: Indicates an arithmetic underflow.
-* std::runtime_error: Represents errors that are not easily classified under other categories and occur at runtime.
+* **std::range_error**: Indicates that a value was out of the allowable range.
+* **std::invalid_argument**: Signals that an argument passed to a function is invalid.
+* **std::overflow_error**: Suggests that an arithmetic overflow occurred.
+* **std::underflow_error**: Indicates an arithmetic underflow.
+* **std::runtime_error**: Represents errors that are not easily classified under other categories and occur at runtime.
 
-2. Error Severity and Handling
+## 2. Error Severity and Handling
 
 Different exceptions suggest different levels of severity and handling needs:
 
-* Logic Errors (std::logic_error, std::invalid_argument, std::domain_error):
+* **Logic Errors** (std::logic_error, std::invalid_argument, std::domain_error):
 	* Typically indicate a programming error or a bug in the logic of the code.
 	* Often require code correction or validation improvements.
-* Runtime Errors (std::runtime_error, std::range_error, std::overflow_error):
+* **Runtime Errors** (std::runtime_error, std::range_error, std::overflow_error):
     * Indicate problems that occur during program execution, possibly due to unforeseen conditions.
     * Might need dynamic handling, such as retries, alternative flows, or logging for post-mortem analysis.
 
-3. Granular Control
+## 3. Granular Control
 
 Choosing specific exceptions allows for precise control over error handling:
 
-* Specific Catch Blocks:
+* **Specific Catch Blocks**:
 	* Different exceptions can be caught and handled separately, enabling specific corrective actions.
     * Example:
 		```
@@ -38,24 +38,24 @@ Choosing specific exceptions allows for precise control over error handling:
     		// Handle any other standard exceptions
 		}
 		```
-4. Documentation and Communication
+## 4. Documentation and Communication
 
 The choice of exception documents the function's behavior:
 
-    Code Readability:
-        It makes the code more readable and understandable for other developers by clearly indicating what types of errors a function might throw.
-    API Contracts:
-        When creating libraries or APIs, specifying which exceptions might be thrown establishes a clear contract with the users of the API.
+* **Code Readability**:
+    * It makes the code more readable and understandable for other developers by clearly indicating what types of errors a function might throw.
+    * API Contracts:
+        * When creating libraries or APIs, specifying which exceptions might be thrown establishes a clear contract with the users of the API.
 
-5. Maintenance and Debugging
+## 5. Maintenance and Debugging
 
 The type of exception can help in identifying and fixing issues more efficiently:
 
-    Error Diagnosis:
-        Different exceptions can guide developers to the source of the problem quickly.
-        For instance, std::invalid_argument might prompt a check on input validation, whereas std::range_error might lead to examining boundary conditions.
+* **Error Diagnosis**:
+    * Different exceptions can guide developers to the source of the problem quickly.
+    * For instance, std::invalid_argument might prompt a check on input validation, whereas std::range_error might lead to examining boundary conditions.
 
-Example
+## Example
 
 Consider a function that processes numerical values:
 ```
@@ -69,7 +69,7 @@ void processValue(int value) {
     std::cout << "Value is " << value << std::endl;
 }
 ```
-Handling the Exceptions
+## Handling the Exceptions
 ```
 int main() {
     try {
@@ -89,7 +89,6 @@ int main() {
 ```
 In this example:
 
-    std::range_error indicates that the value is outside the acceptable range, suggesting a problem with the input data.
-    std::invalid_argument indicates that the value is not even, suggesting a logical or validation error.
-    The catch blocks provide tailored responses based on the type of error, improving the robustness and user experience of the application.
-
+* **std::range_error** indicates that the value is outside the acceptable range, suggesting a problem with the input data.
+* **std::invalid_argument** indicates that the value is not even, suggesting a logical or validation error.
+* The catch blocks provide tailored responses based on the type of error, improving the robustness and user experience of the application.
