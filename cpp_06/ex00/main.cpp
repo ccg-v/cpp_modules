@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:02:29 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/05 23:40:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:25:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,8 @@ int main(int argc, char **argv)
 	{
 		ScalarConverter::detectType(argv[1]);
 	}
+	else
+		std::cout << "Invalid arguments (usage: './convert.out parameter')"
+				  << std::endl;
 	return 0;
 }
