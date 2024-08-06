@@ -29,15 +29,15 @@ Choosing specific exceptions allows for precise control over error handling:
         Example:
 		```
 		try {
-    // Code that may throw exceptions
-} catch (const std::range_error &e) {
-    // Handle range errors specifically
-} catch (const std::invalid_argument &e) {
-    // Handle invalid arguments specifically
-} catch (const std::exception &e) {
-    // Handle any other standard exceptions
-}
-```
+    		// Code that may throw exceptions
+		} catch (const std::range_error &e) {
+    		// Handle range errors specifically
+		} catch (const std::invalid_argument &e) {
+    		// Handle invalid arguments specifically
+		} catch (const std::exception &e) {
+    		// Handle any other standard exceptions
+		}
+		```
 4. Documentation and Communication
 
 The choice of exception documents the function's behavior:
