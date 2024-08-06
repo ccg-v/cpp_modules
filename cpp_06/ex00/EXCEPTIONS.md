@@ -3,30 +3,30 @@ The type of exception chosen provides meaningful information about the nature of
 
 The exception type gives insight into what went wrong:
 
-    std::range_error: Indicates that a value was out of the allowable range.
-    std::invalid_argument: Signals that an argument passed to a function is invalid.
-    std::overflow_error: Suggests that an arithmetic overflow occurred.
-    std::underflow_error: Indicates an arithmetic underflow.
-    std::runtime_error: Represents errors that are not easily classified under other categories and occur at runtime.
+* std::range_error: Indicates that a value was out of the allowable range.
+* std::invalid_argument: Signals that an argument passed to a function is invalid.
+* std::overflow_error: Suggests that an arithmetic overflow occurred.
+* std::underflow_error: Indicates an arithmetic underflow.
+* std::runtime_error: Represents errors that are not easily classified under other categories and occur at runtime.
 
 2. Error Severity and Handling
 
 Different exceptions suggest different levels of severity and handling needs:
 
-    Logic Errors (std::logic_error, std::invalid_argument, std::domain_error):
-        Typically indicate a programming error or a bug in the logic of the code.
-        Often require code correction or validation improvements.
-    Runtime Errors (std::runtime_error, std::range_error, std::overflow_error):
-        Indicate problems that occur during program execution, possibly due to unforeseen conditions.
-        Might need dynamic handling, such as retries, alternative flows, or logging for post-mortem analysis.
+* Logic Errors (std::logic_error, std::invalid_argument, std::domain_error):
+	* Typically indicate a programming error or a bug in the logic of the code.
+	* Often require code correction or validation improvements.
+* Runtime Errors (std::runtime_error, std::range_error, std::overflow_error):
+    * Indicate problems that occur during program execution, possibly due to unforeseen conditions.
+    * Might need dynamic handling, such as retries, alternative flows, or logging for post-mortem analysis.
 
 3. Granular Control
 
 Choosing specific exceptions allows for precise control over error handling:
 
-    Specific Catch Blocks:
-        Different exceptions can be caught and handled separately, enabling specific corrective actions.
-        Example:
+* Specific Catch Blocks:
+	* Different exceptions can be caught and handled separately, enabling specific corrective actions.
+    * Example:
 		```
 		try {
     		// Code that may throw exceptions
