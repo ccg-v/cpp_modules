@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/05 23:24:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/07 23:27:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,15 @@ private:
 
 	/* --- Private nember methods ------------------------------------------- */
 
-	static bool	isChar(const std::string & literal);
-	static bool	isInteger(const std::string & literal);
-	static bool	isFloat(const std::string & literal);
-	static bool	isDouble(const std::string & literal);
+	static bool		isInteger(const std::string & literal);
+	static bool		isFloat(const std::string & literal);
+	static bool		isDouble(const std::string & literal);
+	static bool		isChar(const std::string & literal);
+	
+	static int		toInteger(const std::string & literal);
+	static float	toFloat(const std::string & literal);
+	static double	toDouble(const std::string & literal);
+	static char		toChar(const std::string & literal);
 
 public:
 

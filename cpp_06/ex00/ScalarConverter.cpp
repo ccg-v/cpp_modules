@@ -6,15 +6,19 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/06 21:24:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/08 00:26:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <cctype>	// isprint(), isdigit()
-#include <climits>	// INT_MIN, INT_MAX
 #include <cerrno>	// errno
 #include <cstdlib>	// strtol()
+#include <climits>	// INT_MIN, INT_MAX
+#include <cfloat>	// FLT_MIN, FLT_MAX, DBL_MIN, DBL_MAX
+#include <limits>	// std::numeric_limits
+#include <iomanip>	// std::fixed, std::setprecision
+#include <cmath>	// HUGE_VAL
 
 /* --- Orthodox Canonical Form implementation ------------------------------- */
 
@@ -108,48 +112,126 @@ bool	ScalarConverter::isChar(const std::string & literal) {
 	return false;
 }
 
-int	toInteger(const std::string & literal) {
+int	ScalarConverter::toInteger(const std::string & literal) {
 
 	char	*end;
 	errno = 0;
 	long value = std::strtol(literal.c_str(), &end, 10);
-
+	
 	if (errno == ERANGE || value < INT_MIN || value > INT_MAX) {
-		throw std::range_error("Value out of range");
-		// std::cout << "Value out of range" << std::endl;
+		throw std::range_error("out of integer range");
 	}
 	return static_cast<int>(value);
+}
+
+float	ScalarConverter::toFloat(const std::string & literal) {
+
+	char	*end;
+	errno = 0;
+	float value = std::strtof(literal.c_str(), &end);
+
+	if (errno == ERANGE || value < -FLT_MAX || value > FLT_MAX) {
+		throw std::range_error("out of float range");
+	}
+	return value;
+}
+
+double	ScalarConverter::toDouble(const std::string & literal) {
+	
+	char	*end;
+	errno = 0;
+	double value = std::strtod(literal.c_str(), &end);
+
+	if (errno == ERANGE || value < -DBL_MAX || value > DBL_MAX) {
+		throw std::range_error("out of double range");
+	}
+	return value;
+}
+
+char	ScalarConverter::toChar(const std::string & literal) {
+
+	char value = literal[0];
+
+	if (!std::isprint(static_cast<unsigned char>(value))) {
+		throw std::runtime_error("non displayable character");
+	}
+	return value;
 }
 
 void	ScalarConverter::detectType(const std::string & literal) {
 
 	if (isInteger(literal)) {
-		std::cout << "Type has integer format" << std::endl;
 		try {
 			int value = toInteger(literal);
-			std::cout << "Converted value is " << value << std::endl;
+			std::cout << "int:\t" << value << std::endl;
 		} catch (const std::runtime_error & e) {
-			std::cout << "Exception caught: " << e.what() << std::endl;
+			std::cout << "int:\t" << e.what() << std::endl;
 		}
-
 	}
 	if (isFloat(literal)) {
-		std::cout << "Type has float format" << std::endl;
+		try {
+			float value = toFloat(literal);
+			std::cout << "float:\t" << std::fixed << std::setprecision(1) // (1)
+					  << value << 'f' << std::endl;
+		} catch (const std::runtime_error & e) {
+			std::cout << "float:\t" << e.what() << std::endl;
+		}
 	}
 	if (isDouble(literal)) {
-		std::cout << "Type has double format" << std::endl;
+		try {
+			double value = toDouble(literal);
+			std::cout << "double:\t" << std::fixed << std::setprecision(1) // (1) 
+					  << value << std::endl;
+		} catch (const std::runtime_error & e) {
+			std::cout << "double:\t" << e.what() << std::endl;
+		}
 	}
 	if (isChar(literal)) {
 		std::cout << "Type is char" << std::endl; 
-		// try {
-			
-		// } catch (const std::exception & e) {
-
-		// }
+		try {
+			char value = toChar(literal);
+			std::cout << "char:\t" << value << std::endl;
+		} catch (const std::exception & e) {
+			std::cout << "char:\t" << e.what() << std::endl;
+		}
 	}
 }
 
-const char *ScalarConverter::OutofRange::what() const throw()
-{
-    return "Out of range";
-}
+/*
+ *	(1) 'std::fixed'  and  'std::precision' are manipulators in C++ used
+ *		with streams  (like 'std::cout')  to control  the formatting  of
+ *		floating-point numbers.
+ *		When used together,  'std::fixed'  and  'std::precision' control
+ *		the number of decimal places displayed in floating-point numbers
+ *		Without 'std::fixed', 'std::setprecision'  sets the total number
+ *		of significant digits displayed, which may include digits before
+ *		and after the decimal point
+ */
+
+/*
+ *	A number larger than the maximum representable double:
+ *	17976931348623157081452742373170435679807056752584499659891747680315
+ 	72607800285387605895586327668781715404589535143824642343213268894641
+	82768467546703537516986049910576551282076245490090389328944075868508
+	45513394230458323690322294816580855933212334827479782620414472316873
+	81771809192998812504040261841248583680.0
+ *
+ *	To test a smaller number that the minimum representable double, just
+ *	change the sign of the previous number
+ *
+ *	~
+ *  Shell expansion to the current user home directory. If we print the
+ * 	literal in 'isChar()':
+ * 		std::cout << "Literal: [" << literal << "]" << std::endl;
+ * 	the user home directory is printed
+ * 		literal: [/home/ccarrace]
+ * 
+ * 	&
+ * 	In Shell it is used to run processes in the background. The command 
+ * 	preceding the & will be ran in the background. If we print the literal
+ * 	in 'isChar()':
+ * 		[1] 43662
+ * 	the output indicates that the command was launched in the background
+ * 	with the job number [1] and process ID 43662. The shell then displays
+ * 	the prompt again because it is ready for more commands.
+ */
