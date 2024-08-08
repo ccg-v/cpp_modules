@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   ScalarConverter_copy.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 13:33:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:57:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,12 @@ class ScalarConverter
 {
 
 private:
-	
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 
 	ScalarConverter();									// Default constructor
 	ScalarConverter(const ScalarConverter & source);	// Copy constructor
 	ScalarConverter & operator=(const ScalarConverter & source);	// Copy assignment operator
 	~ScalarConverter();									// Default destructor
-
-	/* --- Type definitions ------------------------------------------------- */
-
-	enum eType {
-		CHAR,
-		INT,
-		FLOAT,
-		DOUBLE,
-		UNKNOWN
-	};
-
-	/* --- Private member variables ----------------------------------------- */
-
-	enum eType	currentType;
 
 	/* --- Private member methods ------------------------------------------- */
 
@@ -55,30 +40,19 @@ private:
 	static double	toDouble(const std::string & literal);
 	static char		toChar(const std::string & literal);
 
-	static eType	detectType(const std::string & literal);
-
 public:
 
 	/* --- Public member methods -------------------------------------------- */
 
-	static void		displayConversions(const std::string &literal);
+	static void	detectType (const std::string & literal);
 
 	/* --- Exceptions ------------------------------------------------------- */
 
-	class OutOfRangeException : public std::exception {
+	class OutofRange : public std::exception
+	{
 		public:
 			const char *what() const throw();
 	};
-
-    class ImpossibleConversionException : public std::exception {
-        public:
-            const char *what() const throw();
-    };
-
-    class NonDisplayableException : public std::exception {
-        public:
-            const char *what() const throw();
-    };
 };
 
 #endif
