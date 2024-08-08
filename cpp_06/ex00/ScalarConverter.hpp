@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 13:33:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:05:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ private:
 
 	/* --- Private member variables ----------------------------------------- */
 
-	enum eType	currentType;
+	// enum eType	currentType;
 
 	/* --- Private member methods ------------------------------------------- */
 

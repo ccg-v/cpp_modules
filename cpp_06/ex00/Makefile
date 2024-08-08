@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/05 00:00:38 by ccarrace          #+#    #+#              #
-#    Updated: 2024/08/05 19:17:57 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/08/09 00:59:43 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	convert.out
 
 # --- Compiler --------------------------------------------------------------- #
 CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
 
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	ScalarConverter.cpp main.cpp 

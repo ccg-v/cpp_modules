@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*   ScalarConverter_copy.cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 11:04:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:29:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ char	ScalarConverter::toChar(const std::string & literal) {
 	char value = literal[0];
 
 	if (!std::isprint(static_cast<unsigned char>(value))) {
-		throw std::runtime_error("non displayable character");
+		throw std::runtime_error("non printable character");
 	}
 	return value;
 }
@@ -164,7 +164,7 @@ void	ScalarConverter::detectType(const std::string & literal) {
 		try {
 			std::cout << "is integer" << std::endl;
 			int value = toInteger(literal);
-			std::cout << "char:\t" << (std::isprint(value) ? std::string(1, static_cast<char>(value)) : "Non displayable") << "\n";
+			std::cout << "char:\t" << (std::isprint(value) ? std::string(1, static_cast<char>(value)) : "non printable") << "\n";
 			std::cout << "int:\t" << value << std::endl;
 			std::cout << "float:\t" << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f\n";
 			std::cout << "double:\t" << static_cast<double>(value) << "\n";
