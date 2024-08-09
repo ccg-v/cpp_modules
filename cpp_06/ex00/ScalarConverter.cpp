@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/09 00:46:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/09 02:03:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ bool	ScalarConverter::isInteger(const std::string & literal) {
 	}
 	return true;
 }
+
+// bool ScalarConverter::isInteger(const std::string & literal) {
+//     char* end;
+//     long value = std::strtol(literal.c_str(), &end, 10);
+    
+//     // Check if the entire string was consumed and the value is within int range
+//     if (*end == '\0' && 
+//         value >= std::numeric_limits<int>::min() && 
+//         value <= std::numeric_limits<int>::max()) {
+//         return true;
+//     }
+//     return false;
+// }
 
 bool	ScalarConverter::isFloat(const std::string & literal) {
 	size_t	i = 0;
@@ -145,6 +158,7 @@ int	ScalarConverter::toInteger(const std::string & literal) {
 	return static_cast<int>(value);
 }
 
+
 float	ScalarConverter::toFloat(const std::string & literal) {
 
 	char	*end;
@@ -152,7 +166,8 @@ float	ScalarConverter::toFloat(const std::string & literal) {
 	float value = std::strtof(literal.c_str(), &end);
 
 	if (errno == ERANGE || value < -FLT_MAX || value > FLT_MAX) {
-		throw std::range_error("out of float range");
+		// throw std::range_error("out of float range");
+		throw OutOfRangeException();
 	}
 	return value;
 }
@@ -164,7 +179,8 @@ double	ScalarConverter::toDouble(const std::string & literal) {
 	double value = std::strtod(literal.c_str(), &end);
 
 	if (errno == ERANGE || value < -DBL_MAX || value > DBL_MAX) {
-		throw std::range_error("out of double range");
+		// throw std::range_error("out of double range");
+		throw OutOfRangeException();
 	}
 	return value;
 }
@@ -201,6 +217,49 @@ void ScalarConverter::displayConversions(const std::string &literal) {
                 std::cout << "char: " << e.what() << std::endl;
             }
             break;
+
+// case INT:
+//     std::cout << "Integer type" << std::endl;
+//     try {
+//         int value = toInteger(literal);
+
+//         // Handle char conversion
+//         try {
+//             if (value >= 0 && value <= 127) {
+//                 if (value >= 32 && value <= 126) {
+//                     std::cout << "char:\t'" << static_cast<char>(value) << "'" << std::endl;
+//                 } else {
+//                     throw NonDisplayableException();
+//                 }
+//             } else {
+//                 throw OutOfRangeException();
+//             }
+//         } catch (const OutOfRangeException &e) {
+//             std::cout << "char:\t" << e.what() << std::endl;
+//         } catch (const NonDisplayableException &e) {
+//             std::cout << "char:\t" << e.what() << std::endl;
+//         }
+
+//         // Display other conversions
+//         std::cout << "int:\t" << value << std::endl;
+//         std::cout << "float:\t" << std::fixed << std::setprecision(1)
+//                   << static_cast<float>(value) << "f" << std::endl;
+//         std::cout << "double:\t" << static_cast<double>(value) << std::endl;
+
+//     } catch (const OutOfRangeException &e) {
+//         std::cout << "char:\timpossible" << std::endl;
+//         std::cout << "int:\t" << e.what() << std::endl;
+        
+//         // For float and double, we need to use C++98 compatible conversion
+//         char* end;
+//         double d_value = std::strtod(literal.c_str(), &end);
+//         std::cout << "float:\t" << std::fixed << std::setprecision(1)
+//                   << static_cast<float>(d_value) << "f" << std::endl;
+//         std::cout << "double:\t" << d_value << std::endl;
+//     } catch (const std::exception &e) {
+//         std::cout << "Error: " << e.what() << std::endl;
+//     }
+//     break;
 
 		case INT:
 			std::cout << "Integer type" << std::endl;
@@ -244,53 +303,54 @@ case FLOAT:
     std::cout << "Float type" << std::endl;
     try {
         float value;
-
-        // Handle special float literals
         if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
             std::cout << "char:\timpossible" << std::endl;
             std::cout << "int:\timpossible" << std::endl;
             std::cout << "float:\t" << literal << std::endl;
             std::cout << "double:\t" << literal.substr(0, literal.size() - 1) << std::endl;
         } else {
-            // Attempt to convert literal to float
-            try {
-                value = toFloat(literal);
-            } catch (const ScalarConverter::OutOfRangeException &e) {
-                std::cout << "float:\t" << e.what() << std::endl;
-                // Proceed with double conversion if float is out of range
-                try {
-                    double doubleValue = toDouble(literal);
-                    std::cout << "double:\t" << doubleValue << std::endl;
-                } catch (const ScalarConverter::OutOfRangeException &e) {
-                    std::cout << "double:\t" << e.what() << std::endl;
-                }
-                // Skip other conversions
-                break;
-            }
+            value = toFloat(literal);
 
             // Handle char conversion
             try {
                 if (value < 0 || value > 127) {
-                    throw OutOfRangeException(); 
+                    throw OutOfRangeException();
                 } else if (value >= 32 && value <= 126) {
                     std::cout << "char:\t'" << static_cast<char>(value) << "'" << std::endl;
                 } else {
                     throw NonDisplayableException();
                 }
-            } catch (const ScalarConverter::NonDisplayableException &e) {
+            } catch (const OutOfRangeException &e) {
                 std::cout << "char:\t" << e.what() << std::endl;
-        	}
+            } catch (const NonDisplayableException &e) {
+                std::cout << "char:\t" << e.what() << std::endl;
+            }
 
-            // Proceed with other conversions
-            std::cout << "int:\t" << static_cast<int>(value) << std::endl;
+            // Handle int conversion
+			try {
+				if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
+					value < static_cast<float>(std::numeric_limits<int>::min()) || 
+					std::isnan(value)) {
+					throw OutOfRangeException();
+				}
+				std::cout << "int:\t" << static_cast<int>(value) << std::endl;
+			} catch (const OutOfRangeException &e) {
+				std::cout << "int:\t" << e.what() << std::endl;
+			}
+
+            // Display float and double
             std::cout << "float:\t" << std::fixed << std::setprecision(1) << value << "f" << std::endl;
             std::cout << "double:\t" << static_cast<double>(value) << std::endl;
         }
-    } catch (const std::exception &e) {
+    } catch (const OutOfRangeException &e) {
+        std::cout << "char:\timpossible" << std::endl;
+        std::cout << "int:\timpossible" << std::endl;
         std::cout << "float:\t" << e.what() << std::endl;
+        std::cout << "double:\t" << e.what() << std::endl;
+    } catch (const std::exception &e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
     break;
-
 
         // case FLOAT:
 		// 	std::cout << "Float type" << std::endl;
@@ -448,6 +508,9 @@ const char *ScalarConverter::ImpossibleConversionException::what() const throw()
  */
 
 /*
+ *	A number larger than the maximum representable float:
+ *	340282350000000000000000000000000000000.0f
+ * 
  *	A number larger than the maximum representable double:
  *	17976931348623157081452742373170435679807056752584499659891747680315
  	72607800285387605895586327668781715404589535143824642343213268894641
