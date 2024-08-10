@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/10 14:09:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:25:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,12 @@ bool ScalarConverter::isFloat(const std::string & literal) {
     // Remove the 'f' suffix
     std::string numPart = literal.substr(0, literal.length() - 1);
 
+    // We'll just check if it can be parsed as a number here
     char* end;
     std::strtod(numPart.c_str(), &end);
     
     // Check if the entire string (except 'f') was consumed
-    return *end == '\0';
+    return (*end == '\0');
 }
 
 // bool	ScalarConverter::isDouble(const std::string & literal) {
@@ -212,21 +213,34 @@ int	ScalarConverter::toInteger(const std::string & literal) {
 // }
 
 float ScalarConverter::toFloat(const std::string & literal) {
-    // Remove the 'f' suffix if present
-    std::string numPart = literal;
-    if (!numPart.empty() && numPart[numPart.length()-1] == 'f') {
-        numPart.erase(numPart.length()-1);
-    }
+    if (literal == "+inff") return std::numeric_limits<float>::infinity();
+    if (literal == "-inff") return -std::numeric_limits<float>::infinity();
+    if (literal == "nanf") return std::numeric_limits<float>::quiet_NaN();
 
+    // Remove the 'f' suffix
+    std::string numPart = literal.substr(0, literal.length() - 1);
+
+    // Parse as a double to check the range more precisely
     char* end;
-    double value = std::strtod(numPart.c_str(), &end);
+    double d_value = std::strtod(numPart.c_str(), &end);
+	if (d_value > FLT_MAX)
+		std::cout << d_value << " is greater than FLT_MAX" << std::endl;
+	else
+		std::cout << d_value << " is smaller than FLT_MAX" << std::endl;	
 
-    if (value < -std::numeric_limits<float>::max() || 
-        value > std::numeric_limits<float>::max()) {
+    // Check if the entire string was parsed
+    if (*end != '\0') {
         throw OutOfRangeException();
     }
 
-    return static_cast<float>(value);
+    // Check if the value is within float range
+    if (d_value < -std::numeric_limits<float>::max() || 
+        d_value > std::numeric_limits<float>::max()) {
+        throw OutOfRangeException();
+    }
+
+    // If it's in range, convert to float
+    return static_cast<float>(d_value);
 }
 
 // double	ScalarConverter::toDouble(const std::string & literal) {
@@ -429,45 +443,52 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 //     }
 //     break;
 
-case FLOAT:
-    std::cout << "Float type" << std::endl;
-    try {
-        float value = toFloat(literal);
-        
-        // Handle char conversion
-        if (value >= 0 && value <= 127) {
-            if (value >= 32 && value <= 126) {
-                std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
-            } else {
-                std::cout << "char: Non displayable" << std::endl;
-            }
-        } else {
-            std::cout << "char: impossible" << std::endl;
-        }
+		case FLOAT:
+			std::cout << "Float type" << std::endl;
+			try {
+				float value = toFloat(literal);
+				
+				// Handle char conversion
+				if (value >= 0 && value <= 127) {
+					if (value >= 32 && value <= 126) {
+						std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+					} else {
+						std::cout << "char: Non displayable" << std::endl;
+					}
+				} else {
+					std::cout << "char: impossible" << std::endl;
+				}
 
-        // Handle int conversion
-        if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
-            value < static_cast<float>(std::numeric_limits<int>::min()) || 
-            std::isnan(value)) {
-            std::cout << "int: impossible" << std::endl;
-        } else {
-            std::cout << "int: " << static_cast<int>(value) << std::endl;
-        }
+				// Handle int conversion
+				if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
+					value < static_cast<float>(std::numeric_limits<int>::min()) || 
+					std::isnan(value)) {
+					std::cout << "int: impossible" << std::endl;
+				} else {
+					std::cout << "int: " << static_cast<int>(value) << std::endl;
+				}
 
-        // Display float and double
-        std::cout << "float: " << std::fixed << std::setprecision(1) << value << "f" << std::endl;
-        std::cout << "double: " << static_cast<double>(value) << std::endl;
-    } catch (const OutOfRangeException &) {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: out of range" << std::endl;
-        
-        // For double, we need to use the original literal
-        char* end;
-        double d_value = std::strtod(literal.c_str(), &end);
-        std::cout << "double: " << d_value << std::endl;
-    }
-    break;
+				// Display float
+				std::cout << "float: " << std::fixed << std::setprecision(1) << value << "f" << std::endl;
+			} catch (const OutOfRangeException &) {
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+				std::cout << "float: out of range" << std::endl;
+			}
+
+			// Always attempt to convert to double, even if float conversion failed
+			try {
+				// Remove 'f' suffix for double conversion
+				std::string doubleStr = literal.substr(0, literal.length() - 1);
+				double d_value = std::strtod(doubleStr.c_str(), NULL);
+				if (d_value == HUGE_VAL || d_value == -HUGE_VAL) {
+					throw OutOfRangeException();
+				}
+				std::cout << "double: " << std::fixed << std::setprecision(1) << d_value << std::endl;
+			} catch (const OutOfRangeException &) {
+				std::cout << "double: out of range" << std::endl;
+			}
+			break;
 
 // case DOUBLE:
 //     std::cout << "Double type" << std::endl;
@@ -518,8 +539,18 @@ case DOUBLE:
     try {
         double value = toDouble(literal);
         
-        // Handle char conversion
-        std::cout << "char: impossible" << std::endl;
+        // // Handle char conversion
+        // std::cout << "char: impossible" << std::endl;
+		        // Handle char conversion
+        if (value >= 0 && value <= 127) {
+            if (value >= 32 && value <= 126) {
+                std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+            } else {
+                std::cout << "char: Non displayable" << std::endl;
+            }
+        } else {
+            std::cout << "char: impossible" << std::endl;
+        }
 
         // Handle int conversion
         std::cout << "int: impossible" << std::endl;

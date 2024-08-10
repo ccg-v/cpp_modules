@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:02:29 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 13:02:41 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:22:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 int main(int argc, char **argv) {
 
     if (argc != 2) {
-        std::cerr << "Invalid arguments (usage: './convert.out parameter')"
+        std::cerr << "Invalid arguments (usage: './convert.out <parameter>')"
 				  << std::endl;
         return 1;
     }
