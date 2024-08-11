@@ -64,7 +64,7 @@ Key Points:
 
 * Representation of Large Numbers:
     The largest representable value for a float (which is FLT_MAX) is approximately 3.4028235×10383.4028235×1038.
-    However, because of the limited precision (23 bits for the significand), <strong>any number that is close to FLT_MAX might get rounded off to the nearest representable float value</strong>. This is why numbers that should theoretically be distinct might be represented as the same float value.
+    However, because of the limited precision (23 bits for the significand), <u>any number that is close to FLT_MAX might get rounded off to the nearest representable float value</u>. This is why numbers that should theoretically be distinct might be represented as the same float value.
 
 * Precision Loss:
     When you try to represent a number slightly larger than FLT_MAX, due to the rounding behavior, it might still be represented as FLT_MAX.
