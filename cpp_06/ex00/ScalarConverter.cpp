@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/11 00:25:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/12 00:27:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,25 +99,53 @@ bool ScalarConverter::isInteger(const std::string & literal) {
 // 	return true;
 // }
 
+// bool ScalarConverter::isFloat(const std::string & literal) {
+//     if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
+//         return true;
+//     }
+
+//     // Check if the last character is 'f'
+//     if (literal.empty() || literal[literal.length() - 1] != 'f') {
+//         return false;
+//     }
+
+//     // Remove the 'f' suffix
+//     std::string numPart = literal.substr(0, literal.length() - 1);
+
+//     // We'll just check if it can be parsed as a number here
+//     char* end;
+//     std::strtod(numPart.c_str(), &end);
+    
+//     // Check if the entire string (except 'f') was consumed
+//     return (*end == '\0');
+// }
+
 bool ScalarConverter::isFloat(const std::string & literal) {
     if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
         return true;
     }
-
-    // Check if the last character is 'f'
-    if (literal.empty() || literal[literal.length() - 1] != 'f') {
+    
+    // Check if the last character is 'f' or 'F'
+    if (literal.empty() || (literal[literal.length() - 1] != 'f' && literal[literal.length() - 1] != 'F')) {
         return false;
     }
-
-    // Remove the 'f' suffix
-    std::string numPart = literal.substr(0, literal.length() - 1);
-
-    // We'll just check if it can be parsed as a number here
-    char* end;
-    std::strtod(numPart.c_str(), &end);
     
-    // Check if the entire string (except 'f') was consumed
-    return (*end == '\0');
+    // Remove the trailing 'f' or 'F'
+    std::string trimmed = literal.substr(0, literal.length() - 1);
+    
+    char* end;
+    float value = std::strtof(trimmed.c_str(), &end);
+    
+    // Check if the entire string was consumed
+    if (*end == '\0') {
+        // Check if the value is within float range
+        if (value >= -std::numeric_limits<float>::max() &&
+            value <= std::numeric_limits<float>::max() &&
+            !std::isnan(value)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // bool	ScalarConverter::isDouble(const std::string & literal) {
@@ -194,7 +222,8 @@ int	ScalarConverter::toInteger(const std::string & literal) {
 	
 	if (errno == ERANGE || value < INT_MIN || value > INT_MAX) {
 		// throw std::range_error("out of integer range");
-		throw OutOfRangeException();
+		// throw OutOfRangeException();
+		throw ImpossibleConversionException();
 	}
 	return static_cast<int>(value);
 }
@@ -222,11 +251,7 @@ float ScalarConverter::toFloat(const std::string & literal) {
 
     // Parse as a double to check the range more precisely
     char* end;
-    double d_value = std::strtod(numPart.c_str(), &end);
-	if (d_value > FLT_MAX)
-		std::cout << d_value << " is greater than FLT_MAX" << std::endl;
-	else
-		std::cout << d_value << " is smaller than FLT_MAX" << std::endl;	
+    double d_value = std::strtod(numPart.c_str(), &end);	
 
     // Check if the entire string was parsed
     if (*end != '\0') {
@@ -280,9 +305,9 @@ char	ScalarConverter::toChar(const std::string & literal) {
 
 	char value = literal[0];
 
-	if (!std::isprint(static_cast<unsigned char>(value))) {
-		throw std::runtime_error("non printable character");
-	}
+	// if (!std::isprint(static_cast<unsigned char>(value))) {
+	// 	throw std::runtime_error("non printable character"); // POR QUE NO SE LANZA NUNCA ESTA EXCEPCION???????
+	// }
 	return value;
 }
 
@@ -453,19 +478,26 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 					if (value >= 32 && value <= 126) {
 						std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
 					} else {
-						std::cout << "char: Non displayable" << std::endl;
+						// std::cout << "char: Non displayable" << std::endl;
+						throw NonDisplayableException();
 					}
 				} else {
 					std::cout << "char: impossible" << std::endl;
 				}
 
-				// Handle int conversion
-				if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
-					value < static_cast<float>(std::numeric_limits<int>::min()) || 
-					std::isnan(value)) {
-					std::cout << "int: impossible" << std::endl;
-				} else {
-					std::cout << "int: " << static_cast<int>(value) << std::endl;
+				// // Handle int conversion
+				// if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
+				// 	value < static_cast<float>(std::numeric_limits<int>::min()) || 
+				// 	std::isnan(value)) {
+				// 	std::cout << "int: impossible" << std::endl;
+				// } else {
+				// 	std::cout << "int: " << static_cast<int>(value) << std::endl;
+				// }
+				try {
+					if (toInteger(literal))
+						std::cout << "HERE:\t" << toInteger(literal) << std::endl;
+				} catch (const ImpossibleConversionException & e) {
+					std::cout << "int:\t" << e.what() << std::endl;
 				}
 
 				// Display float
