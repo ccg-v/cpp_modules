@@ -79,7 +79,7 @@ Key Points:
 
 ***The difference arises from the finite precision of the float type. Numbers near FLT_MAX are so close in value that they may be represented as the same float due to rounding. Only when the input number is large enough that it rounds to a representable value greater than FLT_MAX will the program correctly identify it as out of range. This behavior is inherent to how floating-point arithmetic works in computers.***
 </details>
----
+
 <details>
 <summary><strong>Can a number be considered close to another number that is 18,889,465,931,478,580,854,783 units bigger?</strong></summary> 
 
@@ -108,7 +108,7 @@ Floating-point numbers are represented using a binary system, and the precision 
 
 ***The difference of 18889465931478580854783 may seem huge in absolute terms, but in the context of floating-point arithmetic near FLT_MAX, it is indeed "close." This is why the program doesn't recognize the number as distinct from FLT_MAX until it exceeds this threshold, at which point the number is no longer rounded to FLT_MAX but to a different, larger representable value.***
 </details>
----
+
 <details>
 <summary><strong>Is that difference of  18889465931478580854784 constant or it depends on the system?</strong></summary>
 
@@ -131,5 +131,3 @@ The difference of 18,889,465,931,478,580,854,784 is related to the precision of 
 
 ***The difference of 18,889,465,931,478,580,854,784 is a fundamental characteristic of the IEEE 754 single-precision floating-point format and is therefore constant across different systems. It reflects the limitations of precision at the extreme upper end of the float range, and is not influenced by the specific system on which the code is run.***
 </details>
-abcde
----
