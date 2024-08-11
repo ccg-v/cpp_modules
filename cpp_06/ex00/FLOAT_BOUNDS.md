@@ -71,7 +71,7 @@ Key Points:
 	This is why a number like 340282346638528859811704183484516925441.0000000000000000f (which is larger than FLT_MAX) might still be recognized as FLT_MAX due to precision loss and rounding.
 
 * The Threshold:
-        <strong>The threshold at which the program finally recognizes the number as greater than FLT_MAX happens when the number is large enough that the rounding doesn't bring it back to FLT_MAX, but instead to a representable number greater than FLT_MAX.</strong>
+        <strong><u>The threshold at which the program finally recognizes the number as greater than FLT_MAX happens when the number is large enough that the rounding doesn't bring it back to FLT_MAX, but instead to a representable number greater than FLT_MAX.</u></strong>
         The difference between the "theoretical" maximum and the "real" maximum observed (18889465931478580854784) is because of this rounding. The number provided has exceeded the range where it can still be rounded to FLT_MAX and is instead rounded to a different number.
 
 <strong>Conclusion:</strong>
