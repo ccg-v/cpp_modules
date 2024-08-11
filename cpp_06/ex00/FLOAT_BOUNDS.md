@@ -32,11 +32,10 @@ int main(int argc, char **argv) {
 }
 ```
 FLT_MAX is 340282346638528859811704183484516925440.0000000000000000f
-If we pass the first float value out of range, FLT_MAX + 1, the program will consider it as a valid float:
 > ./convert 340282346638528859811704183484516925440.0000000000000000f
 >
 > 3.40282e+38 is equal to FLT_MAX
-
+If we pass the first float value out of range, FLT_MAX + 1, the program will consider it as a valid float:
 > ./convert 340282346638528859811704183484516925441.0000000000000000f
 >
 > 3.40282e+38 is equal to FLT_MAX
@@ -53,6 +52,6 @@ And this is the first value that overflows float range:
 >3.40282e+38 is greater than FLT_MAX
 
 <details> 
-<summary><b3>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</b3></summary> 
+<summary><span style="font-size: 20px;">Why this difference between 'theoretical' and 'real' FLOAT_MAX?</span></summary> 
 Hidden content here 
 </details> 
