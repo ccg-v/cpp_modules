@@ -50,7 +50,8 @@ And this is the first value that overflows float range:
 >./convert 340282346638528878701170114963097780225.0000000000000000f
 >
 >3.40282e+38 is greater than FLT_MAX
-
-<details><strong>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</strong></summary> 
+---
+<details>
+<summary><strong>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</strong></summary> 
 Hidden content here 
 </details> 
