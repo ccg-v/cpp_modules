@@ -54,5 +54,6 @@ And this is the first value that overflows float range:
 > [!NOTE]
 > <details>
 > <summary><strong>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</strong></summary> 
-> Hidden content here 
-> </details> 
+Hidden content here 
+> </details>
+---
