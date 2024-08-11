@@ -82,7 +82,7 @@ Key Points:
 </details>
 
 <details>
-<summary><strong>Can a number be considered close to another number that is 18,889,465,931,478,580,854,783 units bigger?</strong></summary> 
+<summary><strong>Can a number be considered 'close' to another number that is 18,889,465,931,478,580,854,783 units bigger?</strong></summary> 
 
 The crux of the matter lies in how floating-point precision works, particularly for very large numbers.
 
