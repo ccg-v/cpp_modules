@@ -51,7 +51,8 @@ And this is the first value that overflows float range:
 >
 >3.40282e+38 is greater than FLT_MAX
 ---
+> [!NOTE]
 <details>
-<summary><strong><underline>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</underline></strong></summary> 
+<summary><strong>Why this difference between 'theoretical' and 'real' FLOAT_MAX?</strong></summary> 
 Hidden content here 
 </details> 
