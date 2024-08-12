@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/12 00:27:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/13 01:22:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,54 +99,54 @@ bool ScalarConverter::isInteger(const std::string & literal) {
 // 	return true;
 // }
 
-// bool ScalarConverter::isFloat(const std::string & literal) {
-//     if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
-//         return true;
-//     }
-
-//     // Check if the last character is 'f'
-//     if (literal.empty() || literal[literal.length() - 1] != 'f') {
-//         return false;
-//     }
-
-//     // Remove the 'f' suffix
-//     std::string numPart = literal.substr(0, literal.length() - 1);
-
-//     // We'll just check if it can be parsed as a number here
-//     char* end;
-//     std::strtod(numPart.c_str(), &end);
-    
-//     // Check if the entire string (except 'f') was consumed
-//     return (*end == '\0');
-// }
-
 bool ScalarConverter::isFloat(const std::string & literal) {
     if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
         return true;
     }
-    
-    // Check if the last character is 'f' or 'F'
-    if (literal.empty() || (literal[literal.length() - 1] != 'f' && literal[literal.length() - 1] != 'F')) {
+
+    // Check if the last character is 'f'
+    if (literal.empty() || literal[literal.length() - 1] != 'f') {
         return false;
     }
-    
-    // Remove the trailing 'f' or 'F'
+
+    // Remove the 'f' suffix
     std::string trimmed = literal.substr(0, literal.length() - 1);
-    
+
+    // We'll just check if it can be parsed as a number here
     char* end;
-    float value = std::strtof(trimmed.c_str(), &end);
+    double value = std::strtod(trimmed.c_str(), &end);
     
-    // Check if the entire string was consumed
-    if (*end == '\0') {
-        // Check if the value is within float range
-        if (value >= -std::numeric_limits<float>::max() &&
-            value <= std::numeric_limits<float>::max() &&
-            !std::isnan(value)) {
-            return true;
-        }
-    }
-    return false;
+    // Check if the entire string (except 'f') was consumed
+    return (*end == '\0' && std::isfinite(value));
 }
+
+// bool ScalarConverter::isFloat(const std::string & literal) {
+//     if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
+//         return true;
+//     }
+    
+//     // Check if the last character is 'f' or 'F'
+//     if (literal.empty() || (literal[literal.length() - 1] != 'f' && literal[literal.length() - 1] != 'F')) {
+//         return false;
+//     }
+    
+//     // Remove the trailing 'f' or 'F'
+//     std::string trimmed = literal.substr(0, literal.length() - 1);
+    
+//     char* end;
+//     float value = std::strtof(trimmed.c_str(), &end);
+    
+//     // Check if the entire string was consumed
+//     if (*end == '\0') {
+//         // Check if the value is within float range
+//         if (value >= -std::numeric_limits<float>::max() &&
+//             value <= std::numeric_limits<float>::max() &&
+//             !std::isnan(value)) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
 
 // bool	ScalarConverter::isDouble(const std::string & literal) {
 // 	size_t	i = 0;
@@ -255,13 +255,13 @@ float ScalarConverter::toFloat(const std::string & literal) {
 
     // Check if the entire string was parsed
     if (*end != '\0') {
-        throw OutOfRangeException();
+        throw ImpossibleConversionException();
     }
 
     // Check if the value is within float range
     if (d_value < -std::numeric_limits<float>::max() || 
         d_value > std::numeric_limits<float>::max()) {
-        throw OutOfRangeException();
+        throw ImpossibleConversionException();
     }
 
     // If it's in range, convert to float
@@ -304,10 +304,6 @@ double ScalarConverter::toDouble(const std::string & literal) {
 char	ScalarConverter::toChar(const std::string & literal) {
 
 	char value = literal[0];
-
-	// if (!std::isprint(static_cast<unsigned char>(value))) {
-	// 	throw std::runtime_error("non printable character"); // POR QUE NO SE LANZA NUNCA ESTA EXCEPCION???????
-	// }
 	return value;
 }
 
@@ -320,62 +316,16 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 	
     switch (type) {
 		
-        case CHAR:
+        case CHAR: {
 			std::cout << "Char type" << std::endl;
-            try {
-                char value = toChar(literal);
-                std::cout << "char:\t'" << value << "'" << std::endl;
-                std::cout << "int:\t" << static_cast<int>(value) << std::endl;
-                std::cout << "float:\t" << std::fixed << std::setprecision(1)
-						  << static_cast<float>(value) << "f" << std::endl;
-                std::cout << "double:\t" << static_cast<double>(value) << std::endl;
-            } catch (const std::exception &e) {
-                std::cout << "char: " << e.what() << std::endl;
-            }
+            char value = toChar(literal);
+            std::cout << "char:\t'" << value << "'" << std::endl;
+            std::cout << "int:\t" << static_cast<int>(value) << std::endl;
+            std::cout << "float:\t" << std::fixed << std::setprecision(1)
+					  << static_cast<float>(value) << "f" << std::endl;
+            std::cout << "double:\t" << static_cast<double>(value) << std::endl;
             break;
-
-// case INT:
-//     std::cout << "Integer type" << std::endl;
-//     try {
-//         int value = toInteger(literal);
-
-//         // Handle char conversion
-//         try {
-//             if (value >= 0 && value <= 127) {
-//                 if (value >= 32 && value <= 126) {
-//                     std::cout << "char:\t'" << static_cast<char>(value) << "'" << std::endl;
-//                 } else {
-//                     throw NonDisplayableException();
-//                 }
-//             } else {
-//                 throw OutOfRangeException();
-//             }
-//         } catch (const OutOfRangeException &e) {
-//             std::cout << "char:\t" << e.what() << std::endl;
-//         } catch (const NonDisplayableException &e) {
-//             std::cout << "char:\t" << e.what() << std::endl;
-//         }
-
-//         // Display other conversions
-//         std::cout << "int:\t" << value << std::endl;
-//         std::cout << "float:\t" << std::fixed << std::setprecision(1)
-//                   << static_cast<float>(value) << "f" << std::endl;
-//         std::cout << "double:\t" << static_cast<double>(value) << std::endl;
-
-//     } catch (const OutOfRangeException &e) {
-//         std::cout << "char:\timpossible" << std::endl;
-//         std::cout << "int:\t" << e.what() << std::endl;
-        
-//         // For float and double, we need to use C++98 compatible conversion
-//         char* end;
-//         double d_value = std::strtod(literal.c_str(), &end);
-//         std::cout << "float:\t" << std::fixed << std::setprecision(1)
-//                   << static_cast<float>(d_value) << "f" << std::endl;
-//         std::cout << "double:\t" << d_value << std::endl;
-//     } catch (const std::exception &e) {
-//         std::cout << "Error: " << e.what() << std::endl;
-//     }
-//     break;
+		}
 
 		case INT:
 			std::cout << "Integer type" << std::endl;
@@ -386,258 +336,136 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 				try {
 					if (value >= 32 && value <= 126) {
 						std::cout << "char:\t'" << static_cast<char>(value) << "'" << std::endl;
-					} else if (value > 127 || value < 0) {
-						throw OutOfRangeException(); // This will be caught by the outer block
-					} else {
-						throw NonDisplayableException(); // This will be caught by the inner block
-					}
+					} else if (value > 127 || value < 0)
+						throw ImpossibleConversionException();
+					else 
+						throw NonDisplayableException();
 				} catch (const NonDisplayableException &e) {
 					std::cout << "char:\t" << e.what() << std::endl;
 				}
-
-				// Proceed with the remaining conversions
-				std::cout << "int:\t" << value << std::endl;
-				std::cout << "float:\t" << std::fixed << std::setprecision(1)
-						<< static_cast<float>(value) << "f" << std::endl;
-				std::cout << "double:\t" << static_cast<double>(value) << std::endl;
-
-			} catch (const OutOfRangeException &e) {
-				// If 'OutOfRangeException' is thrown, we catch it here
+			} catch (const ImpossibleConversionException &e) {
 				std::cout << "char:\t" << e.what() << std::endl;
-
-				// The char conversion failed, but we still want to show float and double conversions
-				std::cout << "int:\t" << toInteger(literal) << std::endl;
-				std::cout << "float:\t" << std::fixed << std::setprecision(1)
-						<< static_cast<float>(toInteger(literal)) << "f" << std::endl;
-				std::cout << "double:\t" << static_cast<double>(toInteger(literal)) << std::endl;
-			} catch (const std::exception &e) { 
-				std::cout << "int:\t" << e.what() << std::endl;
 			}
+			
+			// The char conversion failed, but we still want to show float and double conversions
+			std::cout << "int:\t" << toInteger(literal) << std::endl;
+			std::cout << "float:\t" << std::fixed << std::setprecision(1)
+					  << static_cast<float>(toInteger(literal)) << "f" << std::endl;
+			std::cout << "double:\t" << static_cast<double>(toInteger(literal))
+					  << std::endl;
 			break;
-
-// case FLOAT:
-//     std::cout << "Float type" << std::endl;
-//     try {
-//         float value;
-//         if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
-//             std::cout << "char:\timpossible" << std::endl;
-//             std::cout << "int:\timpossible" << std::endl;
-//             std::cout << "float:\t" << literal << std::endl;
-//             std::cout << "double:\t" << literal.substr(0, literal.size() - 1) << std::endl;
-//         } else {
-//             value = toFloat(literal);
-
-//             // Handle char conversion
-//             try {
-//                 if (value < 0 || value > 127) {
-//                     throw OutOfRangeException();
-//                 } else if (value >= 32 && value <= 126) {
-//                     std::cout << "char:\t'" << static_cast<char>(value) << "'" << std::endl;
-//                 } else {
-//                     throw NonDisplayableException();
-//                 }
-//             } catch (const OutOfRangeException &e) {
-//                 std::cout << "char:\t" << e.what() << std::endl;
-//             } catch (const NonDisplayableException &e) {
-//                 std::cout << "char:\t" << e.what() << std::endl;
-//             }
-
-//             // Handle int conversion
-// 			try {
-// 				if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
-// 					value < static_cast<float>(std::numeric_limits<int>::min()) || 
-// 					std::isnan(value)) {
-// 					throw OutOfRangeException();
-// 				}
-// 				std::cout << "int:\t" << static_cast<int>(value) << std::endl;
-// 			} catch (const OutOfRangeException &e) {
-// 				std::cout << "int:\t" << e.what() << std::endl;
-// 			}
-
-//             // Display float and double
-//             std::cout << "float:\t" << std::fixed << std::setprecision(1) << value << "f" << std::endl;
-//             std::cout << "double:\t" << static_cast<double>(value) << std::endl;
-//         }
-//     } catch (const OutOfRangeException &e) {
-//         std::cout << "char:\timpossible" << std::endl;
-//         std::cout << "int:\timpossible" << std::endl;
-//         std::cout << "float:\t" << e.what() << std::endl;
-//         std::cout << "double:\t" << e.what() << std::endl;
-//     } catch (const std::exception &e) {
-//         std::cout << "Error: " << e.what() << std::endl;
-//     }
-//     break;
 
 		case FLOAT:
 			std::cout << "Float type" << std::endl;
+			float f_value;
+			double d_value;
+
+			// Step 1: Try to convert to float
 			try {
-				float value = toFloat(literal);
+				f_value = toFloat(literal);
+
+				// Step 2: Attempt to convert to char
+				try {
+					if (f_value >= 32 && f_value <= 126) {
+						std::cout << "char:\t'" << static_cast<char>(f_value) << "'" << std::endl;
+					} else if (f_value > 127 || f_value < 0) {
+						throw ImpossibleConversionException();
+					} else {
+						throw NonDisplayableException();
+					}
+				} catch (const NonDisplayableException &e) {
+					std::cout << "char:\t" << e.what() << std::endl;
+				} catch (const ImpossibleConversionException &e) {
+					std::cout << "char:\t" << e.what() << std::endl;
+				}
+
+				// Step 3: Attempt to convert to int
+				try {
+					std::string floatStr = literal.substr(0, literal.length() - 1);
+					int intValue = toInteger(floatStr);
+					std::cout << "int:\t" << intValue << std::endl;
+				} catch (const ImpossibleConversionException &e) {
+					std::cout << "int:\t" << e.what() << std::endl;
+				}
+
+				// Step 4: Display the float value
+				std::cout << "float:\t" << std::fixed << std::setprecision(1) << f_value << "f" << std::endl;
+
+			} catch (const ImpossibleConversionException &e) {
+				std::cout << "char:\t" << e.what() << std::endl;
+				std::cout << "int:\t" << e.what() << std::endl;
+				std::cout << "float:\t" << e.what() << std::endl;
+			}
+
+			// Step 5: Attempt to convert to double, whether float conversion succeeded or failed
+			try {
+				std::string doubleStr = literal.substr(0, literal.length() - 1);
+				d_value = std::strtod(doubleStr.c_str(), NULL);
+				if (d_value == HUGE_VAL || d_value == -HUGE_VAL) {
+					throw ImpossibleConversionException();
+				}
+				std::cout << "double:\t" << std::fixed << std::setprecision(1) << d_value << std::endl;
+			} catch (const ImpossibleConversionException &e) {
+				std::cout << "double:\t" << e.what() << std::endl;
+			}
+
+			break;
+
+		case DOUBLE:
+			std::cout << "Double type" << std::endl;
+			try {
+				double value = toDouble(literal);
 				
 				// Handle char conversion
 				if (value >= 0 && value <= 127) {
 					if (value >= 32 && value <= 126) {
 						std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
 					} else {
-						// std::cout << "char: Non displayable" << std::endl;
-						throw NonDisplayableException();
+						std::cout << "char: Non displayable" << std::endl;
 					}
 				} else {
-					std::cout << "char: impossible" << std::endl;
+					std::cout << "(CASE:DOUBLE_CHAR)char: impossible" << std::endl;
 				}
 
-				// // Handle int conversion
-				// if (value > static_cast<float>(std::numeric_limits<int>::max()) || 
-				// 	value < static_cast<float>(std::numeric_limits<int>::min()) || 
-				// 	std::isnan(value)) {
-				// 	std::cout << "int: impossible" << std::endl;
-				// } else {
-				// 	std::cout << "int: " << static_cast<int>(value) << std::endl;
-				// }
-				try {
-					if (toInteger(literal))
-						std::cout << "HERE:\t" << toInteger(literal) << std::endl;
-				} catch (const ImpossibleConversionException & e) {
-					std::cout << "int:\t" << e.what() << std::endl;
+				// Handle int conversion
+				std::cout << "(CASE:DOUBLE_INT)int: impossible" << std::endl;
+
+				// Handle float conversion
+				if (std::isnan(value) || std::isinf(value)) {
+					std::cout << "float: " << (std::isnan(value) ? "nanf" : (value > 0 ? "+inff" : "-inff")) << std::endl;
+				} else {
+					float f_value = static_cast<float>(value);
+					if (f_value != value) {
+						std::cout << "(CASE:DOUBLE_FLOAT)float: impossible" << std::endl;
+					} else {
+						std::cout << "float: " << std::fixed << std::setprecision(1) << f_value << "f" << std::endl;
+					}
 				}
 
-				// Display float
-				std::cout << "float: " << std::fixed << std::setprecision(1) << value << "f" << std::endl;
-			} catch (const OutOfRangeException &) {
-				std::cout << "char: impossible" << std::endl;
-				std::cout << "int: impossible" << std::endl;
-				std::cout << "float: out of range" << std::endl;
-			}
-
-			// Always attempt to convert to double, even if float conversion failed
-			try {
-				// Remove 'f' suffix for double conversion
-				std::string doubleStr = literal.substr(0, literal.length() - 1);
-				double d_value = std::strtod(doubleStr.c_str(), NULL);
-				if (d_value == HUGE_VAL || d_value == -HUGE_VAL) {
-					throw OutOfRangeException();
+				// Display double
+				if (std::isnan(value)) {
+					std::cout << "double: nan" << std::endl;
+				} else if (std::isinf(value)) {
+					std::cout << "double: " << (value > 0 ? "+inf" : "-inf") << std::endl;
+				} else {
+					// std::cout << "double: " << std::fixed << std::setprecision(1) << value << std::endl;
+					std::cout << "double: " << std::setprecision(1) << value << std::endl;
 				}
-				std::cout << "double: " << std::fixed << std::setprecision(1) << d_value << std::endl;
-			} catch (const OutOfRangeException &) {
-				std::cout << "double: out of range" << std::endl;
+			} catch (const OutOfRangeException & e) {
+				std::cout << "(CASE:DOUBLE_OOR_EXC)char:\t" << std::endl;
+				std::cout << "(CASE:DOUBLE_OOR_EXC)int:\t" << e.what() << std::endl;
+				std::cout << "(CASE:DOUBLE_OOR_EXC)float:\t" << e.what() << std::endl;
+				std::cout << "(CASE:DOUBLE_OOR_EXC)double:\t" << e.what() << std::endl;
 			}
 			break;
 
-// case DOUBLE:
-//     std::cout << "Double type" << std::endl;
-//     try {
-//         double value = toDouble(literal);
-        
-//         // Handle char conversion
-//         if (value >= 0 && value <= 127) {
-//             if (value >= 32 && value <= 126) {
-//                 std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
-//             } else {
-//                 std::cout << "char: Non displayable" << std::endl;
-//             }
-//         } else {
-//             std::cout << "char: impossible" << std::endl;
-//         }
-
-//         // Handle int conversion
-//         if (value > static_cast<double>(std::numeric_limits<int>::max()) || 
-//             value < static_cast<double>(std::numeric_limits<int>::min()) || 
-//             std::isnan(value)) {
-//             std::cout << "int: impossible" << std::endl;
-//         } else {
-//             std::cout << "int: " << static_cast<int>(value) << std::endl;
-//         }
-
-//         // Handle float conversion
-//         if (value > std::numeric_limits<float>::max() || 
-//             value < -std::numeric_limits<float>::max() || 
-//             std::isnan(value)) {
-//             std::cout << "float: impossible" << std::endl;
-//         } else {
-//             std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f" << std::endl;
-//         }
-
-//         // Display double
-//         std::cout << "double: " << value << std::endl;
-//     } catch (const OutOfRangeException &) {
-//         std::cout << "char: impossible" << std::endl;
-//         std::cout << "int: impossible" << std::endl;
-//         std::cout << "float: impossible" << std::endl;
-//         std::cout << "double: out of range" << std::endl;
-//     }
-//     break;
-
-case DOUBLE:
-    std::cout << "Double type" << std::endl;
-    try {
-        double value = toDouble(literal);
-        
-        // // Handle char conversion
-        // std::cout << "char: impossible" << std::endl;
-		        // Handle char conversion
-        if (value >= 0 && value <= 127) {
-            if (value >= 32 && value <= 126) {
-                std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
-            } else {
-                std::cout << "char: Non displayable" << std::endl;
-            }
-        } else {
-            std::cout << "char: impossible" << std::endl;
-        }
-
-        // Handle int conversion
-        std::cout << "int: impossible" << std::endl;
-
-        // Handle float conversion
-        // if (std::isnan(value)) {
-        //     std::cout << "float: nanf" << std::endl;
-        // } else if (std::isinf(value)) {
-        //     std::cout << "float: " << (value > 0 ? "+inff" : "-inff") << std::endl;
-        // } else if (value > std::numeric_limits<float>::max() || 
-        //            value < -std::numeric_limits<float>::max()) {
-        //     std::cout << "float: impossible" << std::endl;
-        // } else {
-        //     std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f" << std::endl;
-        // }
-
-		// Handle float conversion
-		if (std::isnan(value) || std::isinf(value)) {
-			std::cout << "float: " << (std::isnan(value) ? "nanf" : (value > 0 ? "+inff" : "-inff")) << std::endl;
-		} else {
-			float f_value = static_cast<float>(value);
-			if (f_value != value) {
-				std::cout << "float: impossible" << std::endl;
-			} else {
-				std::cout << "float: " << std::fixed << std::setprecision(1) << f_value << "f" << std::endl;
-			}
-		}
-
-        // Display double
-        if (std::isnan(value)) {
-            std::cout << "double: nan" << std::endl;
-        } else if (std::isinf(value)) {
-            std::cout << "double: " << (value > 0 ? "+inf" : "-inf") << std::endl;
-        } else {
-            std::cout << "double: " << std::fixed << std::setprecision(1) << value << std::endl;
-        }
-    } catch (const OutOfRangeException &) {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: out of range" << std::endl;
-    }
-    break;
-
-	case UNKNOWN:
-		std::cout << "Unknown type" << std::endl;
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossible" << std::endl;
-		std::cout << "double: impossible" << std::endl;
-		break;
-	default:
-		std::cout << "Error: Unhandled type" << std::endl;
-// 		break;
-
+		case UNKNOWN:
+			std::cout << "Unknown type" << std::endl;
+			std::cout << "(UNKNOWN)char:\timpossible" << std::endl;
+			std::cout << "(UNKNOWN)int:\timpossible" << std::endl;
+			std::cout << "(UNKNOWN)float:\timpossible" << std::endl;
+			std::cout << "(UNKNOWN)double:\timpossible" << std::endl;
+			break;
     }
 }
 
@@ -647,11 +475,11 @@ const char *ScalarConverter::OutOfRangeException::what() const throw() {
 }
 
 const char *ScalarConverter::NonDisplayableException::what() const throw() {
-    return "non printable";
+    return "non displayable";
 }
 
 const char *ScalarConverter::ImpossibleConversionException::what() const throw() {
-    return "impossible to convert";
+    return "impossible";
 }
 
 /*
