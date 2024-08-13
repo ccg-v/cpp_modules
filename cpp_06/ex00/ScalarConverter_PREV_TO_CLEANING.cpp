@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*   ScalarConverter_PREV_TO_CLEANING.cpp               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/13 23:32:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/13 23:15:38 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,7 @@ int	ScalarConverter::toInteger(const std::string & literal) {
 	long value = std::strtol(literal.c_str(), &end, 10);
 	
 	if (errno == ERANGE || value < INT_MIN || value > INT_MAX) {
-		// throw std::range_error("out of integer range");
-		// throw OutOfRangeException();
+
 		throw ImpossibleConversionException();
 	}
 	return static_cast<int>(value);
@@ -287,6 +286,7 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 			std::cout << "Integer type" << std::endl;
 			try {
 				int value = toInteger(literal);
+
 				//	Handle char conversion in its own try-catch block to throw exceptions
 				try {
 					if (value >= 32 && value <= 126) {
@@ -300,7 +300,9 @@ void ScalarConverter::displayConversions(const std::string &literal) {
 				}
 			} catch (const ImpossibleConversionException &e) {
 				std::cout << "char:\t" << e.what() << std::endl;
-			}		
+			}
+
+			
 			// The char conversion failed, but we still want to show float and double conversions
 			std::cout << "int:\t" << toInteger(literal) << std::endl;
 			std::cout << "float:\t" << std::fixed << std::setprecision(1)

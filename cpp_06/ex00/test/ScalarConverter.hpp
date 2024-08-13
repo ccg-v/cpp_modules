@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter_copy.hpp                           :+:      :+:    :+:   */
+/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 11:57:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/14 00:22:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,27 @@ class ScalarConverter
 {
 
 private:
+	
 	/* --- Orthodox Canonical Form ------------------------------------------ */
 
 	ScalarConverter();									// Default constructor
 	ScalarConverter(const ScalarConverter & source);	// Copy constructor
 	ScalarConverter & operator=(const ScalarConverter & source);	// Copy assignment operator
 	~ScalarConverter();									// Default destructor
+
+	/* --- Type definitions ------------------------------------------------- */
+
+	enum eType {
+		CHAR,
+		INT,
+		FLOAT,
+		DOUBLE,
+		UNKNOWN
+	};
+
+	/* --- Private member variables ----------------------------------------- */
+
+	// enum eType	currentType;
 
 	/* --- Private member methods ------------------------------------------- */
 
@@ -40,18 +55,41 @@ private:
 	static double	toDouble(const std::string & literal);
 	static char		toChar(const std::string & literal);
 
+	static eType	detectType(const std::string & literal);
+
+	static void displayType				(eType type);
+	static void displayUnknownConversions();
+	static void displayCharConversion	(const std::string &literal, eType type);
+	static void displayIntConversion	(const std::string &literal, eType type);
+	static void displayFloatConversion	(const std::string &literal, eType type);
+	static void displayDoubleConversion	(const std::string &literal, eType type);
+
 public:
 
 	/* --- Public member methods -------------------------------------------- */
 
-	static void	detectType (const std::string & literal);
+	static void		displayConversions(const std::string &literal);
 
 	/* --- Exceptions ------------------------------------------------------- */
 
-	class OutofRange : public std::exception
-	{
-		public:
+    class ImpossibleConversionException : public std::exception {
+        public:
+            const char *what() const throw();
+    };
+
+    class NonDisplayableException : public std::exception {
+        public:
+            const char *what() const throw();
+    };
+
+	class PositiveInffException : public std:: exception {
+		public: 
 			const char *what() const throw();
+	};
+
+	class NegativeInffException : public std:: exception {
+	public: 
+		const char *what() const throw();
 	};
 };
 

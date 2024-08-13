@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/08 18:05:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/13 23:04:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ private:
 	static double	toDouble(const std::string & literal);
 	static char		toChar(const std::string & literal);
 
+	static void		HandleCharConversion (int value);
+
 	static eType	detectType(const std::string & literal);
 
 public:
@@ -65,11 +67,6 @@ public:
 
 	/* --- Exceptions ------------------------------------------------------- */
 
-	class OutOfRangeException : public std::exception {
-		public:
-			const char *what() const throw();
-	};
-
     class ImpossibleConversionException : public std::exception {
         public:
             const char *what() const throw();
@@ -79,6 +76,16 @@ public:
         public:
             const char *what() const throw();
     };
+
+	class PositiveInffException : public std:: exception {
+		public: 
+			const char *what() const throw();
+	};
+
+	class NegativeInffException : public std:: exception {
+	public: 
+		const char *what() const throw();
+	};
 };
 
 #endif
