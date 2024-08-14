@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/14 20:50:19 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:03:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ ScalarConverter::ScalarConverter() {
 ScalarConverter::ScalarConverter(const ScalarConverter & source) {
 	std::cout << "ScalarConverter copy constructor called" << std::endl;
 	// Currently, there's no instance-specific data to copy
-	(void) source;	// To avoid unused parameter warning
+	(void)source;	// To avoid unused parameter warning
 }
 
 // Copy assignment operator
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter & source) {
 	std::cout << "ScalarConverter copy assignment operator called" << std::endl;
-	if (this == &source) {
-		// Currently, there's nothing to copy
-	}
+	// Currently, there's nothing to copy
+	(void)source;
 	return (*this);
 }
 
