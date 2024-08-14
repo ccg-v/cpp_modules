@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/14 00:22:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:49:07 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ private:
 
 	static eType	detectType(const std::string & literal);
 
-	static void displayType				(eType type);
-	static void displayUnknownConversions();
-	static void displayCharConversion	(const std::string &literal, eType type);
-	static void displayIntConversion	(const std::string &literal, eType type);
-	static void displayFloatConversion	(const std::string &literal, eType type);
-	static void displayDoubleConversion	(const std::string &literal, eType type);
+	static void 	displayType	(eType type);
+	static void 	displayUnknownConversions();
+	static void 	displayCharConversion(const std::string &literal, eType type);
+	static void 	displayIntConversion(const std::string &literal, eType type);
+	static void 	displayFloatConversion(const std::string &literal, eType type);
+	static void 	displayDoubleConversion(const std::string &literal, eType type);
 
 public:
 

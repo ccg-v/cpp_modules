@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/14 00:52:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:50:19 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,8 @@ int	ScalarConverter::toInteger(const std::string & literal) {
 	errno = 0;
 	long value = std::strtol(literal.c_str(), &end, 10);
 	
-	if (errno == ERANGE || value < INT_MIN || value > INT_MAX) {
-		// throw std::range_error("out of integer range");
-		// throw OutOfRangeException();
+	if (errno == ERANGE || value < INT_MIN || value > INT_MAX) 
 		throw ImpossibleConversionException();
-	}
 	return static_cast<int>(value);
 }
 
@@ -145,7 +142,6 @@ float ScalarConverter::toFloat(const std::string & literal) {
     if (literal == "-inff") return -std::numeric_limits<float>::infinity();
     if (literal == "nanf") return std::numeric_limits<float>::quiet_NaN();
 
-    // Remove the 'f' suffix
     std::string numPart = literal.substr(0, literal.length() - 1);
 
     // Parse as a double to check the range more precisely
@@ -153,35 +149,29 @@ float ScalarConverter::toFloat(const std::string & literal) {
     double d_value = std::strtod(numPart.c_str(), &end);	
 
     // Check if the entire string was parsed
-    if (*end != '\0') {
-        throw ImpossibleConversionException();
-    }
+    // if (*end != '\0') {
+    //     throw ImpossibleConversionException();
+    // }
 
     // Check if the value is within float range
     if (d_value < -std::numeric_limits<float>::max() || 
         d_value > std::numeric_limits<float>::max()) {
-        // throw ImpossibleConversionException();
 		if (d_value > 0)
 			throw PositiveInffException();
 		else
 			throw NegativeInffException();
     }
-
-    // If it's in range, convert to float
     return static_cast<float>(d_value);
 }
 
 double ScalarConverter::toDouble(const std::string & literal) {
     char* end;
-    if (literal == "+inf") {
+    if (literal == "+inf") 
         return std::numeric_limits<double>::infinity();
-    }
-    if (literal == "-inf") {
+    if (literal == "-inf") 
         return -std::numeric_limits<double>::infinity();
-    }
-    if (literal == "nan") {
+    if (literal == "nan")
         return std::numeric_limits<double>::quiet_NaN();
-    }
     double value = std::strtod(literal.c_str(), &end);
 
     // Instead of throwing an exception, return infinity for out-of-range values
@@ -232,10 +222,10 @@ void ScalarConverter::displayType(eType type) {
 }
 
 void ScalarConverter::displayUnknownConversions() {
-    std::cout << "(UNKNOWN)char:\timpossible" << std::endl;
-    std::cout << "(UNKNOWN)int:\timpossible" << std::endl;
-    std::cout << "(UNKNOWN)float:\timpossible" << std::endl;
-    std::cout << "(UNKNOWN)double:\timpossible" << std::endl;
+    std::cout << "char:\timpossible" << std::endl;
+    std::cout << "int:\timpossible" << std::endl;
+    std::cout << "float:\timpossible" << std::endl;
+    std::cout << "double:\timpossible" << std::endl;
 }
 
 void ScalarConverter::displayCharConversion(const std::string &literal, eType type) {
@@ -260,15 +250,14 @@ void ScalarConverter::displayCharConversion(const std::string &literal, eType ty
         } else {
             throw ImpossibleConversionException();
         }
-        
         if (value < 32 || value > 126) {
             throw NonDisplayableException();
         }
         std::cout << "char:\t'" << value << "'" << std::endl;
-    } catch (const NonDisplayableException &e) {
+    } catch (const NonDisplayableException & e) {
         std::cout << "char:\t" << e.what() << std::endl;
-    } catch (const std::exception &) {
-        std::cout << "char:\tImpossible" << std::endl;
+    } catch (const std::exception & e) {
+        std::cout << "char:\t" << e.what() << std::endl;
     }
 }
 
@@ -281,7 +270,7 @@ void ScalarConverter::displayIntConversion(const std::string &literal, eType typ
             value = toInteger(literal);
         } else if (type == FLOAT) {
             float floatValue = toFloat(literal);
-            if (floatValue > std::numeric_limits<int>::max() || floatValue < std::numeric_limits<int>::min() 
+            if (floatValue > std::numeric_limits<int>::max()|| floatValue < std::numeric_limits<int>::min() 
                 || std::isnan(floatValue) || std::isinf(floatValue)) 
                 throw ImpossibleConversionException();
             value = static_cast<int>(floatValue);
@@ -295,8 +284,8 @@ void ScalarConverter::displayIntConversion(const std::string &literal, eType typ
             throw ImpossibleConversionException();
         }
         std::cout << "int:\t" << value << std::endl;
-    } catch (const std::exception &) {
-        std::cout << "int:\tImpossible" << std::endl;
+    } catch (const std::exception & e) {
+        std::cout << "int:\t" << e.what() << std::endl;
     }
 }
 
@@ -310,11 +299,11 @@ void ScalarConverter::displayFloatConversion(const std::string &literal, eType t
         } else if (type == FLOAT) {
             try {
                 value = toFloat(literal);
-            } catch (const PositiveInffException &) {
-                std::cout << "float:\t+inff" << std::endl;
+            } catch (const PositiveInffException & e) {
+                std::cout << "float:\t" << e.what() << std::endl;
                 return;
-            } catch (const NegativeInffException &) {
-                std::cout << "float:\t-inff" << std::endl;
+            } catch (const NegativeInffException & e) {
+                std::cout << "float:\t" << e.what()  << std::endl;
                 return;
             }
         } else if (type == DOUBLE) {
@@ -329,12 +318,17 @@ void ScalarConverter::displayFloatConversion(const std::string &literal, eType t
         }
         
         if (std::isinf(value)) {
-            std::cout << "float:\t" << (value > 0 ? "+inff" : "-inff") << std::endl;
+			if (value > 0)
+				std::cout << "float:\t+inff" << std::endl;
+			else
+            	std::cout << "float:\t-inff" << std::endl;
         } else {
-            std::cout << "float:\t" << std::fixed << std::setprecision(1) << value << "f" << std::endl;
+            std::cout << "float:\t" 
+			<< std::fixed << std::setprecision(1) // comment/uncomment to switch between scientific/decimal notation (1)
+			<< value << "f" << std::endl;
         }
-    } catch (const std::exception &) {
-        std::cout << "float:\tImpossible" << std::endl;
+    } catch (const ImpossibleConversionException & e) {
+        std::cout << "float:\t" << e.what() << std::endl;
     }
 }
 
@@ -346,7 +340,6 @@ void ScalarConverter::displayDoubleConversion(const std::string &literal, eType 
         } else if (type == INT) {
             value = static_cast<double>(toInteger(literal));
         } else if (type == FLOAT) {
-            // Remove the 'f' suffix for float literals
             std::string floatStr = literal.substr(0, literal.length() - 1);
             value = std::strtod(floatStr.c_str(), NULL);
             if (value == HUGE_VAL || value == -HUGE_VAL) {
@@ -359,39 +352,19 @@ void ScalarConverter::displayDoubleConversion(const std::string &literal, eType 
         }
         
         if (std::isinf(value)) {
-            std::cout << "double:\t" << (value > 0 ? "+inf" : "-inf") << std::endl;
+			if (value > 0)
+				std::cout << "double:\t+inf" << std::endl;
+			else
+            	std::cout << "double:\t-inf" << std::endl;
         } else {
-            std::cout << "double:\t" << std::fixed << std::setprecision(1) << value << std::endl;
+            std::cout << "double:\t"
+			<< std::fixed << std::setprecision(1) // comment/uncomment to switch between scientific/decimal notation (1)
+			<< value << std::endl;
         }
-    } catch (const std::exception &) {
-        std::cout << "double:\tImpossible" << std::endl;
+    } catch (const ImpossibleConversionException & e) {
+        std::cout << "double:\t" << e.what() << std::endl;
     }
 }
-
-// void ScalarConverter::displayDoubleConversion(const std::string &literal, eType type) {
-//     try {
-//         double value;
-//         if (type == CHAR) {
-//             value = static_cast<double>(toChar(literal));
-//         } else if (type == INT) {
-//             value = static_cast<double>(toInteger(literal));
-//         } else if (type == FLOAT) {
-//             value = static_cast<double>(toFloat(literal));
-//         } else if (type == DOUBLE) {
-//             value = toDouble(literal);
-//         } else {
-//             throw ImpossibleConversionException();
-//         }
-        
-//         if (std::isinf(value)) {
-//             std::cout << "double:\t" << (value > 0 ? "+inf" : "-inf") << std::endl;
-//         } else {
-//             std::cout << "double:\t" << std::fixed << std::setprecision(1) << value << std::endl;
-//         }
-//     } catch (const std::exception &) {
-//         std::cout << "double:\tImpossible" << std::endl;
-//     }
-// }
 
 //	Exceptions
 
