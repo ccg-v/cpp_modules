@@ -13,12 +13,13 @@
 	* Empty Derived Classes: Maintain the constraint that derived classes are empty by not adding extra members or methods.
 
 This exercise helps in understanding polymorphism, dynamic type identification, and adhering to specific constraints while designing classes in C++.
+
+Read the subject [**here**](https://github.com/ccg-v/cpp_modules/blob/master/cpp_06/cpp06_subject.pdf)
 ***
-The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI) in C++ come into play
-***
+
 ## Questions:
 <details>
-<summary><strong>Why `Base` class must have a public virtual destructor? And why ONLY?</strong></summary>
+<summary><strong>Why <i>`Base`</i> class must have a public virtual destructor? And why ONLY?</strong></summary>
 
 * **The Purpose of the Destructor in this Context**
 
@@ -35,8 +36,10 @@ The challenge here lies in identifying the actual type of an object when the der
 	* While the subject specifies that the Base class only needs a public virtual destructor, it’s unusual to have a destructor without a constructor. However, since the exercise explicitly allows you to avoid the Orthodox Canonical Form, it’s fine for this simplified context.
 
 </details>
+
 <details>
 <summary><strong><i>`generate()`</i> and <i>`identify()`</i> must be member methods of Base class?</strong></summary>
+
 No, in fact it’s more appropriate to implement them as non-member functions for the following reasons:
 
 1. Design Separation:
@@ -48,4 +51,20 @@ No, in fact it’s more appropriate to implement them as non-member functions fo
     You’re not burdening the Base class with utility logic that’s unrelated to its core purpose.
 </details>
 
+<details>
+<summary><strong>If derived classes are empty, how can we identify their types?</strong></summary>
+
+The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI) in C++ come into play.
+
+* **Identifying the Type Using a Pointer**
+
+	* `dinamic_cast`: You can use dynamic casting to determine the actual type of the object at runtime. In C++, `dynamic_cast` allows you to safely cast a pointer from a base class to a derived class. 
+		* If the cast is valid (i.e., the object is actually of the derived type), the cast succeeds.
+		* If it’s not valid, it returns NULL (C++98) or nullptr (C++11 and later).
+
+	* **Why This Works**: When you declare a class with a virtual function (like the virtual destructor in Base), the compiler generates a `vtable`(virtual table) for that class, allowing dynamic_cast to work. The `vtable` stores information about the actual type of the object, enabling runtime identification.
+
+* **Identifying the Type Using a Reference**
+
+</details>
 
