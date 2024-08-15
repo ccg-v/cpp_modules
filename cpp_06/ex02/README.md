@@ -13,10 +13,9 @@
 	* Empty Derived Classes: Maintain the constraint that derived classes are empty by not adding extra members or methods.
 
 This exercise helps in understanding polymorphism, dynamic type identification, and adhering to specific constraints while designing classes in C++.
----
 
 The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI) in C++ come into play
----
+
 ## Questions:
 <details>
 <summary><strong>Why `Base` class must have a public virtual destructor? And why ONLY?</strong></summary>
