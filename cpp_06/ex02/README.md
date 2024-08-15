@@ -13,7 +13,7 @@
 	* Empty Derived Classes: Maintain the constraint that derived classes are empty by not adding extra members or methods.
 
 This exercise helps in understanding polymorphism, dynamic type identification, and adhering to specific constraints while designing classes in C++.
-___
+***
 The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI) in C++ come into play
 ***
 ## Questions:
@@ -34,6 +34,18 @@ The challenge here lies in identifying the actual type of an object when the der
     	* A default constructor establishes how an object is initialized. Even if there’s no special initialization needed right now, you might add it later.
 	* While the subject specifies that the Base class only needs a public virtual destructor, it’s unusual to have a destructor without a constructor. However, since the exercise explicitly allows you to avoid the Orthodox Canonical Form, it’s fine for this simplified context.
 
+</details>
+<details>
+<summary><strong><i>`generate()`</i> and <i>`identify()`</i> must be member methods of Base class?</strong></summary>
+No, in fact it’s more appropriate to implement them as non-member functions for the following reasons:
+
+1. Design Separation:
+    * The generate() function’s purpose is to randomly instantiate one of the derived classes (A, B, or C). Since it’s a utility function that deals with object creation and returns a pointer to Base, it doesn’t have to be tightly coupled with the Base class. It’s more of a utility related to the inheritance hierarchy rather than functionality specific to the Base class itself.
+    The two identify() functions are also utilities that identify the type of an object derived from Base. These functions operate on objects of type Base, but they don’t need to be part of Base. They don’t change the state of Base objects, and they serve more as external tools that analyze the objects.
+
+2. Simplicity and Clarity:
+    * Making these functions non-member functions simplifies the Base class. The Base class can remain focused solely on being a polymorphic base class with a virtual destructor, as specified in the exercise.
+    You’re not burdening the Base class with utility logic that’s unrelated to its core purpose.
 </details>
 
 
