@@ -1,6 +1,6 @@
 # Exercise 02: Identify real type
 
-* ## **Objective**: 
+* **Objective**: 
 	* Implement a base class with specific functionality and derive three empty classes from it. Use type identification techniques to determine the type of objects at runtime.
 
 * **Constraints**:
