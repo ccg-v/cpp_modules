@@ -76,7 +76,7 @@ The challenge here lies in identifying the actual type of an object when the der
 </details>
 
 [^1]: RTTI allows a program to determine the type of an object during execution. This is useful for operations such as dynamic type checking, especially in cases where the actual type of an object needs to be known at runtime. It requires at least one virtual function in the base class (commonly a virtual destructor). This is because the virtual table (vtable) mechanism is used to store type information.
-* RTTI is closely associated with polymorphism. When a base class declares a virtual destructor or virtual methods, RTTI information is available for objects of derived classes. This allows the program to identify and interact with derived types through base class pointers or references.
-* Key RTTI Features:
-    * `dynamic_cast`: This operator is used for safely downcasting (casting from a base class pointer/reference to a derived class pointer/reference). If the cast fails, dynamic_cast will return NULL for pointers or throw std::bad_cast for references. RTTI is used to check the actual type of the object at runtime.
-    * `typeid`: This operator provides information about the type of an object or type information object. It returns a std::type_info object, which can be used to compare types or retrieve type names.
+RTTI is closely associated with polymorphism. When a base class declares a virtual destructor or virtual methods, RTTI information is available for objects of derived classes. This allows the program to identify and interact with derived types through base class pointers or references.
+Key RTTI Features:
+`dynamic_cast`: This operator is used for safely downcasting (casting from a base class pointer/reference to a derived class pointer/reference).
+`typeid`: This operator provides information about the type of an object or type information object. It returns a std::type_info object, which can be used to compare types or retrieve type names.
