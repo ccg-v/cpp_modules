@@ -54,7 +54,7 @@ No, in fact it’s more appropriate to implement them as non-member functions fo
 <details>
 <summary><strong>If derived classes are empty, how can we identify their types?</strong></summary>
 
-The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI) in C++ come into play.
+The challenge here lies in identifying the actual type of an object when the derived classes are empty and don’t have any members or methods that differentiate them. This is where the power of polymorphism and runtime type identification (RTTI)[^1] in C++ come into play.
 
 * **Identifying the Type Using a Pointer**
 
@@ -62,9 +62,21 @@ The challenge here lies in identifying the actual type of an object when the der
 		* If the cast is valid (i.e., the object is actually of the derived type), the cast succeeds.
 		* If it’s not valid, it returns NULL (C++98) or nullptr (C++11 and later).
 
-	* **Why This Works**: When you declare a class with a virtual function (like the virtual destructor in Base), the compiler generates a `vtable`(virtual table) for that class, allowing dynamic_cast to work. The `vtable` stores information about the actual type of the object, enabling runtime identification.
+	* **Why This Works**: When you declare a class with a virtual function (like the virtual destructor in Base), the compiler generates a `vtable`(virtual table) for that class, allowing `dynamic_cast` to work. The `vtable` stores information about the actual type of the object, enabling runtime identification.
 
 * **Identifying the Type Using a Reference**
 
+	* In this case, you’re dealing with a reference, so you don’t have the option to use pointers or dynamic_cast directly. Instead, the best approach is to use try-catch exception handling combined with dynamic_cast.
+
+    * When you use dynamic_cast with references, it will throw a `std::bad_cast` exception if the cast fails. This gives you a way to identify the type by attempting to cast to each derived type inside a try-catch block:
+		- If the cast is successful, you can print the corresponding type.
+    	- If the cast fails, catch the exception and continue with the next type.
+
+	* The `std::bad_cast` exception is available in in the <typeinfo> header, but based on the exercise instructions, we are not allowed to include this header. Instead, we can use `std::exception`, which is a base class for all standard exceptions, to catch exceptions thrown by `dynamic_cast`
 </details>
 
+[^1] * RTTI allows a program to determine the type of an object during execution. This is useful for operations such as dynamic type checking, especially in cases where the actual type of an object needs to be known at runtime. It requires at least one virtual function in the base class (commonly a virtual destructor). This is because the virtual table (vtable) mechanism is used to store type information.
+* RTTI is closely associated with polymorphism. When a base class declares a virtual destructor or virtual methods, RTTI information is available for objects of derived classes. This allows the program to identify and interact with derived types through base class pointers or references.
+* Key RTTI Features:
+    * `dynamic_cast`: This operator is used for safely downcasting (casting from a base class pointer/reference to a derived class pointer/reference). If the cast fails, dynamic_cast will return NULL for pointers or throw std::bad_cast for references. RTTI is used to check the actual type of the object at runtime.
+    * `typeid`: This operator provides information about the type of an object or type information object. It returns a std::type_info object, which can be used to compare types or retrieve type names.
