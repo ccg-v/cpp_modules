@@ -1,6 +1,8 @@
-# SERIALIZATION AND DESERIALIZATION
 The exercise tests your understanding of how pointers, memory addresses, and type casting work in low-level programming, and how you can manipulate these concepts using serialization and deserialization techniques.
-* **Serialization**: This is the process of converting an object (or, in this case, a pointer to an object) into a format that can be easily stored, transmitted, or used in some other way. Here, the format is an integer (`***uintptr_t***`), which is a type specifically designed to hold a memory address as an unsigned integer.
+
+# SERIALIZATION AND DESERIALIZATION
+
+* **Serialization**: This is the process of converting an object (or, in this case, a pointer to an object) into a format that can be easily stored, transmitted, or used in some other way. Here, the format is an integer (***`uintptr_t`***), which is a type specifically designed to hold a memory address as an unsigned integer.
 * **Deserialization**: This is the reverse process of serialization. It involves taking the serialized format (in this case, the integer) and converting it back to the original object (or pointer to the object).
 
 # REPRESENTATION OF MEMORY ADDRESS
