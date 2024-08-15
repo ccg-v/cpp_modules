@@ -26,7 +26,7 @@ The challenge here lies in identifying the actual type of an object when the der
 
     * **Dynamic Casting and Type Identification**: The virtual destructor also establishes the class as polymorphic. When a class has a virtual function (like a virtual destructor), it automatically contains a `vtable (virtual table)`. This `vtable` is crucial for dynamic casting, without it dynamic casting wouldn’t work.
 
-* **Absence of a Constructor**
+* **Lack of Constructor**
 
 	* The presence of a destructor typically implies that objects of the class need special cleanup upon deletion. Without a constructor (or any other member functions), one might wonder what the destructor is actually managing.
 	* In general, a class with a destructor should have a constructor, even if it’s just the default constructor.
