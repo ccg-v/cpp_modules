@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/16 21:33:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:49:07 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ public:
 
 	/* --- Exceptions ------------------------------------------------------- */
 
-    class ImpossibleException : public std::exception {
+    class ImpossibleConversionException : public std::exception {
         public:
             const char *what() const throw();
     };
@@ -81,16 +81,6 @@ public:
         public:
             const char *what() const throw();
     };
-
-	class PosInfException : public std:: exception {
-		public: 
-			const char *what() const throw();
-	};
-
-	class NegInfException : public std:: exception {
-	public: 
-		const char *what() const throw();
-	};
 
 	class PositiveInffException : public std:: exception {
 		public: 
