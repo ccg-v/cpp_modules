@@ -15,9 +15,10 @@ Both float (single-precision) and double (double-precision) follow the IEEE 754 
 
 A floating-point number is represented as:	   **value= <sup>(−1)</sup> sign × (1+mantissa) × 2<sup>exponent−bias</sup>**
 
-Lets convert a number out of integer range to float type, for instance `(INT_MAX + 1)` = 2147483649
 ---
 ## Conversion of 2147483649 to Float
+
+Lets convert a number out of integer range to float type, for instance `(INT_MAX + 1)` = 2147483649
 
 ### 1. Representing in binary
 * 2147483649 is represented in binary as ```10000000000000000000000000000001```
