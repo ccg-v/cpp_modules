@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 13:57:39 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/18 14:23:10 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:48:49 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	ScalarConverter::toDouble (const std::string & literal) {
 	char	*end;
 	double d_value = std::strtod(c_str, &end);
 
-    // Check if the conversion was successful and the input is within int range
-	// DON'T THROW THE EXCEPTION IF STRING HAS FLOAT FORMAT (ENDS WITH 'F')
     if (*end != '\0' && !(*end == 'f' && *(end + 1) == '\0')) { //	(1)
         	throw ImpossibleConversionException();
     }
@@ -38,7 +36,7 @@ void	ScalarConverter::toDouble (const std::string & literal) {
 	if (d_value >= -DBL_MAX && d_value <= DBL_MAX &&	// (2)
 		!(std::isinf(d_value) || std::isnan(d_value))) {
 			std::cout << "double:\t" 
-				  	  << std::fixed << std::setprecision(1) // comment/uncomment for scientific/decimal notation
+				  	  << std::fixed << std::setprecision(1) // (3)
 					  << d_value << std::endl;
 		}
 	else if (std::isinf(d_value))
@@ -65,3 +63,37 @@ void	ScalarConverter::convertToDouble (const std::string & literal) {
 		std::cout << "double:\t" << e.what() << std::endl;
 	}
 }
+
+/*
+ *	(1)	This condition first checks if *end is not '\0', meaning there are
+ *		extra characters after parsing the number.
+ *
+ *		Then, it verifies  whether these characters are not exactly an 'f' 
+ *		followed by '\0'.
+ 
+ *		The overall logic says:  "If there are  extra characters and they
+ *		are not 'f' followed by the end of the string, throw an error."
+ */
+
+/*
+ *	(2)	DBL_MIN does not represent the smallest negative value a double
+ *		can hold,  it represents the SMALLEST POSITIVE normalized value
+ *		for a double (around 2.225074e-308).
+ *
+ *		The smallest value a float can hold is actually -DBL_MAX for
+ *		negative values.
+ */
+
+/*
+ *	(3) --> Comment/uncomment this line to display either scientific or
+ *			decimal notation
+ *
+ *		'std::fixed'  and  'std::precision' are manipulators in C++ used
+ *		with streams  (like 'std::cout')  to control  the formatting  of
+ *		floating-point numbers.
+ *		When used together,  'std::fixed'  and  'std::precision' control
+ *		the number of decimal places displayed in floating-point numbers
+ *		Without 'std::fixed', 'std::setprecision'  sets the total number
+ *		of significant digits displayed, which may include digits before
+ *		and after the decimal point.
+ */

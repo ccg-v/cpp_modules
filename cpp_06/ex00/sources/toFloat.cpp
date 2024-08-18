@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 00:39:37 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/18 14:18:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:47:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	ScalarConverter::toFloat(const std::string & literal) {
 	char	*end;
 	double d_value = std::strtod(c_str, &end);
 
-    // Check if the conversion was successful and the input is within int range
-	// DON'T THROW THE EXCEPTION IF STRING HAS FLOAT FORMAT (ENDS WITH 'F')
     if (*end != '\0' && !(*end == 'f' && *(end + 1) == '\0')) { //	(1)
         	throw ImpossibleConversionException();
     }
@@ -38,7 +36,7 @@ void	ScalarConverter::toFloat(const std::string & literal) {
 	if (d_value >= -FLT_MAX && d_value <= FLT_MAX &&	// (2)
 		!(std::isinf(d_value) || std::isnan(d_value))) {
 			std::cout << "float:\t" 
-				  	  << std::fixed << std::setprecision(1) // comment/uncomment for scientific/decimal notation
+				  	  << std::fixed << std::setprecision(1) // (3))
 					  << static_cast<float>(d_value) << "f" << std::endl;
 		}
 	else if (std::isinf(static_cast<float>(d_value)))
@@ -68,16 +66,33 @@ void	ScalarConverter::convertToFloat(const std::string & literal) {
 /*
  *	(1)	This condition first checks if *end is not '\0', meaning there are extra
  *		characters after parsing the number.
+ *
  *		Then, it verifies whether these characters are not exactly an 'f' 
- *		followed by '\0'.
+ *		followed by '\0' (to avoid throwing exception if literal has float format)
+ *
  *		The overall logic says: "If there are extra characters and they are not 
  *		'f' followed by the end of the string, throw an error."
  */
 
 /*
  *	(2)	FLT_MIN does not represent the smallest negative value a float can hold,
- *		it represents the smallest positive normalized value for a float
+ *		it represents the SMALLEST POSITIVE normalized value for a float
  *		(around 1.175494e-38).
+ *
  *		The smallest value a float can hold is actually -FLT_MAX for negative 
  *		values.
+ */
+
+/*
+ *	(3) --> Comment/uncomment this line to display either scientific or
+ *			decimal notation
+ *
+ *		'std::fixed'  and  'std::precision' are manipulators in C++ used
+ *		with streams  (like 'std::cout')  to control  the formatting  of
+ *		floating-point numbers.
+ *		When used together,  'std::fixed'  and  'std::precision' control
+ *		the number of decimal places displayed in floating-point numbers
+ *		Without 'std::fixed', 'std::setprecision'  sets the total number
+ *		of significant digits displayed, which may include digits before
+ *		and after the decimal point.
  */

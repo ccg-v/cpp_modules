@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:44:52 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/18 14:17:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 21:15:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 # include <iostream>
 # include <string>
-// # include <cstring>	// strlen()
 # include <climits>	// CHAR_MIN, CHAR_MAX, INT_MIN, INT_MAX, 
 # include <cfloat>	// FLT_MIN, FLT_MAX, DBL_MIN, DBL_MAX
 # include <cmath>	// std::isinf, std::isnan
 # include <iomanip>	// std::setprecision
 # include <cstdlib>	// std:strtod
 
-class ScalarConverter
+class ScalarConverter	// (1)
 {
 
 private:
@@ -34,9 +33,7 @@ private:
 	ScalarConverter & operator=(const ScalarConverter & source);	// Copy assignment operator
 	~ScalarConverter();									// Default destructor
 	
-public:
-
-	/* --- Public member methods -------------------------------------------- */
+	/* --- Private member methods -------------------------------------------- */
 
 	static void		toChar(const std::string & literal);
 	static void		toInt(const std::string & literal);
@@ -47,6 +44,34 @@ public:
 	static void		convertToInt (const std::string & literal);
 	static void		convertToFloat(const std::string & literal);
 	static void		convertToDouble(const std::string & literal);
+
+public:
+
+	/* --- Public member methods -------------------------------------------- */
+
+	static void		convert(const std::string & literal);
 };
 
 #endif
+
+/*
+ *	(1) Class design explanation
+ *
+ * 	1. Static member functions
+ * 
+ *	The functions in `ScalarConverter` are declared as static, meaning they do
+ *	not require an instance of the class to be called. This is logical because 
+ *	conversions like these  do not depend on any instance-specific data.  They 
+ *	take input and perform operations based purely on that input.
+ *
+ * 2. Public/private visibility
+ * 
+ * 	- The individual `toChar()`, `toInt()`, etc., functions are private because
+ * 		they are implementation details. Their sole purpose is to serve the main
+ * 		convert method.  This improves encapsulation and makes the class easier
+ * 		to maintain and extend in the future.
+ * 
+ * 	- The only public method is `convert()`, which is the main interface for 
+ * 		external users. This method internally calls the specific conversion 
+ * 		methods and handles exceptions.
+ */

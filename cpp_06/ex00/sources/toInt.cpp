@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:12:13 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/18 13:57:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:46:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	ScalarConverter::toInt(const std::string & literal) {
 	char	*end;
 	double d_value = std::strtod(c_str, &end);
 
-    // Check if the conversion was successful and the input is within int range
-	// DON'T THROW THE EXCEPTION IF STRING HAS FLOAT FORMAT (ENDS WITH 'F')
+
     if (*end != '\0' && !(*end == 'f' && *(end + 1) == '\0')) {	// (1)
         	throw ImpossibleConversionException();
     }
@@ -51,8 +50,10 @@ void	ScalarConverter::convertToInt(const std::string & literal) {
 /*
  *	(1)	This condition first checks if *end is not '\0', meaning there are extra
  *		characters after parsing the number.
+ *
  *		Then, it verifies whether these characters are not exactly an 'f' 
- *		followed by '\0'.
+ *		followed by '\0' (to avoid throwing exception if literal has float format)
+ *
  *		The overall logic says: "If there are extra characters and they are not 
  *		'f' followed by the end of the string, throw an error."
  */
