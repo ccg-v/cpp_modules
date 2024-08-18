@@ -39,36 +39,36 @@ processLiteral("true");      // Represents a boolean literal
 
 In C++, pseudo literals are special values used to represent certain edge cases or special conditions in floating-point arithmetic. They are not numeric values in the usual sense but are part of the floating-point standard to handle cases that cannot be represented by finite floating-point numbers:
 
-**1. Infinity** (`**+inf**` and `**-inf**`)
+1. **Infinity** ('**+inf**' and '**-inf**')
 
 	* **Positive Infinity** ('**+inf**'): Represents a value that is larger than any finite number. This can result from operations like dividing a positive number by zero.
 	* **Negative Infinity** ('**-inf**'): Represents a value that is more negative than any finite number. This can result from operations like dividing a negative number by zero.
 
 	In C++, these are represented in floating-point types as:
 
-	* For 'float': '+inff' and '-inff'
-	* For 'double': '+inf' and '-inf'
+	* For 'float': '**+inff**' and '**-inff**'
+	* For 'double': '**+inf**' and '**-inf**'
 
-**2. NaN** (**Not-a-Number**)
+2. **NaN** (**Not-a-Number**)
 
 	Represents a value that is undefined or unrepresentable, especially in floating-point calculations. Operations like '0.0 / 0.0' or the square root of a negative number (in a context where complex numbers are not being used) can produce NaN.
 
 	In C++, these are represented in floating-point types as:
 
-	* For 'float': 'nanf'
-	* For 'double': 'nan'
+	* For 'float': '**nanf**'
+	* For 'double': '**nan**'
 
 ## Exercise's logic
 
-**1. Attributes of the Class**
+1. **Attributes of the Class**
 
     Since the class ScalarConverter is designed to be non-instantiable and only needs to perform a conversion based on the provided string literal, it does not require any attributes. The conversion logic can be handled purely through static methods without any need for member variables.
 
-**2. Constructor**
+2. **Constructor**
 
     The constructor should not receive any parameters. Given the class must be non-instantiable, the constructor should be private or protected to prevent instantiation. The string literal should be handled by a static method rather than through the constructor.
 
-**3. Static Method for Conversion**
+3. **Static Method for Conversion**
 
     The class should provide a static method (likely named convert) that takes the string literal as a parameter. This method will handle the detection of the literal type, conversion to the appropriate scalar types, and output the results.
 
