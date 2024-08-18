@@ -38,7 +38,7 @@ A floating point number in a computer is usually stored in a specific format. Th
 
 For simplicity, let's talk about a common format: **32-bit single precision**.
 
-1. ### The Sign bit
+### 1. The Sign bit
 
 The sign bit is the simplest part. It’s just one bit (0 or 1):
 
@@ -47,7 +47,7 @@ The sign bit is the simplest part. It’s just one bit (0 or 1):
 
 Example: For +5.75, the sign bit would be 0; for -5.75, it would be 1.
 
-2. ### The Exponent
+### 2. The Exponent
 
 The exponent part is what moves the decimal point. It’s stored in a special way called ***"biased exponent"***. Instead of storing the exponent as a positive or negative number directly, the computer adds a *bias* (a fixed number) to the exponent to make it easier to store in binary.
 
@@ -55,7 +55,7 @@ For single precision (32-bit):
 * The exponent is 8 bits long.
 * The bias for single precision is 127. This means if you have an exponent of +3, you actually store 3 + 127 = 130.
 
-3. ### The Mantissa (Significant Digits)
+### 3. The Mantissa (Significant Digits)
 
 The mantissa represents the actual digits of the number, but in binary (0s and 1s). In floating point representation, the mantissa assumes there is a leading "1." This is called the ***"implicit leading bit"***.
 
@@ -63,7 +63,7 @@ For single precision:
 * The mantissa is 23 bits long.
 * Example: The decimal number 5.75 has a binary mantissa of 1.011. In the computer, it’s stored as 011 (the leading 1 is implicit).
 
-4. ### Putting it all together"
+### 4. Putting it all together"
 
 Let's store the number 5.75 in a 32-bit single precision floating point format.
 
