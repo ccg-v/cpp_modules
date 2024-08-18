@@ -54,8 +54,8 @@ int main() {
 ## Summary:
 * These literals are mainly used when working with floating-point operations to handle edge cases correctly and are a part of many modern programming languages.
 
->    * `+inf` and `-inf` represent infinite values.
->    * `+inff` and `-inff` are the same but for single-precision floats.
->    * `nan` represents "Not a Number", used for undefined results.
->    * `nanf` is the single-precision equivalent of nan.
+	* `+inf` and `-inf` represent infinite values.
+    * `+inff` and `-inff` are the same but for single-precision floats.
+    * `nan` represents "Not a Number", used for undefined results.
+    * `nanf` is the single-precision equivalent of nan.
 
