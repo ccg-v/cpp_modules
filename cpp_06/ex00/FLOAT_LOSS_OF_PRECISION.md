@@ -13,10 +13,10 @@ Both float (single-precision) and double (double-precision) follow the IEEE 754 
 	* 11 bits for the exponent
 	* 52 bits for the mantissa (fraction)
 
-A floating-point number is represented as:	**value= <sup>(−1)</sup> sign × (1+mantissa) × 2<sup>exponent−bias</sup>**
+A floating-point number is represented as:	   **value= <sup>(−1)</sup> sign × (1+mantissa) × 2<sup>exponent−bias</sup>**
 
 Lets convert a number out of integer range to float type, for instance `(INT_MAX + 1)` = 2147483649
-
+---
 ## Conversion of 2147483649 to Float
 
 ### 1. Representing in binary
@@ -59,11 +59,24 @@ Convert this float representation back to decimal:
 
 Now let's convert the same number but in double format, 2147483649.0, to float.
 
-## Conversion of 2147483649.0 to Float
+## Conversion of double 2147483649.0 to Float
 
+### Step 1: 'double' representation of '2147483649.0'
 ### 1. Binary representation
 * 2147483649 is represented in binary as ```10000000000000000000000000000001```
 * This binary representation corresponds to `2^31 + 1`
 
-### 2. Representing in float
-* **Exponent Calculation**: In 'float', the exponent part is encoded with a `bias` of 127. For a number around 2^31, the exponent will be: ```Exponent = 31 + 127 = 158```
+### 2. Exponent calculation
+* **Exponent Calculation**: The position of the most significant bit is at position 31 (from right to left, starting at 0), so the exponent for this value is '**31**'.
+
+### 3. Mantissa
+* In 'double' , the mantissa can store up to 52 bits. Here, the mantissa is: ```1.00000000000000000000000000000001 (binary)```
+* The leading 1 is implicit in the IEEE 754 format, so only the fractional part after the binary point is stored: ```0000000000000000000000000000000000000000000000000001```
+
+### 4. Double representation
+* **Sign bit**: 0 (positive number)
+* **Exponent**: 31 + 1023 (bias) = 1054 (in binary: 10000011110)
+* **Mantissa**: 0000000000000000000000000000000000000000000000000001
+* So, the double value for 2147483649.0 is: ```0 10000011110 0000000000000000000000000000000000000000000000000001```
+
+### Step 2: Converting to 'float'
