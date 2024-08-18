@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 20:58:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/14 23:03:10 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/16 13:55:49 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ void ScalarConverter::displayCharConversion(const std::string &literal, eType ty
         std::cout << "char:\t'" << value << "'" << std::endl;
     } catch (const NonDisplayableException & e) {
         std::cout << "char:\t" << e.what() << std::endl;
-    } catch (const std::exception & e) {
+    } catch (const ImpossibleConversionException & e) {
         std::cout << "char:\t" << e.what() << std::endl;
     }
 }

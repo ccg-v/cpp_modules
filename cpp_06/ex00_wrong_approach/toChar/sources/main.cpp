@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:02:29 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/11 23:03:39 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:48:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ int main(int argc, char **argv) {
 				  << std::endl;
         return 1;
     }
-	try {
-    	ScalarConverter::toChar(argv[1]);
-	}
-	catch (const ScalarConverter::NonDisplayableException & e) {
-		std::cout << "char:\t" << e.what() << std::endl;
-	}
+	
+	ScalarConverter::convert(argv[1]);
+
     return 0;
 }
