@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:11:49 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/17 01:05:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 13:57:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	ScalarConverter::toChar(const std::string & literal) {
 	double d_value = std::strtod(c_str, &end);
 
     // Check if the conversion was successful and the input is within char range
-    if (*end != '\0') {
-        // If *end is not '\0', the input contains invalid characters
-        throw ImpossibleConversionException();
+	// DON'T THROW THE EXCEPTION IF STRING HAS FLOAT FORMAT (ENDS WITH 'F')
+    if (*end != '\0' && !(*end == 'f' && *(end + 1) == '\0')) {	// (1)
+        	throw ImpossibleConversionException();
     }
     
     // Additional check for negative values that are not within the printable range
@@ -61,3 +61,12 @@ void	ScalarConverter::convertToChar (const std::string & literal) {
 		std::cout << "char:\t" << e.what() << std::endl;
 	} 
 }
+
+/*
+ *	(1)	This condition first checks if *end is not '\0', meaning there are extra
+ *		characters after parsing the number.
+ *		Then, it verifies whether these characters are not exactly an 'f' 
+ *		followed by '\0'.
+ *		The overall logic says: "If there are extra characters and they are not 
+ *		'f' followed by the end of the string, throw an error."
+ */

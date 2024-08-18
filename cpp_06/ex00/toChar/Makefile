@@ -6,13 +6,13 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 23:35:07 by ccarrace          #+#    #+#              #
-#    Updated: 2024/08/17 01:27:15 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/08/18 14:14:18 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # --- Program name ----------------------------------------------------------- #
 
-NAME 		= 	convert.out
+NAME 		= 	convert
 
 # --- Compiler --------------------------------------------------------------- #
 
@@ -32,7 +32,8 @@ INCLUDES	=	-I $(INC_DIR)
 
 # --- Files ------------------------------------------------------------------ #
 
-SRC_FILES	=	toChar.cpp toInt.cpp toFloat.cpp ScalarExceptions.cpp main.cpp
+SRC_FILES	=	toChar.cpp toInt.cpp toFloat.cpp toDouble.cpp main.cpp \
+				ScalarExceptions.cpp
 				
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o treated as literal strings
 DEP_FILES	=	$(SRC_FILES:.cpp=.d)	

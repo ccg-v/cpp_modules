@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:19:48 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/16 21:23:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 13:28:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ class PositiveInffException : public std:: exception {
 };
 
 class NegativeInffException : public std:: exception {
+	public: 
+		const char *what() const throw();
+};
+
+class NanfException : public std:: exception {
+	public: 
+		const char *what() const throw();
+};
+
+class NanException : public std:: exception {
 	public: 
 		const char *what() const throw();
 };

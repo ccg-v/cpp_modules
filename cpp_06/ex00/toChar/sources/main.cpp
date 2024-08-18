@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:02:29 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/17 00:42:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:12:33 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
 	ScalarConverter::convertToChar(argv[1]);
 	ScalarConverter::convertToInt(argv[1]);
 	ScalarConverter::convertToFloat(argv[1]);
-	
+	ScalarConverter::convertToDouble(argv[1]);
+
     return 0;
 }
