@@ -1,4 +1,4 @@
-#PSEUDOLITERALS
+# PSEUDOLITERALS
 
 The pseudoliterals +inf, -inf, +inff, -inff, nan, and nanf are often used in programming languages like C and C++ to represent special floating-point values.
 
@@ -44,7 +44,7 @@ int main() {
     return 0;
 }
 ```
-The values of `+inf`, `-inf`, and `nan` are defined by the IEEE 754 standard for floating-point arithmetic, which ensures that these special values behave consistently across platforms.
+* The values of `+inf`, `-inf`, and `nan` are defined by the IEEE 754 standard for floating-point arithmetic, which ensures that these special values behave consistently across platforms.
 
 	* Operations with `+inf` and `-inf`:
         Adding or multiplying by infinity follows intuitive rules (e.g., 1 + inf = inf, -inf * 2 = -inf).
@@ -52,10 +52,10 @@ The values of `+inf`, `-inf`, and `nan` are defined by the IEEE 754 standard for
         Any operation involving nan typically results in nan, as it indicates an indeterminate or invalid result.
 
 ## Summary:
-
+>
     * `+inf` and `-inf` represent infinite values.
     * `+inff` and `-inff` are the same but for single-precision floats.
     * `nan` represents "Not a Number", used for undefined results.
     * `nanf` is the single-precision equivalent of nan.
-
-These literals are mainly used when working with floating-point operations to handle edge cases correctly and are a part of many modern programming languages.
+>
+* These literals are mainly used when working with floating-point operations to handle edge cases correctly and are a part of many modern programming languages.
