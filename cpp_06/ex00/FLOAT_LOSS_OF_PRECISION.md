@@ -86,7 +86,7 @@ Now let's convert the same number but in double format, 2147483649.0, to float.
 
 When converting to 'float', only 23 bits are available for the mantissa, which means significant precision is lost.
 
-### 1. Truncation of Mantissa**: 
+### 1. Truncation of Mantissa: 
 ***The original double mantissa has 52 bits, but float can only store 23 bits***. The truncated mantissa looks like this:  ```00000000000000000000000```. Notice that the last significant 1 in the double mantissa is lost because it falls beyond the 23-bit limit of float.
 
 ### 2. Float Representation:
