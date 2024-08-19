@@ -1,5 +1,6 @@
 # Exercise 00: Conversion of scalar types
 
+## Concepts
 <details>
 <summary><h3> Scalar Types </h3></summary>
 
