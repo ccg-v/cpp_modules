@@ -1,7 +1,7 @@
 # Exercise 00: Conversion of scalar types
 
 <details>
-<summary><h2> Scalar types </h2></summary>
+<summary><h2> Scalar Types </h2></summary>
 
 Data types that hold a single value, as opposed to aggregate types like arrays, classes, or structures that can hold multiple values.
 Main categories of scalar types:
@@ -20,7 +20,8 @@ Main categories of scalar types:
 
 </details>
 
-## The function must take as a parameter "a string representation of a C++ literal"
+<details>
+<summary><h2> String Literals </h2></summary>
 
 When we talk about a "string representation of a C++ literal", we're talking about how literals of various types (integers, floats, characters, etc.) are expressed as strings in source code, rather than referring to string literals themselves (char* or std::string).
 Let's consider a function that takes a string representation of a literal:
@@ -35,7 +36,11 @@ processLiteral("'a'");       // Represents a character literal
 processLiteral("\"hello\""); // Represents a string literal
 processLiteral("true");      // Represents a boolean literal
 ```
-## Pseudo Literals
+
+</details>
+
+<details>
+<summary><h2> Pseudo Literals </h2></summary>
 
 In C++, pseudo literals are special values used to represent certain edge cases or special conditions in floating-point arithmetic. They are not numeric values in the usual sense but are part of the floating-point standard to handle cases that cannot be represented by finite floating-point numbers:
 
@@ -57,6 +62,8 @@ In C++, pseudo literals are special values used to represent certain edge cases 
 
 	* For 'float': '**nanf**'
 	* For 'double': '**nan**'
+
+</details>
 
 ## Exercise's logic
 
