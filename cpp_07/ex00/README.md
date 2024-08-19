@@ -50,9 +50,9 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 	}
 
 	int main() {
-		cout << add(3, 4) << endl;          // Calls the int version
-		cout << add(3.5, 4.5) << endl;      // Calls the double version
-		cout << add("Hello", " World") << endl; // Calls the string version
+		std::cout << add(3, 4) << std::endl;          		// Calls the int version
+		std::cout << add(3.5, 4.5) << std::endl;      		// Calls the double version
+		std::cout << add("Hello", " World") << std::endl; 	// Calls the string version
 	}
 	```
 	In the example we have written separate functions for each data type. This approach requires to manually write each version of the function, which can lead to duplicated code if the logic is similar for all types.
@@ -60,4 +60,21 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 
 **2. Templates**
 
-As we have seen in the [first example](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#types-of-templates-in-c), templates allow you to write a single function (or class) that works with any type. The compiler generates the appropriate function or class when it sees the type used at compile-time.
+* Templates allow you to write a single function (or class) that works with any type. Unlike overloading, where you need to write separate functions for each data type even if the logic is identical, using a template you write the logic once, which is more concise and avoids code duplication. The compiler generates the appropriate function or class when it sees the type used at compile-time.
+
+	Here's how the previous example can be refactored to use a template for the 'add()' function that can handle any type of data:
+
+	```
+	template <typename T>
+	T add(T a, T b) {
+		return a + b;
+	}
+
+	int main() {
+		std::cout << add(3, 4) << std::endl;          						// Works with int
+		std::cout << add(3.5, 4.5) << std::endl;      						// Works with double
+		std::cout << add(string("Hello"), string(" World")) << std::endl; 	// Works with string
+	}
+
+	```
+
