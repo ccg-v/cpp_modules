@@ -7,7 +7,8 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 ### Types of Templates in C++
 
 **1. Function Templates**
-Function templates are used to create a single function that can operate on different data types. You define a template with one or more type parameters (e.g., 'T', 'U') that are used as placeholders for actual types.
+
+* Function templates are used to create a single function that can operate on different data types. You define a template with one or more type parameters (e.g., 'T', 'U') that are used as placeholders for actual types.
 
 In the following example, the same 'findMax()' function works with integers, doubles and chars. The template automatically adatps to the data type passed when the function is called.
 
@@ -58,4 +59,4 @@ In the example we have written separate functions for each data type. This appro
 
 **2. Templates**
 
-As we have seen in the first example, templates allow you to write a single function (or class) that works with any type. The compiler generates the appropriate function or class when it sees the type used at compile-time.
+As we have seen in the [first example](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#types-of-templates-in-c), templates allow you to write a single function (or class) that works with any type. The compiler generates the appropriate function or class when it sees the type used at compile-time.
