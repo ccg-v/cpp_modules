@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 22:57:47 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/20 02:05:19 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:01:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void test(T value1, T value2) {
 
 	std::cout << "Before swapping:\tvalue1 = " << value1
 			  << "\tvalue2 = " << value2 << std::endl;	
-	swap(value1, value2);
+	::swap(value1, value2);												// (1)
 	std::cout << "After swapping :\tvalue1 = " << value1
 			  << "\tvalue2 = " << value2 << std::endl;
 
-	std::cout << "Min value is " << min(value1, value2) << std::endl; 
-	std::cout << "Max value is " << max(value1, value2) << std::endl;
+	std::cout << "Min value is " << ::min(value1, value2) << std::endl;	// (1)
+	std::cout << "Max value is " << ::max(value1, value2) << std::endl;	// (1)
 	std::cout << std::endl;
 }
 
@@ -57,6 +57,8 @@ int	main(void)
 	return 0;
 }
 
+// /* --- Subject's main() example to test output ------------------------ */
+
 // int main( void ) {
 // 	int a = 2;
 // 	int b = 3;
@@ -75,3 +77,25 @@ int	main(void)
 // 	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
 // 	return 0;
 // }
+
+/*
+ *	(1)	The "Scope Resolution Operator" (`::`)
+
+ *		In my exercise implementation it is not necessary since I am not 
+ *		encountering any name conflicts. My code works correctly because:
+
+ *		 - I only have one version of `swap()`, `min()` and `max()`
+ *			defined in the global namespace
+ *		 - There are no conflicting functions from any other scope
+ *
+ *		However, it is a good practice, anticipating that the code might be 
+ *		extended in the future and introduce potential naming conflicts. In
+ *		C++ the Standard Library provides `swap()`, `min()` and `max()`
+ *		within the `std` namespace. If I define my own `swap()`, `min()` and 
+ *		`max()` functions outside of the std::namespace and use them without
+ *		specifying a namespace, conflicts can occur if I am also using
+ *		standard `std::swap`, `std::min` or `std::max`.
+ 
+ *		Read more about `::` in the github documentation:
+ *		
+ */

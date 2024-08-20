@@ -77,4 +77,23 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 	}
 
 	```
+---
+<details>
+<summary><h2> What is the Scope Resolution Operator (`::`)? </h2></summary>
 
+You would need the `::` in the following cases:
+
+**1. Name conflicts:**
+	If you have functions that share the name defined within different scopes, such as inside classes or namespaces, then you might need the `::` to disambiguate and explicitly call the global version
+
+**2. Preventing ambiguities:**
+	If you include libraries (like the C++ Standard Library) that have their own functions with the same name as yours, using `::` ensures that your custom functions are called instead of the library functions.
+
+You might not need it if:
+1. You have only one version of each of these functions defined in the global namespace[^1]
+2. There are no conflicting functions from any other scopes
+
+However, it is recommended to use it purely as a safeguard, anticipating that the code might be extended in the future and potentially introduce unexepected naming conflicts.
+**Conflicts can also be avoided by not using `using namespace std;`, explicitly specifying namespaces, or giving our functions a different name.**
+</details>
+[^1] 
