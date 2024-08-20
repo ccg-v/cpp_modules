@@ -91,11 +91,11 @@ You would need the `::` in the following cases:
 	If you include libraries (like the C++ Standard Library) that have their own functions with the same name as yours, using `::` ensures that your custom functions are called instead of the library functions.
 
 You might not need it if:
-1. You have only one version of each of these functions defined in the global namespace[^1]
+1. You have only one version of each of these functions defined in the global namespace[^1].
 2. There are no conflicting functions from any other scopes
 
 However, it is recommended to use it purely as a safeguard, anticipating that the code might be extended in the future and potentially introduce unexepected naming conflicts.
 **Conflicts can also be avoided by not using `using namespace std;`, explicitly specifying namespaces, or giving our functions a different name.**
 
-[^1]The **Global Namespace** is the top-level namespace in a C++ program where all identifiers (like variables, functions, and classes) that are not inside any specific namespace are placed by default. Any identifier that is not enclosed withi an custom
+[^1]: The **Global Namespace** is the top-level namespace in a C++ program where all identifiers (like variables, functions, and classes) that are not inside any specific namespace are placed by default. Any identifier that is not enclosed withi an custom
 namespace or the `std` namespace will be considered part of the Global Namespace.
