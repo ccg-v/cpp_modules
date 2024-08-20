@@ -80,8 +80,7 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 
 ---
 
-<details>
-<summary><h2> What is the Scope Resolution Operator (`::`)? </h2></summary>
+## The Scope Resolution Operator (`::`)?
 
 You would need the `::` in the following cases:
 
@@ -97,5 +96,6 @@ You might not need it if:
 
 However, it is recommended to use it purely as a safeguard, anticipating that the code might be extended in the future and potentially introduce unexepected naming conflicts.
 **Conflicts can also be avoided by not using `using namespace std;`, explicitly specifying namespaces, or giving our functions a different name.**
-</details>
-[^1] 
+
+[^1] The **Global Namespace** is the top-level namespace in a C++ program where all identifiers (like variables, functions, and classes) that are not inside any specific namespace are placed by default. Any identifier that is not enclosed withi an custom
+namespace or the `std` namespace will be considered part of the Global Namespace.
