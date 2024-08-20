@@ -21,6 +21,16 @@ In C++ there are four types of casting operators:
 	* It is used to add or remove the const qualifier from a variable. It’s typically used when you need to pass a const object to a function that requires a non-const parameter.
 3. **`reinterpret_cast`**
 	* It is used for low-level casting where you want to convert one type to a completely unrelated type. This is often used for pointer conversions, such as converting a pointer to an integer type or vice versa. It doesn’t perform any type safety checks and is essentially a bitwise reinterpretation of the value.
+	* Some common uses are:
+		- Printing memory addresses for debugging purposes 
+		- Creating hash values based on memory addresses
+		- Performing calculations on memory addresses, etc. 
+	* Why using unsigned integers instead of hexadecimal addresses? They can offer some specific advantages in certain scenarios:
+		- Arithmetic operations: Easier with integers, more straightforward with hexadecimal
+		- Compatibility with standard library: Many of the functions and data structures work with integers rather than hexadecimal
+		- Bit manipulation: Easier to perform on integers than on hexadecimal representations
+		- Performance: In some cases slightly faster in integer operations
+		- Storage efficiency: Storing an integer typically uses less memory than storin a string representation of an hex address
 	* `reinterpret_cast` is designed to handle conversions between types that have different underlying representations, like converting a pointer to an integer. Since a pointer is essentially a memory address, `reinterpret_cast` allows you to treat this memory address as an integer without changing the bit pattern—just interpreting it differently.
 	* This is the most appropriate choice for converting a pointer to an integer (`uintptr_t`) because you’re explicitly telling the compiler to treat the pointer’s memory address as an unsigned integer.
 4. **`dynamic_cast`**
