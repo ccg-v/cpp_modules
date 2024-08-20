@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 22:57:47 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/20 14:13:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:23:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int	main(void)
  *		standard `std::swap`, `std::min` or `std::max`.
  * 
  *		Read more about `::` in the github documentation:
- *		
+ *		https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex00#the-scope-resolution-operator-
  */
