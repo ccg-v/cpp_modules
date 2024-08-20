@@ -77,7 +77,9 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 	}
 
 	```
+
 ---
+
 <details>
 <summary><h2> What is the Scope Resolution Operator (`::`)? </h2></summary>
 

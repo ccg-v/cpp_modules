@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 22:57:47 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/20 14:01:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:13:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	main(void)
 
 /*
  *	(1)	The "Scope Resolution Operator" (`::`)
-
+ *
  *		In my exercise implementation it is not necessary since I am not 
  *		encountering any name conflicts. My code works correctly because:
-
+ *
  *		 - I only have one version of `swap()`, `min()` and `max()`
  *			defined in the global namespace
  *		 - There are no conflicting functions from any other scope
@@ -95,7 +95,7 @@ int	main(void)
  *		`max()` functions outside of the std::namespace and use them without
  *		specifying a namespace, conflicts can occur if I am also using
  *		standard `std::swap`, `std::min` or `std::max`.
- 
+ * 
  *		Read more about `::` in the github documentation:
  *		
  */
