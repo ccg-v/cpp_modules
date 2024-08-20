@@ -25,7 +25,8 @@ In C++ there are four types of casting operators:
 		- Printing memory addresses for debugging purposes 
 		- Creating hash values based on memory addresses
 		- Performing calculations on memory addresses, etc. 
-	* Why using unsigned integers instead of hexadecimal addresses? They can offer some specific advantages in certain scenarios:
+	* Why using unsigned integers instead of hexadecimal addresses? 
+		They can offer some specific advantages in certain scenarios:
 		- Arithmetic operations: Easier with integers, more straightforward with hexadecimal
 		- Compatibility with standard library: Many of the functions and data structures work with integers rather than hexadecimal
 		- Bit manipulation: Easier to perform on integers than on hexadecimal representations

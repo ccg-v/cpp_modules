@@ -73,6 +73,8 @@ The challenge here lies in identifying the actual type of an object when the der
     	- If the cast fails, catch the exception and continue with the next type.
 
 	* The `std::bad_cast` exception is available in in the <typeinfo> header, but based on the exercise instructions, we are not allowed to include this header. Instead, we can use `std::exception`, which is a base class for all standard exceptions, to catch exceptions thrown by `dynamic_cast`
+
+	Read about the four different types of casting [here](https://github.com/ccg-v/cpp_modules/tree/master/cpp_06/ex01#casting-in-c)
 </details>
 
 [^1]: RTTI allows a program to determine the type of an object during execution. This is useful for operations such as dynamic type checking, especially in cases where the actual type of an object needs to be known at runtime. It requires at least one virtual function in the base class (commonly a virtual destructor). This is because the virtual table (vtable) mechanism is used to store type information.
