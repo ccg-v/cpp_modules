@@ -13,7 +13,7 @@ Therefore, the `iter` function doesn’t need to define a specific operation tha
 <details>
 <summary><h3> The function parameter: Why passing by reference and not by value? </h3></summary>
 
-## Passing by Value is Fine for Basic Types (Scalars)
+### Passing by Value is Fine for Basic Types (Scalars)
 
 For simple, scalar types like int, float, or char, copying is inexpensive:
 
@@ -23,7 +23,7 @@ For simple, scalar types like int, float, or char, copying is inexpensive:
 
 This is why passing by value works well for such basic types. Even though each element is copied, the cost is minimal.
 
-## Passing by Value is Less Ideal for Complex Types
+### Passing by Value is Less Ideal for Complex Types
 
 What happens when T is a more complex type, such as:
 
@@ -40,14 +40,14 @@ In such cases:
 - Performance overhead: Copying complex objects can be much slower, especially in loops where many copies are made.
 - Unnecessary resource use: Creating temporary copies can lead to unnecessary memory usage and potential slowdowns.
 
-## Conclusion
+### Conclusion
 
 Passing by value works for basic types because copying them is cheap and straightforward. For complex types, copying is more expensive and potentially problematic, which is why passing by const T& is preferred—it’s more efficient and avoids unnecessary deep copies.
 
 Passing by `const T&`:
 
-> Avoids copying by passing a reference, which is just a pointer under the hood.
-> Ensures that the function operates directly on the original object without creating unnecessary copies.
-> Maintains immutability (const) so that the function cannot accidentally modify the original elements.
+- Avoids copying by passing a reference, which is just a pointer under the hood.
+- Ensures that the function operates directly on the original object without creating unnecessary copies.
+- Maintains immutability (const) so that the function cannot accidentally modify the original elements.
 
 </details>
