@@ -4,6 +4,9 @@
 
 Templates in C++ are a powerful feature that allows you to write generic and reusable code. They enable you to define functions and classes that work with any data type, which is very useful when you want to write code that is independent of specific types. 
 
+> [!NOTE]
+> Templates must be defined in the header files
+
 ### Types of Templates in C++
 
 **1. Function Templates**
