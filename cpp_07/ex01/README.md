@@ -33,7 +33,7 @@ In the previous example, `printElement` is a function template. You can instanti
 - Keep iter flexible: Since iter is itself a function template, you can pass different instantiated function templates for different types, making your code more reusable.
 
 <details>
-<summary><h3><del> The function parameter: Why passing by reference and not by value?** </del></h3></summary>
+<summary><h3> The function parameter: Why passing by reference and not by value?** </h3></summary>
 
 ### Passing by Value is Fine for Basic Types (Scalars)
 
@@ -75,7 +75,7 @@ Passing by `const T&`:
 </details>
 
 <details>
-<summary><h3><del> Other options for `iter()`'s third parameter ** </del></h3></summary>
+<summary><h3> Other options for `iter()`'s third parameter ** </h3></summary>
 
 The subject says hat the third parameter ***"can be an instantiated function template"***, suggesting that there are other options. These are the alternatives:
 
