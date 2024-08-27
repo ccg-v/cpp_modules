@@ -33,7 +33,7 @@ In the previous example, `printElement` is a function template. You can instanti
 - Keep iter flexible: Since iter is itself a function template, you can pass different instantiated function templates for different types, making your code more reusable.
 
 <details>
-<summary><h3> The function parameter: Why passing by reference and not by value?** </h3></summary>
+<summary><h3> The function parameter: Why passing by reference and not by value? </h3></summary>
 
 ### Passing by Value is Fine for Basic Types (Scalars)
 
@@ -75,7 +75,7 @@ Passing by `const T&`:
 </details>
 
 <details>
-<summary><h3> Other options for `iter()`'s third parameter ** </h3></summary>
+<summary><h3> Other options for `iter()`'s third parameter </h3></summary>
 
 The subject says hat the third parameter ***"can be an instantiated function template"***, suggesting that there are other options. These are the alternatives:
 
@@ -125,3 +125,44 @@ iter(arr, 4, MultiplyByTwo());
 This approach provides even more flexibility, allowing you to store state or define more complex behavior.
 
 </details>
+
+<details>
+<summary><h3> Using a more generalized template for the callable parameter </h3></summary>
+
+Using a more generalized template for the callable parameter can offer even more flexibility and simplify the code.
+
+* **The Problem with the Fixed Function Pointer Signature**
+
+When you declare the third parameter as a function pointer like this:
+
+```
+void iter(T* array, size_t length, void (*f)(const T&))
+```
+
+You're requiring that the function passed in must strictly match the signature void (const T&). This is fine in most cases, but it’s limiting if:
+
+- The callable object doesn’t exactly match the signature: For example, a lambda with a slightly different signature or a functor with extra members might not match exactly.
+
+- You want to pass more generic callable objects: Like lambdas that capture variables or functors with state.
+
+* **Using a Template for the Callable Parameter**
+
+By changing the third parameter to a more generalized template type, you remove the strict requirement of using a function pointer and make the code more flexible:
+
+```
+template <typename T, typename F>
+void iter(T* array, size_t length, F f) {
+    for (size_t i = 0; i < length; i++) {
+        f(array[i]);
+    }
+}
+```
+- F is a Template Parameter:
+Instead of requiring a function pointer with a fixed signature, you now allow any type Func that can be called like a function. This can be:
+    - A regular function
+    - An instantiated function template
+    - A lambda expression (even one that captures variables)
+    - A functor (a class or struct with operator())
+
+- Func Can Have Any Callable Signature:
+    The callable passed to iter no longer needs to be void(const T&). It can be anything callable that accepts the type T.
