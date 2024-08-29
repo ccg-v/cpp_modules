@@ -6,7 +6,7 @@
 /*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/27 13:24:48 by carlos           ###   ########.fr       */
+/*   Updated: 2024/08/27 13:47:28 by carlos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void iter(T* array, size_t length, F f) {
  *                  f(array[i]);
  *              }
  *          };
+ *
+ *  https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-
+ *  https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-using-a-more-generalized-template-for-the-callable-parameter-
  */
 
