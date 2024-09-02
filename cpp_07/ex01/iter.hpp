@@ -6,7 +6,7 @@
 /*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/01 19:19:57 by carlos           ###   ########.fr       */
+/*   Updated: 2024/09/02 23:37:42 by carlos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <cstddef>
 #include <iostream> // for std::ostream
 
-// Example of a custom struct
 struct Point {
     int x, y;
 };

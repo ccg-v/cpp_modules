@@ -6,7 +6,7 @@
 /*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:07:46 by carlos            #+#    #+#             */
-/*   Updated: 2024/09/02 02:05:55 by carlos           ###   ########.fr       */
+/*   Updated: 2024/09/03 00:51:49 by carlos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,27 @@
 #include <string>   // for std::string
 #include <iomanip>  // for std::precision
 
-// // Function to double a number
-// template <typename T>
-// void doubleElement(T & num) {
-//     num *= 2;
-// }
+/* --- INCREMENTING FUNCTIONS ----------------------------------------------- */
 
-// // Function to square a number
-// template <typename T>
-// void squareElement(T & num) {
-//     num *= num;
-// }
-
-// // Function to convert string to uppercase
-// void toLowerCase(std::string & str) {
-//     for (size_t i = 0; i < str.length(); ++i) {
-//         str[i] = std::tolower(static_cast<unsigned char>(str[i]));
-//     }
-// }
-
-
-// // Function to print an element
-// template <typename T>
-// void printElement(const T& element) {
-//     std::cout << element << " ";
-// }
-
-// Function to increment
+// General template for incrementing an element
 template <typename T>
-void incrementElement(T & element) {
+void incrementElement(T& element) {
     element += 42;
 }
 
-// Specialization for the Point struct
+// Specialization for incrementing the Point struct
 template <>
 void incrementElement(Point & p) {
     p.x += 42;
     p.y += 42;
 }
+
+// Wrapper function for incrementing a pointer value (1)
+void incrementPointerElement(int* p) {
+    incrementElement(*p);
+}
+
+/* --- CONVERTING TO UPPERCASE FUNCTIONS ------------------------------------ */
 
 // Function to convert string to uppercase
 template <typename T>
@@ -68,25 +51,18 @@ void toUpperCase(char & c) {
     c = std::toupper(static_cast<unsigned char>(c));
 }
 
-// Function to print an element
+/* --- PRINTING FUNCTIONS --------------------------------------------------- */
+
+// General template for printing an element
 template <typename T>
 void printElement(const T& element) {
     std::cout << std::fixed << std::setprecision(1) << "[" << element << "] ";
 }
 
-// template <typename T>
-// void	printArray(std::string str, T & array, size_t length)
-// {
-//     std::cout << "\t" << str;
-// 	for (size_t i = 0; i < length; i++) {
-// 		std::cout << array[i];
-//         if (i < (length - 1))
-//             std::cout << ", ";
-//         if (i == (length - 1))
-//             std::cout << "}";
-//     }
-// 	std::cout << std::endl;
-// }
+// Wrapper function for printing a pointer value (1)
+void printPointerElement(int* p) {
+    printElement(*p);
+}
 
 int main() {
 
@@ -160,6 +136,22 @@ int main() {
     iter(pointArr, length, printElement<Point>);
     std::cout << "\n" << std::endl;
 
+    // Pointer array
+    int a = 1, b = 2, c = 3;
+    int* ptrArr[] = {&a, &b, &c};
+    length = sizeof(ptrArr) / sizeof(ptrArr[0]);
+
+    std::cout << "\t// Pointer array" << std::endl;
+    std::cout << "\tOriginal   : ";
+    iter(ptrArr, length, printPointerElement);
+    std::cout << std::endl;
+    
+    iter(ptrArr, length, incrementPointerElement);
+    
+    std::cout << "\tTransformed: ";
+    iter(ptrArr, length, printPointerElement);
+    std::cout << "\n" << std::endl;
+
     /* --- Test 2 ---------------------------------------------------------- */
 
     std::cout << "/* ---- Test 2: Convert to uppercase --------------------- */"
@@ -178,7 +170,7 @@ int main() {
     iter(strArr, length, printElement<std::string>);
     std::cout << "\n" << std::endl;
 
-    // Char array (I use the array of chars defined and transformed before)
+    // Char array (I use the array of chars defined and transformed in Test 1)
     length = sizeof(charArr) / sizeof(charArr[0]);
     
     std::cout << "\t// Char array" << std::endl;
@@ -192,11 +184,12 @@ int main() {
 
     /* --- Test 3 ---------------------------------------------------------- */
 
-    std::cout << "/* ---- Test 3: Empty Array ------------------------------ */"
+    std::cout << "/* ---- Test 3: Edge cases ------------------------------- */"
               << std::endl << std::endl;
     int emptyArr[] = {};
     length = sizeof(emptyArr) / sizeof(emptyArr[0]);
 
+    std::cout << "\t// Empty array" << std::endl;
     std::cout << "\tOriginal   : ";
     iter(emptyArr, length, printElement<int>);
     std::cout << std::endl;
@@ -205,5 +198,31 @@ int main() {
     iter(emptyArr, length, printElement<int>);
     std::cout << "\n" << std::endl;
 
+    int singleElemArr[] = {42};
+    length = sizeof(singleElemArr) / sizeof(singleElemArr[0]);
+
+    std::cout << "\t// Single element array" << std::endl;
+    std::cout << "\tOriginal   : ";
+    iter(singleElemArr, length, printElement<int>);
+    std::cout << std::endl;
+    iter(singleElemArr, length, incrementElement<int>);
+    std::cout << "\tResulting  : "; 
+    iter(singleElemArr, length, printElement<int>);
+    std::cout << "\n" << std::endl;
+
     return 0;
 }
+
+/* 
+ *  (1) Wrapper functions to dereference the pointer and call 
+ *      'incrementElement()'/'printElement()' with the dereferenced value.
+ *
+ *      Overloading 'incrementElement()'/'printElement()' doesn't work 
+ *      because the compiler can't deduce which version to use when passing
+ *      it as a template argument and returns the "couldn't deduce template 
+ *      parameter 'F'" errors.
+ *
+ *      Template specialization in this case doesn't solve the underlying 
+ *      issue of needing to dereference the pointers before applying the 
+ *      operation
+ */
