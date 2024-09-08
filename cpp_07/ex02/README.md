@@ -24,7 +24,7 @@ private:
 Even though the class template can work with multiple types, it remains type-safe. You can't mix types unless explicitly allowed by the design.
 lass templates are especially useful when you want to create data structures or algorithms that are not dependent on a specific type. For example, containers like `std::vector`, `std::list`, and `std::map` in the C++ Standard Library are implemented using class templates.
 
-# Template Implementation File (.tpp)
+## Template Implementation File (.tpp)
 
  It's used to store the **template function/method definitions** when working with class templates, keeping the separation of declaration and definition that is usually required in C++ while still ensuring that template definitions are available to the compiler when needed.
 
