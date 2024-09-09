@@ -176,3 +176,5 @@ Instead of requiring a function pointer with a fixed signature, you now allow an
 ### Why finally I don't use void iter(T* array, size_t length, F f)
 
 ### Difference between primary, partial and full specialization
+
+### Again, difference between iter() receiving function pointer or function template
