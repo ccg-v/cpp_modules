@@ -149,7 +149,7 @@ You're requiring that the function passed in must strictly match the signature v
 
 - You want to pass more generic callable objects: Like lambdas that capture variables or functors with state.
 
-### Using a Template for the Callable Parameter
+### ~~Using a Template for the Callable Parameter~~
 
 By changing the third parameter to a more generalized template type, you remove the strict requirement of using a function pointer and make the code more flexible:
 
@@ -170,3 +170,9 @@ Instead of requiring a function pointer with a fixed signature, you now allow an
 
 - F can have any callable signature:
     The callable passed to iter no longer needs to be void(const T&). It can be anything callable that accepts the type T.
+
+### Why function templates must be defined in the header file, not in the main file
+
+### Why finally I don't use void iter(T* array, size_t length, F f)
+
+### Difference between primary, partial and full specialization
