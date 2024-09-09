@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:54:18 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/08 23:31:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:14:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 // Default constructor
 template <typename T>
 Array<T>::Array() : array(NULL), size(0) {
-    std::cout << "Default Array constructor called" << std::endl;
+    std::cout << "\n\tDefault Array constructor called" << std::endl;
 }
 
 // Copy constructor (3)
 template <typename T>
 Array<T>::Array(const Array & source) : array(NULL), size(source.size) {
-	std::cout << "Array copy constructor called" << std::endl;
+	std::cout << "\n\tArray copy constructor called" << std::endl;
 	array = new T[size];
 	for (unsigned int i = 0; i < size; i++)
 		array[i] = source.array[i];	// Deep copy of the element (3)
@@ -30,15 +30,15 @@ Array<T>::Array(const Array & source) : array(NULL), size(source.size) {
 // Copy assignment operator
 template <typename T>
 Array<T>& Array<T>::operator=(const Array & source) {
-	std::cout << "Copy assignment operator called" << std::endl;
+	std::cout << "\n\tCopy assignment operator called" << std::endl;
 	if (this == &source)
 		return *this;
-	if (array.size != source.size) {
+	if (size != source.size) {
 		delete[] array;
 		size = source.size;
 		array = new T[size];
 	}
-	for (unsigned int i; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 		array[i] = source.array[i];
 	return *this;
 }
@@ -54,7 +54,7 @@ Array<T>::~Array() {
 
 template <typename T>
 Array<T>::Array(const unsigned int n) : array(NULL), size(n) {	// (2)
-	std::cout << "Parameterized Array constructor called" << std::endl;
+	std::cout << "\n\tParameterized Array constructor called" << std::endl;
     if (n != 0)
         array = new T[n];
 }
@@ -73,7 +73,7 @@ unsigned int Array<T>::getSize(void) const {
 template <typename T>
 T& Array<T>::operator[](unsigned int index) {
 	if (index >= size)
-		throw std::out_of_range("Index is out of array bounds");
+		throw std::out_of_range("\n\tIndex is out of array bounds");
 	return array[index];
 }
 
@@ -81,7 +81,7 @@ T& Array<T>::operator[](unsigned int index) {
 template <typename T>
 const T& Array<T>::operator[](unsigned int index) const {
 	if (index >= size)
-		throw std::out_of_range("Index is out of array bounds");
+		throw std::out_of_range("\n\tIndex is out of array bounds");
 	return array[index];
 }
 

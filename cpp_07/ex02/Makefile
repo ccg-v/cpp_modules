@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/09/08 23:33:23 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/09/09 21:31:30 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	array
 
 # --- Compiler --------------------------------------------------------------- #
 CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address
 
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	main.cpp
