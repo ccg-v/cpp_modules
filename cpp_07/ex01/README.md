@@ -177,9 +177,7 @@ iterates over the array with a function that does not modify the elements. To al
 
 But still both iter() function templates expect an array of elements of type T, where T is either a primitive or user-defined type (like int, float, Point, etc.). Thus, to deal for instance with an array of pointers (int*) we need to create a ***specialized template*** of iter() to handle arrays where T is a pointer type, allowing operations with int* to work correctly:
 
-	```
 	void iter(T** array, size_t length, void (*f)(T*));
-	```
 
 
 ### Why function templates must be defined in the header file, not in the main file
