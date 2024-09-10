@@ -169,11 +169,11 @@ This version of iter accepts a function object or a function pointer as the thir
 
 This is because F is a generic callable, and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit primary templates or partial specializations to handle different cases like arrays of pointers. The alternative iter signature:
 
-	`void iter(T* array, size_t length, void (*f)(const T &));`
+	void iter(T* array, size_t length, void (*f)(const T &));
 
 iterates over the array with a function that does not modify the elements. To allow element modifications (e.g. increment the values) we would need to create a ***primary template***:
 
-	```void iter(T* array, size_t length, void (*f)(T &));```
+	void iter(T* array, size_t length, void (*f)(T &));
 
 But still both iter() function templates expect an array of elements of type T, where T is either a primitive or user-defined type (like int, float, Point, etc.). Thus, to deal for instance with an array of pointers (int*) we need to create a ***specialized template*** of iter() to handle arrays where T is a pointer type, allowing operations with int* to work correctly:
 
@@ -188,7 +188,10 @@ But still both iter() function templates expect an array of elements of type T, 
  - Primary template:
 		A general, unspecialized template that works for all types (like T*). For example:
 		```
-
+		template <typename T>
+		void incrementElement(T& element) {
+    		element += 42;
+		}
 		```
  
  - Full specialization (`template <>`):
