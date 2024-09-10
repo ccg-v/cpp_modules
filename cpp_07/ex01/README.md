@@ -163,28 +163,41 @@ void iter(T* array, size_t length, F f) {
 ```
 This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
 
-    - Functions that modify elements of the array (void (*f)(T&))
-    - Functions that don't modify elements (void (*f)(T const&))
-    - Functions for arrays of pointers (void (*f)(T*))
+- Functions that modify elements of the array (void (*f)(T&))
+- Functions that don't modify elements (void (*f)(T const&))
+- Functions for arrays of pointers (void (*f)(T*))
 
 This is because F is a generic callable, and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit primary templates or partial specializations to handle different cases like arrays of pointers. The alternative iter signature:
 
-	```void iter(T* array, size_t length, void (*f)(const T &)) {}```
+	`void iter(T* array, size_t length, void (*f)(const T &));`
 
 iterates over the array with a function that does not modify the elements. To allow element modifications (e.g. increment the values) we would need to create a ***primary template***:
 
-	```void iter(T* array, size_t length, void (*f)(T &)) {}```
+	```void iter(T* array, size_t length, void (*f)(T &));```
 
 But still both iter() function templates expect an array of elements of type T, where T is either a primitive or user-defined type (like int, float, Point, etc.). Thus, to deal for instance with an array of pointers (int*) we need to create a ***specialized template*** of iter() to handle arrays where T is a pointer type, allowing operations with int* to work correctly:
 
-	```void iter(T** array, size_t length, void (*f)(T*)) {}```
+	```
+	void iter(T** array, size_t length, void (*f)(T*));
+	```
 
 
 ### Why function templates must be defined in the header file, not in the main file
 
+<details>
+<summary><h3> Primary templates and specializations </h3></summary>
 
+ - Primary template:
+		A general, unspecialized template that works for all types (like T*). For example:
+		```
 
-### Difference between primary, partial and full specialization
+		```
+ 
+ - Full specialization (`template <>`):
+ 		It is used when you are providing a specific implementation for a particular type (Point or charin our case).
+
+ - Partial specialization (`template <typename T>`):
+ 		It is used when you're still using a template parameter but restricting the template to handle a particular case (e.g., arrays of pointers) while keeping flexibility in the specific type.
 
 ### Again, difference between iter() receiving function pointer or function template
 
