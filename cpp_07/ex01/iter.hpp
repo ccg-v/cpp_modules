@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/10 00:15:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 01:16:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,16 @@ struct Point {
     int x, y;
 };
 
-// Template for iterating over an array with a function that does not modify elements
-template <typename T>   // (1)
-void iter(T* array, size_t length, void (*f)(T const &)) {
+// Primary template for iterating over an array with a function that does not modify elements
+template <typename T, typename F>   // (1)
+// void iter(T* array, size_t length, void (*f)(T const &)) {
+void iter(T* array, size_t length, F f) {
 	if (!array || !f)
 		return;
     for (size_t i = 0; i < length; i++)
         f(array[i]);
 }
 
-// Template for iterating over an array with a function that modifies elements
-template <typename T>   // (1)
-void iter(T* array, size_t length, void (*f)(T &)) {
-	if (!array || !f)
-		return;
-    for (size_t i = 0; i < length; i++)
-        f(array[i]);
-}
-
-// Template specialization for arrays of pointers (non-modifying functions)
-template <typename T>
-void iter(T** array, size_t length, void (*f)(T*)) {
-    if (!array || !f)
-        return;
-    for (size_t i = 0; i < length; i++)
-        f(array[i]);
-}
 
 std::ostream& operator<<(std::ostream& os, const Point& p) {    // (2)
     os << "(" << p.x << ", " << p.y << ")";
@@ -55,27 +39,27 @@ std::ostream& operator<<(std::ostream& os, const Point& p) {    // (2)
 
 /* --- INCREMENT FUNCTIONS -------------------------------------------------- */
 
-// General template for incrementing an element
+// Primary template for incrementing an element
 template <typename T>
 void incrementElement(T& element) {
     element += 42;
 }
 
-// Specialization for incrementing the Point struct
+// Full specialization for incrementing the Point struct (3)
 template <>
 void incrementElement(Point & p) {
     p.x += 42;
     p.y += 42;
 }
 
-// Wrapper function for incrementing a pointer value (1)
+// Wrapper function for incrementing a pointer value (4)
 void incrementPointerElement(int* p) {
     incrementElement(*p);
 }
 
 /* --- CONVERSION TO UPPERCASE FUNCTIONS ------------------------------------ */
 
-// Function to convert string to uppercase
+// Primary template to convert string to uppercase
 template <typename T>
 void toUpperCase(T & str) {
     for (size_t i = 0; i < str.length(); ++i) {
@@ -83,7 +67,7 @@ void toUpperCase(T & str) {
     }
 }
 
-// Specialization of toUpperCase for single chars
+// Full specialization of toUpperCase for single chars
 template <>
 void toUpperCase(char & c) {
     c = std::toupper(static_cast<unsigned char>(c));
@@ -91,13 +75,13 @@ void toUpperCase(char & c) {
 
 /* --- PRINTING FUNCTIONS --------------------------------------------------- */
 
-// General template for printing an element
+// Primary template for printing an element
 template <typename T>
 void printElement(const T& element) {
     std::cout << std::fixed << std::setprecision(1) << "[" << element << "] ";
 }
 
-// Wrapper function for printing a pointer value (1)
+// Wrapper function for printing a pointer value (4)
 void printPointerElement(int* p) {
     printElement(*p);
 }
@@ -128,4 +112,34 @@ void printPointerElement(int* p) {
  *      format and print an object of your custom type.  Without this overload, the 
  *      compiler has no idea how to represent the "Point" structure when you try to 
  *      output it using std::cout.
+ */
+
+/*
+ *	(3) Template Specializations:
+ *		
+ *		- Primary templates:
+ *			The general, unspecialized templates that work for all types (like T*).
+ *
+ *		- Full specialization (template <>):
+ * 			It is used when you are providing a specific implementation for a
+ *			particular type (Point or charin our case).
+ *
+ *		- Partial specialization (template <typename T>):
+ *			It is used when you're still using a template parameter but restricting
+ *			the template to handle a particular case (e.g., arrays of pointers) 
+ *			while keeping flexibility in the specific type.
+ */
+
+/* 
+ *  (4) Wrapper functions to dereference the pointer and call 
+ *      'incrementElement()'/'printElement()' with the dereferenced value.
+ *
+ *      Overloading 'incrementElement()'/'printElement()' doesn't work 
+ *      because the compiler can't deduce which version to use when passing
+ *      it as a template argument and returns the "couldn't deduce template 
+ *      parameter 'F'" errors.
+ *
+ *      Template specialization in this case doesn't solve the underlying 
+ *      issue of needing to dereference the pointers before applying the 
+ *      operation
  */

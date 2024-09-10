@@ -131,9 +131,9 @@ This approach provides even more flexibility, allowing you to store state or def
 </details>
 
 <details>
-<summary><h3> Using a more generalized template for the callable parameter </h3></summary>
+<summary><h3> Using a more generalized template for the callable parameter (third iter's parameter) </h3></summary>
 
-Using a more generalized template for the callable parameter can offer even more flexibility and simplify the code.
+Using a more generalized template for the callable parameter[^1] can offer even more flexibility and simplify the code.
 
 ### The Problem with the Fixed Function Pointer Signature
 
@@ -149,7 +149,7 @@ You're requiring that the function passed in must strictly match the signature v
 
 - You want to pass more generic callable objects: Like lambdas that capture variables or functors with state.
 
-### ~~Using a Template for the Callable Parameter~~
+### Using a Template for the Callable Parameter
 
 By changing the third parameter to a more generalized template type, you remove the strict requirement of using a function pointer and make the code more flexible:
 
@@ -161,20 +161,31 @@ void iter(T* array, size_t length, F f) {
     }
 }
 ```
-- F is a Template Parameter:
-Instead of requiring a function pointer with a fixed signature, you now allow any type F that can be called like a function. This can be:
-    - A regular function
-    - An instantiated function template
-    - A lambda expression (even one that captures variables)
-    - A functor (a class or struct with operator())
+This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
 
-- F can have any callable signature:
-    The callable passed to iter no longer needs to be void(const T&). It can be anything callable that accepts the type T.
+    - Functions that modify elements of the array (void (*f)(T&))
+    - Functions that don't modify elements (void (*f)(T const&))
+    - Functions for arrays of pointers (void (*f)(T*))
+
+This is because F is a generic callable, and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit primary templates or partial specializations to handle different cases like arrays of pointers. The alternative iter signature:
+
+	```void iter(T* array, size_t length, void (*f)(const T &)) {}```
+
+iterates over the array with a function that does not modify the elements. To allow element modifications (e.g. increment the values) we would need to create a ***primary template***:
+
+	```void iter(T* array, size_t length, void (*f)(T &)) {}```
+
+But still both iter() function templates expect an array of elements of type T, where T is either a primitive or user-defined type (like int, float, Point, etc.). Thus, to deal for instance with an array of pointers (int*) we need to create a ***specialized template*** of iter() to handle arrays where T is a pointer type, allowing operations with int* to work correctly:
+
+	```void iter(T** array, size_t length, void (*f)(T*)) {}```
+
 
 ### Why function templates must be defined in the header file, not in the main file
 
-### Why finally I don't use void iter(T* array, size_t length, F f)
+
 
 ### Difference between primary, partial and full specialization
 
 ### Again, difference between iter() receiving function pointer or function template
+
+[^1]: n C++ terminology, a callable is any object that can be called using the function call operator ().
