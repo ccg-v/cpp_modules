@@ -188,4 +188,6 @@ But still both iter() function templates expect an array of elements of type T, 
 
 ### Again, difference between iter() receiving function pointer or function template
 
+</details>
+
 [^1]: n C++ terminology, a callable is any object that can be called using the function call operator ().
