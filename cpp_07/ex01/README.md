@@ -133,7 +133,7 @@ This approach provides even more flexibility, allowing you to store state or def
 </details>
 
 <details>
-<summary><h2> Using a more generalized template for the callable parameter (third iter's parameter) </h2></summary>
+<summary><h2> Using a more generalized template for the third iter's parameter </h2></summary>
 
 Using a more generalized template for the callable parameter[^1] can offer even more flexibility and simplify the code.
 
