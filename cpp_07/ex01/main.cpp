@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:07:46 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 02:15:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:00:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 int main() {
 
     /* --- Test 1: Increment each element ---------------------------------- */
-
-	int * z = new int();
-	std::cout << *z << std::endl;
 
     std::cout << "/* ---- Test 1: Add 42 to each element ------------------ */"
               << std::endl << std::endl;
@@ -76,10 +73,12 @@ int main() {
     iter(charArr, length, printElement<char>); 
     std::cout << "\n" << std::endl;
 
+	// Function template specializations
     // String array
     std::string strArr[] = {"Goodbye", "Cruel", "World"};
     length = sizeof(strArr) / sizeof(strArr[0]);
 
+    std::cout << "\t// Function template full specializations\n" << std::endl;
     std::cout << "\t// String array" << std::endl;
     std::cout << "\tOriginal  : ";
     iter(strArr, length, printElement<std::string>);
@@ -111,9 +110,7 @@ int main() {
     std::cout << "\tOriginal  : ";
     iter(ptrArr, length, printPointerElement);
     std::cout << std::endl;
-    
-    iter(ptrArr, length, incrementPointerElement);
-    
+    iter(ptrArr, length, incrementElement<int*>);
     std::cout << "\tResulting : ";
     iter(ptrArr, length, printPointerElement);
     std::cout << "\n" << std::endl;
@@ -124,7 +121,6 @@ int main() {
               << std::endl << std::endl;
 
     // String array
-    // std::string strArr[] = {"cpp module 07", "exercise 01", "testing"};
     length = sizeof(strArr) / sizeof(strArr[0]);
 
     std::cout << "\t// String array" << std::endl;
@@ -132,7 +128,7 @@ int main() {
     iter(strArr, length, printElement<std::string>);
     std::cout << std::endl;
     iter(strArr, length, toUpperCase<std::string>);
-    std::cout << "\tResulting : "; 
+    std::cout << "\tResulting : ";
     iter(strArr, length, printElement<std::string>);
     std::cout << "\n" << std::endl;
 
