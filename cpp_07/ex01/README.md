@@ -180,8 +180,6 @@ But still both iter() function templates expect an array of elements of type T, 
 	void iter(T** array, size_t length, void (*f)(T*));
 
 
-### Why function templates must be defined in the header file, not in the main file
-
 <details>
 <summary><h3> Primary templates and specializations </h3></summary>
 
@@ -210,10 +208,12 @@ But still both iter() function templates expect an array of elements of type T, 
 			(*ptr)++;
 	}
 	```
-	The function receives a pointer to a T, which is an undefined type. Thus, the specialization is not full but partial.
-
-### Again, difference between iter() receiving function pointer or function template
+	The function receives a pointer to a T, which is a template parameter; thus, the specialization is partial, not full.
 
 </details>
+
+### Again, difference between iter() receiving function pointer or function template
+### Why function templates must be defined in the header file, not in the main file
+
 
 [^1]: n C++ terminology, a callable is any object that can be called using the function call operator ().
