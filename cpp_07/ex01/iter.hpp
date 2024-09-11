@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 01:16:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 02:06:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ template <>
 void incrementElement(Point & p) {
     p.x += 42;
     p.y += 42;
+}
+
+// Full specialization for incrementing/appending a string
+template <>
+void incrementElement(std::string & str) {
+    str += "!!!";
 }
 
 // Wrapper function for incrementing a pointer value (4)

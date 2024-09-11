@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:07:46 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 01:15:15 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 02:15:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ int main() {
     iter(charArr, length, printElement<char>); 
     std::cout << "\n" << std::endl;
 
+    // String array
+    std::string strArr[] = {"Goodbye", "Cruel", "World"};
+    length = sizeof(strArr) / sizeof(strArr[0]);
+
+    std::cout << "\t// String array" << std::endl;
+    std::cout << "\tOriginal  : ";
+    iter(strArr, length, printElement<std::string>);
+    std::cout << std::endl;
+    iter(strArr, length, incrementElement<std::string>);
+    std::cout << "\tResulting : "; 
+    iter(strArr, length, printElement<std::string>);
+    std::cout << "\n" << std::endl;
+
     // Struct array
     Point pointArr[] = {{1, 2}, {3, 4}, {5, 6}};
     length = sizeof(pointArr) / sizeof(pointArr[0]);
@@ -111,7 +124,7 @@ int main() {
               << std::endl << std::endl;
 
     // String array
-    std::string strArr[] = {"cpp module 07", "exercise 01", "testing"};
+    // std::string strArr[] = {"cpp module 07", "exercise 01", "testing"};
     length = sizeof(strArr) / sizeof(strArr[0]);
 
     std::cout << "\t// String array" << std::endl;

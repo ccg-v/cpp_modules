@@ -185,20 +185,32 @@ But still both iter() function templates expect an array of elements of type T, 
 <details>
 <summary><h3> Primary templates and specializations </h3></summary>
 
- - Primary template:
-A general, unspecialized template that works for all types (like T*). For example:
-```
-template <typename T>
-void incrementElement(T& element) {
-	element += 42;
-}
-```
+ - **Primary template**: A general, unspecialized template that works for all types (like T*). For example:
+	```
+	template <typename T>
+	void incrementElement(T& element) {
+		element++;
+	}
+	```
  
- - Full specialization (`template <>`):
- 	It is used when you are providing a specific implementation for a particular type (Point or charin our case).
+ - **Full specialization** (`template <>`): It is used when you are providing a specific implementation for a particular type. This is a full specialization of the previous template, specifically for Point struct:
+	```
+	template <>
+	void incrementElement(Point & p) {
+		p.x ++;
+		p.y ++;
+	}
+	```
 
- - Partial specialization (`template <typename T>`):
- 		It is used when you're still using a template parameter but restricting the template to handle a particular case (e.g., arrays of pointers) while keeping flexibility in the specific type.
+ - **Partial specialization** (`template <typename T>`): It is used when you're still using a template parameter but restricting the template to handle a particular case (e.g., arrays of pointers) while keeping flexibility in the specific type. This is a partial specialization of incrementElement() template:
+	```
+	template <typename T>
+	void incrementElement(T* &ptr) {
+		if (ptr)
+			(*ptr)++;
+	}
+	```
+	The function receives a pointer to a T, which is an undefined type. Thus, the specialization is not full but partial.
 
 ### Again, difference between iter() receiving function pointer or function template
 
