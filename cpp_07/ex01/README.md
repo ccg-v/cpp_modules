@@ -179,6 +179,7 @@ But still both iter() function templates expect an array of elements of type T, 
 
 	void iter(T** array, size_t length, void (*f)(T*));
 
+</details>
 
 <details>
 <summary><h3> Primary templates and specializations </h3></summary>
