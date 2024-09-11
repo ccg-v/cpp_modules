@@ -103,7 +103,7 @@ In short, this signature it's too limiting in terms of flexibility. You end up n
 
 The subject says that the third parameter ***"can be an instantiated function template"***, suggesting a second and more flexible approach:
 
-2. **Using a template parameter for the function**
+2. ###Using a template parameter for the function###
 
 	```
 	template <typename T, typename F>
