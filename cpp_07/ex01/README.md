@@ -39,7 +39,7 @@ In the previous example, `printElement` is a function template. You can instanti
 <details>
 <summary><h2> The function parameter: Why passing by reference and not by value? </h2></summary>
 
-## Passing by Value is Fine for Basic Types (Scalars)
+### Passing by Value is Fine for Basic Types (Scalars)
 
 For simple, scalar types like int, float, or char, copying is inexpensive:
 
