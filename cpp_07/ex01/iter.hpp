@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 20:25:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:11:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void printPointerElement(int* p) {
 /*
  *	(3) Template Specializations:
  *		
- *		https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-primary-templates-and-specializations-
+ *		https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#primary-templates-and-specializations
  */
 
 /* 

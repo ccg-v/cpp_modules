@@ -38,8 +38,6 @@ In the previous example, `printElement` is a function template. You can instanti
 
 ## Primary templates and specializations
 
-Specialization is a mechanism used in templates to provide a different implementation of a primary template ***for a specific type or condition***.
-
  - **Primary template**: A general, unspecialized template that works for all types (like T*). For example:
 	```
 	template <typename T>
@@ -71,55 +69,6 @@ Specialization is a mechanism used in templates to provide a different implement
 
 <details>
 <summary><h2> Exercise questions and hints </h2></summary>
-
-<details>
-<summary><h2> Options for `iter()`'s function parameter </h2></summary>
-
-1. **Function locked to a specific function pointer type `void (*f)(T&)`**
-
-	```
-	template <typename T>`
-	void iter(T* array, size_t length, void (*f)(T &));
-	```
-
-This signature requires that the function passed as the third argument strictly takes a reference (`T &`) to non-constant elements of the array. 
-Limitations:
-
-* You can't pass functions that accept a constant reference (`const T &`). If you want to allow functions that do not modify the array elements (e.g. `void 		printElement(const T& element)`) you need to overload iter() to handle `const` cases:
-
-	`void iter(T* array, size_t length, void (*f)(const T &);`
-
-* You also lose the ability to pass functions that take array elements by value. Again, we would need to overload iter():
-
-	`void iter(T* array, size_t length, void (*f)(T))`
-
-Read [here](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
-
-* Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of T, not T*:
-
-	`void iter(T** array, size_t length, void (*f)(T*))`
-
-In short, this signature it's too limiting in terms of flexibility. You end up needing more repetitive code, and that doesn't align well with the concept of templates where flexibility is the key.
-
-The subject says that the third parameter ***"can be an instantiated function template"***, suggesting a second and more flexible approach:
-
-2. **Using a template parameter for the function**
-
-	```
-	template <typename T, typename F>
-	void iter (T* array, size_t length, F f);
-	```
-
-This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
-
-- Functions that modify elements of the array (void (*f)(T&))
-- Functions that don't modify elements (void (*f)(T const&))
-- Functions for arrays of pointers (void (*f)(T*))
-
-This is because F is a generic callable[^1], and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit overloads for specific cases.
-
---------------------------------------------------------------------
-</details>
 
 <details>
 <summary><h2> The function parameter: Why passing by reference and not by value? </h2></summary>
@@ -160,6 +109,111 @@ Passing by `const T&`:
 - Avoids copying by passing a reference, which is just a pointer under the hood.
 - Ensures that the function operates directly on the original object without creating unnecessary copies.
 - Maintains immutability (const) so that the function cannot accidentally modify the original elements.
+
+--------------------------------------------------------------------
+</details>
+
+<details>
+<summary><h2> Other options for `iter()`'s third parameter </h2></summary>
+
+The subject says hat the third parameter ***"can be an instantiated function template"***, suggesting that there are other options. These are the alternatives:
+
+1. **A Regular Function (Non-Template Function)**:
+
+The third parameter can simply be a standard, non-template function that takes a specific type. For instance, if you’re working with an array of `int`, you could pass a function like this:
+
+```
+void increment(int& x) {
+    x++;
+}
+```
+
+You can pass this function directly to `iter` when iterating over an int array. The function is specific to `int` and is not a template, but it will still work.
+
+Example usage:
+
+```
+int arr[] = {1, 2, 3, 4};
+iter(arr, 4, increment);
+```
+
+2. **A Lambda Function**:
+
+Lambda functions are a convenient way to define small, inline functions without having to declare them separately.
+
+```
+iter(arr, 4, [](int& x) { x *= 2; });  // Doubles each element
+```
+
+Here, the lambda captures each element by reference and modifies it directly.
+
+3. **A Function Object (Functor)**:
+
+You can define a class or struct that overloads the `operator()`, turning it into a callable object. This is known as a **functor**
+
+```
+struct MultiplyByTwo {
+    void operator()(int& x) const {
+        x *= 2;
+    }
+};
+
+iter(arr, 4, MultiplyByTwo());
+```
+
+This approach provides even more flexibility, allowing you to store state or define more complex behavior.
+
+--------------------------------------------------------------------
+</details>
+
+<details>
+<summary><h2> Using a more generalized template for the third iter's parameter </h2></summary>
+
+Using a more generalized template for the callable parameter[^1] can offer even more flexibility and simplify the code.
+
+### The Problem with the Fixed Function Pointer Signature
+
+When you declare the third parameter as a function pointer like this:
+
+```
+void iter(T* array, size_t length, void (*f)(const T&))
+```
+
+You're requiring that the function passed in must strictly match the signature void (const T&). This is fine in most cases, but it’s limiting if:
+
+- The callable object doesn’t exactly match the signature: For example, a lambda with a slightly different signature or a functor with extra members might not match exactly.
+
+- You want to pass more generic callable objects: Like lambdas that capture variables or functors with state.
+
+### Using a Template for the Callable Parameter
+
+By changing the third parameter to a more generalized template type, you remove the strict requirement of using a function pointer and make the code more flexible:
+
+```
+template <typename T, typename F>
+void iter(T* array, size_t length, F f) {
+    for (size_t i = 0; i < length; i++) {
+        f(array[i]);
+    }
+}
+```
+This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
+
+- Functions that modify elements of the array (void (*f)(T&))
+- Functions that don't modify elements (void (*f)(T const&))
+- Functions for arrays of pointers (void (*f)(T*))
+
+This is because F is a generic callable, and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit primary templates or partial specializations to handle different cases like arrays of pointers. The alternative iter signature:
+
+	void iter(T* array, size_t length, void (*f)(const T &));
+
+iterates over the array with a function that does not modify the elements. To allow element modifications (e.g. increment the values) we would need to create a ***primary template***:
+
+	void iter(T* array, size_t length, void (*f)(T &));
+
+But still both iter() function templates expect an array of elements of type T, where T is either a primitive or user-defined type (like int, float, Point, etc.). Thus, to deal for instance with an array of pointers (int*) we need to create a ***specialized template*** of iter() to handle arrays where T is a pointer type, allowing operations with int* to work correctly:
+
+	void iter(T** array, size_t length, void (*f)(T*));
 
 --------------------------------------------------------------------
 </details>
