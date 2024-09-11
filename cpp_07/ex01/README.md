@@ -15,7 +15,7 @@ Therefore, the `iter` function doesn’t need to define a specific operation tha
 
 --------------------------------------------------------------------
 
-### Function templates ###
+## Function templates
 
 The subject suggests a deeper use of templates, implying that we may need to create a specific function template as well. The idea is that we can leverage function templates to create a generic function that can be used with different data types. This way, iter can accept not just regular functions, but also function templates that have been instantiated for specific types.
 
@@ -39,7 +39,7 @@ In the previous example, `printElement` is a function template. You can instanti
 <details>
 <summary><h3> The function parameter: Why passing by reference and not by value? </h3></summary>
 
-### Passing by Value is Fine for Basic Types (Scalars)
+## Passing by Value is Fine for Basic Types (Scalars)
 
 For simple, scalar types like int, float, or char, copying is inexpensive:
 
