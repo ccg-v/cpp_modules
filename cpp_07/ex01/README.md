@@ -82,18 +82,18 @@ Specialization is a mechanism used in templates to provide a different implement
 	void iter(T* array, size_t length, void (*f)(T &));
 	```
 
-This signature requires that the function passed as the third argument strictly takes a reference (`T &`) to non-constant elements of the array. 
-Limitations:
+	This signature requires that the function passed as the third argument strictly takes a reference (`T &`) to non-constant elements of the array. 
+	Limitations:
 
-* You can't pass functions that accept a constant reference (`const T &`). If you want to allow functions that do not modify the array elements (e.g. `void 		printElement(const T& element)`) you need to overload iter() to handle `const` cases:
+	* You can't pass functions that accept a constant reference (`const T &`). If you want to allow functions that do not modify the array elements (e.g. `void 		printElement(const T& element)`) you need to overload iter() to handle `const` cases:
 
-	`void iter(T* array, size_t length, void (*f)(const T &);`
+		`void iter(T* array, size_t length, void (*f)(const T &);`
 
-* You also lose the ability to pass functions that take array elements by value. Again, we would need to overload iter():
+	* You also lose the ability to pass functions that take array elements by value. Again, we would need to overload iter():
 
-	`void iter(T* array, size_t length, void (*f)(T))`
+		`void iter(T* array, size_t length, void (*f)(T))`
 
-Read in next section, ["The function parameter: Why passing by reference and not by value?"](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
+	Read in next section, ["The function parameter: Why passing by reference and not by value?"](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
 
 * Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of T, not T*:
 
@@ -103,7 +103,7 @@ In short, this signature it's too limiting in terms of flexibility. You end up n
 
 The subject says that the third parameter ***"can be an instantiated function template"***, suggesting a second and more flexible approach:
 
-2. ###Using a template parameter for the function###
+2. **Using a template parameter for the function**
 
 	```
 	template <typename T, typename F>
