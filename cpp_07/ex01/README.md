@@ -75,48 +75,48 @@ Specialization is a mechanism used in templates to provide a different implement
 <details>
 <summary><h2> Options for `iter()`'s function parameter </h2></summary>
 
-### 1. **Function locked to a specific function pointer type `void (*f)(T&)`###
+### 1. **Function locked to a specific function pointer type `void (*f)(T&)`**
 
-	```
-	template <typename T>`
-	void iter(T* array, size_t length, void (*f)(T &));
-	```
+```
+template <typename T>`
+void iter(T* array, size_t length, void (*f)(T &));
+```
 
-	This signature requires that the function passed as the third argument strictly takes a reference (`T &`) to non-constant elements of the array. 
-	Limitations:
+This signature requires that the function passed as the third argument strictly takes a reference (`T &`) to non-constant elements of the array. 
+Limitations:
 
-	* You can't pass functions that accept a constant reference (`const T &`). If you want to allow functions that do not modify the array elements (e.g. `void 		printElement(const T& element)`) you need to overload iter() to handle `const` cases:
+* You can't pass functions that accept a constant reference (`const T &`). If you want to allow functions that do not modify the array elements (e.g. `void 		printElement(const T& element)`) you need to overload iter() to handle `const` cases:
 
-		`void iter(T* array, size_t length, void (*f)(const T &);`
+	`void iter(T* array, size_t length, void (*f)(const T &));`
 
-	* You also lose the ability to pass functions that take array elements by value. Again, we would need to overload iter():
+* You also lose the ability to pass functions that take array elements by value. Again, we would need to overload iter():
 
-		`void iter(T* array, size_t length, void (*f)(T))`
+	`void iter(T* array, size_t length, void (*f)(T))`
 
-	Read in next section, ["The function parameter: Why passing by reference and not by value?"](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
+Read in next section, ["The function parameter: Why passing by reference and not by value?"](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
 
-	* Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of T, not T*:
+* Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of T, not T*:
 
-		`void iter(T** array, size_t length, void (*f)(T*))`
+	`void iter(T** array, size_t length, void (*f)(T*))`
 
-	In short, this signature it's too limiting in terms of flexibility. You end up needing more repetitive code, and that doesn't align well with the concept of templates where flexibility is the key.
+In short, this signature it's too limiting in terms of flexibility. You end up needing more repetitive code, and that doesn't align well with the concept of templates where flexibility is the key.
 
 The subject says that the third parameter ***"can be an instantiated function template"***, suggesting a second and more flexible approach:
 
-2. **Using a template parameter for the function**
+### 2. **Using a template parameter for the function**
 
-	```
-	template <typename T, typename F>
-	void iter (T* array, size_t length, F f);
-	```
+```
+template <typename T, typename F>
+void iter (T* array, size_t length, F f);
+```
 
-	This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
+This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
 
-	- Functions that modify elements of the array (void (*f)(T&))
-	- Functions that don't modify elements (void (*f)(T const&))
-	- Functions for arrays of pointers (void (*f)(T*))
+- Functions that modify elements of the array (void (*f)(T&))
+- Functions that don't modify elements (void (*f)(T const&))
+- Functions for arrays of pointers (void (*f)(T*))
 
-	This is because F is a generic callable[^1], and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit overloads for specific cases.
+This is because F is a generic callable[^1], and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit overloads for specific cases.
 
 --------------------------------------------------------------------
 </details>
