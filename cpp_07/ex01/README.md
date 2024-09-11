@@ -68,6 +68,9 @@ In the previous example, `printElement` is a function template. You can instanti
 --------------------------------------------------------------------
 
 <details>
+<summary><h2> Exercise questions and hints </h2></summary>
+
+<details>
 <summary><h2> The function parameter: Why passing by reference and not by value? </h2></summary>
 
 ### Passing by Value is Fine for Basic Types (Scalars)
@@ -215,37 +218,6 @@ But still both iter() function templates expect an array of elements of type T, 
 --------------------------------------------------------------------
 </details>
 
-<details>
-<summary><h2> Primary templates and specializations </h2></summary>
-
- - **Primary template**: A general, unspecialized template that works for all types (like T*). For example:
-	```
-	template <typename T>
-	void incrementElement(T& element) {
-		element++;
-	}
-	```
- 
- - **Full specialization** (`template <>`): It is used when you are providing a specific implementation for a particular type. This is a full specialization of the previous template, specifically for Point struct:
-	```
-	template <>
-	void incrementElement(Point & p) {
-		p.x ++;
-		p.y ++;
-	}
-	```
-
- - **Partial specialization** (`template <typename T>`): It is used when you're still using a template parameter but restricting the template to handle a particular case (e.g., arrays of pointers) while keeping flexibility in the specific type. This is a partial specialization of incrementElement() template:
-	```
-	template <typename T>
-	void incrementElement(T* &ptr) {
-		if (ptr)
-			(*ptr)++;
-	}
-	```
-	The function receives a pointer to a T, which is a template parameter; thus, the specialization is partial, not full.
-
---------------------------------------------------------------------
 </details>
 
 [^1]: n C++ terminology, a callable is any object that can be called using the function call operator ().
