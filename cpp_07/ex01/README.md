@@ -80,7 +80,7 @@ Passing by `const T&`:
 </details>
 
 <details>
-<summary><h3> Other options for `iter()`'s third parameter </h3></summary>
+<summary><h2> Other options for `iter()`'s third parameter </h2></summary>
 
 The subject says hat the third parameter ***"can be an instantiated function template"***, suggesting that there are other options. These are the alternatives:
 
@@ -133,7 +133,7 @@ This approach provides even more flexibility, allowing you to store state or def
 </details>
 
 <details>
-<summary><h3> Using a more generalized template for the callable parameter (third iter's parameter) </h3></summary>
+<summary><h2> Using a more generalized template for the callable parameter (third iter's parameter) </h2></summary>
 
 Using a more generalized template for the callable parameter[^1] can offer even more flexibility and simplify the code.
 
@@ -185,7 +185,7 @@ But still both iter() function templates expect an array of elements of type T, 
 </details>
 
 <details>
-<summary><h3> Primary templates and specializations </h3></summary>
+<summary><h2> Primary templates and specializations </h2></summary>
 
  - **Primary template**: A general, unspecialized template that works for all types (like T*). For example:
 	```
