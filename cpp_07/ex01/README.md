@@ -13,7 +13,7 @@ Therefore, the `iter` function doesn’t need to define a specific operation tha
 > [!NOTE]
 > Templates must be defined in the header files
 
----
+--------------------------------------------------------------------
 
 ### Function templates ###
 
@@ -34,7 +34,7 @@ In the previous example, `printElement` is a function template. You can instanti
 - Write generic operations: You can create a single function template (like printElement) that works for all types, then instantiate it for specific types when needed.
 - Keep iter flexible: Since iter is itself a function template, you can pass different instantiated function templates for different types, making your code more reusable.
 
----
+--------------------------------------------------------------------
 
 <details>
 <summary><h3> The function parameter: Why passing by reference and not by value? </h3></summary>
@@ -76,7 +76,7 @@ Passing by `const T&`:
 - Ensures that the function operates directly on the original object without creating unnecessary copies.
 - Maintains immutability (const) so that the function cannot accidentally modify the original elements.
 
----
+--------------------------------------------------------------------
 </details>
 
 <details>
@@ -129,7 +129,7 @@ iter(arr, 4, MultiplyByTwo());
 
 This approach provides even more flexibility, allowing you to store state or define more complex behavior.
 
----
+--------------------------------------------------------------------
 </details>
 
 <details>
@@ -214,6 +214,7 @@ But still both iter() function templates expect an array of elements of type T, 
 	```
 	The function receives a pointer to a T, which is a template parameter; thus, the specialization is partial, not full.
 
+--------------------------------------------------------------------
 </details>
 
 ### Again, difference between iter() receiving function pointer or function template
