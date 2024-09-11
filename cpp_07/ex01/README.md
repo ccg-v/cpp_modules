@@ -95,7 +95,7 @@ Limitations:
 
 Read in next section, ["The function parameter: Why passing by reference and not by value?"](https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-the-function-parameter-why-passing-by-reference-and-not-by-value-) why this is not the best choice.
 
-* Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of T, not T*:
+* Also, if for instance we want to handle arrays of pointers (e.g., `int*`), we need to provide a different function signature where the first parameter accepts an array of pointers. This is because the T* in the original function signature is meant for arrays of `T`, not `T*`:
 
 	`void iter(T** array, size_t length, void (*f)(T*))`
 
@@ -110,13 +110,13 @@ template <typename T, typename F>
 void iter (T* array, size_t length, F f);
 ```
 
-This version of iter accepts a function object or a function pointer as the third argument (F f). It doesn't require a specific function signature, which means it can handle both:
+This version of iter accepts a function object or a function pointer as the third argument (`F f`). It doesn't require a specific function signature, which means it can handle both:
 
 - Functions that modify elements of the array (void (*f)(T&))
 - Functions that don't modify elements (void (*f)(T const&))
 - Functions for arrays of pointers (void (*f)(T*))
 
-This is because F is a generic callable[^1], and C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit overloads for specific cases.
+This is because `F` is a template parameter that can be any callable[^1] type (e.g., function pointer, lambda, functor). This means that `F` is not restricted to a specific type of callable; it can adapt to different types, including those that handle `T` or `T*`. C++'s template system will automatically deduce the correct type for F based on how you invoke the iter function. As a result, you don't need explicit overloads for specific cases.
 
 --------------------------------------------------------------------
 </details>
