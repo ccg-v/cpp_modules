@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 02:06:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/11 02:36:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,17 +123,7 @@ void printPointerElement(int* p) {
 /*
  *	(3) Template Specializations:
  *		
- *		- Primary templates:
- *			The general, unspecialized templates that work for all types (like T*).
- *
- *		- Full specialization (template <>):
- * 			It is used when you are providing a specific implementation for a
- *			particular type (Point or charin our case).
- *
- *		- Partial specialization (template <typename T>):
- *			It is used when you're still using a template parameter but restricting
- *			the template to handle a particular case (e.g., arrays of pointers) 
- *			while keeping flexibility in the specific type.
+ *		https://github.com/ccg-v/cpp_modules/tree/master/cpp_07/ex01#-primary-templates-and-specializations-
  */
 
 /* 

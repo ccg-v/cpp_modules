@@ -76,6 +76,8 @@ Passing by `const T&`:
 - Ensures that the function operates directly on the original object without creating unnecessary copies.
 - Maintains immutability (const) so that the function cannot accidentally modify the original elements.
 
+---
+
 </details>
 
 <details>
