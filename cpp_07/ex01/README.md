@@ -77,7 +77,6 @@ Passing by `const T&`:
 - Maintains immutability (const) so that the function cannot accidentally modify the original elements.
 
 ---
-
 </details>
 
 <details>
@@ -130,6 +129,7 @@ iter(arr, 4, MultiplyByTwo());
 
 This approach provides even more flexibility, allowing you to store state or define more complex behavior.
 
+---
 </details>
 
 <details>
