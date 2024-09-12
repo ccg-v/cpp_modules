@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 22:41:33 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/08/20 14:13:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:43:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <iostream>
 
 template <typename T>
-void swap(T &a, T &b)	// (1)
+void swap(T &a, T &b)	// (1) (2)
 {	
 	T tmp;
 
@@ -26,13 +26,13 @@ void swap(T &a, T &b)	// (1)
 }
 
 template <typename T>
-T min(T a, T b)
+T const & min(T const &a, T const &b)
 {
 	return (a < b ? a : b);
 }
 
 template <typename T>
-T max(T a, T b)
+T max(T const &a, T const &b)
 {
 	return (a > b ? a : b);
 }
@@ -40,7 +40,14 @@ T max(T a, T b)
 #endif
 
 /*
- *	(1) Swapping values can also be done using pointers:
+ *	(1)	When the arguments are passed by value, a copy of each argument is made
+ *		when calling thee function.
+ *		When the arguments are passed by reference, the original objects are
+ *		not copied, and the function works with the original values directly.
+ */
+
+/*
+ *	(2) Swapping values can also be done using pointers:
  *
  *				template <typename T>
  *				void swap(T *a, T *b)

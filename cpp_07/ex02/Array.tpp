@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 22:54:18 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/09 20:14:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/12 23:14:12 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,20 +123,16 @@ const T& Array<T>::operator[](unsigned int index) const {
  *	(3)	The subject specifically says that the implementations of the Copy Constructor
  *		and the Copy Assignment Operator should not affect the original array, and
  *		viceversa. This means that we have to create a deep copy of the original by:
- *		 -	Allocate new memory for the copy.
+ *		 -	Allocating new memory for the copy.
  *		 -	Copying each element from source.array to the new array so that changes in 
  *			the copied array don't affect the original array.
  *
- *		A shallow copy 
+ *		A shallow copy, 
  *
  *    		template <typename T>
  *			Array<T>::Array(const Array & source) : array(source.array), size(source.size) {}
  *
- *		would simply copying the pointer from source.array, meaning both the original
+ *		would simply copy the pointer from source.array, meaning both the original
  *		and the copy would share the same memory, which can lead to issues like double
  *		deletion or modifying one affecting the other.
- */
-
-/*
- *	(4)	
  */

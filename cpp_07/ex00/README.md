@@ -81,7 +81,24 @@ Templates in C++ are a powerful feature that allows you to write generic and reu
 
 	```
 
----
+**3. Do Templates replace Overloading?**
+
+Definitely not. Overloading is still necessary in many cases, for instance when you need different logic for different types:
+
+	```
+	int add(int a, int b) {
+		return a + b;
+	}
+
+	std::string add(std::string a, std::string b) {
+		return a + b + " (concatenated)";
+	}
+	```
+Here, the std::string version adds a custom behavior (appending " (concatenated)") that the int version doesn't. A template cannot express this without specialization, which can add complexity.
+
+Templates are powerful for code reuse and generic programming, but overloading provides more flexibility in many scenarios. Both are important tools in C++.
+
+---------------------------------------------------------------------
 
 ## The Scope Resolution Operator (`::`)
 

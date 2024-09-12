@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:05:01 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 21:11:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:33:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@ struct Point {
     int x, y;
 };
 
-// Primary template for iterating over an array with a function that does not modify elements
 template <typename T, typename F>   // (1)
-// void iter(T* array, size_t length, void (*f)(T const &)) {
 void iter(T* array, size_t length, F f) {
 	if (!array || !f)
 		return;
     for (size_t i = 0; i < length; i++)
         f(array[i]);
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Point& p) {    // (2)
     os << "(" << p.x << ", " << p.y << ")";

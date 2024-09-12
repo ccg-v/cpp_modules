@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 21:57:33 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/09 21:30:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/12 23:54:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	main(void) {
 
 
 	std::cout << "/* ----  Set/get values with subscript operator ---------- */"
-			  << std::endl;
+			  << std::endl << std::endl;
 			  
 	// Fill the array with n integers
 	for (unsigned int i = 0; i < n; i++)
 		intArray[i] = (i + 1) * 10;
 	// Print the array
 	for (unsigned int i = 0; i < n; i++)
-		std::cout << "\tintArray[" << i << "] = " << intArray[i] << std::endl;
+		std::cout << "\tintArray[" << i << "] = " << intArray[i] << std::endl;	
 
 	Array<std::string> strArray(3);
 
@@ -54,6 +54,21 @@ int	main(void) {
 		std::cout << "\tstrArray[" << i << "] = " << strArray[i] << std::endl;
 	std::cout << std::endl;
 
+
+	std::cout << "/* ----  Test subscript operator's const overload --------- */"
+			  << std::endl;
+
+	// You can initialize a const array by copying or assigning from an 
+	// already-filled non-const array
+	const Array<int> constArray = intArray;
+	// Print the array
+	for (unsigned int i = 0; i < n; i++)
+		std::cout << "\tconstArray[" << i << "] = " << constArray[i] << std::endl;	
+	// If we try to modify an element the program won't compile because the Array
+	// object that we have instantiated is const
+	// constArray[0] = 999;
+	std::cout << std::endl;
+	
 
 	std::cout << "/* ---- Accessing out of bounds (throw exception) -------- */"
 			  << std::endl;
@@ -79,7 +94,7 @@ int	main(void) {
 
 
 	std::cout << "/* ---- Modify copied array (check deep copy) ------------ */"
-			 << std::endl;
+			 << std::endl << std::endl;
 
 	copiedArray[0] = "Goodbye ";
 	copiedArray[1] = "Cruel ";
@@ -114,6 +129,7 @@ int	main(void) {
 	Array<int> emptyArray;
 
 	std::cout << "\tEmpty array size: " << emptyArray.getSize() << std::endl;
+	
 	emptyArray = intArray;
 	std::cout << "\tEmpty array size after assignment: " << emptyArray.getSize()
 			  << std::endl;

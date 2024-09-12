@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:07:46 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/11 21:00:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/12 23:50:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int main() {
     std::cout << "\tOriginal  : ";
     iter(ptrArr, length, printPointerElement);
     std::cout << std::endl;
-    iter(ptrArr, length, incrementElement<int*>);
+    iter(ptrArr, length, incrementPointerElement);
     std::cout << "\tResulting : ";
     iter(ptrArr, length, printPointerElement);
     std::cout << "\n" << std::endl;
