@@ -10,31 +10,31 @@ There are three primary categories of containers in C++:
 
 1. **Sequence Containers**
 
-These containers store elements in a linear sequence, where the order of the elements is determined by the order in which they are inserted. Some examples include:
+	These containers store elements in a linear sequence, where the order of the elements is determined by the order in which they are inserted. Some examples include:
 
-* `std::vector`: A dynamic array that can grow and shrink as needed. Elements are stored in contiguous memory locations.
-* `std::deque`: A double-ended queue that allows fast insertion and deletion at both the front and back.
-* `std::list`: A doubly linked list that allows fast insertion and deletion anywhere in the list, but slower random access compared to a vector.
-* `std::array`: A fixed-size array with compile-time known size.
-* `std::forward_list`: A singly linked list, optimized for minimal memory overhead, but slower random access.
+	* `std::vector`: A dynamic array that can grow and shrink as needed. Elements are stored in contiguous memory locations.
+	* `std::deque`: A double-ended queue that allows fast insertion and deletion at both the front and back.
+	* `std::list`: A doubly linked list that allows fast insertion and deletion anywhere in the list, but slower random access compared to a vector.
+	* `std::array`: A fixed-size array with compile-time known size.
+	* `std::forward_list`: A singly linked list, optimized for minimal memory overhead, but slower random access.
 
 2. **Associative Containers**
 
-These containers store elements in a way that allows fast searching, insertion, and deletion based on keys. The elements are usually stored in a sorted manner. Some examples include:
+	These containers store elements in a way that allows fast searching, insertion, and deletion based on keys. The elements are usually stored in a sorted manner. Some examples include:
 
-* `std::set`: A container that stores unique elements in a specific order.
-* `std::map`: A collection of key-value pairs, where each key is unique, and elements are sorted by key.
-* `std::multiset`: Like set, but allows duplicate elements.
-* `std::multimap`: Like map, but allows duplicate keys.
+	* `std::set`: A container that stores unique elements in a specific order.
+	* `std::map`: A collection of key-value pairs, where each key is unique, and elements are sorted by key.
+	* `std::multiset`: Like set, but allows duplicate elements.
+	* `std::multimap`: Like map, but allows duplicate keys.
 
 3. **Unordered Containers**
 
-These containers are similar to associative containers but do not maintain any specific order for the elements. They are based on hash tables and provide very fast access times for searching, insertion, and deletion. Examples include:
+	These containers are similar to associative containers but do not maintain any specific order for the elements. They are based on hash tables and provide very fast access times for searching, insertion, and deletion. Examples include:
 
-* `std::unordered_set`: A set that stores unique elements with no particular order.
-* `std::unordered_map`: A map that stores key-value pairs with no particular order.
-* `std::unordered_multiset`: A set that allows duplicates and does not maintain any order.
-* `std::unordered_multimap`: A map that allows duplicate keys with no particular order.
+	* `std::unordered_set`: A set that stores unique elements with no particular order.
+	* `std::unordered_map`: A map that stores key-value pairs with no particular order.
+	* `std::unordered_multiset`: A set that allows duplicates and does not maintain any order.
+	* `std::unordered_multimap`: A map that allows duplicate keys with no particular order.
 
 ### Key Features:
 
@@ -55,35 +55,35 @@ These containers are similar to associative containers but do not maintain any s
 
 * **Safety**: Containers automatically manage memory for the objects they store, reducing the risk of memory leaks and pointer errors.
 
-## Example Usage of a Container (std::vector)
+### Example Usage of a Container (std::vector)
 
-```
-#include <iostream>
-#include <vector>
+	```
+	#include <iostream>
+	#include <vector>
 
-int main() {
-    std::vector<int> numbers;
+	int main() {
+		std::vector<int> numbers;
 
-    // Adding elements to the vector
-    numbers.push_back(10);
-    numbers.push_back(20);
-    numbers.push_back(30);
+		// Adding elements to the vector
+		numbers.push_back(10);
+		numbers.push_back(20);
+		numbers.push_back(30);
 
-    // Accessing elements using an iterator
-    for (auto it = numbers.begin(); it != numbers.end(); ++it) {
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
+		// Accessing elements using an iterator
+		for (auto it = numbers.begin(); it != numbers.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
 
-    return 0;
-}
-```
+		return 0;
+	}
+	```
 
-## Why Use Containers?
+### Why Use Containers?
 
-* `Ease of Use`: You don't have to manually handle memory allocation or resizing, as most containers automatically adjust based on their size.
-* `Efficiency`: STL containers are optimized for performance, with various operations (like sorting, searching, and insertion) being handled efficiently.
-* `Flexibility`: C++ containers can store any data type and can be easily extended with custom behavior.
+	* `Ease of Use`: You don't have to manually handle memory allocation or resizing, as most containers automatically adjust based on their size.
+	* `Efficiency`: STL containers are optimized for performance, with various operations (like sorting, searching, and insertion) being handled efficiently.
+	* `Flexibility`: C++ containers can store any data type and can be easily extended with custom behavior.
 
 ---------------------------------------------------------------------------------------
 
