@@ -179,3 +179,5 @@ In C++ programming (especially in the Standard Template Library (STL)), the term
 In the STL, functions like `std::find`, `std::sort`, and others are part of the **algorithms** category because they implement well-known, abstract algorithms (like linear search or sorting) and follow a standard sequence of steps.
 
 However, when you call `std::find` or `std::sort`, you're actually invoking functions that take parameters (like iterators, ranges, or comparison functions) and return results (like an iterator or nothing in the case of sort). **Thus, you would not be wrong to refer to them as functions**. In fact, they are **function templates**, i.e. functions that are parameterized with types and work across different types of containers. It's just that in C++, these functions are part of the broader category called "STL algorithms" because they follow well-known algorithmic strategies.
+
+---------------------------------------------------------------------------------------
