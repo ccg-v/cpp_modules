@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:23:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/23 21:43:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/24 21:23:15 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ class Span {
 
 	private:
 
-		unsigned int N;
+		std::vector<int>	vec;
+		unsigned int		_N;
 
 	public:
 
