@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/25 22:11:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/26 22:16:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Span::Span(const Span & source) : _N(source._N) {
 	vec.reserve(source.vec.size());	// (1)
 
 	for (std::vector<int>::iterator srcIt = source.vec.begin(); srcIt != vec.end(); 
-		++srcIt)
+			++srcIt)
 		vec.push_back(*srcIt);
 }
 
@@ -50,7 +50,7 @@ Span Span::&operator=(const Span & source) {
 	return *this;
 }
 
-// Default destructor
+// Default destructor	
 Span::~Span() {
 	std::cout << "Span Default Destructor called" << std::endl;
 }
@@ -64,7 +64,18 @@ Span::Span(unsigned int N) : _N(N){
 
 /* --- Member functions ----------------------------------------------------- */
 
-void	addNumber(unsigned)
+void	addNumber(Span & spn, unsigned int num) {
+	if (spn.vec.size() < spn._N)
+		spn.vec.push_back(num);
+	else
+		throw SpanIsFullException();
+}
+
+/* --- Exceptions ----------------------------------------------------------- */
+
+const char* AForm::SpanIsFullException::what() const throw() {
+    return "No element added: the span is full";
+}
 
 /*
  *	(1)	Why use vec.size() instead of _N?

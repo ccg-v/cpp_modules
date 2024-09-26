@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:23:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/24 21:23:15 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/09/26 22:16:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,19 @@ class Span {
 
 		/* --- Parameterized constructor ------------------------------------ */
 
-		Span(unsigned int N);
+		void addNumber(Span & spn, unsigned int num);
 
 		/* --- Member methods ----------------------------------------------- */
 
-		unsigned int shortestSpan(Span Array);
-		unsigned int longestSpan(Span Array)
+		unsigned int shortestSpan(Span & spn);
+		unsigned int longestSpan(Span & spn);
+
+		/* --- Exceptions --------------------------------------------------- */
+
+		class SpanIsFullException : public std:: exception {
+			public: 
+				const char *what() const throw();
+		};
 }
 
 #endif
