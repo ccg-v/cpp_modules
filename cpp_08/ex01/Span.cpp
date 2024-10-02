@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/26 22:16:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/02 23:12:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default Constructor
-Span::Span : _N(0) {
-	std::cout << "Span Default Constructor called" << std::enl;
+Span::Span() : _N(0) {
+	std::cout << "Span Default Constructor called" << std::endl;
 }
 
 // Copy constructor
@@ -24,13 +24,13 @@ Span::Span(const Span & source) : _N(source._N) {
 	std::cout << "Span Copy Constructor called"  << std::endl;
 	vec.reserve(source.vec.size());	// (1)
 
-	for (std::vector<int>::iterator srcIt = source.vec.begin(); srcIt != vec.end(); 
+	for (std::vector<int>::const_iterator srcIt = source.vec.begin(); srcIt != source.vec.end(); 
 			++srcIt)
 		vec.push_back(*srcIt);
 }
 
 // Copy assignment operator
-Span Span::&operator=(const Span & source) {
+Span &Span::operator=(const Span & source) {
 	std::cout << "Span Copy Assignment Operator called" << std::endl;
 	if (this == &source)
 		return *this;
@@ -40,7 +40,7 @@ Span Span::&operator=(const Span & source) {
 	this->vec.resize(source.vec.size());	// (3)
 	
 	std::vector<int>::const_iterator srcIt = source.vec.begin();	// (4)
-	std::vector<int>::iterator dstIt = this.vec.begin();
+	std::vector<int>::iterator dstIt = this->vec.begin();
 	
 	while (srcIt != source.vec.end()) {
 		*dstIt = *srcIt;
@@ -64,16 +64,16 @@ Span::Span(unsigned int N) : _N(N){
 
 /* --- Member functions ----------------------------------------------------- */
 
-void	addNumber(Span & spn, unsigned int num) {
-	if (spn.vec.size() < spn._N)
-		spn.vec.push_back(num);
+void	Span::addNumber(unsigned int num) {
+	if (vec.size() < _N)
+		vec.push_back(num);
 	else
 		throw SpanIsFullException();
 }
 
 /* --- Exceptions ----------------------------------------------------------- */
 
-const char* AForm::SpanIsFullException::what() const throw() {
+const char* Span::SpanIsFullException::what() const throw() {
     return "No element added: the span is full";
 }
 
