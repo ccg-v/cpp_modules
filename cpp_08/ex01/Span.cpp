@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/02 23:12:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/03 22:18:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ Span::Span() : _N(0) {
 // Copy constructor
 Span::Span(const Span & source) : _N(source._N) {
 	std::cout << "Span Copy Constructor called"  << std::endl;
-	vec.reserve(source.vec.size());	// (1)
+	_vec.reserve(source._vec.size());	// (1)
 
-	for (std::vector<int>::const_iterator srcIt = source.vec.begin(); srcIt != source.vec.end(); 
+	for (std::vector<int>::const_iterator srcIt = source._vec.begin(); srcIt != source._vec.end(); 
 			++srcIt)
-		vec.push_back(*srcIt);
+		_vec.push_back(*srcIt);
 }
 
 // Copy assignment operator
@@ -37,12 +37,12 @@ Span &Span::operator=(const Span & source) {
 	
 	// delete[] this.vec;	// (2)
 	this->_N = source._N;
-	this->vec.resize(source.vec.size());	// (3)
+	this->_vec.resize(source._vec.size());	// (3)
 	
-	std::vector<int>::const_iterator srcIt = source.vec.begin();	// (4)
-	std::vector<int>::iterator dstIt = this->vec.begin();
+	std::vector<int>::const_iterator srcIt = source._vec.begin();	// (4)
+	std::vector<int>::iterator dstIt = this->_vec.begin();
 	
-	while (srcIt != source.vec.end()) {
+	while (srcIt != source._vec.end()) {
 		*dstIt = *srcIt;
 		srcIt++;
 		dstIt++;
@@ -59,22 +59,68 @@ Span::~Span() {
 
 Span::Span(unsigned int N) : _N(N){
 	std::cout << "Span Parameterized Constructor called" << std::endl;
-	vec.reserve(N);  // Preallocate space for N elements (optional) (5)
+	_vec.reserve(N);  // Preallocate space for N elements (optional) (5)
+}
+
+/* --- Getters -------------------------------------------------------------- */
+
+const std::vector<int> & Span::getVector() const {
+	return _vec;
 }
 
 /* --- Member functions ----------------------------------------------------- */
 
 void	Span::addNumber(unsigned int num) {
-	if (vec.size() < _N)
-		vec.push_back(num);
-	else
-		throw SpanIsFullException();
+	std::cout << "_vec.size is " << _vec.size() << std::endl;
+	if (_vec.size() == 0)
+		throw SpanIsEmptyException();
+	if (_vec.size() > _N)
+		throw SpanIsFullException();	
+	else {
+		_vec.push_back(num);
+		std::cout << "\t" << num << " added" << std::endl;
+	}
+}
+
+unsigned int Span::longestSpan() {
+	if (_vec.size() >= 2)
+		return *std::max_element(_vec.begin(), _vec.end()) - *std::min_element(_vec.begin(), _vec.end());
+	throw SpanTooSmallException();
+}
+
+unsigned int Span::shortestSpan() {
+	if (_vec.size() >= 2) {	
+		unsigned int shortestSpan = INT_MAX;  // Start with the maximum possible value
+
+		// First, sort the vector to find adjacent differences
+		std::vector<int> sortedVec = _vec;  // Copy the original vector
+		std::sort(sortedVec.begin(), sortedVec.end());  // Sort the copied vector
+
+		// Calculate the minimum difference between adjacent elements
+		for (std::vector<int>::iterator it = sortedVec.begin(); it != sortedVec.end() - 1; ++it) {
+			unsigned int diff = *(it + 1) - *it;
+			if (diff < shortestSpan) {
+				shortestSpan = diff;
+			}
+		}
+
+		return shortestSpan;
+	}
+	throw SpanTooSmallException();
 }
 
 /* --- Exceptions ----------------------------------------------------------- */
 
+const char* Span::SpanIsEmptyException::what() const throw() {
+    return "\tException: The span is empty";
+}
+
 const char* Span::SpanIsFullException::what() const throw() {
-    return "No element added: the span is full";
+    return "\tException: No more elements added: the span is full";
+}
+
+const char*	Span::SpanTooSmallException::what() const throw() {
+	return "\tException: No span calculated: at least two numbers needed";
 }
 
 /*
