@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:23:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/03 22:07:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:05:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ class Span {
 			public:
 				const char *what() const throw();
 		};
+
 };
+
+
+/* --- Non member functions ------------------------------------------------- */
+
+// Insertion operator<< overload
+std::ostream & operator<<(std::ostream & os, const Span & sp);
 
 #endif

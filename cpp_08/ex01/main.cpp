@@ -6,60 +6,36 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:18:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/03 22:14:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:57:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
-void	printSpan(Span & sp) {
-
-		const std::vector<int> & vec = sp.getVector();
-		
-		std::cout << "\t{ "; 		
-		for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); 
-				++it) 
-			std::cout << (*it) << " ";	
-		std::cout << "}" << std::endl;	
-}
-
 int	main(void) {
 
-	unsigned int size = 4;
-	Span sp = Span(size);
+	unsigned int N = 5;
+	Span sp = Span(N);
 
 	try {
 		sp.addNumber(6);
 		sp.addNumber(3);
-		// sp.addNumber(17);
-		// sp.addNumber(9);
-		// sp.addNumber(11);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
 
-		// const std::vector<int> & vec = sp.getVector();
-		
-		// std::cout << "{ "; 		
-		// for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); 
-		// 		++it) 
-		// 	std::cout << (*it) << " ";	
-		// std::cout << "}" << std::endl;
-
-		printSpan(sp);
-	} catch (const Span::SpanIsFullException &e) {
-		printSpan(sp);	
+		std::cout << sp << std::endl;	// print the Span object
+	} catch (const Span::SpanIsEmptyException &e) {	
 		std::cerr << e.what() << std::endl;
+	} catch (const Span::SpanIsFullException &e) {
+		std::cerr << e.what() << std::endl;
+		std::cout << sp << std::endl;	// print the Span object
 	}
 	
-	try {
-		// const std::vector<int> & vec = sp.getVector();
-		// std::cout << "{ "; 		
-		// for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); 
-		// 		++it) 
-		// 	std::cout << (*it) << " ";	
-		// std::cout << "}" << std::endl;
-	
-		
+	try {		
 		unsigned int	shortSpan = sp.shortestSpan();
 		unsigned int	longSpan = sp.longestSpan();
+
 		std::cout << "\tShortest span = " << shortSpan << std::endl;
 		std::cout << "\tLongest span  = " << longSpan << std::endl;
 	} catch (const Span::SpanTooSmallException &e) {

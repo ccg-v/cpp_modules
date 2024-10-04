@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/03 22:18:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:40:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ const std::vector<int> & Span::getVector() const {
 /* --- Member functions ----------------------------------------------------- */
 
 void	Span::addNumber(unsigned int num) {
-	std::cout << "_vec.size is " << _vec.size() << std::endl;
-	if (_vec.size() == 0)
+	if (_N == 0)
 		throw SpanIsEmptyException();
-	if (_vec.size() > _N)
+	if (_vec.size() >= _N)
 		throw SpanIsFullException();	
 	else {
 		_vec.push_back(num);
@@ -123,6 +122,22 @@ const char*	Span::SpanTooSmallException::what() const throw() {
 	return "\tException: No span calculated: at least two numbers needed";
 }
 
+/* --- Insertion operator<< overload ---------------------------------------- */
+
+std::ostream & operator<<(std::ostream & os, const Span & sp) {
+
+	const std::vector<int> & vec = sp.getVector();
+    if (vec.empty()) {  // If the vector is empty, throw an exception
+        throw Span::SpanIsEmptyException();
+    } else {	
+		std::cout << "\t{ "; 		
+		for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); 
+				++it) 
+			std::cout << (*it) << " ";	
+		std::cout << "}";
+	}
+    return os;	
+}
 /*
  *	(1)	Why use vec.size() instead of _N?
  *
