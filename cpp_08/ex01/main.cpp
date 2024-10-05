@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:18:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/04 14:09:19 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/05 13:42:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,58 @@
 
 int	main(void) {
 
-	// unsigned int N = 5;
-	// Span sp = Span(N);
+	unsigned int N = 5;
+	Span sp = Span(N);
 
-	// try {
-	// 	sp.addNumber(6);
-	// 	sp.addNumber(3);
-	// 	sp.addNumber(17);
-	// 	sp.addNumber(9);
-	// 	sp.addNumber(11);
+	try {
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
 
-	// 	std::cout << sp << std::endl;	// print the Span object
-	// } catch (const Span::SpanIsEmptyException &e) {	
-	// 	std::cerr << e.what() << std::endl;
-	// } catch (const Span::SpanIsFullException &e) {
-	// 	std::cerr << e.what() << std::endl;
-	// 	std::cout << sp << std::endl;	// print the Span object
-	// }
+		std::cout << sp << std::endl;	// print the Span object
+	} catch (const Span::SpanIsEmptyException &e) {	
+		std::cerr << e.what() << std::endl;
+	} catch (const Span::SpanIsFullException &e) {
+		std::cerr << e.what() << std::endl;
+		std::cout << sp << std::endl;	// print the Span object
+	}
+
+	try {		
+		unsigned int	shortSpan = sp.shortestSpan();
+		unsigned int	longSpan = sp.longestSpan();
+
+		std::cout << "\tShortest span = " << shortSpan << std::endl;
+		std::cout << "\tLongest span  = " << longSpan << std::endl;
+	} catch (const Span::SpanTooSmallException &e) {
+		std::cerr << e.what() << std::endl;
+	}
 	
-	// try {		
-	// 	unsigned int	shortSpan = sp.shortestSpan();
-	// 	unsigned int	longSpan = sp.longestSpan();
+	std::cout << std::endl;
 
-	// 	std::cout << "\tShortest span = " << shortSpan << std::endl;
-	// 	std::cout << "\tLongest span  = " << longSpan << std::endl;
-	// } catch (const Span::SpanTooSmallException &e) {
-	// 	std::cerr << e.what() << std::endl;
-	// }
+	unsigned int capacity = 10;
+	unsigned int numAmount = 10;
+	Span sp2 = Span(capacity);
+	
+	try {
+		std::srand(std::time(0));
+		sp2.fillSpan(numAmount);
+		std::cout << sp2 << std::endl;	// print the Span object
+	} catch (const Span::SpanIsFullException &e) {
+		std::cerr << e.what() << std::endl;
+		std::cout << sp2 << std::endl;	// print the Span object
+	}
 
-	std::srand(std::time(0));
-	unsigned int N = 20;
-	Span sp2 = Span(N);
-	sp2.fillSpan(N);
-	std::cout << sp2 << std::endl;	// print the Span object
+	try {		
+		unsigned int	shortSpan = sp2.shortestSpan();
+		unsigned int	longSpan = sp2.longestSpan();
+
+		std::cout << "\tShortest span = " << shortSpan << std::endl;
+		std::cout << "\tLongest span  = " << longSpan << std::endl;
+	} catch (const Span::SpanTooSmallException &e) {
+		std::cerr << e.what() << std::endl;
+	}
+
 	return 0;
 }
