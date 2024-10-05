@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:18:58 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/05 13:42:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/05 23:43:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include <ctime>   // std::time()
 
 int	main(void) {
+
+/* --- Adding random numbers one by one ------------------------------------- */
+
+	std::cout << "/* --- Adding random numbers one by one ------------------- */" 
+			  << std::endl;
 
 	unsigned int N = 5;
 	Span sp = Span(N);
@@ -45,14 +50,27 @@ int	main(void) {
 	
 	std::cout << std::endl;
 
+/* --- Adding random numbers in one call ------------------------------------ */
+
+	std::cout << "/* --- Adding random numbers in one call ------------------ */" 
+			  << std::endl;
+			  
 	unsigned int capacity = 10;
-	unsigned int numAmount = 10;
+	unsigned int numAmount = 10000;
 	Span sp2 = Span(capacity);
 	
 	try {
-		std::srand(std::time(0));
-		sp2.fillSpan(numAmount);
-		std::cout << sp2 << std::endl;	// print the Span object
+		std::srand(std::time(0));  // Seed for randomness
+
+		// Generate a range of random numbers in a temporary vector
+		std::vector<int> randomVec(numAmount);
+		for (std::vector<int>::iterator it = randomVec.begin(); it != randomVec.end(); ++it) {
+			*it = std::rand() % INT_MAX;
+		}
+
+		// Add the range of random numbers to the Span using iterators
+		sp2.addRange(randomVec.begin(), randomVec.end());
+		std::cout << sp2 << std::endl;	// print the Span object		
 	} catch (const Span::SpanIsFullException &e) {
 		std::cerr << e.what() << std::endl;
 		std::cout << sp2 << std::endl;	// print the Span object

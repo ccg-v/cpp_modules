@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/05 14:52:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/05 23:19:50 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,26 @@ unsigned int Span::shortestSpan() {
  *	Fills the span with the desired amount of random numbers, but does not use
  *	a range of iterators
  */
-void Span::fillSpan(unsigned int spanSize) {
+// void Span::fillSpan(unsigned int spanSize) {
 
-    while (_vec.size() < _N) {
-        this->addNumber(std::rand() % spanSize * 2 + 1);  // Add random numbers
-    }
-	if (spanSize > _vec.size()) {
-		throw SpanIsFullException();
+//     while (_vec.size() < _N) {
+//         this->addNumber(std::rand() % spanSize * 2 + 1);  // Add random numbers
+//     }
+// 	if (spanSize > _vec.size()) {
+// 		throw SpanIsFullException();
+// 	}
+// }
+
+void Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
+	
+	for (std::vector<int>::iterator it = begin; it != end; ++it) {
+		if (_vec.size() < _N) {
+			addNumber(*it);
+		} else {
+			throw SpanIsFullException();
+		}
 	}
 }
-
 
 /* --- Exceptions ----------------------------------------------------------- */
 

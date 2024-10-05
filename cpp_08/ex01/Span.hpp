@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:23:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/04 13:30:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/05 23:41:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <string>
 # include <vector>
 # include <iostream>
-# include <algorithm>	// for std::min_element and std::max_element
+# include <algorithm>	// for std::min_element, std::max_element, std::sort
 # include <limits.h>	// for INT_MAX
 
 class Span {
@@ -48,7 +48,8 @@ class Span {
 		void 			addNumber(unsigned int num);
 		unsigned int	shortestSpan();
 		unsigned int	longestSpan();
-		void			fillSpan(unsigned int spanSize);
+		void			addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+		// void			fillSpan(unsigned int spanSize);
 
 		/* --- Exceptions --------------------------------------------------- */
 
