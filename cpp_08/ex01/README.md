@@ -51,3 +51,25 @@ While the container can store integers, it doesn't inherently provide the logic 
 * Container: Is well integrated with C++ algorithms, so calculating things like spans (e.g., finding the minimum or maximum difference between elements) becomes much easier. 
 
 </details>
+
+<details>
+<summary><h3> What is a range of iterators? </h3></summary>
+
+A range of iterators is a way to refer to a sequence of elements between two iterators: a **beginning iterator** and an **ending iterator**. Many functions in the C++ Standard Library (including container member functions) allow you to specify a range of elements by providing these two iterators.
+
+For example:
+
+* The range `[vec.begin(), vec.end()]` represents all elements in a vector.
+* The range `[vec.begin(), vec.begin() + 5]` would represent the first 5 elements of the vector.
+
+C++ containers often have member functions that accept iterator ranges. For example, `std::vector` has an `insert()` function that can take a pair of iterators and insert all the elements in the range between those iterators.
+
+```
+std::vector<int> vec1 = {1, 2, 3, 4, 5};
+std::vector<int> vec2;
+
+// Insert elements from vec1 into vec2 using iterators
+vec2.insert(vec2.begin(), vec1.begin(), vec1.end());
+```
+
+</details>
