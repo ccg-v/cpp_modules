@@ -10,7 +10,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary><h2> Why create a new class to store integers if standard containers do the same job? </h2></summary>
+<summary><h3> Why create a new class to store integers if standard containers do the same job? </h3></summary>
 The Span class will not only store integers but also implement logic for:
 
 * Limiting the number of elements (N).
