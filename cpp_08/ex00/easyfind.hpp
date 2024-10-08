@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 19:15:05 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/09/17 20:24:12 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/08 22:20:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,26 @@
 # include <algorithm>	// for std::find
 # include <vector>		// for std:vector
 # include <stdexcept>   // for std::runtime_error
-# include <iostream>
-
-// template<typename T>
-// typename T::const_iterator easyfind(const T& container, const int value) {
-
-// 	typename T::const_iterator it = std::find(container.begin(), container.end(), value);
-// 	if (it == container.end())
-// 		// throw std::runtime_error("No occurrence found");
-// 		throw std::exception("No occurrence found");
-// 	return it;
-// }
+# include <iostream>	// for std::ostream and std::cout
+# include <sstream> 	// For std::ostringstream
 
 template <typename T>
-typename T::const_iterator easyfind(const T& container, int value) {
-    typename T::const_iterator it = std::find(container.begin(), container.end(), value);
-    if (it == container.end()) {
-        throw std::runtime_error("No occurrence found");
-    }
-    return it;
-}
+typename T::const_iterator easyfind(const T& container, int value); 
 
 // Specialization for C-style arrays
 template <typename T, size_t N>
-T* easyfind(T (&array)[N], int value) {
-    T* it = std::find(array, array + N, value);
-    if (it == array + N) {
-        throw std::runtime_error("No occurrence found");
-    }
-    return it;
-}
+T* easyfind(T (&array)[N], int value);
+
+// Generic function to print container contents
+template <typename T>
+void printContainer(const T& container);
+
+// Exception
+class NoOccurrenceFoundException : public std::exception {
+	public:
+		const char *what() const throw();
+};
+
+#include "easyfind.tpp"
 
 #endif
