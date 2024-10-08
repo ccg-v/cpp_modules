@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/05 23:19:50 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:35:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,11 @@ std::ostream & operator<<(std::ostream & os, const Span & sp) {
     if (vec.empty()) {  // If the vector is empty, throw an exception
         throw Span::SpanIsEmptyException();
     } else {	
-		std::cout << "\t{ "; 		
+		os << "\t{ "; 		
 		for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); 
 				++it) 
-			std::cout << (*it) << " ";	
-		std::cout << "}";
+			os << (*it) << " ";	
+		os << "}";
 	}
     return os;	
 }
