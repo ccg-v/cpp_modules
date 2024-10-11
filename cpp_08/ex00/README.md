@@ -198,7 +198,7 @@ However, when you call `std::find` or `std::sort`, you're actually invoking func
 <details>
 <summary><h3> Throw a standard or a custom exception? </h3></summary>
 
-Choosing between throwing a standard exception like std::runtime_error or a custom exception like NoOccurrenceFoundException depends on the context and specific needs of your application. Both options have pros and cons.
+Choosing between throwing a standard exception (like `std::runtime_error`) or a custom exception (like `NoOccurrenceFoundException`) depends on the context and specific needs of your application. Both options have pros and cons.
 
 1. **Throwing a Standard Exception (std::runtime_error)**
 * **Pros**:
