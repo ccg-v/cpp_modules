@@ -5,8 +5,9 @@
 
 ------------------------------------------------------------------
 
-## Concepts: `std::stack`
+## Concepts
 
+### `std::stack`
 
 In C++98, ``std::stack`` is part of the **container adapters** group, which provides a more specialized interface for certain use cases. `std::stack` is not a container itself, but rather an **adapter** that operates on an underlying container like `std::deque`, `std::vector`, or `std::list`.
 
@@ -34,7 +35,7 @@ In C++98, ``std::stack`` is part of the **container adapters** group, which prov
 
 In C++98, in addition to `std::stack`, there are two other container adapters:
 
-## 1. `std::queue`
+## `std::queue`
 
 A `std::queue` is a FIFO structure, where elements are added to the back and removed from the front. It's useful for algorithms where the order of processing needs to follow the order of insertion.
 * **Key Operations**:
@@ -47,7 +48,7 @@ A `std::queue` is a FIFO structure, where elements are added to the back and rem
 
 * **Underlying Container**: By default, `std::queue` uses `std::deque`, but you can also specify other containers like `std::list`. However, the container must support `push_back()` and `pop_front()` operations.
 
-## 2. `std::priority_queue`
+## `std::priority_queue`
 
 `std::priority_queue` is a container adapter that provides a max-heap structure, where the largest element is always accessible at the front. It's a sorted structure where the highest-priority element (largest by default) is processed first.
 
