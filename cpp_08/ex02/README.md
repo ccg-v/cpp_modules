@@ -31,7 +31,7 @@ In C++98, ``std::stack`` is part of the **container adapters** group, which prov
 
 * **Conclusion**:
 
-`std::stack` in C++98 is useful when you need a simple LIFO structure. It’s a container adapter, meaning it doesn’t have iterators or random access, and you can only interact with the most recently added element. If you need to iterate over or access elements elsewhere in the sequence, you should use the underlying container (like `std::deque` or `std::vector`) directly instead.
+	`std::stack` in C++98 is useful when you need a simple LIFO structure. It’s a container adapter, meaning it doesn’t have iterators or random access, and you can only interact with the most recently added element. If you need to iterate over or access elements elsewhere in the sequence, you should use the underlying container (like `std::deque` or `std::vector`) directly instead.
 
 In C++98, in addition to `std::stack`, there are two other container adapters:
 
