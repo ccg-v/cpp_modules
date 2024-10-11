@@ -34,7 +34,7 @@ In C++98, ``std::stack`` is part of the **container adapters** group, which prov
 
 In C++98, in addition to `std::stack`, there are two other container adapters:
 
-## 1. **`std::queue`**
+## 1. `std::queue`
 
 	A `std::queue` is a FIFO structure, where elements are added to the back and removed from the front. It's useful for algorithms where the order of processing needs to follow the order of insertion.
 
