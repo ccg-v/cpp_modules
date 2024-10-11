@@ -6,24 +6,9 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:22:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/11 20:05:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/11 21:31:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "easyfind.hpp"
-
-// int	main(void)
-// {
-// 	// int intArr[] = {1, 3, 5, 7, 11, 13, 17, 19, 21, 23};
-// 	std::vector<int> intArr = {1, 3, 5, 7, 11, 13, 17, 19, 21, 23};
-
-//     try {
-//         typename std::vector<int>::const_iterator result = easyfind(intArr, 13);
-//         std::cout << "Found value at position: " << std::distance(intArr, result) << std::endl;
-//     } catch (const std::runtime_error& e) {
-//         std::cerr << e.what() << std::endl;
-//     }
-// }
 
 #include "easyfind.hpp"
 #include <iostream>
