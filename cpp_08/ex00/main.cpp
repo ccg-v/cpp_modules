@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:22:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/08 22:25:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:05:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main() {
 	/* --- Vector ----------------------------------------------------------- */
 	
 	std::cout << "/* --- Container is a vector ------------------------------ */"
-			  << std::endl;
+			  << std::endl << std::endl;
 			  
     std::vector<int> vec;
     vec.push_back(5);
@@ -71,32 +71,119 @@ int main() {
     } catch (const std::runtime_error & e) {
         std::cerr << e.what() << std::endl;
     }
-
 	
-    // try {
-    //     // Use easyfind with std::vector
-    //     std::vector<int>::const_iterator result = easyfind(vec, 10);
-    //     // Cast vec.begin() to const_iterator explicitly
-    //     std::vector<int>::const_iterator begin = vec.begin();
-    //     std::cout << "Found value at position: "
-	// 			  << std::distance(begin, result) << std::endl;
-    // } catch (const std::runtime_error& e) {
-    //     std::cerr << e.what() << std::endl;
-    // }
+	std::cout << std::endl;
 
-    // // C-style array
-    // int intArr[] = {5, 10, 15, 20, 25};
+	/* --- Double-ended queue ----------------------------------------- */
+	
+	std::cout << "/* --- Container is a double-ended queue ------------ */"
+			  << std::endl << std::endl;
+
+    std::deque<int> deq;
+    deq.push_back(2);
+    deq.push_back(4);
+    deq.push_back(6);
+    deq.push_back(8);
+    deq.push_back(10);
     
-    // try {
-    //     // Use easyfind with C-style array
-    //     int* result = easyfind(intArr, 20);
-    //     std::cout << "Found value at index: " << (result - intArr) << std::endl;
-    // } catch (const std::runtime_error& e) {
-    //     std::cerr << e.what() << std::endl;
-    // }
+	printContainer(deq);
 
-    // Initialize std::vector in C++98 style
+	num = 2;
 
+    try {
 
+        std::deque<int>::const_iterator result = easyfind(deq, num);
+        std::deque<int>::const_iterator begin = deq.begin();
+		
+        std::cout << "Value '" << num << "': Found at position " 
+				  << std::distance(begin, result) << std::endl;
+    } catch (const std::runtime_error & e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+	num = 42;
+	try {
+
+        std::deque<int>::const_iterator result = easyfind(deq, num);
+        std::deque<int>::const_iterator begin = deq.begin();
+		
+        std::cout << "Value '" << num << ": Found at position " 
+				  << std::distance(begin, result) << std::endl;
+    } catch (const std::runtime_error & e) {
+        std::cerr << e.what() << std::endl;
+    }
+	
+	std::cout << std::endl;
+
+	/* --- Double linked list ----------------------------------------- */
+	
+	std::cout << "/* --- Container is a double linked list ------------ */"
+			  << std::endl << std::endl;
+
+    std::list<int> lst;
+    lst.push_back(1);
+    lst.push_back(2);
+    lst.push_back(3);
+    lst.push_back(5);
+    lst.push_back(7);
+    
+	printContainer(lst);
+
+	num = 7;
+
+    try {
+
+        std::list<int>::const_iterator result = easyfind(lst, num);
+        std::list<int>::const_iterator begin = lst.begin();
+		
+        std::cout << "Value '" << num << "': Found at position " 
+				  << std::distance(begin, result) << std::endl;
+    } catch (const std::runtime_error & e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+	num = 42;
+	try {
+
+        std::list<int>::const_iterator result = easyfind(lst, num);
+        std::list<int>::const_iterator begin = lst.begin();
+		
+        std::cout << "Value '" << num << ": Found at position " 
+				  << std::distance(begin, result) << std::endl;
+    } catch (const std::runtime_error & e) {
+        std::cerr << e.what() << std::endl;
+    }
+	
+	std::cout << std::endl;
+
+	/* --- C-style Array ---------------------------------------------- */
+	
+	std::cout << "/* --- C-style Array -------------------------------- */"
+			  << std::endl << std::endl;
+
+    int arr[] = {100, 200, 300, 400, 500};
+
+	printContainer(arr);
+
+	num = 300;
+    try {
+        // Use easyfind with C-style array
+        int* result = easyfind(arr, num);
+        std::cout << "Value '" << num << ": Found at position "
+				  << (result - arr) << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+	num = 42;
+	try {
+       // Use easyfind with C-style array
+        int* result = easyfind(arr, num);
+        std::cout << "Value '" << num << ": Found at position "
+				  << (result - arr) << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+	}
+	
     return 0;
 }

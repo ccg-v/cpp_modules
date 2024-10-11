@@ -6,35 +6,48 @@ In C++, a container is a type of data structure that holds and organizes a colle
 
 ### Container categories
 
-There are three primary categories of containers in C++:
+There are two primary categories of containers in C++ 98:
 
 1. **Sequence Containers**
 
 	These containers store elements in a linear sequence, where the order of the elements is determined by the order in which they are inserted. Some examples include:
 
 	* `std::vector`: A dynamic array that can grow and shrink as needed. Elements are stored in contiguous memory locations.
+		Features:
+		- Fast random access
+		- Insertion/deletion at the **end** is efficient
+		- Insertion/deletion at the **beginning** or in the **middle** is costly, as all elements after the insertion/deletion point may need to be shifted.
 	* `std::deque`: A double-ended queue that allows fast insertion and deletion at both the front and back.
+		Features:
+		- Random access is supported but may be slightly slower than vector due to the underlying block-based structure
+		- Fast insertion/removal at both ends
 	* `std::list`: A doubly linked list that allows fast insertion and deletion anywhere in the list, but slower random access compared to a vector.
-	* `std::array`: A fixed-size array with compile-time known size.
-	* `std::forward_list`: A singly linked list, optimized for minimal memory overhead, but slower random access.
+		Features:
+		- No random access, meaning you cannot access an element by index to traverse the list.
+		- Fast insertion/deletion anywhere in the list, but only when you already have an iterator to the position.
+		- Useful for scenarios where you frequently insert/remove elements at arbitrary positions.
+	C++ 11 has introduced new containers: `std::array` (a fixed-size array with compile-time known size) and  `std::forward_list` (a singly linked list, optimized for minimal memory overhead, but slower random access).
 
 2. **Associative Containers**
 
 	These containers store elements in a way that allows fast searching, insertion, and deletion based on keys. The elements are usually stored in a sorted manner. Some examples include:
 
 	* `std::set`: A container that stores unique elements in a specific order.
+	Features:
+	- Elements are automatically sorted by their values.
+	- Lookup, insertion, and deletion are efficient since they are implemented as balanced binary trees.
 	* `std::map`: A collection of key-value pairs, where each key is unique, and elements are sorted by key.
+	Features:
+	- Fast lookup by key.
+	- Elements are stored as pairs (`std::pair<const Key, T>`), where the key is constant.
 	* `std::multiset`: Like set, but allows duplicate elements.
+	Features:
+	- Allows duplicates, and elements are still sorted.	
 	* `std::multimap`: Like map, but allows duplicate keys.
+	Features:
+	- Allows duplicate keys, and elements are sorted by key.
 
-3. **Unordered Containers**
-
-	These containers are similar to associative containers but do not maintain any specific order for the elements. They are based on hash tables and provide very fast access times for searching, insertion, and deletion. Examples include:
-
-	* `std::unordered_set`: A set that stores unique elements with no particular order.
-	* `std::unordered_map`: A map that stores key-value pairs with no particular order.
-	* `std::unordered_multiset`: A set that allows duplicates and does not maintain any order.
-	* `std::unordered_multimap`: A map that allows duplicate keys with no particular order.
+C++ 11 introduced a third category of containers, the **Unordered Containers**: `std::unordered_set`, `std::unordered_map`, `std::unordered_multiset` and `std::unordered_multimap`. These containers are similar to associative containers but do not maintain any specific order for the elements. They are based on hash tables and provide very fast access times for searching, insertion, and deletion. 
 
 ### Key Features:
 
@@ -181,3 +194,44 @@ In the STL, functions like `std::find`, `std::sort`, and others are part of the 
 However, when you call `std::find` or `std::sort`, you're actually invoking functions that take parameters (like iterators, ranges, or comparison functions) and return results (like an iterator or nothing in the case of sort). **Thus, you would not be wrong to refer to them as functions**. In fact, they are **function templates**, i.e. functions that are parameterized with types and work across different types of containers. It's just that in C++, these functions are part of the broader category called "STL algorithms" because they follow well-known algorithmic strategies.
 
 ---------------------------------------------------------------------------------------
+
+<details>
+<summary><h3> Throw a standard or a custom exception? </h3></summary>
+
+Choosing between throwing a standard exception like std::runtime_error or a custom exception like NoOccurrenceFoundException depends on the context and specific needs of your application. Both options have pros and cons.
+
+1. **Throwing a Standard Exception (std::runtime_error)**
+* **Pros**:
+    - **Simplicity**: Using std::runtime_error is straightforward. It's part of the standard library, so you don't need to define your own class or handle any additional code complexity.
+    - **Familiarity**: Developers are familiar with std::runtime_error and know what to expect. This reduces the cognitive load on other people reading or maintaining the code.
+    - B**uilt-in Functionality**: std::runtime_error provides a way to include a custom error message, which can be retrieved later using what().
+
+* **Cons**:
+    - **Generic**: It doesn't provide specific information about the nature of the error (other than a string message), so it might be harder to distinguish the specific cause of failure (e.g., whether the error is related to "no occurrence found" or another type of runtime error).
+
+* **When to Use**:
+    - When you want simplicity and the error is relatively straightforward.
+    - If your codebase doesn't need different types of exceptions for different failure scenarios, or you're working on smaller-scale projects.
+
+2. **Throwing a Custom Exception** (i.e. `NoOccurrenceFoundException`)
+* **Pros**:
+    - **Clarity**: A custom exception clearly communicates the specific error type, making it easier for the caller to understand the problem and handle it appropriately (especially when there are different types of exceptions).
+    - **Extensibility**: If you later want to add more custom exceptions for different types of errors, it's easier to extend this pattern. A custom exception hierarchy could improve organization and error handling.
+    - **Granularity**: Callers of `easyfind()` can specifically catch `NoOccurrenceFoundException` and handle it differently from other exceptions, which could improve flexibility.
+
+* **Cons**:
+    - **More Code:** Defining custom exceptions adds code, and for simpler projects, this could be overkill.
+    - **Maintenance Overhead**: Custom exceptions may add complexity if you have many different exceptions to manage or if the project grows significantly.
+
+* **When to Use**:
+
+    - When you want to provide very specific error messages and allow for fine-grained exception handling.
+    - When the project is large enough to justify the need for distinct exceptions for different failure modes.
+    - If you expect that other parts of the codebase might rely on more specific exceptions.
+
+3. **Conclusion:**
+
+    - For simplicity (especially in small to medium projects): Use std::runtime_error.
+    - For clarity and fine-grained error handling (especially in larger projects or when multiple types of errors need to be distinguished): Use a custom exception.
+
+</details>

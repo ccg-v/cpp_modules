@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:15:37 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/08 22:24:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:01:42 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ template <typename T, size_t N>
 T* easyfind(T (&array)[N], int value) {
     T* it = std::find(array, array + N, value);
     if (it == array + N) {
-        throw std::runtime_error("No occurrence found");
+        std::ostringstream oss;
+        oss << "Value '" << value << "': No occurrence found";
+        throw std::runtime_error(oss.str());
 		// throw NoOccurrenceFoundException();
     }
     return it;
