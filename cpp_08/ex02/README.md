@@ -49,19 +49,19 @@ A `std::queue` is a FIFO structure, where elements are added to the back and rem
 
 ## 2. `std::priority_queue`
 
-	`std::priority_queue` is a container adapter that provides a max-heap structure, where the largest element is always accessible at the front. It's a sorted structure where the highest-priority element (largest by default) is processed first.
+`std::priority_queue` is a container adapter that provides a max-heap structure, where the largest element is always accessible at the front. It's a sorted structure where the highest-priority element (largest by default) is processed first.
 
-	* **Key Operations**:
+* **Key Operations**:
 
-		* `push()`: Inserts an element and maintains heap order.
-		* `pop()`: Removes the largest element (front of the queue).
-		* `top()`: Accesses the largest element without removing it.
-		* `empty()`: Returns true if the queue is empty.
-		* `size()`: Returns the number of elements in the queue.
+	* `push()`: Inserts an element and maintains heap order.
+	* `pop()`: Removes the largest element (front of the queue).
+	* `top()`: Accesses the largest element without removing it.
+	* `empty()`: Returns true if the queue is empty.
+	* `size()`: Returns the number of elements in the queue.
 
-	* **Underlying Container**: By default, `std::priority_queue` uses `std::vector`, but you can also specify other containers like `std::deque`. The container must support random access iterators, like those provided by `std::vector`.
+* **Underlying Container**: By default, `std::priority_queue` uses `std::vector`, but you can also specify other containers like `std::deque`. The container must support random access iterators, like those provided by `std::vector`.
 
-	* **Custom Comparison**: You can customize the priority (i.e., sorting criteria) by providing a custom comparator function. By default, it uses ``std::less``, which makes the largest element the highest priority.
+* **Custom Comparison**: You can customize the priority (i.e., sorting criteria) by providing a custom comparator function. By default, it uses ``std::less``, which makes the largest element the highest priority.
 
 ## Summary::
 
