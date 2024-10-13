@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:15:10 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/13 00:34:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:24:37 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 template <typename T>	// (1)
 class MutantStack : public std::stack<T> {	// (2)
 
-	private:
-		std::stack<T> _innerStack;
-
 	public:
 
 		/* --- Orthodox Canonical Form -------------------------------------- */
@@ -31,71 +28,22 @@ class MutantStack : public std::stack<T> {	// (2)
 		MutantStack & operator=(const MutantStack & source);	// Copy assignment operator
 		~MutantStack();											// Default destructor
 
-        /* --- Exposing std::stack member functions ------------------------ */
+        /* --- Member functions --------------------------------------------- */
 
-        // Delegate push() to the underlying stack
-        void push(const T& value) {
-            _innerStack.push(value);
-        }
+		// Creating an alias for the underlying container's iterator type
+		typedef typename std::stack<T>::container_type::iterator iterator;	// (3)
 
-        // Delegate top() to the underlying stack
-        T& top() {
-            return _innerStack.top();
-        }
+        // Expose begin() and end() from the underlying container	// (4)
+        iterator begin();
+        iterator end();
 
-        void pop() {
-            _innerStack.pop();
-        }
-
-        bool empty() const {
-            return _innerStack.empty();
-        }
-
-        size_t size() const {
-            return _innerStack.size();
-        }
-
-	    /* --- Adding Iterator Support -------------------------------------- */
-		
-        typedef typename std::deque<T>::iterator iterator;
-        typedef typename std::deque<T>::const_iterator const_iterator;
-        typedef typename std::deque<T>::reverse_iterator reverse_iterator;
-        typedef typename std::deque<T>::const_reverse_iterator const_reverse_iterator;
-
-        // Expose begin() and end() from the underlying container
-        iterator begin() {
-            return this->c.begin();
-        }
-
-        iterator end() {
-            return this->c.end();
-        }
-
-        const_iterator begin() const {
-            return this->c.begin();
-        }
-
-        const_iterator end() const {
-            return this->c.end();
-        }
-
-        // Expose reverse iterators from the underlying container
-        reverse_iterator rbegin() {
-            return this->c.rbegin();
-        }
-
-        reverse_iterator rend() {
-            return this->c.rend();
-        }
-
-        const_reverse_iterator rbegin() const {
-            return this->c.rbegin();
-        }
-
-        const_reverse_iterator rend() const {
-            return this->c.rend();
-        }
 };
+
+/* --- Non member functions ------------------------------------------------- */
+
+// Insertion operator<< overload
+template <typename T>
+std::ostream & operator<<(std::ostream & os, MutantStack<T> & mstack);
 
 # include "MutantStack.tpp"
 
@@ -118,4 +66,31 @@ class MutantStack : public std::stack<T> {	// (2)
   *		Direct Access Through Inheritance: You are inheriting from std::stack,
   *		but the protected member c doesn't become automatically accessible
   *		unless you inherit publicly. Here’s the corrected code:
+  */
+
+/*	(3) The typedef creates an alias for the underlying container's iterator 
+ *		type in the MutantStack class. This alias allows us to refer to the
+ *		container's iterator type directly as iterator within your class.
+ *
+ *		- std::stack<T>::container_type: This is the type of the underlying 
+ *			container (usually std::deque<T> by default).
+ *		- ::iterator: This accesses the iterator type defined within that 
+ *			container (std::deque<T>::iterator, for instance).
+ *
+ *		By defining this typedef in your class, you're effectively saying,
+ *		"I want my class to have an iterator type that is the same as the
+ *		iterator type of the container inside the stack."
+ */
+
+ /*
+  *	(4)	Why explicitly expose the iterators but not push(), pop(), size()...?
+  *
+  *		- Methods like push, pop, top, etc. are part of the std::stack interface,
+  *			so when you inherit from std::stack, these methods are directly 
+  *			accessible without needing to do anything special.
+  *
+  *		- Iterators (begin(), end(), etc.) are not part of the std::stack interface,
+  *			even though the underlying container has them. Since std::stack hides
+  *			the iterators, you need to explicitly expose these in the MutantStack
+  *			class to make the stack iterable.
   */

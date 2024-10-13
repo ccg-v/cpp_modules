@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:57:43 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/13 00:33:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:16:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void) {
 	mstack.push(5);
 	mstack.push(17);
 
-	std::cout << mstack.top() << std::endl;
+	std::cout << "stack top is " << mstack.top() << std::endl;
 
 	mstack.pop();
 
@@ -30,17 +30,19 @@ int	main(void) {
 	//[...]
 	mstack.push(0);
 
-	MutantStack<int>::reverse_iterator rit = mstack.rbegin();
-	MutantStack<int>::reverse_iterator rite = mstack.rend();
+    // MutantStack<int>::iterator it = mstack.begin();
+    // MutantStack<int>::iterator ite = mstack.end();
 
-	++rit;
-	--rit;
-	while (rit != rite)
-	{
-	std::cout << *rit << std::endl;
-	++rit;
-	}
-	std::stack<int> s(mstack);
+	// ++it;
+	// --it;
+	// while (it != ite)
+	// {
+	// std::cout << *it << std::endl;
+	// ++it;
+	// }
+	// std::stack<int> s(mstack);
+
+	std::cout << mstack << std::endl;	
 	
 	return 0;
 }
