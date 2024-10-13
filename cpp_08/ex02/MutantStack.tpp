@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 21:26:36 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/13 14:24:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:16:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ std::ostream & operator<<(std::ostream & os, MutantStack<T> & mstack) {
     if (mstack.empty()) {
         std::cout << "The stack is empty" << std::endl;
     } else {	
-		os << "\t{ "; 		
+		os << "{ "; 		
 		for (typename MutantStack<T>::iterator it = mstack.begin(); it != mstack.end(); 
 				++it) 
 			os << (*it) << " ";	
