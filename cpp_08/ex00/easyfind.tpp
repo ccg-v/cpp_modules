@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:15:37 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/11 20:01:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:14:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ template <typename T>
 typename T::const_iterator easyfind(const T& container, int value) {
     typename T::const_iterator it = std::find(container.begin(), container.end(), value);
     if (it == container.end()) {
-        // Create an error message that includes the value being searched
+        // Create a custom error message
         std::ostringstream oss;
         oss << "Value '" << value << "': No occurrence found";
         throw std::runtime_error(oss.str());  // Throw the dynamically generated message		
