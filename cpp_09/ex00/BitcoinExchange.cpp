@@ -6,11 +6,38 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/16 11:12:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/16 21:06:24 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+
+/* --- Orthodox Canonical Form ---------------------------------------------- */
+
+//	Default constructor
+BitCoinExchange::BitCoinExchange {
+	std::cout << "Default constructor called" << std::endl;
+}
+
+//	Copy constructor
+BitCoinExchange::BitCoinExchange(const BitCoinExchange & source) : _exchangeRates(source._exchangeRates) {
+	std::cout << "Copy constructor called" << std::endl;
+}
+
+//	Copy assignment operator
+BitCoinExchange & BitCoinExchange::operator=(const BitCoinExchange & source) {
+	std::cout << "Copy assignment operaror called" << std::endl;
+	if (this != &source) {
+		this->_exchangeRates = src._exchangeRates;
+	}
+	return *this;
+}
+
+//	Default destructor
+BitCoinExchange::~BitCoinExchange {
+	std::cout << "Default destructor called" << std::endl;
+}
+
 
 bool isValidDateFormat(const std::string& date) {
     // Check the length of the string (YYYY-MM-DD is 10 characters)
