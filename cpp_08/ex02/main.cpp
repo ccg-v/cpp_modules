@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:57:43 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/18 13:55:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:07:55 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	main() {
 
 	/* --- Copying stack content in a vector -------------------------------- */
 
-	std::cout << "\n/* --- Using stack iterators to copy content in a vector ------------- */\n"
-			  << std::endl;
+	std::cout << "\n/* --- Using stack iterators to copy stack content in a vector"
+			  << " ------------- */\n" << std::endl;
 
     // // Use the underlying container to directly copy into a vector
     // std::vector<int> vec(mstack.begin(), mstack.end());
@@ -70,16 +70,22 @@ int	main() {
 	MutantStack<int>::iterator stack_it = mstack.begin();
     MutantStack<int>::iterator stack_ite = mstack.end();
 	std::vector<int>::iterator vec_it = vec.begin();
- 
+
 	while (stack_it != stack_ite)
 	{
-	std::cout << "Copying " << *stack_it << std::endl;
-	*vec_it = *stack_it;
-	++stack_it;
-	++vec_it;
+		std::cout << "...Copying " << *stack_it << " from stack to vector..." << std::endl;
+		*vec_it = *stack_it;
+		++stack_it;
+		++vec_it;
 	}
+	std::cout << std::endl;	
 	print_vector(vec);
-	
+
+	/* --- Testing vector to compare results with stack --------------------- */
+
+	std::cout << "\n/* --- Testing vector to compare with stack --------------"
+			  << "----------------- */\n" << std::endl;
+			  
 	// Testing std::vector methods
 	std::cout << "Top element in vector is: " << vec.back() << std::endl;
 	std::cout << "Size of vector is: " << vec.size() << std::endl;
