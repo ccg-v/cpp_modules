@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:23:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/05 23:41:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:44:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ class Span {
 
 		/* --- Getters ------------------------------------------------------ */
 
-		const std::vector<int> & getVector() const;	
+		const std::vector<int> & getVector() const;
+	unsigned int getN();	
 
 		/* --- Member methods ----------------------------------------------- */
 

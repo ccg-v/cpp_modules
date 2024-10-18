@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/08 21:35:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:45:15 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ const std::vector<int> & Span::getVector() const {
 	return _vec;
 }
 
+unsigned int Span::getN() {
+	return _N;
+};
+
 /* --- Member functions ----------------------------------------------------- */
 
 void	Span::addNumber(unsigned int num) {
@@ -84,18 +88,29 @@ void	Span::addNumber(unsigned int num) {
 unsigned int Span::longestSpan() {
 	if (_vec.size() >= 2)
 		return *std::max_element(_vec.begin(), _vec.end()) - *std::min_element(_vec.begin(), _vec.end());
-	throw SpanTooSmallException();
+	if (_N == 0)
+		throw SpanIsEmptyException();
+	else
+		throw SpanTooSmallException();
 }
 
+ /*
+  *		shortestSpan()
+  *
+  *	-	If the vector hasn't at least two elements, throw an exception
+  *	- 	Start storing the maximum possible span between two integers (INT_MAX)
+  *	- 	Work with a copy to keep the original vector unaltered
+  *	- 	Sort the copy with std::sort algorithm
+  *	- 	Traverse the copy calculating the difference between adjacent elements
+  *			and store it if it's lesser than the stored span
+  */
 unsigned int Span::shortestSpan() {
 	if (_vec.size() >= 2) {	
-		unsigned int shortestSpan = INT_MAX;  // Start with the maximum possible value
+		unsigned int shortestSpan = INT_MAX;
 
-		// First, sort the vector to find adjacent differences
-		std::vector<int> sortedVec = _vec;  // Copy the original vector
-		std::sort(sortedVec.begin(), sortedVec.end());  // Sort the copied vector
+		std::vector<int> sortedVec = _vec;
+		std::sort(sortedVec.begin(), sortedVec.end());
 
-		// Calculate the minimum difference between adjacent elements
 		for (std::vector<int>::iterator it = sortedVec.begin(); it != sortedVec.end() - 1; ++it) {
 			unsigned int diff = *(it + 1) - *it;
 			if (diff < shortestSpan) {
