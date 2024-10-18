@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:57:43 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/14 00:16:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:55:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,6 @@
 #include <list>
 #include <vector>
 #include <cstdlib>	// for rand()
-
-// int	main(void) {
-// 	MutantStack<int> mstack;
-
-// 	mstack.push(5);
-// 	mstack.push(17);
-
-// 	std::cout << mstack.top() << std::endl;
-
-// 	mstack.pop();
-	
-// 	std::cout << mstack.size() << std::endl;
-
-// 	mstack.push(3);
-// 	mstack.push(5);
-// 	mstack.push(737);
-// 	//[...]
-// 	mstack.push(0);
-
-//     MutantStack<int>::iterator it = mstack.begin();
-//     MutantStack<int>::iterator ite = mstack.end();
-
-// 	++it;
-// 	--it;
-// 	while (it != ite)
-// 	{
-// 	std::cout << *it << std::endl;
-// 	++it;
-// 	}
-// 	std::stack<int> s(mstack);
-
-// 	std::cout << "\nRunning a std::list to compare results...\n" << std::endl;
-
-// 	std::list<int> lst;
-
-// 	lst.push_back(5);
-// 	lst.push_back(17);
-
-// 	std::cout << lst.back() << std::endl;
-
-// 	lst.pop_back();
-	
-// 	std::cout << lst.size() << std::endl;
-
-// 	lst.push_back(3);
-// 	lst.push_back(5);
-// 	lst.push_back(737);
-// 	//[...]
-// 	lst.push_back(0);
-
-//     std::list<int>::iterator lst_it = lst.begin();
-//     std::list<int>::iterator lst_ite = lst.end();
-
-// 	++lst_it;
-// 	--lst_it;
-// 	while (lst_it != lst_ite)
-// 	{
-// 	std::cout << *lst_it << std::endl;
-// 	++lst_it;
-// 	}
-
-// 	return 0;
-// }
 
 void	print_vector(std::vector<int> vec) {
 	
@@ -120,11 +57,27 @@ int	main() {
 
 	/* --- Copying stack content in a vector -------------------------------- */
 
-	std::cout << "\n/* --- Copying stack content in a vector... ------------- */\n"
+	std::cout << "\n/* --- Using stack iterators to copy content in a vector ------------- */\n"
 			  << std::endl;
 
-    // Use the underlying container to directly copy into a vector
-    std::vector<int> vec(mstack.begin(), mstack.end());
+    // // Use the underlying container to directly copy into a vector
+    // std::vector<int> vec(mstack.begin(), mstack.end());
+
+	// print_vector(vec);
+
+	std::vector<int> vec(mstack.size());
+
+	MutantStack<int>::iterator stack_it = mstack.begin();
+    MutantStack<int>::iterator stack_ite = mstack.end();
+	std::vector<int>::iterator vec_it = vec.begin();
+ 
+	while (stack_it != stack_ite)
+	{
+	std::cout << "Copying " << *stack_it << std::endl;
+	*vec_it = *stack_it;
+	++stack_it;
+	++vec_it;
+	}
 	print_vector(vec);
 	
 	// Testing std::vector methods
@@ -140,4 +93,6 @@ int	main() {
 		std::cout << "The vector is empty" << std::endl;
 	else
 		std::cout << "The vector is NOT empty" << std::endl;
+
+	return 0;
 }
