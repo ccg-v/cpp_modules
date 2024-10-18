@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:57:43 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/18 14:07:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:33:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ int	main() {
 	std::cout << "\n/* --- Using stack iterators to copy stack content in a vector"
 			  << " ------------- */\n" << std::endl;
 
-    // // Use the underlying container to directly copy into a vector
-    // std::vector<int> vec(mstack.begin(), mstack.end());
-
-	// print_vector(vec);
-
 	std::vector<int> vec(mstack.size());
 
 	MutantStack<int>::iterator stack_it = mstack.begin();
@@ -80,6 +75,11 @@ int	main() {
 	}
 	std::cout << std::endl;	
 	print_vector(vec);
+
+	// // The stack content can be copied in the vector with just one line of code (1)
+    // std::vector<int> vec(mstack.begin(), mstack.end());
+
+	// print_vector(vec);
 
 	/* --- Testing vector to compare results with stack --------------------- */
 
@@ -102,3 +102,55 @@ int	main() {
 
 	return 0;
 }
+
+/* --- Subject's main ------------------------------------------------------- */
+
+// int main()
+// {
+// 	MutantStack<int> mstack;
+
+// 	mstack.push(5);
+// 	mstack.push(17);
+
+// 	std::cout << mstack.top() << std::endl;
+
+// 	mstack.pop();
+
+// 	std::cout << mstack.size() << std::endl;
+
+// 	mstack.push(3);
+// 	mstack.push(5);
+// 	mstack.push(737);
+// 	//[...]
+// 	mstack.push(0);
+
+// 	MutantStack<int>::iterator it = mstack.begin();
+// 	MutantStack<int>::iterator ite = mstack.end();
+	
+// 	++it;
+// 	--it;
+// 	while (it != ite)
+// 	{
+// 	std::cout << *it << std::endl;
+// 	++it;
+// 	}
+// 	std::stack<int> s(mstack);
+// 	return 0;
+// }
+
+/*
+ *	(1)	This single line copies all the content from the stack into a vector:
+ *	
+ *			std::vector<int> vec(mstack.begin(), mstack.end());
+ *
+ * 		It uses a Range Constructor of std::vector, that allows you to create
+ * 		a vector by copying elements from an input range defined by two iterators
+ * 		(begin and end). These iterators will access the elements in the underlying
+ * 		container of the std::stck as if you were iterating over it directly.
+ * 
+ * 		However, I discarded this method to copy the stack into a vector and manually 
+ * 		iterate and copy element by element instead, because I wanted to display a
+ * 		message every time an element is copied.
+ * 
+ * 			std::cout << "...Copying X from stack to vector..." << std::endl;
+ */	
