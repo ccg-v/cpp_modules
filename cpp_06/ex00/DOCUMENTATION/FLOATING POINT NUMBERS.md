@@ -1,6 +1,6 @@
 # UNDERSTANDING FLOATING POINT NUMBERS
 
-## The Trick: Scientific Notation
+## The Trick: ific Notation
 
 Scienfific notation is a way of writing very big or very small numbers more compactly. For example:
 
