@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:43:35 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/18 12:45:15 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:44:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,16 @@ unsigned int Span::longestSpan() {
 		throw SpanTooSmallException();
 }
 
- /*
-  *		shortestSpan()
-  *
-  *	-	If the vector hasn't at least two elements, throw an exception
-  *	- 	Start storing the maximum possible span between two integers (INT_MAX)
-  *	- 	Work with a copy to keep the original vector unaltered
-  *	- 	Sort the copy with std::sort algorithm
-  *	- 	Traverse the copy calculating the difference between adjacent elements
-  *			and store it if it's lesser than the stored span
-  */
+/*
+ *	shortestSpan()
+ *
+ *	-	If the vector hasn't at least two elements, throw an exception
+ *	- 	Start storing the maximum possible span between two integers (INT_MAX)
+ *	- 	Work with a copy to keep the original vector unaltered
+ *	- 	Sort the copy with std::sort algorithm
+ *	- 	Traverse the copy calculating the difference between adjacent elements
+ *			and store it if it's lesser than the stored span
+ */
 unsigned int Span::shortestSpan() {
 	if (_vec.size() >= 2) {	
 		unsigned int shortestSpan = INT_MAX;
