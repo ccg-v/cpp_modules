@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*   SOURCE.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/20 14:28:41 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/20 11:15:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
-BitcoinExchange::BitcoinExchange() {
+BitcoinExchange::BitcoinExchange {
 	std::cout << "Default constructor called" << std::endl;
 }
 
@@ -28,21 +28,84 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange & source) : _exchangeRate
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & source) {
 	std::cout << "Copy assignment operaror called" << std::endl;
 	if (this != &source) {
-		this->_exchangeRates = source._exchangeRates;
+		this->_exchangeRates = src._exchangeRates;
 	}
 	return *this;
 }
 
 //	Default destructor
-BitcoinExchange::~BitcoinExchange() {
+BitcoinExchange::~BitcoinExchange {
 	std::cout << "Default destructor called" << std::endl;
 }
 
-/* --- Member methods ------------------------------------------------------- */
 
-void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
+bool isValidDateFormat(const std::string& date) {
+    // Check the length of the string (YYYY-MM-DD is 10 characters)
+    if (date.length() != 10) {
+        return false;
+    }
 
-    std::ifstream dbFile(dataBase.c_str());	// (3)
+    // Check that positions 4 and 7 are hyphens
+    if (date[4] != '-' || date[7] != '-') {
+        return false;
+    }
+
+    // Ensure the rest of the characters are digits
+    for (int i = 0; i < 10; ++i) {
+        if (i == 4 || i == 7) {
+            continue; // Skip the hyphens
+        }
+        if (!std::isdigit(date[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+bool isValidDate(int year, int month, int day) {
+    // Days in month lookup
+    int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Adjust for leap years in February
+    if (month == 2 && isLeapYear(year)) {
+        daysInMonth[2] = 29;
+    }
+
+    // Check if the month is valid
+    if (month < 1 || month > 12) {
+        return false;
+    }
+
+    // Check if the day is valid for the given month
+    if (day < 1 || day > daysInMonth[month]) {
+        return false;
+    }
+
+    return true;
+}
+
+bool validateDate(const std::string& date) {
+    if (!isValidDateFormat(date)) {
+        return false;
+    }
+
+    // Extract year, month, and day from the string
+    int year = std::atoi(date.substr(0, 4).c_str());
+    int month = std::atoi(date.substr(5, 2).c_str());
+    int day = std::atoi(date.substr(8, 2).c_str());
+
+    // Validate the extracted year, month, and day
+    return isValidDate(year, month, day);
+}
+
+void	FillMap(std::map<std::string, float> & exchangeRates) {
+
+    std::ifstream dbFile("data.csv");
 
     if (!dbFile.is_open()) {
         std::cerr << "Error: could not open database file." << std::endl;
@@ -56,17 +119,30 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
         std::string 		rateDate;
         float				rate;
 
-        std::getline(ss, rateDate, ','); 	// Extract the date
-        ss >> rate;                  		// Extract the value
-		_exchangeRates[rateDate] = rate;	// Store date and value in the map (1)
+        std::getline(ss, rateDate, ',');  // Extract the date
+        ss >> rate;                  // Extract the value
+		exchangeRates[rateDate] = rate;  // Store the date and value in the map (1)
     }
 
     dbFile.close();
 }
 
-void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
+int main(int argc, char **argv) {
+	if (argc != 2) {
+		std::cerr << "Error: Wrong number of arguments" << std::endl;
+		return 1;
+	}
 
-    std::ifstream inputFile(argv.c_str());	// (3)
+    std::ifstream inputFile(argv[1]);
+
+    if (!inputFile.is_open()) {
+        std::cerr << "Error: could not open input file." << std::endl;
+        return 1;
+    }
+
+	std::map<std::string, float> exchangeRates;  // Create a map to store the date and value
+	FillMap(exchangeRates);
+
 	std::string	line;
 
     while (std::getline(inputFile, line)) {
@@ -96,11 +172,11 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
 		}
 
 		// Find the closest date in the map
-        std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
+        std::map<std::string, float>::iterator it = exchangeRates.lower_bound(valueDate);
 
 		// No exact match, move to the closest earlier date
-        if (it == _exchangeRates.end() || it->first != valueDate) {
-            if (it != _exchangeRates.begin()) {
+        if (it == exchangeRates.end() || it->first != valueDate) {
+            if (it != exchangeRates.begin()) {
                 --it;
             } else {
                 std::cerr << "Error: no exchange rate available for " << valueDate << std::endl;
@@ -116,83 +192,13 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
 
 	inputFile.close();
 
+    // // Let's print out the map to check if the data was stored correctly:
+    // for (typename std::map<std::string, float>::iterator it = exchangeRates.begin(); it != exchangeRates.end(); it++) {
+    //     std::cout << "Date: " << it->first << ", Value: " << it->second << std::endl;
+    // }
+
 }
 
-bool BitcoinExchange::isValidDateFormat(const std::string& date) {
-    // Check the length of the string (YYYY-MM-DD is 10 characters)
-    if (date.length() != 10) {
-        return false;
-    }
-
-    // Check that positions 4 and 7 are hyphens
-    if (date[4] != '-' || date[7] != '-') {
-        return false;
-    }
-
-    // Ensure the rest of the characters are digits
-    for (int i = 0; i < 10; ++i) {
-        if (i == 4 || i == 7) {
-            continue; // Skip the hyphens
-        }
-        if (!std::isdigit(date[i])) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-/*
- *	isLeapYear()
- *
- *	Leap year is the year divisible by 4, unless it is a secular year 
- *	(last year of each century, ending in “00”), in which case it must 
- *	also be divisible by 400.
- *
- *	Therefore, a year is leap if:
- *	-	it can be divided by 4
- *	-	it cannot be divided by 100...
- *	-	...except if it can be divided by 400
- */
-bool BitcoinExchange::isLeapYear(int year) {
-    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-}
-
-bool BitcoinExchange::isValidDate(int year, int month, int day) {
-    // Days in month lookup
-    int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    // Adjust for leap years in February
-    if (month == 2 && isLeapYear(year)) {
-        daysInMonth[2] = 29;
-    }
-
-    // Check if the month is valid
-    if (month < 1 || month > 12) {
-        return false;
-    }
-
-    // Check if the day is valid for the given month
-    if (day < 1 || day > daysInMonth[month]) {
-        return false;
-    }
-
-    return true;
-}
-
-bool BitcoinExchange::validateDate(const std::string& date) {
-    if (!isValidDateFormat(date)) {
-        return false;
-    }
-
-    // Extract year, month, and day from the string
-    int year = std::atoi(date.substr(0, 4).c_str());
-    int month = std::atoi(date.substr(5, 2).c_str());
-    int day = std::atoi(date.substr(8, 2).c_str());
-
-    // Validate the extracted year, month, and day
-    return isValidDate(year, month, day);
-}
 
 /*
  *	(1)	This line effectively inserts or updates a key-value pair in the
@@ -211,22 +217,4 @@ bool BitcoinExchange::validateDate(const std::string& date) {
  *		If date already exists in 'exchangeRates', the current value will 
  *		be overwritten. If it doesn't exist, a new key-value pair will be
  *		added.
- */
-
-/*
- *	(2)	Is it worth passing 'dataBase' parameter, which is just a file name,
- *		as a const reference and not just be value?
- *
- *			void	BitcoinExchange::fillMap(std::string dataBase)
- *
- *		Read the answer in .hpp file, comment (1)
- */
-
-/*
- *	(3)	In C++98, the constructor for std::ifstream does not accept a 
- *		std::string as a parameter. Instead, it requires a C-style string
- *		(const char*). In C++98, std::string to const char* conversion 
- *		isn't implicit for this specific use case. You need to manually
- *		convert the std::string to a C-style string using the .c_str()
- *		method.
  */
