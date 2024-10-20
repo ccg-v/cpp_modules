@@ -6,11 +6,12 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/20 14:28:41 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:16:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+#include "DateUtils.hpp"
 
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
@@ -26,7 +27,7 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange & source) : _exchangeRate
 
 //	Copy assignment operator
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & source) {
-	std::cout << "Copy assignment operaror called" << std::endl;
+	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &source) {
 		this->_exchangeRates = source._exchangeRates;
 	}
@@ -45,8 +46,9 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     std::ifstream dbFile(dataBase.c_str());	// (3)
 
     if (!dbFile.is_open()) {
-        std::cerr << "Error: could not open database file." << std::endl;
-        return ;
+        // std::cerr << "Error: could not open database file." << std::endl;
+        // return ;
+		throw BitcoinExchange::DbFileOpenException();
     }
 
 	std::string	line;
@@ -82,7 +84,8 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
 
 		// Validate the date
 		if (validateDate(valueDate) == false){
-            std::cerr << "Error: bad input => " << valueDate << std::endl;
+            // std::cerr << "Error: bad input => " << valueDate << std::endl;
+			throw BitcoinExchange::BadDateException();
             continue;			
 		}
 		// Validate the value
@@ -113,87 +116,27 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
         std::cout << valueDate << " => " << value << " = " << result << std::endl;
     }
 
-
 	inputFile.close();
 
 }
 
-bool BitcoinExchange::isValidDateFormat(const std::string& date) {
-    // Check the length of the string (YYYY-MM-DD is 10 characters)
-    if (date.length() != 10) {
-        return false;
-    }
+/* --- Exceptions ----------------------------------------------------------- */
 
-    // Check that positions 4 and 7 are hyphens
-    if (date[4] != '-' || date[7] != '-') {
-        return false;
-    }
-
-    // Ensure the rest of the characters are digits
-    for (int i = 0; i < 10; ++i) {
-        if (i == 4 || i == 7) {
-            continue; // Skip the hyphens
-        }
-        if (!std::isdigit(date[i])) {
-            return false;
-        }
-    }
-
-    return true;
+const char* BitcoinExchange::WrongArgsException::what() const throw() {
+    return "Exception: Wrong number of arguments";
 }
 
-/*
- *	isLeapYear()
- *
- *	Leap year is the year divisible by 4, unless it is a secular year 
- *	(last year of each century, ending in “00”), in which case it must 
- *	also be divisible by 400.
- *
- *	Therefore, a year is leap if:
- *	-	it can be divided by 4
- *	-	it cannot be divided by 100...
- *	-	...except if it can be divided by 400
- */
-bool BitcoinExchange::isLeapYear(int year) {
-    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+const char* BitcoinExchange::DbFileOpenException::what() const throw() {
+	return "Exception: Could not open database file";
 }
 
-bool BitcoinExchange::isValidDate(int year, int month, int day) {
-    // Days in month lookup
-    int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    // Adjust for leap years in February
-    if (month == 2 && isLeapYear(year)) {
-        daysInMonth[2] = 29;
-    }
-
-    // Check if the month is valid
-    if (month < 1 || month > 12) {
-        return false;
-    }
-
-    // Check if the day is valid for the given month
-    if (day < 1 || day > daysInMonth[month]) {
-        return false;
-    }
-
-    return true;
+const char* BitcoinExchange::InputFileOpenException::what() const throw() {
+	return "Exception: Could not open database file";
 }
 
-bool BitcoinExchange::validateDate(const std::string& date) {
-    if (!isValidDateFormat(date)) {
-        return false;
-    }
-
-    // Extract year, month, and day from the string
-    int year = std::atoi(date.substr(0, 4).c_str());
-    int month = std::atoi(date.substr(5, 2).c_str());
-    int day = std::atoi(date.substr(8, 2).c_str());
-
-    // Validate the extracted year, month, and day
-    return isValidDate(year, month, day);
+const char* BitcoinExchange::BadDateException::what() const throw() {
+	return "Error: bad input => ";
 }
-
 /*
  *	(1)	This line effectively inserts or updates a key-value pair in the
  *		map, where the key is the date (as a string) and the value is the
