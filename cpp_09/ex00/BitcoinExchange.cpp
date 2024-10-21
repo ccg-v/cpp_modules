@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/20 23:16:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:56:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     std::ifstream dbFile(dataBase.c_str());	// (3)
 
     if (!dbFile.is_open()) {
-        // std::cerr << "Error: could not open database file." << std::endl;
-        // return ;
-		throw BitcoinExchange::DbFileOpenException();
+        std::cerr << "Error: could not open database file." << std::endl;
+        return ;
+		// throw BitcoinExchange::DbFileOpenException();
     }
 
 	std::string	line;
@@ -70,6 +70,27 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
 
     std::ifstream inputFile(argv.c_str());	// (3)
 	std::string	line;
+	
+    // Check if file is opened successfully
+    if (!inputFile.is_open()) {
+        // std::cerr << "Error: could not open file." << std::endl;
+        // return;
+		std::ostringstream oss;
+		oss << "Error: could not open file.";
+		throw std::runtime_error(oss.str());
+    }
+
+    // Check if file is empty
+    if (inputFile.peek() == std::ifstream::traits_type::eof()) {
+        // std::cerr << "Error: input file is empty." << std::endl;
+        // return;
+		std::ostringstream oss;
+		oss << "Error: input file is empty.";
+		throw std::runtime_error(oss.str());
+    }
+
+	// Read the fist line (the header)
+    std::getline(inputFile, line);
 
     while (std::getline(inputFile, line)) {
         std::stringstream	ss(line);
@@ -82,38 +103,47 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
         // Trim whitespaces
         valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
 
-		// Validate the date
-		if (validateDate(valueDate) == false){
-            // std::cerr << "Error: bad input => " << valueDate << std::endl;
-			throw BitcoinExchange::BadDateException();
-            continue;			
-		}
-		// Validate the value
-        if (value < 0) {
-            std::cerr << "Error: not a positive number" << std::endl;
-            continue;
-        }
-		if (value > 1000) {
-            std::cerr << "Error: too large a number" << std::endl;
-            continue;			
-		}
+		try {
+			std::ostringstream oss;
+			// Validate the date
+			if (validateDate(valueDate) == false){
+				oss << "Error: bad input => " << valueDate;
+				throw std::runtime_error(oss.str());
+				// continue;
+			}
+			// Validate the value
+			if (value < 0) {
+				oss << "Error: not a positive number.";
+				throw std::runtime_error(oss.str());
+				// continue;
+			}
+			if (value > 1000) {
+				oss << "Error: too large a number.";
+				throw std::runtime_error(oss.str());
+				// continue;			
+			}
+        	
+			std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
 
-		// Find the closest date in the map
-        std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
+			// No exact match, move to the closest earlier date
+			if (it == _exchangeRates.end() || it->first != valueDate) {
+				if (it != _exchangeRates.begin()) {
+					--it;
+				} else {
+					oss << "Error: no exchange rate available for " << valueDate;
+					throw std::runtime_error(oss.str());					
+					// std::cerr << "Error: no exchange rate available for " << valueDate << std::endl;
+					// continue;
+				}
+			}
 
-		// No exact match, move to the closest earlier date
-        if (it == _exchangeRates.end() || it->first != valueDate) {
-            if (it != _exchangeRates.begin()) {
-                --it;
-            } else {
-                std::cerr << "Error: no exchange rate available for " << valueDate << std::endl;
-                continue;
-            }
-        }
-
-		// Multiply the value by the exchange rate
-        float result = value * it->second;
-        std::cout << valueDate << " => " << value << " = " << result << std::endl;
+			// Multiply the value by the exchange rate
+			float result = value * it->second;
+			std::cout << valueDate << " => " << value << " = " << result << std::endl;
+						
+		} catch (const std::runtime_error& e) {
+			std::cerr << e.what() << std::endl;
+		} 
     }
 
 	inputFile.close();
