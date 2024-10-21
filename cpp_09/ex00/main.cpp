@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:47:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/21 20:13:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/21 22:09:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // 		std::string dbFile = "data/data.csv";
 // 		BitcoinExchange btc;
 
-// 		btc.fillMap(dbFile);
+// 		btc.FillMap(dbFile);
 // 		btc.CalculateExchanges(argv[1]);
 // 		return 0;
 // 	}
@@ -35,7 +35,7 @@
 // 			std::string dbFile = "data/data.csv";
 // 			BitcoinExchange btc;
 
-// 			btc.fillMap(dbFile);
+// 			btc.FillMap(dbFile);
 // 			btc.CalculateExchanges(argv[1]);
 // 			return 0;
 // 		} else {
@@ -64,7 +64,8 @@ int	main(int argc, char **argv) {
 			std::string dbFile = "data/data.csv";
 			BitcoinExchange btc;
 
-			btc.fillMap(dbFile);
+			btc.FillMap(dbFile);
+			btc.checkInputFile(argv[1]);
 			btc.CalculateExchanges(argv[1]);
 			return 0;
 		} else {

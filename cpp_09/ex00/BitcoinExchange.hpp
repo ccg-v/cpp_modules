@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/20 23:08:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/21 22:09:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,31 @@ class	BitcoinExchange {
 
 		/* --- Member methods ---------------------------------------------- */		
 
-		void	fillMap(const std::string & dataBase);	// (1)
+		void	FillMap(const std::string & dataBase);	// (1)
 		void	CalculateExchanges(const std::string & argv);	// (1)
+		void	checkInputFile(const std::string & argv);
 
-		/* --- Exceptions --------------------------------------------------- */
+		// /* --- Exceptions --------------------------------------------------- */
 
-		class WrongArgsException : public std::exception {
-			public: 
-				const char *what() const throw();
-		};
+		// class WrongArgsException : public std::exception {
+		// 	public: 
+		// 		const char *what() const throw();
+		// };
 		
-		class DbFileOpenException : public std::exception {
-			public: 
-				const char *what() const throw();
-		};
+		// class DbFileOpenException : public std::exception {
+		// 	public: 
+		// 		const char *what() const throw();
+		// };
 		
-		class InputFileOpenException : public std::exception {
-			public: 
-				const char *what() const throw();
-		};
+		// class InputFileOpenException : public std::exception {
+		// 	public: 
+		// 		const char *what() const throw();
+		// };
 		
-		class BadDateException : public std::exception {
-			public: 
-				const char *what() const throw();
-		};
+		// class BadDateException : public std::exception {
+		// 	public: 
+		// 		const char *what() const throw();
+		// };
 };
 
 #endif

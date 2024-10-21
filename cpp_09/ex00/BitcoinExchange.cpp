@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/21 21:56:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/21 22:22:33 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ BitcoinExchange::~BitcoinExchange() {
 
 /* --- Member methods ------------------------------------------------------- */
 
-void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
+void	BitcoinExchange::FillMap(const std::string & dataBase) {	// (2)
 
     std::ifstream dbFile(dataBase.c_str());	// (3)
 
@@ -66,16 +66,16 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     dbFile.close();
 }
 
-void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
+void	BitcoinExchange::checkInputFile(const std::string & argv) {
 
     std::ifstream inputFile(argv.c_str());	// (3)
 	std::string	line;
-	
+	std::ostringstream oss;
+
     // Check if file is opened successfully
     if (!inputFile.is_open()) {
         // std::cerr << "Error: could not open file." << std::endl;
         // return;
-		std::ostringstream oss;
 		oss << "Error: could not open file.";
 		throw std::runtime_error(oss.str());
     }
@@ -84,10 +84,33 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
     if (inputFile.peek() == std::ifstream::traits_type::eof()) {
         // std::cerr << "Error: input file is empty." << std::endl;
         // return;
-		std::ostringstream oss;
 		oss << "Error: input file is empty.";
 		throw std::runtime_error(oss.str());
     }
+}
+
+void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
+
+    std::ifstream inputFile(argv.c_str());	// (3)
+	std::string	line;
+	
+    // // Check if file is opened successfully
+    // if (!inputFile.is_open()) {
+    //     // std::cerr << "Error: could not open file." << std::endl;
+    //     // return;
+	// 	std::ostringstream oss;
+	// 	oss << "Error: could not open file.";
+	// 	throw std::runtime_error(oss.str());
+    // }
+
+    // // Check if file is empty
+    // if (inputFile.peek() == std::ifstream::traits_type::eof()) {
+    //     // std::cerr << "Error: input file is empty." << std::endl;
+    //     // return;
+	// 	std::ostringstream oss;
+	// 	oss << "Error: input file is empty.";
+	// 	throw std::runtime_error(oss.str());
+    // }
 
 	// Read the fist line (the header)
     std::getline(inputFile, line);
@@ -97,32 +120,43 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
         std::string 		valueDate;
         float				value;
 
-        std::getline(ss, valueDate, '|');  // Extract the date
-        ss >> value;                  // Extract the value
+        std::getline(ss, valueDate, '|');	// Extract the date
+        ss >> value;                  		// Extract the value
 
         // Trim whitespaces
         valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
 
 		try {
 			std::ostringstream oss;
+
 			// Validate the date
-			if (validateDate(valueDate) == false){
+			if (validateDate(valueDate) == false) {
 				oss << "Error: bad input => " << valueDate;
 				throw std::runtime_error(oss.str());
 				// continue;
 			}
+
+			// Validate the value        	
+			if (value < 0 || value > 1000) {
+				if (value < 0)
+					oss << "Error: not a positive number.";
+				else
+					oss << "Error: too large a number.";
+				throw std::runtime_error(oss.str());
+			} 
+			
 			// Validate the value
-			if (value < 0) {
-				oss << "Error: not a positive number.";
-				throw std::runtime_error(oss.str());
-				// continue;
-			}
-			if (value > 1000) {
-				oss << "Error: too large a number.";
-				throw std::runtime_error(oss.str());
-				// continue;			
-			}
-        	
+			// if (value < 0) {
+			// 	oss << "Error: not a positive number.";
+			// 	throw std::runtime_error(oss.str());
+			// 	// continue;
+			// }
+			// if (value > 1000) {
+			// 	oss << "Error: too large a number.";
+			// 	throw std::runtime_error(oss.str());
+			// 	// continue;			
+			// }
+
 			std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
 
 			// No exact match, move to the closest earlier date
@@ -150,23 +184,24 @@ void	BitcoinExchange::CalculateExchanges(const std::string & argv) {
 
 }
 
-/* --- Exceptions ----------------------------------------------------------- */
+// /* --- Exceptions ----------------------------------------------------------- */
 
-const char* BitcoinExchange::WrongArgsException::what() const throw() {
-    return "Exception: Wrong number of arguments";
-}
+// const char* BitcoinExchange::WrongArgsException::what() const throw() {
+//     return "Exception: Wrong number of arguments";
+// }
 
-const char* BitcoinExchange::DbFileOpenException::what() const throw() {
-	return "Exception: Could not open database file";
-}
+// const char* BitcoinExchange::DbFileOpenException::what() const throw() {
+// 	return "Exception: Could not open database file";
+// }
 
-const char* BitcoinExchange::InputFileOpenException::what() const throw() {
-	return "Exception: Could not open database file";
-}
+// const char* BitcoinExchange::InputFileOpenException::what() const throw() {
+// 	return "Exception: Could not open database file";
+// }
 
-const char* BitcoinExchange::BadDateException::what() const throw() {
-	return "Error: bad input => ";
-}
+// const char* BitcoinExchange::BadDateException::what() const throw() {
+// 	return "Error: bad input => ";
+// }
+
 /*
  *	(1)	This line effectively inserts or updates a key-value pair in the
  *		map, where the key is the date (as a string) and the value is the
@@ -190,7 +225,7 @@ const char* BitcoinExchange::BadDateException::what() const throw() {
  *	(2)	Is it worth passing 'dataBase' parameter, which is just a file name,
  *		as a const reference and not just be value?
  *
- *			void	BitcoinExchange::fillMap(std::string dataBase)
+ *			void	BitcoinExchange::FillMap(std::string dataBase)
  *
  *		Read the answer in .hpp file, comment (1)
  */
