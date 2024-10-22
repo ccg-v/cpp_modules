@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/22 13:19:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:36:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     std::ifstream dbFile(dataBase.c_str());	// (3)
 
     if (!dbFile.is_open()) {
-        // std::cerr << "Error: could not open database file." << std::endl;
-        // return ;
-		// throw BitcoinExchange::DbFileOpenException();
 		throw std::runtime_error("Error: could not open database '" + dataBase + "'.");
     }
 
@@ -75,20 +72,12 @@ void	BitcoinExchange::checkInputFile(const std::string & argv) {
 
     // Check if file is opened successfully
     if (!inputFile.is_open()) {
-        // std::cerr << "Error: could not open file." << std::endl;
-        // return;
-		// oss << "Error: could not open file.";
-		// throw std::runtime_error(oss.str());
 		throw std::runtime_error("Error: could not open '" + argv + "'.");
     }
 
     // Check if file is empty
     if (inputFile.peek() == std::ifstream::traits_type::eof()) {
-        // std::cerr << "Error: input file is empty." << std::endl;
-        // return;
-		// oss << "Error: input file is empty.";
-		// throw std::runtime_error(oss.str());
-		throw std::runtime_error("Error: '" + argv + "' is empty.");
+		throw std::runtime_error("Error: '" + argv + "' is not a file or file is empty.");
     }
 }
 
@@ -134,32 +123,6 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 
     std::ifstream inputFile(argv.c_str());	// (3)
 	std::string	line;
-	
-    // // Check if file is opened successfully
-    // if (!inputFile.is_open()) {
-    //     // std::cerr << "Error: could not open file." << std::endl;
-    //     // return;
-	// 	std::ostringstream oss;
-	// 	oss << "Error: could not open file.";
-	// 	throw std::runtime_error(oss.str());
-    // }
-
-    // // Check if file is empty
-    // if (inputFile.peek() == std::ifstream::traits_type::eof()) {
-    //     // std::cerr << "Error: input file is empty." << std::endl;
-    //     // return;
-	// 	std::ostringstream oss;
-	// 	oss << "Error: input file is empty.";
-	// 	throw std::runtime_error(oss.str());
-    // }
-
-    // // Read the first line and check if it is a header
-    // if (std::getline(inputFile, line)) {
-    //     if (line == "date | value") {
-    //         // Skip the header, proceed with reading the next line
-    //         std::getline(inputFile, line);
-    //     }
-    // }
 
     while (std::getline(inputFile, line)) {
 
@@ -178,57 +141,14 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
         std::getline(ss, valueDate, '|');	// Extract the date
         ss >> value;                  		// Extract the value
 
-        // // Trim whitespaces
-        // valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
-
 		try {
-			// std::ostringstream oss;
-
-			// // Validate the date
-			// if (validateDate(valueDate) == false) {
-			// 	// oss << "Error: bad input => " << valueDate;
-			// 	// throw std::runtime_error(oss.str());
-			// 	// continue;
-			// 	throw std::runtime_error("Error: bad input => " + valueDate);
-			// }
-			
-			// // Validate the value
-			// if (value < 0) {
-			// 	// oss << "Error: not a positive number.";
-			// 	// throw std::runtime_error(oss.str());
-			// 	// continue;
-			// 	throw std::runtime_error("Error: not a positive number.");
-			// }
-			// if (value > 1000) {
-			// 	// oss << "Error: too large a number.";
-			// 	// throw std::runtime_error(oss.str());
-			// 	// continue;
-			// 	throw std::runtime_error("Error: too large a number.");		
-			// }
-
 			trimAndvalidateDate(valueDate);
 			validateValue(value);
-			
-			// std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
-
-			// // No exact match, move to the closest earlier date
-			// if (it == _exchangeRates.end() || it->first != valueDate) {
-			// 	if (it != _exchangeRates.begin()) {
-			// 		--it;
-			// 	} else {
-			// 		// oss << "Error: no exchange rate available for " << valueDate;
-			// 		// throw std::runtime_error(oss.str());					
-			// 		// std::cerr << "Error: no exchange rate available for " << valueDate << std::endl;
-			// 		// continue;
-			// 		throw std::runtime_error("Error: no exchange rate available for '" + valueDate + "'.");
-			// 	}
-			// }
-
 			float exchangeRate = findExchangeRate(valueDate);
-			// Multiply the value by the exchange rate
+
 			float result = value * exchangeRate;
 			std::cout << valueDate << " => " << value << " = " << result << std::endl;
-						
+
 		} catch (const std::runtime_error& e) {
 			std::cerr << e.what() << std::endl;
 		} 
@@ -237,24 +157,6 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 	inputFile.close();
 
 }
-
-// /* --- Exceptions ----------------------------------------------------------- */
-
-// const char* BitcoinExchange::WrongArgsException::what() const throw() {
-//     return "Exception: Wrong number of arguments";
-// }
-
-// const char* BitcoinExchange::DbFileOpenException::what() const throw() {
-// 	return "Exception: Could not open database file";
-// }
-
-// const char* BitcoinExchange::InputFileOpenException::what() const throw() {
-// 	return "Exception: Could not open database file";
-// }
-
-// const char* BitcoinExchange::BadDateException::what() const throw() {
-// 	return "Error: bad input => ";
-// }
 
 /*
  *	(1)	This line effectively inserts or updates a key-value pair in the
