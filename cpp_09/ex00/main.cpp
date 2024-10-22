@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:47:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/21 22:09:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:01:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 // 		std::string dbFile = "data/data.csv";
 // 		BitcoinExchange btc;
 
-// 		btc.FillMap(dbFile);
-// 		btc.CalculateExchanges(argv[1]);
+// 		btc.fillMap(dbFile);
+// 		btc.calculateExchanges(argv[1]);
 // 		return 0;
 // 	}
 // 	std::cerr << "Error: Wrong number of arguments" << std::endl;
@@ -35,8 +35,8 @@
 // 			std::string dbFile = "data/data.csv";
 // 			BitcoinExchange btc;
 
-// 			btc.FillMap(dbFile);
-// 			btc.CalculateExchanges(argv[1]);
+// 			btc.fillMap(dbFile);
+// 			btc.calculateExchanges(argv[1]);
 // 			return 0;
 // 		} else {
 // 			throw BitcoinExchange::WrongArgsException();
@@ -64,15 +64,17 @@ int	main(int argc, char **argv) {
 			std::string dbFile = "data/data.csv";
 			BitcoinExchange btc;
 
-			btc.FillMap(dbFile);
+			btc.fillMap(dbFile);
 			btc.checkInputFile(argv[1]);
-			btc.CalculateExchanges(argv[1]);
+			btc.calculateExchanges(argv[1]);
+			
 			return 0;
 		} else {
 			// throw BitcoinExchange::WrongArgsException();
-			std::ostringstream oss;
-			oss << "Error: arguments! (Runtime exception)";
-			throw std::runtime_error(oss.str());
+			// std::ostringstream oss;
+			// oss << "Error: arguments! (Runtime exception)";
+			// throw std::runtime_error(oss.str());
+			throw std::runtime_error("Error: Wrong number of arguments");
 		}
 	// } catch (const BitcoinExchange::WrongArgsException & e) {
 	// 	std::cerr << e.what() << std::endl;

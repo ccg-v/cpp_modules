@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/21 22:09:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:01:33 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool validateDate(const std::string& date) {
     return isValidDate(year, month, day);
 }
 
-void	FillMap(std::map<std::string, float> & exchangeRates) {
+void	fillMap(std::map<std::string, float> & exchangeRates) {
 
     std::ifstream dbFile("data.csv");
 
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
     }
 
 	std::map<std::string, float> exchangeRates;  // Create a map to store the date and value
-	FillMap(exchangeRates);
+	fillMap(exchangeRates);
 
 	std::string	line;
 

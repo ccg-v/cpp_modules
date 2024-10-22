@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/21 22:09:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:21:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ class	BitcoinExchange {
 
 		/* --- Member methods ---------------------------------------------- */		
 
-		void	FillMap(const std::string & dataBase);	// (1)
-		void	CalculateExchanges(const std::string & argv);	// (1)
 		void	checkInputFile(const std::string & argv);
+		void	fillMap(const std::string & dataBase);	// (1)
+		void	calculateExchanges(const std::string & argv);	// (1)
+		void	trimAndvalidateDate(std::string & valueDate);
+		void	validateValue(float value);
+		float	findExchangeRate(const std::string & valueDate);
 
 		// /* --- Exceptions --------------------------------------------------- */
 
