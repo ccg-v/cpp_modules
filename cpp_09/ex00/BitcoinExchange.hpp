@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/22 14:29:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:18:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string>
 # include <map>			// for std::map
 # include <exception>	// for std::exceptions
+# include <sys/stat.h>	// for stat() (in checkInputFile())
 
 class	BitcoinExchange {
 
