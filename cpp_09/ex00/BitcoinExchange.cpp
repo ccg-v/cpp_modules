@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/22 13:36:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:35:40 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,13 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
     std::ifstream inputFile(argv.c_str());	// (3)
 	std::string	line;
 
-    while (std::getline(inputFile, line)) {
+	// Check and skip the header if it exists
+    if (std::getline(inputFile, line)) {
+		if (line == "date | value")
+			std::getline(inputFile, line);
+    }
 
-		std::string	linestr(line);
-
-    	// Read the first line and check if it is a header
-        if (linestr == "date | value") {
-            // Skip the header, proceed with reading the next line
-            std::getline(inputFile, line);
-        }
+	do {	// (4)
 
         std::stringstream	ss(line);
         std::string 		valueDate;
@@ -142,6 +140,7 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
         ss >> value;                  		// Extract the value
 
 		try {
+			
 			trimAndvalidateDate(valueDate);
 			validateValue(value);
 			float exchangeRate = findExchangeRate(valueDate);
@@ -151,8 +150,9 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 
 		} catch (const std::runtime_error& e) {
 			std::cerr << e.what() << std::endl;
-		} 
-    }
+		}
+		
+	} while (std::getline(inputFile, line));  // Continue reading lines until the end
 
 	inputFile.close();
 
@@ -193,4 +193,16 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
  *		isn't implicit for this specific use case. You need to manually
  *		convert the std::string to a C-style string using the .c_str()
  *		method.
+ */
+
+/*
+ *	(4) Why a do-while loop?
+ *
+ *		If I use a simple while loop
+ * 
+ *			while (std::getline(inputFile, line)) {
+ *				...
+ *			}
+ *
+ *		the 
  */
