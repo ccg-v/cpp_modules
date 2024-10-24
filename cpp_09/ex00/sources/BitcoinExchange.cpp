@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/24 20:25:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/25 01:01:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,13 @@ void BitcoinExchange::validateValue(float value) {
 float BitcoinExchange::findExchangeRate(const std::string & valueDate) {
 
     std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);	// (6)
-    std::ostringstream oss;
 
     // No exact match, move to the closest earlier date
     if (it == _exchangeRates.end() || it->first != valueDate) {
         if (it != _exchangeRates.begin()) {
             --it;
         } else {
-            oss << "Error: no exchange rate available for " << valueDate;
-            throw std::runtime_error(oss.str());
+            throw std::runtime_error("Error: no exchange rate available for " << valueDate);
         }
     }
 
