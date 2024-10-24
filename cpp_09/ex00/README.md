@@ -25,44 +25,39 @@ In our exercise, since dates are provided as std::string (YYYY-MM-DD), we will n
 * **Pros of Using `std::time_t`**
 
     - Efficient Comparison:
-        When using std::time_t, comparisons (e.g., finding the closest date) are faster than string comparisons because you're comparing integers rather than performing lexicographical comparisons on strings.
+        When using `std::time_t`, comparisons (e.g., finding the closest date) are faster than string comparisons because you're comparing integers rather than performing lexicographical comparisons on strings.
 
     - Built-in Date Handling:
-        Converting date strings to std::time_t helps avoid errors in date comparisons, leap year handling, and other date-related complexities. The std::tm struct and related functions (mktime, strftime, etc.) can handle date arithmetic more reliably.
+        Converting date strings to `std::time_t` helps avoid errors in date comparisons, leap year handling, and other date-related complexities. The `std::tm` struct and related functions (`mktime`, s`trftime`, etc.) can handle date arithmetic more reliably.
         For example, you can easily add days, months, or years and convert back to human-readable format when necessary.
 
     - Memory Efficient:
-        std::time_t is smaller in size (usually 64-bit) compared to a string that could use more memory. If you have a large set of dates, this could save memory.
+        `std::time_t` is smaller in size (usually 64-bit) compared to a string that could use more memory. If you have a large set of dates, this could save memory.
 
 * **Cons of Using `std::time_t`**
 
-    Conversion Complexity:
-        You would need to convert the YYYY-MM-DD date string from your input files into a std::time_t value when inserting data into the map. This requires extra logic and may introduce complexity.
-        You'll need to work with std::tm to parse the date string and use mktime() to convert it to std::time_t.
+    - Conversion Complexity:
+        You would need to convert the *YYYY-MM-DD* date string from your input files into a `std::time_t` value when inserting data into the map. This requires extra logic and may introduce complexity.
+		You'll need to work with `std::tm` to parse the date string and use `mktime()` to convert it to s`td::time_t`.
+		**This introduces a layer of parsing and conversion you wouldn't need if you were using strings directly.**
 
-		This introduces a layer of parsing and conversion you wouldn't need if you were using strings directly.
+	- Loss of Readability:
+		Dates stored as `std::time`_t are no longer human-readable. While strings like "2023-04-25" are easily understood, a `std::time_`t integer might not make sense at a glance.
+		You would have to convert s`td::time_t` back into a readable format whenever you want to display it.
 
-	Loss of Readability:
+	- Limited to Date Range of `std::time_t`:
+		`std::time_t` is generally based on the number of seconds since the Unix epoch (January 1, 1970). Depending on the system and whether it uses a 32-bit or 64-bit representation for `std::time_t`, it may not cover the full range of historical dates (e.g., before 1970 or far into the future).
 
-		Dates stored as std::time_t are no longer human-readable. While strings like "2023-04-25" are easily understood, a std::time_t integer might not make sense at a glance.
-		You would have to convert std::time_t back into a readable format whenever you want to display it.
+**When to Stick with std::string**
 
-	Limited to Date Range of std::time_t:
+- Simplicity: If your dataset is small and you don’t need date arithmetic, using `std::string` is simpler and more intuitive.
+- Readability: Strings are human-readable, so debugging and printing values from the map is much easier when dates are stored as `std::string`.
+- Fewer conversions: With strings, you avoid the overhead and complexity of converting between formats. If the program’s primary task is comparing date strings from input files, using strings might be easier.
 
-		std::time_t is generally based on the number of seconds since the Unix epoch (January 1, 1970). Depending on the system and whether it uses a 32-bit or 64-bit representation for std::time_t, it may not cover the full range of historical dates (e.g., before 1970 or far into the future).
+**Conclusion**
 
-When to Stick with std::string
-
-    Simplicity: If your dataset is small and you don’t need date arithmetic, using std::string is simpler and more intuitive.
-    Readability: Strings are human-readable, so debugging and printing values from the map is much easier when dates are stored as std::string.
-    Fewer conversions: With strings, you avoid the overhead and complexity of converting between formats. If the program’s primary task is comparing date strings from input files, using strings might be easier.
-
-Conclusion
-
-    For Small Projects or Simpler Code: Storing dates as std::string is easier to implement, more intuitive, and avoids the complexity of converting between date formats.
-    For Performance-Intensive Applications: If you're dealing with a large number of dates and need efficient comparisons or date arithmetic, using std::time_t can be a better choice. However, this comes with the trade-off of added complexity for conversion and a loss of readability.
-
-Since you're writing an educational exercise, the simplicity of using std::string might be more advantageous, but if you're up for handling the conversion complexity, std::time_t is an efficient and robust solution.
+- For small projects or simpler code, storing dates as `std::string` is easier to implement, more intuitive, and avoids the complexity of converting between date formats.
+- For performance-intensive applications, where you're dealing with a large number of dates and need efficient comparisons or date arithmetic, using `std::time_t` can be a better choice. However, this comes with the trade-off of added complexity for conversion and a loss of readability.
 
 </details>
 
