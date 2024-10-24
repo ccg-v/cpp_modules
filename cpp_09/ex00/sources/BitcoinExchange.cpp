@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/25 01:01:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/25 01:12:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ float BitcoinExchange::findExchangeRate(const std::string & valueDate) {
         if (it != _exchangeRates.begin()) {
             --it;
         } else {
-            throw std::runtime_error("Error: no exchange rate available for " << valueDate);
+            throw std::runtime_error("Error: no exchange rate available for " + valueDate);
         }
     }
 
