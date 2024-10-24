@@ -68,7 +68,9 @@ Since you're writing an educational exercise, the simplicity of using std::strin
 
 <details>
 <summary><h3> Should date validation functions be member methods of the class or not? </h3></summary>
-Since my date validation functions don't depend on the internal state of the BitcoinExchange class, and they're useful in a more general context, the cleaner and more flexible approach is to make them non-member functions. This approach:
+Since my date validation functions don't depend on the internal state of the BitcoinExchange class, and they're useful in a more general context, the cleaner and more flexible approach is to make them non-member functions.
+
+This approach:
 
 - Keeps the class focused on its core purpose: handling bitcoin exchange logic.
 - Allows easier reusability of date validation in other parts of the program.
