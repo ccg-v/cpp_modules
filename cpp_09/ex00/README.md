@@ -187,6 +187,7 @@ And finally throw it in the try-catch block:
 Using custom exceptions can feel over-engineered. If the complexity of your application doesn't justify it, simpler solutions like logging or using standard exceptions (std::runtime_error) may be more appropriate. Custom exceptions shine when your system needs more granular control over errors, clear and maintainable separation of concerns, and flexibility as your project scales.
 
 **Conclusion**
-**If the project is small or medium-sized, better stick to simple error messages or standard exceptions**. Move to custom exceptions only when your project grows in complexity and requires more refined error handling.
+
+If the project is small or medium-sized, better stick to simple error messages or standard exceptions. Move to custom exceptions only when your project grows in complexity and requires more refined error handling.
 
 </details>
