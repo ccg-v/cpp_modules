@@ -76,7 +76,7 @@ Since my date validation functions don't depend on the internal state of the Bit
 
 So I have decided to place the date validation functions in separate utility files, DateUtils.hpp and DateUtils.cpp, to decouple them from the BitcoinExchange class.
 
-[1] The *Single Responsibility Principle* is one of the five SOLID principles of object-oriented design. It states that a class should have one and only one reason to change, meaning that it should focus on a single responsibility or function. In other words, **a class should be responsible for one thing**, and all of its methods should contribute to fulfilling that responsibility. In our case, BitcoinExchage's main purpose is to handle exchange logic, so its methods should focus on tasks related to this responsibility. Adding unrelated tasks, such as general date validation, dilutes the focus of the class.
+[*1] The *Single Responsibility Principle* is one of the five SOLID principles of object-oriented design. It states that a class should have one and only one reason to change, meaning that it should focus on a single responsibility or function. In other words, **a class should be responsible for one thing**, and all of its methods should contribute to fulfilling that responsibility. In our case, BitcoinExchage's main purpose is to handle exchange logic, so its methods should focus on tasks related to this responsibility. Adding unrelated tasks, such as general date validation, dilutes the focus of the class.
 
 </details>
 
@@ -87,9 +87,9 @@ So I have decided to place the date validation functions in separate utility fil
 **1. Simple error reporting (C-style error handling)**
 
 ```
-	if (validateDate(valueDate) == false) {
-		std::cerr << "Error: bad input => " << valueDate << std::endl;
-	}
+if (validateDate(valueDate) == false) {
+	std::cerr << "Error: bad input => " << valueDate << std::endl;
+}
 ```
 - This approach is typical in C or for very simple C++ programs that don't require exception handling.
 - It's low-overhead but doesn't integrate well into error management strategies where control flow needs to change based on the error.
@@ -97,16 +97,16 @@ So I have decided to place the date validation functions in separate utility fil
 **2. Generic exception**
 
 ```
-	try {
-		std::ostringstream oss;
+try {
+	std::ostringstream oss;
 
-		if (validateDate(valueDate) == false) {
-			oss << "Error: bad input => " << valueDate;
-			throw std::runtime_error(oss.str());
-		}
-	} catch (const std::exception & e) {
-		std::cerr << e.what() << std::endl;
-	} 
+	if (validateDate(valueDate) == false) {
+		oss << "Error: bad input => " << valueDate;
+		throw std::runtime_error(oss.str());
+	}
+} catch (const std::exception & e) {
+	std::cerr << e.what() << std::endl;
+} 
 ```
 Note that the thrown exception is not `std::exception` but `std::runtime_error`. This is because `std::exception` is very basic and doesn't support custom error messages directly. Instead, `std::runtime_error` does allow you to pass a custom error message with the oss.str().
 
@@ -137,7 +137,7 @@ There is a **compact and clean way** to handle exceptions without needing an ext
 	} 
 ```
 
-4. Custom exception (concatenating additional info -like a variable value- to error message)
+**4. Custom exception** (concatenating additional info -like a variable value- to error message)
 
 First we need to declare the custom exception class:
 
