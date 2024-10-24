@@ -10,5 +10,5 @@ Write a program that calculates and outputs the value of a certain amount of bit
 -----------------------------------
 ## Flow chart
 <p align="center">
-	<img src="assets/BitcoinExchange.png" />
+	<img src="assets/BitcoinExchange.svg" />
 </p>
