@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/25 01:12:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/25 01:14:48 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 //	Default constructor
-BitcoinExchange::BitcoinExchange() {
-	std::cout << "Default constructor called" << std::endl;
-}
+BitcoinExchange::BitcoinExchange() {}
 
 //	Copy constructor
-BitcoinExchange::BitcoinExchange(const BitcoinExchange & source) : _exchangeRates(source._exchangeRates) {
-	std::cout << "Copy constructor called" << std::endl;
-}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange & source) 
+	: _exchangeRates(source._exchangeRates) {}
 
 //	Copy assignment operator
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & source) {
-	std::cout << "Copy assignment operator called" << std::endl;
+	
 	if (this != &source) {
 		this->_exchangeRates = source._exchangeRates;
 	}
@@ -35,9 +32,7 @@ BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & source) {
 }
 
 //	Default destructor
-BitcoinExchange::~BitcoinExchange() {
-	std::cout << "Default destructor called" << std::endl;
-}
+BitcoinExchange::~BitcoinExchange() {}
 
 /* --- Member methods ------------------------------------------------------- */
 
