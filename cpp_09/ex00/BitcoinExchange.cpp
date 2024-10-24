@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/23 23:16:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/24 20:25:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void BitcoinExchange::validateValue(float value) {
 
 float BitcoinExchange::findExchangeRate(const std::string & valueDate) {
 
-    std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);
+    std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);	// (6)
     std::ostringstream oss;
 
     // No exact match, move to the closest earlier date
@@ -257,4 +257,25 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
  *
  *		(path_stat.st_mode & S_IXUSR) checks if the file has user (owner)
  *		execute permissions.
+ */
+
+/*
+ *	(6)	'lower_bound()' and 'upper_bound()'
+ *
+ *		'lower_bound(key)' returns an iterator pointing to:
+ *			- The key itself if it exists.
+ *			- The next key if the key does not exist (the first element
+ *				that is greater).
+ *
+ *		'upper_bound(key)' always returns an iterator pointing to:
+ *			- The first element that is strictly greater than the key.
+ *		
+ *		The standard library does not include a direct function to find
+ *		the closest lesser value. Finding it involves a two-step process:
+ *
+ *			1.	Use lower_bound() to find the first element that is not 
+ *				less than the key (i.e., the smallest element that is 
+ *				greater than or equal to the key).
+ *			2.	Check if you need to move back one position to get the 
+ *				closest lesser value.
  */
