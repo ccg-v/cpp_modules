@@ -74,10 +74,9 @@ Since my date validation functions don't depend on the internal state of the Bit
 - Allows easier reusability of date validation in other parts of the program.
 - Keeps the class lighter and better aligned with the *Single Responsibility Principle* (SRP) [^1].
 
-
 So I have decided to place the date validation functions in separate utility files, DateUtils.hpp and DateUtils.cpp, to decouple them from the BitcoinExchange class.
 
-[^1] The *Single Responsibility Principle* is one of the five SOLID principles of object-oriented design. It states that a class should have one and only one reason to change, meaning that it should focus on a single responsibility or function. In other words, **a class should be responsible for one thing**, and all of its methods should contribute to fulfilling that responsibility. In our case, BitcoinExchage's main purpose is to handle exchange logic, so its methods should focus on tasks related to this responsibility. Adding unrelated tasks, such as general date validation, dilutes the focus of the class.
+[^1]: The *Single Responsibility Principle* is one of the five SOLID principles of object-oriented design. It states that a class should have one and only one reason to change, meaning that it should focus on a single responsibility or function. In other words, **a class should be responsible for one thing**, and all of its methods should contribute to fulfilling that responsibility. In our case, BitcoinExchage's main purpose is to handle exchange logic, so its methods should focus on tasks related to this responsibility. Adding unrelated tasks, such as general date validation, dilutes the focus of the class.
 
 </details>
 
