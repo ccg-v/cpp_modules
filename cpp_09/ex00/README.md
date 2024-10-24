@@ -108,7 +108,7 @@ So I have decided to place the date validation functions in separate utility fil
 		std::cerr << e.what() << std::endl;
 	} 
 ```
-Note that the thrown exception is not `std::exception` but `std::runtime_error`. This is because `std::exception` is very basic and doesn't support custom error messages directly. Instead, `std::runtime_error` does allow you to pass a custom error message with the oss.str().
+- Note that the thrown exception is not `std::exception` but `std::runtime_error`. This is because `std::exception` is very basic and doesn't support custom error messages directly. Instead, `std::runtime_error` does allow you to pass a custom error message with the oss.str().
 
 **3. `std::runtime_error` exception**
 
@@ -125,7 +125,7 @@ Note that the thrown exception is not `std::exception` but `std::runtime_error`.
 	} 
 ```
 
-There is a **compact and clean way** to handle exceptions without needing an extra ostringstream:
+- There is a **compact and clean way** to handle exceptions without needing an extra ostringstream:
 
 ```
 	try {
@@ -139,7 +139,7 @@ There is a **compact and clean way** to handle exceptions without needing an ext
 
 **4. Custom exception** (concatenating additional info -like a variable value- to error message)
 
-First we need to declare the custom exception class:
+- First we need to declare the custom exception class:
 
 ```
 	class BadDateException : public std::exception {
@@ -155,7 +155,7 @@ First we need to declare the custom exception class:
 	};
 ```
 
-Next define it:
+- Next define it:
 
 ```
 	#include "BadDateException.hpp"
@@ -171,7 +171,7 @@ Next define it:
 
 ```
 
-And finally throw it in the try-catch block:
+- And finally throw it in the try-catch block:
 
 ```
 	try {
@@ -184,7 +184,7 @@ And finally throw it in the try-catch block:
 
 ```
 
-Using custom exceptions can feel over-engineered. If the complexity of your application doesn't justify it, simpler solutions like logging or using standard exceptions (std::runtime_error) may be more appropriate. Custom exceptions shine when your system needs more granular control over errors, clear and maintainable separation of concerns, and flexibility as your project scales.
+	Using custom exceptions can feel over-engineered. If the complexity of your application doesn't justify it, simpler solutions like logging or using standard exceptions (std::runtime_error) may be more appropriate. Custom exceptions shine when your system needs more granular control over errors, clear and maintainable separation of concerns, and flexibility as your project scales.
 
 **Conclusion**
 
