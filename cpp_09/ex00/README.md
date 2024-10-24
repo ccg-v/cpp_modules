@@ -9,3 +9,6 @@ Write a program that calculates and outputs the value of a certain amount of bit
 > Be aware that the type of container(s) you choose for this exercise **will no longer be usable for the rest of this module!**
 -----------------------------------
 ## Flow chart
+<p align="center">
+	<img src="assets/BitcoinExchange.png" />
+</p>
