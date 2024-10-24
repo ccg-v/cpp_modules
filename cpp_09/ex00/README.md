@@ -87,9 +87,9 @@ So I have decided to place the date validation functions in separate utility fil
 **1. Simple error reporting (C-style error handling)**
 
 ```
-if (validateDate(valueDate) == false) {
-	std::cerr << "Error: bad input => " << valueDate << std::endl;
-}
+	if (validateDate(valueDate) == false) {
+		std::cerr << "Error: bad input => " << valueDate << std::endl;
+	}
 ```
 - This approach is typical in C or for very simple C++ programs that don't require exception handling.
 - It's low-overhead but doesn't integrate well into error management strategies where control flow needs to change based on the error.
@@ -97,16 +97,16 @@ if (validateDate(valueDate) == false) {
 **2. Generic exception**
 
 ```
-try {
-	std::ostringstream oss;
+	try {
+		std::ostringstream oss;
 
-	if (validateDate(valueDate) == false) {
-		oss << "Error: bad input => " << valueDate;
-		throw std::runtime_error(oss.str());
-	}
-} catch (const std::exception & e) {
-	std::cerr << e.what() << std::endl;
-} 
+		if (validateDate(valueDate) == false) {
+			oss << "Error: bad input => " << valueDate;
+			throw std::runtime_error(oss.str());
+		}
+	} catch (const std::exception & e) {
+		std::cerr << e.what() << std::endl;
+	} 
 ```
 Note that the thrown exception is not `std::exception` but `std::runtime_error`. This is because `std::exception` is very basic and doesn't support custom error messages directly. Instead, `std::runtime_error` does allow you to pass a custom error message with the oss.str().
 
@@ -186,6 +186,7 @@ And finally throw it in the try-catch block:
 
 Using custom exceptions can feel over-engineered. If the complexity of your application doesn't justify it, simpler solutions like logging or using standard exceptions (std::runtime_error) may be more appropriate. Custom exceptions shine when your system needs more granular control over errors, clear and maintainable separation of concerns, and flexibility as your project scales.
 
+**Conclusion**
 **If the project is small or medium-sized, better stick to simple error messages or standard exceptions**. Move to custom exceptions only when your project grows in complexity and requires more refined error handling.
 
 </details>
