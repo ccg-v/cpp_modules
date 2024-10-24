@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:47:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/22 14:24:15 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:14:07 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int argc, char **argv) {
 			std::string dbFile = "data/data.csv";
 			BitcoinExchange btc;
 
-			btc.fillMap(dbFile);
 			btc.checkInputFile(argv[1]);
+			btc.fillMap(dbFile);
 			btc.calculateExchanges(argv[1]);
 			
 			return 0;

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/22 22:30:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:16:44 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,33 @@ BitcoinExchange::~BitcoinExchange() {
 
 /* --- Member methods ------------------------------------------------------- */
 
+void	BitcoinExchange::checkInputFile(const std::string & argv) {
+	
+    struct stat path_stat;
+
+    // Check if the path is a directory	(5)
+    if (stat(argv.c_str(), &path_stat) == 0 && S_ISDIR(path_stat.st_mode)) {
+        throw std::runtime_error("Error: '" + argv + "' is a directory, not a file.");
+    }
+
+    // Check if the path is an executable (5)
+    if (stat(argv.c_str(), &path_stat) == 0 && (path_stat.st_mode & S_IXUSR)) {
+        throw std::runtime_error("Error: '" + argv + "' is an executable.");
+    }
+
+    std::ifstream inputFile(argv.c_str());	// (3)
+
+    // Check if file is opened successfully
+    if (!inputFile.is_open()) {
+		throw std::runtime_error("Error: could not open '" + argv + "'.");
+    }
+
+    // Check if file is empty
+    if (inputFile.peek() == std::ifstream::traits_type::eof()) {
+		throw std::runtime_error("Error: '" + argv + "' is empty.");
+    }
+}
+
 void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
 
     std::ifstream dbFile(dataBase.c_str());	// (3)
@@ -64,33 +91,6 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     dbFile.close();
 }
 
-void	BitcoinExchange::checkInputFile(const std::string & argv) {
-	
-    struct stat path_stat;
-
-    // Check if the path is a directory
-    if (stat(argv.c_str(), &path_stat) == 0 && S_ISDIR(path_stat.st_mode)) {
-        throw std::runtime_error("Error: '" + argv + "' is a directory, not a file.");
-    }
-
-    // Check if the path is an executable
-    if (stat(argv.c_str(), &path_stat) == 0 && (path_stat.st_mode & S_IXUSR)) {
-        throw std::runtime_error("Error: '" + argv + "' is an executable.");
-    }
-
-    std::ifstream inputFile(argv.c_str());	// (3)
-
-    // Check if file is opened successfully
-    if (!inputFile.is_open()) {
-		throw std::runtime_error("Error: could not open '" + argv + "'.");
-    }
-
-    // Check if file is empty
-    if (inputFile.peek() == std::ifstream::traits_type::eof()) {
-		throw std::runtime_error("Error: '" + argv + "' is empty.");
-    }
-}
-
 void BitcoinExchange::trimAndvalidateDate(std::string & valueDate) {
     // Trim whitespaces
     valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
@@ -102,7 +102,6 @@ void BitcoinExchange::trimAndvalidateDate(std::string & valueDate) {
 }
 
 void BitcoinExchange::validateValue(float value) {
-	// Validate the value
 	if (value < 0) {
 		throw std::runtime_error("Error: not a positive number.");
 	}
@@ -233,9 +232,10 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 /*
  *	(5) stat():
  *
- *		'stat(const char *path, struct stat *buf)' is a system call that
+ *	-	'stat(const char *path, struct stat *buf)' is a system call that
  *		retrieves information about the file specified by path and stores
  *		it in the 'buf' structure (of type struct stat).
+ *
  *		This structure contains various details about the file, such as 
  *		its size, permissions, file type (whether it's a directory, regular
  *		file, or executable), and other metadata.
@@ -244,9 +244,17 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
  * 		system call was able to retrieve information about the file or path
  * 		referenced by argv
  *
- *  This retrieves file metadata, including the file mode (permissions and file type).
-S_ISDIR(path_stat.st_mode): Checks if the file is a directory.
-S_IXUSR: This constant checks if the file has execute permissions for the owner (user). There are also S_IXGRP and S_IXOTH to check execute permissions for group and others, respectively.
-
-    (path_stat.st_mode & S_IXUSR) checks if the file has user (owner) execute permissions.
+ *
+ *	-	S_ISDIR(path_stat.st_mode):
+ *
+ *		Checks if the file is a directory.
+ *
+ *	-	S_IXUSR:
+ *
+ *		This constant checks if the file has execute permissions for the
+ *		owner (user).There are also S_IXGRP and S_IXOTH to check execute
+ *		permissions for group and others, respectively.
+ *
+ *		(path_stat.st_mode & S_IXUSR) checks if the file has user (owner)
+ *		execute permissions.
  */
