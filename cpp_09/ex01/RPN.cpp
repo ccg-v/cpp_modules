@@ -5,104 +5,140 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 11:48:20 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/27 01:05:34 by ccarrace         ###   ########.fr       */
+/*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
+/*   Updated: 2024/10/28 00:10:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>		// for std::cout, std::endl;
-#include <vector>
-#include <cstring>	// for strlen
+// #include <iostream>
+// #include <stack>
+// #include <sstream>
+// #include <string>
+// #include <cstdlib>	//for std::atoi
 
-// bool	isOperator(char c) {
-// 	return c == "+" || c == "-" || c == "*" || c == "/";
+// int evaluateRPN(const std::string& expression) {
+//     std::stack<int> stack;
+//     std::istringstream input(expression);
+//     std::string token;
+
+// 	while (input >> token) {
+// 		if (isdigit(token[0]))
+// 			std::cout << token << " is an operand" << std::endl;
+// 		else
+// 			std::cout << token << " is an operator" << std::endl;
+// 	}
+
+//     while (input >> token) {	// Evaluate tokens one by one skipping whitespaces (1)
+//         if (isdigit(token[0])) {
+//             // If the token is a number, push it to the stack
+//             stack.push(std::atoi(token.c_str()));
+//         } else {
+//             // Otherwise, the token is an operator; pop two operands
+//             int operand2 = stack.top();	// Retrieve the next operand
+// 			stack.pop();				// Remove it from the stack
+//             int operand1 = stack.top(); 
+// 			stack.pop();
+//             if (token == "+") stack.push(operand1 + operand2);
+//             else if (token == "-") stack.push(operand1 - operand2);
+//             else if (token == "*") stack.push(operand1 * operand2);
+//             else if (token == "/") stack.push(operand1 / operand2);
+//         }
+//     }
+//     return stack.top(); // The result is on the top of the stack
 // }
 
-void	fillVector(std::vector<char> & vec, char *argv) {
+#include <iostream>
+#include <sstream>
+#include <stack>
+#include <stdexcept>
+#include <string>
+#include <cctype>
+#include <cstdlib>	//for std::atoi
 
-	int i = 0;
-	int	nonWhitespaces = 0;
-
-	// Count the number of non-whitespace characters
-	while (argv[i] != '\0') {
-		if (argv[i] != ' ') {
-			nonWhitespaces++;
-		}
-		i++;
+int evaluateRPN(const std::string& expression) {
+    if (expression.empty()) {
+        throw std::runtime_error("Expression cannot be empty.");
     }
 
-    // Resize the vector to match the length of the input string discarding whitespaces
-    vec.resize(nonWhitespaces);
-	
-	i = 0;
-	int j = 0;
-    // Copy each character from argv into vec
-    while (argv[i] != '\0') {
-        if (argv[i] != ' ') {
-            vec[j] = argv[i];
-            j++;
+    std::istringstream input(expression);
+    std::string token;
+    std::stack<int> stack;
+    int operandCount = 0;
+
+    while (input >> token) {
+        // Check if token is a number
+        if (isdigit(token[0])) {
+            stack.push(std::atoi(token.c_str()));
+            operandCount++;
+            // Reset the count for consecutive operands
+            if (operandCount > 2) {
+                throw std::runtime_error("Invalid RPN expression: more than two consecutive operands.");
+            }
+        } else if (token == "+" || token == "-" || token == "*" || token == "/") {
+            // Check if there are at least two operands in the stack
+            if (stack.size() < 2) {
+                throw std::runtime_error("Invalid RPN expression: not enough operands for operator.");
+            }
+            int operand2 = stack.top(); stack.pop();
+            int operand1 = stack.top(); stack.pop();
+
+            // Perform the operation
+            if (token == "+") stack.push(operand1 + operand2);
+            else if (token == "-") stack.push(operand1 - operand2);
+            else if (token == "*") stack.push(operand1 * operand2);
+            else if (token == "/") {
+                if (operand2 == 0) {
+                    throw std::runtime_error("Invalid RPN expression: division by zero.");
+                }
+                stack.push(operand1 / operand2);
+            }
+
+            // Reset operand count after processing an operator
+            operandCount = 0;  
+        } else {
+            throw std::runtime_error("Invalid RPN expression: unknown token.");
         }
-        i++;
     }
+
+    // Final validation: there must be exactly one result on the stack
+    if (stack.size() != 1) {
+        throw std::runtime_error("Invalid RPN expression: too many operands.");
+    }
+
+    return stack.top();
 }
 
-int	main(int argc, char **argv) {
 
-	if (argc == 2) {
+int main() {
+	// std::string expression = " 1 2 * 3 4	 * 5 6  * * * ";
+    // int result = evaluateRPN(expression);
+    // std::cout << "Result: " << result << std::endl; // Expected output: 720
+	// expression = "8 9 * 9 - 9 - 9 - 4 - 1 +";
+	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
+	// expression = "7 7 * 7 -";
+	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42	
+	// expression = "1 2 * 2 / 2 * 2 4 - +";
+	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 0
 
-		// int i = 0;
-		// int operands = 0;
-		// int res1 = 0;
-		// int res2 = 0;
-		std::vector<char> vec;
+	std::string expression = "(1 + 1)";
+	std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: ERROR
 
-		fillVector(vec, argv[1]);
-		
-		// // Print vector content
-		// std::vector<char>::iterator it = vec.begin();
-		// for (it = vec.begin(); it != vec.end(); it++) {
-		// 	std::cout << *it ;
-		// }
-		// std::cout << std::endl;
-		
-		return 0;
-		
-	} else {
-		std::cout << "Error: Wrong number of arguments" << std::endl;
-		return 1;
-	}
+	// std::string 	expression = "7 * 7 -";
+	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
+    return 0;
 }
 
 /*
- *	(1)	String literals like "+", "-", "*", and "/" are const char* by default,
- *		and cannot be assigned to char* without violating const-correctness in
- *		ISO C++
- */
-
-/*
- *	(2) Choose C-style array or std::vector here?
+ *	In C++, the extraction operator (>>) for input streams (like
+ *	std::istringstream) is designed to skip leading whitespace 
+ *	(spaces, tabs, and newlines) by default when reading formatted
+ *	data (like int, float, std::string, etc.).
+ *	
+ *	When input >> token is called, the stream ignores any leading
+ *	whitespace, then reads characters until it reaches the next
+ *	whitespace, which marks the end of the token.
  *
- *		In C++, it's generally more consistent and idiomatic to use a C++ 
- *		container instead of a C-style array. Using a C++ container has several
- *		advantages, such as better type safety, easier resizing (for vectors), 
- *		and more flexibility with standard library algorithms.
- *
- *		However, If the array (or vector) is not going to change during the 
- *		program's execution and will only store the four basic operators, using
- *		a C-style array can be a more straightforward and efficient choice for 
- *		several reasons:
- *
- *		- Simplicity: C-style arrays are simple to declare and use.
- *		- Performance: C-style arrays have a fixed size and are allocated on the
- *			stack, so they can be slightly more efficient than std::vector,
- *			which has some overhead for managing dynamic memory and its size.
- *			With a fixed size, there’s no need for additional memory allocations
- *			or deallocations, making C-style arrays very efficient in terms of 
- *			performance.
- *		- Memory Footprint: C-style arrays typically use less memory than vectors 
- *			since there’s no need to store metadata related to size, capacity, or
- *			other vector-specific details.
- *		- No Need for Dynamic Behavior: If you know the operators will never change,
- *			you don’t need the dynamic behavior that comes with a vector. C-style
- *			arrays are often sufficient for fixed collections of data.
+ *	In short, you don’t need to write extra code to handle 
+ *	whitespace. It’s automatically managed by the std::istringstream
+ *	extraction behavior.
  */
