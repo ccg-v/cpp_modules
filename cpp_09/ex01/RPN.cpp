@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/28 13:00:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/28 22:19:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 #include <string>
 #include <cctype>
 #include <cstdlib>	//for std::atoi
+#include <climits>
 
 bool onlyWhitespace(const std::string & expression) {
 	std::string::const_iterator it;
@@ -72,12 +73,24 @@ bool	isOperator(std::string token) {
 }
 
 void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token) {
-	if (token == "+") 
+	if (token == "+") {
+        // Check for overflow in addition
+        if (operand2 > 0 && operand1 > INT_MAX - operand2) {
+            throw std::runtime_error("Integer overflow in addition.");
+        }
 		stack.push(operand1 + operand2);
-	else if (token == "-")
+	}
+	else if (token == "-") {
+        // No overflow check needed for subtraction with non-negative single digits
 		stack.push(operand1 - operand2);
-	else if (token == "*")
+	}
+	else if (token == "*") {
+        // Check for overflow in multiplication
+        if (operand1 > INT_MAX / operand2) {
+            throw std::runtime_error("Integer overflow in multiplication.");
+        }
 		stack.push(operand1 * operand2);
+	}
 	else if (token == "/") {
 		if (operand2 == 0) {
 			throw std::runtime_error("Invalid RPN expression: division by zero.");
@@ -95,6 +108,7 @@ int evaluateRPN(const std::string & expression) {
     std::string token;
     std::stack<int> stack;
     int operandCount = 0;
+	int	operatorCount = 0;
 
     while (input >> token) {
 		// Check if token is a single-digit number
@@ -118,7 +132,7 @@ int evaluateRPN(const std::string & expression) {
 			stack.pop();
 
 			doOperation(stack, operand1, operand2, token);
-
+			operatorCount++;
             // Reset operand count after processing an operator
             operandCount = 0;  
         } else {
@@ -127,8 +141,10 @@ int evaluateRPN(const std::string & expression) {
     }
     // Final validation: there must be exactly one result on the stack
     if (stack.size() != 1) {
-		std::cout << "operandCount = " << operandCount << std::endl;
-        throw std::runtime_error("Invalid RPN expression: too many operands.");
+		if (operatorCount == 0)
+			throw std::runtime_error("Invalid RPN expression: operator missing.");
+		else
+        	throw std::runtime_error("Invalid RPN expression: too many operands.");
     }
 
     return stack.top();
