@@ -6,9 +6,12 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/28 00:10:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:00:42 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// Error if result is greater than INT_MAX???? Can result be DOUBLE???
+
 
 // #include <iostream>
 // #include <stack>
@@ -55,43 +58,66 @@
 #include <cctype>
 #include <cstdlib>	//for std::atoi
 
-int evaluateRPN(const std::string& expression) {
-    if (expression.empty()) {
+bool onlyWhitespace(const std::string & expression) {
+	std::string::const_iterator it;
+	for (it = expression.begin(); it != expression.end(); ++it) {
+		if (!std::isspace(*it))
+			return false;
+	}
+	return true;
+}
+
+bool	isOperator(std::string token) {
+	return token == "+" || token == "-" || token == "*" || token == "/";
+}
+
+void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token) {
+	if (token == "+") 
+		stack.push(operand1 + operand2);
+	else if (token == "-")
+		stack.push(operand1 - operand2);
+	else if (token == "*")
+		stack.push(operand1 * operand2);
+	else if (token == "/") {
+		if (operand2 == 0) {
+			throw std::runtime_error("Invalid RPN expression: division by zero.");
+		}
+		stack.push(operand1 / operand2);
+	}	
+}
+
+int evaluateRPN(const std::string & expression) {
+    if (expression.empty() || onlyWhitespace(expression)) {
         throw std::runtime_error("Expression cannot be empty.");
     }
 
-    std::istringstream input(expression);
+    std::istringstream input(expression); 	// WHY IS CONVERSION NECESSARY?
     std::string token;
     std::stack<int> stack;
     int operandCount = 0;
 
     while (input >> token) {
-        // Check if token is a number
-        if (isdigit(token[0])) {
+		// Check if token is a single-digit number
+        if (isdigit(token[0]) && token.size() == 1) {
             stack.push(std::atoi(token.c_str()));
             operandCount++;
-            // Reset the count for consecutive operands
+			
             if (operandCount > 2) {
                 throw std::runtime_error("Invalid RPN expression: more than two consecutive operands.");
             }
-        } else if (token == "+" || token == "-" || token == "*" || token == "/") {
+		} else if (token.size() > 1) {
+			throw std::runtime_error("Invalid RPN expression: operands must be digits (0-9)");
+        } else if (isOperator(token)) {
             // Check if there are at least two operands in the stack
             if (stack.size() < 2) {
                 throw std::runtime_error("Invalid RPN expression: not enough operands for operator.");
             }
-            int operand2 = stack.top(); stack.pop();
-            int operand1 = stack.top(); stack.pop();
+            int operand2 = stack.top();
+			stack.pop();
+            int operand1 = stack.top();
+			stack.pop();
 
-            // Perform the operation
-            if (token == "+") stack.push(operand1 + operand2);
-            else if (token == "-") stack.push(operand1 - operand2);
-            else if (token == "*") stack.push(operand1 * operand2);
-            else if (token == "/") {
-                if (operand2 == 0) {
-                    throw std::runtime_error("Invalid RPN expression: division by zero.");
-                }
-                stack.push(operand1 / operand2);
-            }
+			doOperation(stack, operand1, operand2, token);
 
             // Reset operand count after processing an operator
             operandCount = 0;  
@@ -99,33 +125,45 @@ int evaluateRPN(const std::string& expression) {
             throw std::runtime_error("Invalid RPN expression: unknown token.");
         }
     }
-
     // Final validation: there must be exactly one result on the stack
     if (stack.size() != 1) {
+		std::cout << "operandCount = " << operandCount << std::endl;
         throw std::runtime_error("Invalid RPN expression: too many operands.");
     }
 
     return stack.top();
 }
 
+// int main() {
+// 	// std::string expression = " 1 2 * 3 4	 * 5 6  * * * ";
+//     // int result = evaluateRPN(expression);
+//     // std::cout << "Result: " << result << std::endl; // Expected output: 720
+// 	// expression = "8 9 * 9 - 9 - 9 - 4 - 1 +";
+// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
+// 	// expression = "7 7 * 7 -";
+// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42	
+// 	// expression = "1 2 * 2 / 2 * 2 4 - +";
+// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 0
 
-int main() {
-	// std::string expression = " 1 2 * 3 4	 * 5 6  * * * ";
-    // int result = evaluateRPN(expression);
-    // std::cout << "Result: " << result << std::endl; // Expected output: 720
-	// expression = "8 9 * 9 - 9 - 9 - 4 - 1 +";
-	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
-	// expression = "7 7 * 7 -";
-	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42	
-	// expression = "1 2 * 2 / 2 * 2 4 - +";
-	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 0
+// 	// std::string expression = "(1 + 1)";
+// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: ERROR
 
-	std::string expression = "(1 + 1)";
-	std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: ERROR
+// 	// std::string 	expression = "7 * 7 -";
+// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
+//     return 0;
+// }
 
-	// std::string 	expression = "7 * 7 -";
-	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
-    return 0;
+int	main(int argc, char **argv) {
+	try {
+		if (argc == 2) {
+			int result = evaluateRPN(argv[1]);
+			std::cout << "Result: " << result << std::endl;
+			return 0;
+		}
+	} catch (const std::runtime_error & e) {
+		std::cerr << e.what() << std::endl;
+		return 1;
+	}
 }
 
 /*
