@@ -6,58 +6,11 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/28 22:19:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/29 22:28:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Error if result is greater than INT_MAX???? Can result be DOUBLE???
-
-
-// #include <iostream>
-// #include <stack>
-// #include <sstream>
-// #include <string>
-// #include <cstdlib>	//for std::atoi
-
-// int evaluateRPN(const std::string& expression) {
-//     std::stack<int> stack;
-//     std::istringstream input(expression);
-//     std::string token;
-
-// 	while (input >> token) {
-// 		if (isdigit(token[0]))
-// 			std::cout << token << " is an operand" << std::endl;
-// 		else
-// 			std::cout << token << " is an operator" << std::endl;
-// 	}
-
-//     while (input >> token) {	// Evaluate tokens one by one skipping whitespaces (1)
-//         if (isdigit(token[0])) {
-//             // If the token is a number, push it to the stack
-//             stack.push(std::atoi(token.c_str()));
-//         } else {
-//             // Otherwise, the token is an operator; pop two operands
-//             int operand2 = stack.top();	// Retrieve the next operand
-// 			stack.pop();				// Remove it from the stack
-//             int operand1 = stack.top(); 
-// 			stack.pop();
-//             if (token == "+") stack.push(operand1 + operand2);
-//             else if (token == "-") stack.push(operand1 - operand2);
-//             else if (token == "*") stack.push(operand1 * operand2);
-//             else if (token == "/") stack.push(operand1 / operand2);
-//         }
-//     }
-//     return stack.top(); // The result is on the top of the stack
-// }
-
-#include <iostream>
-#include <sstream>
-#include <stack>
-#include <stdexcept>
-#include <string>
-#include <cctype>
-#include <cstdlib>	//for std::atoi
-#include <climits>
+#include "RPN.hpp"
 
 bool onlyWhitespace(const std::string & expression) {
 	std::string::const_iterator it;

@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/10/25 00:48:19 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/10/29 22:28:01 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all: $(OBJ_DIR) $(NAME)
 
 # --- Object build rules ----------------------------------------------------- #
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	$(CC) $(FLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 $(OBJ_DIR):
