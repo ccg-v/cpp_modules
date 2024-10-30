@@ -21,7 +21,13 @@ Example:
 
 **Polish Notation**, in which the operator comes before the operands, was invented in the 1920s by the Polish mathematician Jan Lucasiewicz.
 
-In the late 1950s, Australian philosopher and computer scientist Charles L. Hamblin suggested placing the operator after the operands and hence created **Reverse Polish Notation**. Also known as **postfix notation**, contrasts with the **"infix notation"** of standard arithmetic expressions in which the operator symbol appears between the operands. 
+In the late 1950s, Australian philosopher and computer scientist Charles L. Hamblin suggested placing the operator after the operands and hence created **Reverse Polish Notation**. Also known as **postfix notation**, contrasts with the **"infix notation"** of standard arithmetic expressions in which the operator symbol appears between the operands.
+
+Reverse Polish Notation validation rules:
+
+- Operands and Operators: In RPN, numbers (operands) appear before the operators that use them.
+- Operator Requirements: Each binary operator (like *, +, -, /) needs two operands available in the container to apply the operation.
+- Result: At the end of a valid RPN expression, there should be exactly one value left in the container (the result).
 
 <details>
 <summary><h3> Hint </h3></summary>
