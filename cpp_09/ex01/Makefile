@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/10/30 20:00:40 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/10/30 21:29:30 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,33 +17,44 @@ NAME 		= 	RPN
 CC 			= 	c++
 FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address
 
+# --- Folders ---------------------------------------------------------------- #
+OBJ_DIR		=	obj/
+DEP_DIR		=	$(OBJ_DIR)
+
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	RPN.cpp main.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
 DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 
+# --- Paths ------------------------------------------------------------------ #
+OBJ			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+DEP			=	$(addprefix $(DEP_DIR), $(DEP_FILES))
+
 # --- Build rules ------------------------------------------------------------ #
-all: $(NAME) 
+all: $(OBJ_DIR) $(NAME) 
 
 # --- Object build rules ----------------------------------------------------- #
-%.o:%.cpp
+$(OBJ_DIR)%.o:%.cpp | $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
--include $(DEP_FILES)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+	
+-include $(DEP)
 
 # --- Program build rules ---------------------------------------------------- #
-$(NAME): $(OBJ_FILES) Makefile
-	$(CC) $(FLAGS) $(OBJ_FILES) -o $@
+$(NAME): $(OBJ) Makefile
+	$(CC) $(FLAGS) $(OBJ) -o $@
 
 # --- Cleaning rules --------------------------------------------------------- #
 
 clean:
-	rm -f $(OBJ_FILES)
-	rm -f $(DEP_FILES)
+	rm -f $(OBJ) $(DEP)
+	rm -rf $(OBJ_DIR)
 	
 fclean: clean
 	rm -f $(NAME) 
 
 re:	fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean re//
