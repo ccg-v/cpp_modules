@@ -8,11 +8,19 @@ Create a program that takes as an argument a mathematical expression written in 
 - Brackets and decimal numbers don't have to be handled
 - At least one container must be used to validate the exercise.
 
+Example:
+```
+	$> ./RPN "8 9 * 9 - 9 - 9 - 4 - 1 +"
+	42
+```
+
 > [!WARNING]
 > The type of container(s) chosen for this exercise **must not be the one used in the previous exercise** and **will not be usable for the next one!**
 
 ## Reverse Polish Notation
+
 **Polish Notation**, in which the operator comes before the operands, was invented in the 1920s by the Polish mathematician Jan Lucasiewicz.
+
 In the late 1950s, Australian philosopher and computer scientist Charles L. Hamblin suggested placing the operator after the operands and hence created **Reverse Polish Notation**. Also known as **postfix notation**, contrasts with the **"infix notation"** of standard arithmetic expressions in which the operator symbol appears between the operands. 
 
 <details>
