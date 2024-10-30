@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/10/27 11:34:28 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/10/30 20:00:40 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC 			= 	c++
 FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address
 
 # --- Files ------------------------------------------------------------------ #
-SRC_FILES	=	RPN.cpp
+SRC_FILES	=	RPN.cpp main.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
 DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 

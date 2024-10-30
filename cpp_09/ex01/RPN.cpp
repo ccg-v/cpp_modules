@@ -6,30 +6,37 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/29 22:28:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/30 21:12:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
-bool onlyWhitespace(const std::string & expression) {
-	std::string::const_iterator it;
-	for (it = expression.begin(); it != expression.end(); ++it) {
-		if (!std::isspace(*it))
-			return false;
-	}
-	return true;
+/* --- Orthodox Canonical Form ---------------------------------------------- */
+
+// Default constructor
+RPN::RPN() {}
+
+// Copy constructor
+RPN::RPN(const RPN & source) : _stack(source._stack) {}
+
+// Copy assignment operator
+RPN & RPN::operator=(const RPN & source) {
+	if (this != &source)
+		this->_stack = source._stack;
+	return *this;
 }
 
-bool	isOperator(std::string token) {
-	return token == "+" || token == "-" || token == "*" || token == "/";
-}
+// Default destructor
+RPN::~RPN() {}
 
-void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token) {
+/* --- Member functions ----------------------------------------------------- */
+
+void	RPN::doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token) {
 	if (token == "+") {
         // Check for overflow in addition
-        if (operand2 > 0 && operand1 > INT_MAX - operand2) {
-            throw std::runtime_error("Integer overflow in addition.");
+        if (operand2 > 0 && operand1 > (INT_MAX - operand2)) {
+            throw std::runtime_error("Error: integer overflow in addition.");
         }
 		stack.push(operand1 + operand2);
 	}
@@ -39,7 +46,7 @@ void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::strin
 	}
 	else if (token == "*") {
         // Check for overflow in multiplication
-        if (operand1 > INT_MAX / operand2) {
+        if (operand2 > 0 && operand1 > (INT_MAX / operand2)) {
             throw std::runtime_error("Integer overflow in multiplication.");
         }
 		stack.push(operand1 * operand2);
@@ -52,7 +59,7 @@ void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::strin
 	}	
 }
 
-int evaluateRPN(const std::string & expression) {
+int RPN::evaluateRPN(const std::string & expression) {
     if (expression.empty() || onlyWhitespace(expression)) {
         throw std::runtime_error("Expression cannot be empty.");
     }
@@ -103,36 +110,19 @@ int evaluateRPN(const std::string & expression) {
     return stack.top();
 }
 
-// int main() {
-// 	// std::string expression = " 1 2 * 3 4	 * 5 6  * * * ";
-//     // int result = evaluateRPN(expression);
-//     // std::cout << "Result: " << result << std::endl; // Expected output: 720
-// 	// expression = "8 9 * 9 - 9 - 9 - 4 - 1 +";
-// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
-// 	// expression = "7 7 * 7 -";
-// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42	
-// 	// expression = "1 2 * 2 / 2 * 2 4 - +";
-// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 0
+/* --- Non-member utility functions ----------------------------------------- */
 
-// 	// std::string expression = "(1 + 1)";
-// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: ERROR
-
-// 	// std::string 	expression = "7 * 7 -";
-// 	// std::cout << "Result: " << evaluateRPN(expression) << std::endl; // Expected output: 42
-//     return 0;
-// }
-
-int	main(int argc, char **argv) {
-	try {
-		if (argc == 2) {
-			int result = evaluateRPN(argv[1]);
-			std::cout << "Result: " << result << std::endl;
-			return 0;
-		}
-	} catch (const std::runtime_error & e) {
-		std::cerr << e.what() << std::endl;
-		return 1;
+bool	onlyWhitespace(const std::string & expression) {
+	std::string::const_iterator it;
+	for (it = expression.begin(); it != expression.end(); ++it) {
+		if (!std::isspace(*it))
+			return false;
 	}
+	return true;
+}
+
+bool	isOperator(std::string token) {
+	return token == "+" || token == "-" || token == "*" || token == "/";
 }
 
 /*
