@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/25 01:14:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:18:20 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
         std::getline(ss, valueDate, '|');	// Extract the date
         ss >> value;                  		// Extract the value
 
-		try {
+		try {	// (7)
 			
 			trimAndvalidateDate(valueDate);
 			validateValue(value);
@@ -271,4 +271,19 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
  *				greater than or equal to the key).
  *			2.	Check if you need to move back one position to get the 
  *				closest lesser value.
+ */
+
+/*
+ *	(7)	This inner try-catch block allows each line in the database file
+ *		to be processed independently: if one line causes an error, the
+ *		exception is caught locally, logged, and then the loop can continue
+ *		to the next line.
+ *
+ *		Without this inner block, any exception thrown by functions like 
+ *		trimAndvalidateDate(), validateValue(), or findExchangeRate() would
+ *		terminate the entire loop prematurely, as the exception would 
+ *		propagate up and be caught by the outer try-catch block in main. 
+ *		This would stop processing entirely upon encountering the first error
+ *		in a line, which contradicts the requirement to read through to the
+ *		last line.
  */
