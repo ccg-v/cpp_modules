@@ -41,3 +41,9 @@ RPN can be conveniently evaluated using a stack structure. Reading the expressio
 2. If an operator appears next, **pop** two items from the top of the stack and **push** the result of the operation on to the stack.
 
 </details>
+
+-----------------------------------
+## Flow chart
+<p align="center">
+	<img src="assets/RPN.svg" />
+</p>
