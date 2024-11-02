@@ -1,27 +1,27 @@
-]/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PMergeMe.cpp                                       :+:      :+:    :+:   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/01 20:16:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:38:31 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PMergeMe.hpp"
+#include "PmergeMe.hpp"
 
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PMergeMe::PMergeMe() {}
+PmergeMe::PmergeMe() {}
 
 // Copy constructor
-PMergeMe::PMergeMe(const PMergeMe & source) : _vec(source._vec), _lst(source._lst) {}
+PmergeMe::PmergeMe(const PmergeMe & source) : _vec(source._vec), _lst(source._lst) {}
 
 // Copy assignment operator
-PMergeMe & PMergeMe::operator=(const PMergeMe & source) {
+PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 	if (this != &source) {
 		this->_vec = source._vec;
 		this->_lst = source._lst;
@@ -30,4 +30,14 @@ PMergeMe & PMergeMe::operator=(const PMergeMe & source) {
 }
 
 // Default destructor
-PMergeMe::~PMergeMe() {}
+PmergeMe::~PmergeMe() {}
+
+/* --- Getters -------------------------------------------------------------- */
+
+std::vector<int> & PmergeMe::getVector() {
+	return this->_vec;
+}
+
+std::list<int> & PmergeMe::getList() {
+	return this->_lst;
+}
