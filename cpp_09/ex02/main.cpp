@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/03 23:42:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/04 00:35:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ bool	isValidNumber(std::string & element) {
     return true;
 }
 
-int main(int argc, char* argv[]) {
-    PmergeMe pmergeme;
-
+int	fillContainers(PmergeMe & pmergeme, int argc, char **argv) {
     // Populate the containers with the sequence of integers
     for (int i = 1; i < argc; ++i) {
         std::string input = argv[i];
@@ -68,41 +66,16 @@ int main(int argc, char* argv[]) {
         std::istringstream argStream(input);
         std::string element;
 
-        // Split quoted arguments
-        // while (argStream >> element) {
-        //     if (!isValid(element)) {
-        //         std::cerr << "Sequence not valid" << std::endl;
-        //         return 0;
-        //     }
-        //     pmergeme.getVector().push_back(atoi(element.c_str()));
-        //     pmergeme.getList().push_back(atoi(element.c_str()));
-        // }
-
         while (argStream >> element) {
             if (!isValidNumber(element)) {
                 std::cerr << "Sequence not valid" << std::endl;
                 return 0;
             }
 
-            // // Convert element to an integer with range checking
-            // char* end;
-            // errno = 0;
-            // long value = std::strtol(element.c_str(), &end, 10);
-
-            // // Check for errors in conversion
-            // if (errno == ERANGE || value > INT_MAX) {
-            //     std::cerr << "Value out of integer's range found" << std::endl;
-            //     return 0;
-            // }
-
 			if (!isInteger(element)) {
 				std::cerr << "Value out of integer's range found" << std::endl;
             	return 0;
 			}
-
-            // // Add the integer to the containers
-            // pmergeme.getVector().push_back(static_cast<int>(element));
-            // pmergeme.getList().push_back(static_cast<int>(element));
 
             // Add the integer to the containers
             pmergeme.getVector().push_back(atoi(element.c_str()));
@@ -112,6 +85,45 @@ int main(int argc, char* argv[]) {
 
     printContainer(pmergeme.getVector());
     printContainer(pmergeme.getList());
+
+	return 0;
+}
+
+int main(int argc, char* argv[]) {
+    PmergeMe pmergeme;
+	
+	fillContainers(pmergeme, argc, argv);
+    // // Populate the containers with the sequence of integers
+    // for (int i = 1; i < argc; ++i) {
+    //     std::string input = argv[i];
+
+    //     if (input.empty() || onlyWhitespace(input)) {
+    //         std::cerr << "Error: input is empty." << std::endl;
+    //         return 0;
+    //     }
+
+    //     std::istringstream argStream(input);
+    //     std::string element;
+
+    //     while (argStream >> element) {
+    //         if (!isValidNumber(element)) {
+    //             std::cerr << "Sequence not valid" << std::endl;
+    //             return 0;
+    //         }
+
+	// 		if (!isInteger(element)) {
+	// 			std::cerr << "Value out of integer's range found" << std::endl;
+    //         	return 0;
+	// 		}
+
+    //         // Add the integer to the containers
+    //         pmergeme.getVector().push_back(atoi(element.c_str()));
+    //         pmergeme.getList().push_back(atoi(element.c_str()));
+    //     }
+    // }
+
+    // printContainer(pmergeme.getVector());
+    // printContainer(pmergeme.getList());
 
     return 0;
 }
