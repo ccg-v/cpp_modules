@@ -13,37 +13,55 @@ void printContainer(std::vector<int> container) {
 }
 
 class PmergeMe {
+
 private:
-    void sortPairsAndDivide(std::vector<int>& seq, std::vector<int>& smaller) {
+	void sortPairs(std::vector<int>& seq) {
+        if (seq.size() <= 1)
+            return;	
+        for (size_t i = 0; i < seq.size() - 1; i += 2) {
+            if (seq[i] > seq[i + 1]) {
+				std::swap(seq[i], seq[i + 1]);
+            } 
+        }
+
+std::cout << "After sortPairs(): ";
+printContainer(seq);
+	}
+
+    void divideSequence(std::vector<int>& seq, std::vector<int>& smaller) {
         if (seq.size() <= 1)
             return;
 
         std::vector<int> larger;
         for (size_t i = 0; i < seq.size() - 1; i += 2) {
-            if (seq[i] > seq[i + 1]) {
-                larger.push_back(seq[i]);
-                smaller.push_back(seq[i + 1]);
-            } else {
-                larger.push_back(seq[i + 1]);
-                smaller.push_back(seq[i]);
-            }
-        }
+			smaller.push_back(seq[i]);
+			larger.push_back(seq[i + 1]);
+        } 
         if (seq.size() % 2 == 1) {
             larger.push_back(seq[seq.size() - 1]);
         }
         
         seq = larger; // Now `seq` holds only the larger elements
+
+std::cout << "After divideSequence(): larger  = ";
+printContainer(larger);
+std::cout << "After divideSequence(): smaller = ";
+printContainer(smaller);
     }
 
     size_t findInsertionPos(const std::vector<int>& seq, int value, size_t end) {
         size_t left = 0, right = end;
+printContainer(seq);
         while (left < right) {
             size_t mid = (left + right) / 2;
+std::cout << "left = " << left << "; right = " << right << "; mid = " << mid << std::endl;
+std::cout << "value = " << value << "; seq[" << mid << "] = " << seq[mid] << std::endl;
             if (seq[mid] > value)
                 right = mid;
             else
                 left = mid + 1;
         }
+std::cout << "LEFT IS " << left << std::endl;
         return left;
     }
 
@@ -61,7 +79,8 @@ public:
         }
 
         std::vector<int> smaller;
-        sortPairsAndDivide(seq, smaller);  // Splits into `seq` (larger elements) and `smaller`
+        sortPairs(seq);
+		divideSequence(seq, smaller);  // Splits into `seq` (larger elements) and `smaller`
         fordJohnsonSort(seq);  // Recursively sort `seq`
 
         // Insert the remaining elements from `smaller`
