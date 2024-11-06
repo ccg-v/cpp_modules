@@ -1,28 +1,16 @@
+#include <iostream>
 #include <vector>
 #include <algorithm>
-#include <iostream>
-
-// Generic function to print container contents
-// template <typename T>
-void printContainer(std::vector<int> container) {
-	if (container.size() > 0) {
-		std::cout << "{ ";
-		for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); ++it) {
-			std::cout << *it << " ";
-		}
-		std::cout << "}" << std::endl;
-	}
-}
 
 class PmergeMe {
 private:
     // Helper function to sort pairs and separate into sequences
     void sortPairs(std::vector<int>& seq, std::vector<int>& smaller) {
-
-// std::cout << "seq	: ";
-// printContainer(seq);
-// printContainer(smaller);
-// std::cout << std::endl;
+        std::cout << "sortPairs() - Input seq: ";
+        for (int num : seq) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
 
         if (seq.size() <= 1)
             return;
@@ -48,22 +36,20 @@ private:
             std::vector<int> nextSmaller;
             sortPairs(newSeq, nextSmaller);
             // Merge nextSmaller back into smaller in correct order
-
-// std::cout << "seq	: ";
-// printContainer(seq);
-// std::cout << std::endl;
-// std::cout << "small : ";
-// printContainer(smaller);
-// std::cout << std::endl;
-// std::cout << "newSeq	: ";
-// printContainer(newSeq);
-// std::cout << std::endl;
-// std::cout << "nextSmaller : ";
-// printContainer(nextSmaller);
-// std::cout << std::endl;
-
             smaller.insert(smaller.begin(), nextSmaller.begin(), nextSmaller.end());
         }
+        
+        std::cout << "sortPairs() - Output seq: ";
+        for (int num : newSeq) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
+        std::cout << "sortPairs() - Output smaller: ";
+        for (int num : smaller) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl << std::endl;
+
         // Copy back to original sequence
         seq = newSeq;
     }
@@ -90,6 +76,12 @@ private:
 
 public:
     void fordJohnsonSort(std::vector<int>& seq) {
+        std::cout << "fordJohnsonSort() - Input seq: ";
+        for (int num : seq) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
+
         if (seq.size() <= 1)
             return;
 
@@ -108,29 +100,23 @@ public:
         std::vector<int> result;
         result.push_back(seq[0]);  // First element of main chain
 
-std::cout << "seq: ";
-printContainer(seq);
-
         // Step 3: Insert remaining elements from main chain
         for (size_t i = 1; i < seq.size(); ++i) {
             size_t pos = findInsertionPos(result, seq[i], result.size());
             insertElement(result, seq[i], pos);
-std::cout << "Inserting " << seq[i] << std::endl;
-std::cout << "result: ";
-printContainer(result);
         }
-
-std::cout << "smaller: ";
-printContainer(smaller);
 
         // Step 4: Insert elements from smaller sequence
         for (size_t i = 0; i < smaller.size(); ++i) {
             size_t pos = findInsertionPos(result, smaller[i], result.size());
             insertElement(result, smaller[i], pos);
-std::cout << "Inserting " << smaller[i] << std::endl;
-std::cout << "result: ";
-printContainer(result);
         }
+
+        std::cout << "fordJohnsonSort() - Output seq: ";
+        for (int num : result) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl << std::endl;
 
         // Copy result back to original sequence
         seq = result;
@@ -152,6 +138,6 @@ int main() {
 
     PmergeMe sorter;
     sorter.fordJohnsonSort(numbers);
-    printContainer(numbers);
+    
     return 0;
 }
