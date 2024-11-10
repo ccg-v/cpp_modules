@@ -59,6 +59,10 @@ std::cout << "--------------------------" << std::endl;
 			num = JacobsthalSeq[i - 1] + (2 * JacobsthalSeq[i - 2]);
 			JacobsthalSeq.push_back(num);
 		}
+
+std::cout << "\tJacobsthal numbers = ";
+printContainer(JacobsthalSeq);
+
 		return JacobsthalSeq;
 	}
 
@@ -95,12 +99,12 @@ public:
             return;
         }
 
-generateJacobsthalSeq(10);
-
         std::vector<int> smaller;
         sortPairs(seq);
 		divideSequence(seq, smaller);  // Splits into `seq` (larger elements) and `smaller
         fordJohnsonSort(seq);  // Recursively sort `seq`
+
+generateJacobsthalSeq(seq.size() / 2);
 
 std::cout << "larger  = ";
 printContainer(seq);
@@ -126,7 +130,7 @@ int main() {
     numbers.push_back(1);
     numbers.push_back(7);
     numbers.push_back(8);
-    // numbers.push_back(10);
+    numbers.push_back(10);
     numbers.push_back(4);
     numbers.push_back(6);
 
