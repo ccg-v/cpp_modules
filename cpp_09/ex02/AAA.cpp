@@ -52,6 +52,10 @@ private:
             if (next >= len) break;
             JacobsthalSeq.push_back(next);
         }
+		// Remove the first two elements if the sequence has at least two elements
+		if (JacobsthalSeq.size() > 2) {
+			JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
+		}
         return JacobsthalSeq;
     }
 
@@ -76,8 +80,9 @@ private:
 	std::vector<int> getInsertionOrder(const std::vector<int>& jacobsthalSeq, size_t size) {
 		std::vector<int> insertionOrder;
 
+
 		// Add all Jacobsthal-indexed elements and interleave non-Jacobsthal elements in reverse order
-		for (size_t i = 0; i < jacobsthalSeq.size(); ++i) {
+		for (size_t i = 0; i < jacobsthalSeq.size(); i++) {
 			size_t currentJacobIndex = jacobsthalSeq[i];
 
 			// Stop if the current Jacobsthal index exceeds the given size
@@ -103,11 +108,17 @@ private:
 			insertionOrder.push_back(k);
 		}
 
+		// Ensure '0' is included as the first index if it's missing
+		if (!insertionOrder.empty() && insertionOrder[0] != 0) {
+			insertionOrder.insert(insertionOrder.begin(), 0);
+		}
+
 		return insertionOrder;
 	}
 
 
 public:
+
 	void fordJohnsonSort(std::vector<int>& seq) {
 		if (seq.size() <= 1) return;
 		if (seq.size() == 2) {
@@ -115,65 +126,47 @@ public:
 			return;
 		}
 
+		// Step 1: Pair and sort
 		std::vector<int> smaller;
 		sortPairs(seq);
-		divideSequence(seq, smaller);  
+		divideSequence(seq, smaller);
 		fordJohnsonSort(seq);
 
-		std::vector<int> jacobsthalOrder = generateJacobsthalSeq(40);
-		std::cout << "\tJacobsthal sequence for insertion order: ";
-		printContainer(jacobsthalOrder);
-
+		// Step 2: Generate insertion order using Jacobsthal sequence
+		std::vector<int> jacobsthalOrder = generateJacobsthalSeq(smaller.size());
 		std::vector<int> insertionOrder = getInsertionOrder(jacobsthalOrder, smaller.size());
-		std::cout << "Insertion order: ";
+
+		std::cout << "\nLarger (main chain)    :\t";
+		printContainer(seq);		
+		std::cout << "Smaller (pend elements):\t";
+		printContainer(smaller);
+		std::cout << "Jacobsthal numbers     :\t";
+		printContainer(jacobsthalOrder);
+		std::cout << "Insertion indexes      :\t";
 		printContainer(insertionOrder);
 
-		std::vector<bool> inserted(smaller.size(), false);
-		
-		// Track the previous Jacobsthal index to manage interleaved insertion
-		for (size_t jIndex = 0; jIndex < jacobsthalOrder.size(); ++jIndex) {
-			size_t jacobIndex = jacobsthalOrder[jIndex];
-
-			// Insert the current Jacobsthal-indexed value if it's within bounds
-			if (jacobIndex < smaller.size() && !inserted[jacobIndex]) {
-				int value = smaller[jacobIndex];
-				size_t pos = binarySearch(seq, value, seq.size());
-				std::cout << "Inserting Jacobsthal-indexed smaller[" << jacobIndex << "] = " << value << " at position " << pos << std::endl;
-				insertElement(seq, value, pos);
-				inserted[jacobIndex] = true;
-			}
-
-			// Check if it's time to insert interleaved values between the last two Jacobsthal elements
-			if (jIndex > 0) {
-				size_t prevJacobIndex = jacobsthalOrder[jIndex - 1];
-				for (size_t k = prevJacobIndex + 1; k < jacobIndex && k < smaller.size(); ++k) {
-					if (!inserted[k]) {
-						int interleavedValue = smaller[k];
-						size_t pos = binarySearch(seq, interleavedValue, seq.size());
-						std::cout << "Inserting interleaved smaller[" << k << "] = " << interleavedValue << " at position " << pos << std::endl;
-						insertElement(seq, interleavedValue, pos);
-						inserted[k] = true;
-					}
-				}
-			}
-		}
-
-		// Insert any remaining unprocessed elements in reverse order if not yet inserted
-		for (int k = smaller.size() - 1; k >= 0; --k) {
-			if (!inserted[k]) {
-				int remainingValue = smaller[k];
-				size_t pos = binarySearch(seq, remainingValue, seq.size());
-				std::cout << "Inserting remaining smaller[" << k << "] = " << remainingValue << " at position " << pos << std::endl;
-				insertElement(seq, remainingValue, pos);
+		// Step 3: Insert smaller elements into seq based on insertionOrder
+		for (size_t i = 0; i < insertionOrder.size(); ++i) {
+			int insertIndex = insertionOrder[i];
+			if (insertIndex < smaller.size()) {
+				int valueToInsert = smaller[insertIndex];
+				size_t pos = binarySearch(seq, valueToInsert, seq.size());
+				insertElement(seq, valueToInsert, pos);
+				// debug
+				std::cout << "\n   Inserting value " << valueToInsert << " at position " << pos << std::endl;
+				std::cout << "      Updated larger sequence:\t";
+				printContainer(seq);
 			}
 		}
 	}
 };
 
 int main() {
-    std::vector<int> numbers = { 5, 3, 9, 2, 1, 7, 8, 10, 4, 6, 11, 12, 15, 19, 17, 13, 18, 20, 14, 16, 25, 29, 23, 21, 22, 28, 30, 24, 26, 27};
+
+    std::vector<int> numbers = { 5, 3, 9, 2, 1, 7, 8, 10, 4, 6};
     PmergeMe sorter;
     sorter.fordJohnsonSort(numbers);
+	std::cout << "\nSorted sequence: ";
     printContainer(numbers);
     return 0;
 }
