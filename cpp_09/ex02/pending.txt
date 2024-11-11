@@ -1,1 +1,2 @@
 - Refuse input sequences that hold a zero
+- Review generateJacobsthal()
