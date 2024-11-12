@@ -20,3 +20,29 @@ In C++, a **stream** is an abstraction for a sequence of characters that can be 
 	Streams allow you to use operators like **>> (extraction)** and **<< (insertion)** to read and write data.
 	The **>> operator** reads formatted input from the stream (like integers, words, or lines).
 	The **<< operator** writes formatted output to the stream.
+
+## Why lists are inefficient for binary searches?
+ 
+- Lack of Random Access:
+	Binary search requires jumping to the "middle" element repeatedly. Lists are linked structures, so you can’t directly access an element by index. To get to the middle, you’d have to step through each link starting from the beginning, which turns each step in binary search into a linear traversal. This eliminates the efficiency of binary search, which relies on being able to jump to any element quickly.
+
+- Time Complexity: 
+	In a vector or deque, binary search has a logarithmic time complexity, `O(log n)`, due to direct access. In a list, it effectively becomes `O(n log n)` because each "middle" element access is linear `(O(n))`, compounded by the log n divisions from binary search.
+
+ - Resource Consumption:
+	Because lists don’t have contiguous memory, there’s extra overhead in moving through nodes, which can be costly in terms of both time and memory usage.
+
+## Binary searches in vectors and deque lists
+
+In comparing binary search efficiency between std::vector and std::deque, std::vector is generally better suited. Here’s why:
+
+- Contiguous Memory Layout:
+	std::vector stores elements in a single contiguous block of memory, allowing efficient, direct access to elements by index. This layout enables binary search to quickly jump to the middle element, divide the range, and repeat as needed without needing additional traversal.
+
+- Random Access Iterators:
+	std::vector provides random access iterators, allowing vec[mid] to directly access the middle element. This property makes binary search faster and simpler with vectors.
+
+- Deque’s Split Memory Layout:
+	std::deque stores its elements in multiple non-contiguous memory blocks (or “chunks”). Although std::deque allows fast access to the front and back, it doesn’t support as efficient index-based access for intermediate elements, as each index access may require a lookup within the underlying chunks. This can make binary search slower in a std::deque.
+
+So, while you can perform binary search on both, std::vector is often more efficient due to its contiguous storage and true random access capabilities.

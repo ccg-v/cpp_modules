@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/11/02 11:31:18 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/11/12 18:10:32 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJ_DIR		=	obj/
 DEP_DIR		=	$(OBJ_DIR)
 
 # --- Files ------------------------------------------------------------------ #
-SRC_FILES	=	PmergeMe.cpp main.cpp
+SRC_FILES	=	PmergeMe.cpp Utils.cpp main.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
 DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 

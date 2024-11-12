@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/11 21:43:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/12 22:57:09 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PMERGEME_HPP
 
 #include <vector>
-#include <list>
+#include <deque>
 #include <iostream>	// for std::cout, std::cerr
 
 class PmergeMe {
@@ -22,20 +22,24 @@ class PmergeMe {
 	private:
 
 		std::vector<int>	_vec;
-		std::list<int>		_lst;
+		std::deque<int>		_deq;
 
 		/* --- Private methods ---------------------------------------------- */
 
 		// for a vector container
-		void 				sortPairs(std::vector<int>& seq);
-		void 				divideSequence(std::vector<int>& seq, std::vector<int>& smaller);
-		std::vector<int> 	generateJacobsthalSeq(size_t len);
-		size_t				binarySearch(const std::vector<int>& seq, int value, size_t end);
-		std::vector<int>	getInsertionOrder(const std::vector<int>& jacobsthalSeq, size_t size);
+		void 				sortPairs(std::vector<int> & seq);
+		void 				divideSequence(std::vector<int> & seq, std::vector<int> & smaller);
+		std::vector<int> 	buildJacobsthalVec(size_t len);
+		size_t				binarySearch(const std::vector<int> & seq, int value, size_t end);
+		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size);
 
-		// overloading for a list container
+		// overloading for a deque container
+		void				sortPairs(std::deque<int> & seq);
+		void				divideSequence(std::deque<int> & seq, std::deque<int> & smaller);
+		std::deque<int> 	buildJacobsthalDeq(size_t len);
+		size_t				binarySearch(const std::deque<int> & seq, int value, size_t end);
+		std::deque<int>		getInsertionOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
-		
 	public:
 
 		/* --- Orthodox Canonical Form -------------------------------------- */
@@ -48,11 +52,14 @@ class PmergeMe {
 		/* --- Getters ------------------------------------------------------ */
 
 		std::vector<int> & getVector();
-		std::list<int> & getList();
+		std::deque<int> & getDeque();
 
 	/* --- Public methods --------------------------------------------------- */
 
-		void	fordJohnsonSort(std::vector<int>& seq);
+		void	fordJohnsonSort(std::vector<int> & seq);
+
+		// overloading for a list container
+		void	fordJohnsonSort(std::deque<int> & seq);		
 };
 
 // Generic function to print container contents

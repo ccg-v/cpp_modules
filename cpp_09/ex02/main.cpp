@@ -6,52 +6,14 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/11 22:26:55 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/12 23:00:42 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-
-# include <iostream>	// For std::cout(), std::cerr()
-# include <sstream>		// For std::isstringstream()
-#include <vector>	
-#include <climits>		// For INT_MAX
-#include <cstdlib>   	// For std::strtol
-#include <cerrno>    	// For errno
-
-// bool	onlyWhitespace(std::string input) {
-// 	for (size_t i = 0; i < input.size(); i++) {
-// 		if (!isspace(input[i])) {
-// 			return false;
-// 		}
-// 	}
-// 	return true;
-// }
-
-// bool	isInteger(std::string element) {
-// 	// Convert element to an integer with range checking
-// 	char* end;
-// 	errno = 0;
-// 	long value = std::strtol(element.c_str(), &end, 10);
-
-// 	// Check for errors in conversion
-// 	if (errno == ERANGE || value > INT_MAX) {
-// 		return false;
-// 	}
-// 	return true;
-// }	
-
-// bool	isValidNumber(std::string & element) {
-//     // Check if the input contains only digits
-//     for (size_t i = 0; i < element.size(); ++i) {
-//         if (!isdigit(element[i])) {
-//             return false;
-//         }
-//     }
-// 	if (std::atoi(element.c_str()) > INT_MAX)
-// 		return false;
-//     return true;
-// }
+#include "Utils.hpp"
+#include <iostream>	// For std::cout(), std::cerr()
+#include <sstream>	// For std::istringstream()	
 
 int	fillContainers(PmergeMe & pmergeme, int argc, char **argv) {
     // Populate the containers with the sequence of integers
@@ -79,12 +41,12 @@ int	fillContainers(PmergeMe & pmergeme, int argc, char **argv) {
 
             // Add the integer to the containers
             pmergeme.getVector().push_back(atoi(element.c_str()));
-            pmergeme.getList().push_back(atoi(element.c_str()));
+            pmergeme.getDeque().push_back(atoi(element.c_str()));
         }
     }
 
     printContainer(pmergeme.getVector());
-    printContainer(pmergeme.getList());
+    printContainer(pmergeme.getDeque());
 
 	return 0;
 }
@@ -95,9 +57,14 @@ int main(int argc, char* argv[]) {
 	fillContainers(pmergeme, argc, argv);
 
     pmergeme.fordJohnsonSort(pmergeme.getVector());
-	std::cout << "\nSorted sequence: ";
+	std::cout << "\nSorted vector: ";
     printContainer(pmergeme.getVector());
-    return 0;
+
+	std::cout << "\n===========================================\n" << std::endl;
+
+	pmergeme.fordJohnsonSort(pmergeme.getDeque());
+	std::cout << "\nSorted deque: ";
+    printContainer(pmergeme.getDeque());
 
     return 0;
 }

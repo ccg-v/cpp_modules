@@ -6,11 +6,11 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:24:33 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/11 22:26:59 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:19:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <climits>		// For INT_MAX
+#include "Utils.hpp"
 
 bool	onlyWhitespace(std::string input) {
 	for (size_t i = 0; i < input.size(); i++) {
