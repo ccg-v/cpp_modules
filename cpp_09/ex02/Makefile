@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/11/12 18:10:32 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/11/13 18:15:13 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,20 @@ CC 			= 	c++
 FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address
 
 # --- Folders ---------------------------------------------------------------- #
+INC_DIR		=	inc/
+SRC_DIR		=	src/
 OBJ_DIR		=	obj/
 DEP_DIR		=	$(OBJ_DIR)
+
+# --- Includes --------------------------------------------------------------- #
+INCLUDES	=	-I $(INC_DIR)
 
 # --- Files ------------------------------------------------------------------ #
 SRC_FILES	=	PmergeMe.cpp Utils.cpp main.cpp
 OBJ_FILES	=	$(SRC_FILES:.cpp=.o)	# .cpp and .o are treated as literal strings
 DEP_FILES	=	$(OBJ_FILES:%.o=%.d)	# .o and .d are treated as patterns
 
-# --- Paths ------------------------------------------------------------------ #
+# --- Files full paths ------------------------------------------------------- #
 OBJ			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 DEP			=	$(addprefix $(DEP_DIR), $(DEP_FILES))
 
@@ -34,8 +39,8 @@ DEP			=	$(addprefix $(DEP_DIR), $(DEP_FILES))
 all: $(OBJ_DIR) $(NAME) 
 
 # --- Object build rules ----------------------------------------------------- #
-$(OBJ_DIR)%.o:%.cpp | $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
+	$(CC) $(FLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -44,7 +49,7 @@ $(OBJ_DIR):
 
 # --- Program build rules ---------------------------------------------------- #
 $(NAME): $(OBJ) Makefile
-	$(CC) $(FLAGS) $(OBJ) -o $@
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $@
 
 # --- Cleaning rules --------------------------------------------------------- #
 
