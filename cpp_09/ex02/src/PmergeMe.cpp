@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/12 22:56:33 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/13 22:27:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ void PmergeMe::divideSequence(std::vector<int> & seq, std::vector<int> & smaller
 
 	seq = larger;
 
-	std::cout << "larger  = ";
-	printContainer(seq);
-	std::cout << "smaller = ";
-	printContainer(smaller);
+	printContainer("larger  = ", seq);
+	printContainer("smaller = ", smaller);
 	std::cout << "--------------------------" << std::endl;
 }
 
@@ -107,43 +105,71 @@ size_t PmergeMe::binarySearch(const std::vector<int> & seq, int value, size_t en
 	return left;
 }
 
-std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size) {
-	std::vector<int> insertionOrder;
+// std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size) {
+// 	std::vector<int> insertionOrder;
 
-	// Add all Jacobsthal-indexed elements and interleave non-Jacobsthal elements in reverse order
-	for (size_t i = 0; i < jacobsthalSeq.size(); i++) {
-		size_t currentJacobIndex = jacobsthalSeq[i];
+// 	// Add all Jacobsthal-indexed elements and interleave non-Jacobsthal elements in reverse order
+// 	for (size_t i = 0; i < jacobsthalSeq.size(); i++) {
+// 		size_t currentJacobIndex = jacobsthalSeq[i];
 
-		// Stop if the current Jacobsthal index exceeds the given size
-		if (currentJacobIndex >= size) break;
+// 		// Stop if the current Jacobsthal index exceeds the given size
+// 		if (currentJacobIndex >= size) break;
 
-		// Add current Jacobsthal-indexed element
-		insertionOrder.push_back(currentJacobIndex);
+// 		// Add current Jacobsthal-indexed element
+// 		insertionOrder.push_back(currentJacobIndex);
 
-		// If there's a previous Jacobsthal index, add interleaved indices in reverse order
-		if (i > 0) {
-			size_t prevJacobIndex = jacobsthalSeq[i - 1];
-			for (size_t j = currentJacobIndex - 1; j > prevJacobIndex; --j) {
-				if (j < size) {
-					insertionOrder.push_back(j);
-				}
-			}
-		}
-	}
+// 		// If there's a previous Jacobsthal index, add interleaved indices in reverse order
+// 		if (i > 0) {
+// 			size_t prevJacobIndex = jacobsthalSeq[i - 1];
+// 			for (size_t j = currentJacobIndex - 1; j > prevJacobIndex; --j) {
+// 				if (j < size) {
+// 					insertionOrder.push_back(j);
+// 				}
+// 			}
+// 		}
+// 	}
 
-	// For any remaining values past the last Jacobsthal index, add them in reverse order
-	size_t lastJacobIndex = jacobsthalSeq.back();
-	for (size_t k = size - 1; k > lastJacobIndex; --k) {
-		insertionOrder.push_back(k);
-	}
+	// // For any remaining values past the last Jacobsthal index, add them in reverse order
+	// size_t lastJacobIndex = jacobsthalSeq.back();
+	// for (size_t k = size - 1; k > lastJacobIndex; --k) {
+	// 	insertionOrder.push_back(k);
+	// }
 
-	// Ensure '0' is included as the first index if it's missing
-	if (!insertionOrder.empty() && insertionOrder[0] != 0) {
-		insertionOrder.insert(insertionOrder.begin(), 0);
-	}
+	// // Ensure '0' is included as the first index if it's missing
+	// if (!insertionOrder.empty() && insertionOrder[0] != 0) {
+	// 	insertionOrder.insert(insertionOrder.begin(), 0);
+	// }
 
-	return insertionOrder;
+// 	return insertionOrder;
+// }
+
+std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthalOrder, size_t numElements) {
+    std::vector<int> insertionOrder;
+    std::vector<bool> included(numElements, false);  // Track included indices
+    size_t jIndex = 0;
+
+    // Add Jacobsthal indices to insertion order, ensuring each is within bounds
+    while (jIndex < jacobsthalOrder.size() && static_cast<size_t>(jacobsthalOrder[jIndex]) < numElements) {
+        if (!included[jacobsthalOrder[jIndex]]) {
+            insertionOrder.push_back(jacobsthalOrder[jIndex]);
+            included[jacobsthalOrder[jIndex]] = true;
+        }
+        ++jIndex;
+    }
+
+    // Fill in any remaining indices sequentially
+    for (size_t i = 0; i < numElements; ++i) {
+        if (!included[i]) {
+            insertionOrder.push_back(i);
+std::cout << "##### Inserting " << i << std::endl;
+            included[i] = true;
+        }
+std::cout << "[" << i << "] ";
+    }
+
+    return insertionOrder;
 }
+
 
 void	PmergeMe::fordJohnsonSort(std::vector<int> & seq) {
 	if (seq.size() <= 1)
@@ -164,14 +190,10 @@ void	PmergeMe::fordJohnsonSort(std::vector<int> & seq) {
 	std::vector<int> jacobsthalOrder = buildJacobsthalVec(smaller.size());
 	std::vector<int> insertionOrder = getInsertionOrder(jacobsthalOrder, smaller.size());
 
-	std::cout << "\nLarger (main chain)    :\t";
-	printContainer(seq);		
-	std::cout << "Smaller (pend elements):\t";
-	printContainer(smaller);
-	std::cout << "Jacobsthal numbers     :\t";
-	printContainer(jacobsthalOrder);
-	std::cout << "Insertion indexes      :\t";
-	printContainer(insertionOrder);
+	printContainer("\nLarger (main chain)    :\t", seq);		
+	printContainer("Smaller (pend elements):\t", smaller);
+	printContainer("Jacobsthal numbers     :\t", jacobsthalOrder);
+	printContainer("Insertion indexes      :\t", insertionOrder);
 
 	// Step 3: Insert smaller elements into seq based on insertionOrder
 	for (size_t i = 0; i < insertionOrder.size(); ++i) {
@@ -179,12 +201,10 @@ void	PmergeMe::fordJohnsonSort(std::vector<int> & seq) {
 		if (insertIndex < smaller.size()) {
 			int valueToInsert = smaller[insertIndex];
 			size_t position = binarySearch(seq, valueToInsert, seq.size());
-			// insertElement(seq, valueToInsert, pos);
 			seq.insert((seq.begin() + position), valueToInsert);
 			// debug
 			std::cout << "\n   Inserting value " << valueToInsert << " at position " << position << std::endl;
-			std::cout << "      Updated larger sequence:\t";
-			printContainer(seq);
+			printContainer("      Updated larger sequence:\t", seq);
 		}
 	}
 }
@@ -222,10 +242,8 @@ void PmergeMe::divideSequence(std::deque<int> & seq, std::deque<int> & smaller) 
 
 	seq = larger;
 
-	std::cout << "larger  = ";
-	printContainer(seq);
-	std::cout << "smaller = ";
-	printContainer(smaller);
+	printContainer("larger  = ", seq);
+	printContainer("smaller = ", smaller);
 	std::cout << "--------------------------" << std::endl;
 }
 
@@ -319,14 +337,10 @@ void	PmergeMe::fordJohnsonSort(std::deque<int> & seq) {
 	std::deque<int> jacobsthalOrder = buildJacobsthalDeq(smaller.size());
 	std::deque<int> insertionOrder = getInsertionOrder(jacobsthalOrder, smaller.size());
 
-	std::cout << "\nLarger (main chain)    :\t";
-	printContainer(seq);		
-	std::cout << "Smaller (pend elements):\t";
-	printContainer(smaller);
-	std::cout << "Jacobsthal numbers     :\t";
-	printContainer(jacobsthalOrder);
-	std::cout << "Insertion indexes      :\t";
-	printContainer(insertionOrder);
+	printContainer("\nLarger (main chain)    :\t", seq);		
+	printContainer("Smaller (pend elements):\t", smaller);
+	printContainer("Jacobsthal numbers     :\t", jacobsthalOrder);
+	printContainer("Insertion indexes      :\t", insertionOrder);
 
 	// Step 3: Insert smaller elements into seq based on insertionOrder
 	for (size_t i = 0; i < insertionOrder.size(); ++i) {
@@ -338,8 +352,7 @@ void	PmergeMe::fordJohnsonSort(std::deque<int> & seq) {
 			seq.insert((seq.begin() + position), valueToInsert);
 			// debug
 			std::cout << "\n   Inserting value " << valueToInsert << " at position " << position << std::endl;
-			std::cout << "      Updated larger sequence:\t";
-			printContainer(seq);
+			printContainer("      Updated larger sequence:\t", seq);
 		}
 	}
 }

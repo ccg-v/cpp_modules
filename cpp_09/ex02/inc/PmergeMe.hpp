@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/12 22:57:09 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/13 22:06:27 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ class PmergeMe {
 		void 				divideSequence(std::vector<int> & seq, std::vector<int> & smaller);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				binarySearch(const std::vector<int> & seq, int value, size_t end);
-		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size);
-
+		// std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size);
+std::vector<int> getInsertionOrder(const std::vector<int>& jacobsthalOrder, size_t numElements);
 		// overloading for a deque container
 		void				sortPairs(std::deque<int> & seq);
 		void				divideSequence(std::deque<int> & seq, std::deque<int> & smaller);
@@ -64,9 +64,9 @@ class PmergeMe {
 
 // Generic function to print container contents
 template <typename T>
-void printContainer(const T& container) {
+void printContainer(const std::string msg, const T& container) {
 	if (container.size() > 0) {
-		std::cout << "{ ";
+		std::cout << msg << "{ ";
 		for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
 			std::cout << *it << " ";
 		}

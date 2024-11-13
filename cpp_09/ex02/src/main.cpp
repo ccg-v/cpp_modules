@@ -6,17 +6,17 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/12 23:00:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/13 21:26:19 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include "Utils.hpp"
 #include <iostream>	// For std::cout(), std::cerr()
-#include <sstream>	// For std::istringstream()	
+#include <sstream>	// For std::istringstream()
+#include <ctime>	// For clock()
 
 int	fillContainers(PmergeMe & pmergeme, int argc, char **argv) {
-    // Populate the containers with the sequence of integers
     for (int i = 1; i < argc; ++i) {
         std::string input = argv[i];
 
@@ -44,10 +44,6 @@ int	fillContainers(PmergeMe & pmergeme, int argc, char **argv) {
             pmergeme.getDeque().push_back(atoi(element.c_str()));
         }
     }
-
-    printContainer(pmergeme.getVector());
-    printContainer(pmergeme.getDeque());
-
 	return 0;
 }
 
@@ -56,15 +52,26 @@ int main(int argc, char* argv[]) {
 
 	fillContainers(pmergeme, argc, argv);
 
+	printContainer("Before:  ", pmergeme.getVector());
+	clock_t	vecStart = clock();
     pmergeme.fordJohnsonSort(pmergeme.getVector());
-	std::cout << "\nSorted vector: ";
-    printContainer(pmergeme.getVector());
+	clock_t vecEnd = clock();
+    printContainer("After :  ", pmergeme.getVector());
 
-	std::cout << "\n===========================================\n" << std::endl;
+	// std::cout << "\n===========================================\n" << std::endl;
 
-	pmergeme.fordJohnsonSort(pmergeme.getDeque());
-	std::cout << "\nSorted deque: ";
-    printContainer(pmergeme.getDeque());
+	// clock_t	deqStart = clock();
+	// pmergeme.fordJohnsonSort(pmergeme.getDeque());
+	// clock_t	deqEnd = clock();
+    // // printContainer("\nSorted deque: ", pmergeme.getDeque());
+
+	double vecTime = (static_cast<double>(vecEnd - vecStart) / CLOCKS_PER_SEC) * 1000000;
+	// double deqTime = (static_cast<double>(deqEnd - deqStart) / CLOCKS_PER_SEC) * 1000000;	
+
+	std::cout << "Time to process a range of " << pmergeme.getVector().size() << " elements with std::vector : " << vecTime << std::endl;
+	// std::cout << "Time to process a range of " << pmergeme.getDeque().size() << " elements with std::deque  : " << deqTime << std::endl;
+
+
 
     return 0;
 }
