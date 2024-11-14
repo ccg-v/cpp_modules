@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/13 22:27:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:03:58 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthal
         if (!included[i]) {
             insertionOrder.push_back(i);
 std::cout << "##### Inserting " << i << std::endl;
+printContainer("included = ", included);
             included[i] = true;
         }
 std::cout << "[" << i << "] ";

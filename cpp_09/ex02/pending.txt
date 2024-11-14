@@ -3,6 +3,5 @@
 - Verbose mode
 - Binary search optimization
 - Implement watch
-- Source/include folders
 - Move fillContainers()?
 - error treatment: exceptions?
