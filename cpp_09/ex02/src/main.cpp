@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/16 13:40:13 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/16 14:09:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 int main(int argc, char* argv[]) {
 
 	try {
-		
 		if (argc > 1) {
 			PmergeMe pmergeme;
 			

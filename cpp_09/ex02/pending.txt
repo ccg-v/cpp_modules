@@ -3,5 +3,4 @@
 - Verbose mode
 - Binary search optimization
 - Implement watch
-- error treatment: exceptions?
 - straggler
