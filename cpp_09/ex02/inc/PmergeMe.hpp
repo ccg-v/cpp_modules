@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/13 22:06:27 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/16 13:27:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <vector>
 #include <deque>
 #include <iostream>	// for std::cout, std::cerr
+#include <sstream>	// for std::istringstream()
+#include "Utils.hpp"
 
 class PmergeMe {
 
@@ -31,8 +33,8 @@ class PmergeMe {
 		void 				divideSequence(std::vector<int> & seq, std::vector<int> & smaller);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				binarySearch(const std::vector<int> & seq, int value, size_t end);
-		// std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t size);
-std::vector<int> getInsertionOrder(const std::vector<int>& jacobsthalOrder, size_t numElements);
+		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
+
 		// overloading for a deque container
 		void				sortPairs(std::deque<int> & seq);
 		void				divideSequence(std::deque<int> & seq, std::deque<int> & smaller);
@@ -56,6 +58,7 @@ std::vector<int> getInsertionOrder(const std::vector<int>& jacobsthalOrder, size
 
 	/* --- Public methods --------------------------------------------------- */
 
+		void	fillContainers(int argc, char** argv);
 		void	fordJohnsonSort(std::vector<int> & seq);
 
 		// overloading for a list container

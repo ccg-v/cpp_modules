@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:24:33 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/12 18:19:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:49:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,21 @@ bool	onlyWhitespace(std::string input) {
 	return true;
 }
 
-bool	isInteger(std::string element) {
+bool	isPositiveNumber(std::string & element) {
+    // Check if the input contains only digits
+    for (size_t i = 0; i < element.size(); ++i) {
+		if (element[i] == '+')
+			i++;
+        if (!isdigit(element[i]) || element[i] == '0') {
+            return false;
+        }
+    }
+	if (std::atoi(element.c_str()) > INT_MAX)
+		return false;
+    return true;
+}
+
+bool	isIntegerRange(std::string element) {
 	// Convert element to an integer with range checking
 	char* end;
 	errno = 0;
@@ -32,16 +46,29 @@ bool	isInteger(std::string element) {
 		return false;
 	}
 	return true;
-}	
-
-bool	isValidNumber(std::string & element) {
-    // Check if the input contains only digits
-    for (size_t i = 0; i < element.size(); ++i) {
-        if (!isdigit(element[i])) {
-            return false;
-        }
-    }
-	if (std::atoi(element.c_str()) > INT_MAX)
-		return false;
-    return true;
 }
+
+bool isSorted(const std::vector<int> & vec) {
+    return std::adjacent_find(vec.begin(), vec.end(), std::greater<int>()) == vec.end();
+}
+
+/*
+ *	bool isSorted(const std::vector<int>& vec) {
+ *		for (size_t i = 1; i < vec.size(); ++i) {
+ *			if (vec[i] < vec[i - 1]) {
+ *				return false;
+ *			}
+ *		}
+ *		return true;
+ *	}
+ *
+ *
+ *	bool isSorted(const std::vector<int>& vec) {
+ *		for (std::vector<int>::const_iterator it = vec.begin() + 1; it != vec.end(); ++it) {
+ *			if (*it < *(it - 1)) {
+ *				return false;
+ *			}
+ *		}
+ *		return true;
+ *	}
+ */

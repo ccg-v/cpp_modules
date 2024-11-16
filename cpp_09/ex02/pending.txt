@@ -1,7 +1,7 @@
-- Refuse input sequences that hold a zero
+
 - Review generateJacobsthal()
 - Verbose mode
 - Binary search optimization
 - Implement watch
-- Move fillContainers()?
 - error treatment: exceptions?
+- straggler
