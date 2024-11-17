@@ -1,49 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/17 11:20:00 by ccarrace         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "PmergeMe.hpp"
-
-/* --- Orthodox Canonical Form ---------------------------------------------- */
-
-// Default constructor
-PmergeMe::PmergeMe() {}
-
-// Copy constructor
-PmergeMe::PmergeMe(const PmergeMe & source) : _vec(source._vec), _deq(source._deq) {}
-
-// Copy assignment operator
-PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
-	if (this != &source) {
-		this->_vec = source._vec;
-		this->_deq = source._deq;
-	}
-	return *this;
-}
-
-// Default destructor
-PmergeMe::~PmergeMe() {}
-
-/* --- Getters -------------------------------------------------------------- */
-
-std::vector<int> & PmergeMe::getVector() {
-	return this->_vec;
-}
-
-std::deque<int> & PmergeMe::getDeque() {
-	return this->_deq;
-}
-
-/* --- Common member methods ------------------------------------------------------ */
-
 void	PmergeMe::fillContainers(int argc, char** argv) {
 	for (int i = 1; i < argc; ++i) {
 		std::string input = argv[i];
@@ -74,8 +28,6 @@ void	PmergeMe::fillContainers(int argc, char** argv) {
 		throw std::runtime_error("Error: sequence is already sorted.");
 	}
 }
-
-/* --- Member methods for a VECTOR container ------------------------------- */
 
 void	PmergeMe::sortPairs(std::vector<int> & seq) {
 	if (seq.size() <= 1)
@@ -167,21 +119,9 @@ std::cout << "SMALLERSIZE = " << smallerSize << std::endl;
             inserted[boundary] = true;
         }
 
-//         // Insert interleaved indices between `current` and `boundary`
-//         for (size_t j = current; j < static_cast<size_t>(boundary); ++j) {
-// std::cout << "\t\t\t\tj = " << j << " | current = " << current << " | boundary = " << boundary << std::endl;
-//             if (!inserted[j]) {
-// std::cout << "\t\t\t\tinserting " << j << std::endl;	
-//                 result.push_back(j);
-//                 inserted[j] = true;
-//             }
-//         }
-
         // Insert interleaved indices between `current` and `boundary` in descending order
         for (size_t j = boundary; j >= static_cast<size_t>(current); --j) {
-// std::cout << "\t\t\t\tcurrent = " << current << " | boundary = " << boundary << std::endl;
-            if (!inserted[j]) {
-// std::cout << "\t\t\t\tinserting " << j << std::endl;				
+            if (!inserted[j]) {		
                 result.push_back(j);
                 inserted[j] = true;
             }
@@ -190,16 +130,7 @@ std::cout << "SMALLERSIZE = " << smallerSize << std::endl;
         current = boundary + 1; // Move to the next range
     }
 
-//     // Add any remaining indices after the last Jacobsthal boundary
-//     for (size_t i = current; i < smallerSize; ++i) {
-// std::cout << "\t\t\t\tcurrent = " << i << " | smallerSize = " << smallerSize << std::endl;
-//         if (!inserted[i]) {
-//             result.push_back(i);
-//         }
-//     }
-
     for (size_t i = smallerSize; i > current; --i) {
-std::cout << "\t\t\t\tcurrent = " << i << " | smallerSize = " << smallerSize << std::endl;
         if (!inserted[i]) {
             result.push_back(i);
         }
@@ -227,11 +158,6 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &seq) {
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(smaller.size());
     std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, smaller.size());
 
-	printContainer("\tLarger sequence  = ", seq);
-	printContainer("\tSmaller sequence = ", smaller);
-	printContainer("\tJacobthal sequence = ", jacobsthalSeq);
-	printContainer("\tInsertion indexes  = ", insertionIndexes);
-
     // Step 3: Insert smaller elements into seq based on insertionIndexes
     std::vector<bool> inserted(smaller.size(), false); // Track inserted elements
     for (size_t i = 0; i < insertionIndexes.size(); ++i) {
@@ -239,13 +165,7 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &seq) {
         if (insertIndex < smaller.size() && !inserted[insertIndex]) {
             int valueToInsert = smaller[insertIndex];
             size_t position = binarySearch(seq, valueToInsert, seq.size());
-
-            // Debugging
-            std::cout << "Inserting smaller[" << insertionIndexes[i] << "] = " << valueToInsert << " at larger[" << position << "]" << std::endl;
-
             seq.insert((seq.begin() + position), valueToInsert);
-            printContainer("Debug seq after insertion = ", seq);
-
             inserted[insertIndex] = true;
         }
     }
@@ -255,12 +175,30 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &seq) {
         if (!inserted[i]) {
             int valueToInsert = smaller[i];
             size_t position = binarySearch(seq, valueToInsert, seq.size());
-
-            // Debugging
-            std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
-
             seq.insert((seq.begin() + position), valueToInsert);
-            printContainer("Debug seq after remaining insertion = ", seq);
         }
     }
+}
+
+int main(int argc, char* argv[]) {
+
+	try {
+		if (argc > 1) {
+			PmergeMe pmergeme;
+			
+			pmergeme.fillContainers(argc, argv);
+			
+			printContainer("Before:  ", pmergeme.getVector());
+			pmergeme.fordJohnsonSort(pmergeme.getVector());
+			printContainer("After :  ", pmergeme.getVector());
+
+		} else {
+			throw std::runtime_error("Error: Wrong number of arguments");			
+		}
+	} catch (const std::runtime_error & e) {
+		std::cerr << e.what() << std::endl;
+		return 1;
+	}
+
+    return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:24:33 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/16 12:49:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/17 11:44:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ bool	onlyWhitespace(std::string input) {
 bool	isPositiveNumber(std::string & element) {
     // Check if the input contains only digits
     for (size_t i = 0; i < element.size(); ++i) {
-		if (element[i] == '+')
-			i++;
-        if (!isdigit(element[i]) || element[i] == '0') {
+        if (!isdigit(element[i])) {
             return false;
         }
     }
-	if (std::atoi(element.c_str()) > INT_MAX)
+	if (std::atoi(element.c_str()) == 0)
 		return false;
     return true;
 }

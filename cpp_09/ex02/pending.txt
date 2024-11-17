@@ -4,3 +4,4 @@
 - Binary search optimization
 - Implement watch
 - straggler
+- track comparisons

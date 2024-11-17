@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/16 14:09:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/17 11:12:12 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ class PmergeMe {
 		/* --- Private methods ---------------------------------------------- */
 
 		// for a vector container
+
+struct 	ComparePairs;
+
 		void 				sortPairs(std::vector<int> & seq);
 		void 				divideSequence(std::vector<int> & seq, std::vector<int> & smaller);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
