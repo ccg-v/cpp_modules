@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/16 14:09:17 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/17 22:09:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,30 @@ int main(int argc, char* argv[]) {
 			
 			pmergeme.fillContainers(argc, argv);
 			
-			printContainer("Before:  ", pmergeme.getVector());
-			clock_t	vecStart = clock();
-			pmergeme.fordJohnsonSort(pmergeme.getVector());
-			clock_t vecEnd = clock();
-			printContainer("After :  ", pmergeme.getVector());
+			printContainer("Before:  ", pmergeme.getPairedVector());
 
-			// std::cout << "\n===========================================\n" << std::endl;
+			pmergeme.setVectorStraggler(pmergeme.getPairedVector());
 
-			// clock_t	deqStart = clock();
-			// pmergeme.fordJohnsonSort(pmergeme.getDeque());
-			// clock_t	deqEnd = clock();
-			// // printContainer("\nSorted deque: ", pmergeme.getDeque());
+			std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+			
+			printContainer("After:  ", pmergeme.getPairedVector());			
+			// clock_t	vecStart = clock();
+			pmergeme.fordJohnsonSort(pmergeme.getPairedVector());
+			// clock_t vecEnd = clock();
+			// printContainer("After :  ", pmergeme.getVector());
 
-			double vecTime = (static_cast<double>(vecEnd - vecStart) / CLOCKS_PER_SEC) * 1000000;
-			// double deqTime = (static_cast<double>(deqEnd - deqStart) / CLOCKS_PER_SEC) * 1000000;	
+			// // std::cout << "\n===========================================\n" << std::endl;
 
-			std::cout << "Time to process a range of " << pmergeme.getVector().size() << " elements with std::vector : " << vecTime << std::endl;
-			// std::cout << "Time to process a range of " << pmergeme.getDeque().size() << " elements with std::deque  : " << deqTime << std::endl;
+			// // clock_t	deqStart = clock();
+			// // pmergeme.fordJohnsonSort(pmergeme.getDeque());
+			// // clock_t	deqEnd = clock();
+			// // // printContainer("\nSorted deque: ", pmergeme.getDeque());
+
+			// double vecTime = (static_cast<double>(vecEnd - vecStart) / CLOCKS_PER_SEC) * 1000000;
+			// // double deqTime = (static_cast<double>(deqEnd - deqStart) / CLOCKS_PER_SEC) * 1000000;	
+
+			// std::cout << "Time to process a range of " << pmergeme.getVector().size() << " elements with std::vector : " << vecTime << std::endl;
+			// // std::cout << "Time to process a range of " << pmergeme.getDeque().size() << " elements with std::deque  : " << deqTime << std::endl;
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}

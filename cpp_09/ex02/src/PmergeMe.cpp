@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/17 11:20:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/17 23:02:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PmergeMe::PmergeMe() {}
+PmergeMe::PmergeMe() : _vecStraggler(0) {}
 
 // Copy constructor
-PmergeMe::PmergeMe(const PmergeMe & source) : _vec(source._vec), _deq(source._deq) {}
+PmergeMe::PmergeMe(const PmergeMe & source) 
+	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), _vecStraggler(source._vecStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 	if (this != &source) {
-		this->_vec = source._vec;
-		this->_deq = source._deq;
+		this->_pairedVector = source._pairedVector;
+		this->_deqPairs = source._deqPairs;
+		this->_vecStraggler = source._vecStraggler;
 	}
 	return *this;
 }
@@ -34,20 +36,67 @@ PmergeMe::~PmergeMe() {}
 
 /* --- Getters -------------------------------------------------------------- */
 
-std::vector<int> & PmergeMe::getVector() {
-	return this->_vec;
+std::vector<t_pair> & PmergeMe::getPairedVector() {
+	return this->_pairedVector;
 }
 
-std::deque<int> & PmergeMe::getDeque() {
-	return this->_deq;
+std::deque<t_pair> & PmergeMe::getPairedDeque() {
+	return this->_deqPairs;
 }
 
-/* --- Common member methods ------------------------------------------------------ */
+int	PmergeMe::getVectorStraggler() {
+	return this->_vecStraggler;
+}
 
-void	PmergeMe::fillContainers(int argc, char** argv) {
+/* --- Setters -------------------------------------------------------------- */
+
+void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
+	// _vecStraggler = 0;
+	if (pairedSeq.back()._smaller == -1) {
+		_vecStraggler = pairedSeq.back()._larger;
+		pairedSeq.pop_back();
+	}
+}
+
+/* --- Common member methods ------------------------------------------------ */
+
+// void	PmergeMe::fillContainers(int argc, char** argv) {
+// 	for (int i = 1; i < argc; ++i) {
+// 		std::string input = argv[i];
+
+// 		if (input.empty() || onlyWhitespace(input)) {
+// 			throw std::runtime_error("Error: input is empty.");
+// 		}
+
+// 		std::istringstream argStream(input);
+// 		std::string element;
+
+// 		while (argStream >> element) {
+// 			if (!isPositiveNumber(element)) {
+// 				throw std::runtime_error("Error: sequence must be made up of positive integers.");
+// 			}
+
+// 			if (!isIntegerRange(element)) {
+// 				throw std::runtime_error("Error: value out of integer's range found.");
+// 			}
+
+// 			int value = atoi(element.c_str());
+// 			_vec.push_back(value);
+// 			_deq.push_back(value);
+// 		}
+// 	}
+
+// 	if (isSorted(_vec)) {
+// 		throw std::runtime_error("Error: sequence is already sorted.");
+// 	}
+// }
+
+void PmergeMe::fillContainers(int argc, char** argv) {
+
 	for (int i = 1; i < argc; ++i) {
+		// input validation
 		std::string input = argv[i];
-
+		
 		if (input.empty() || onlyWhitespace(input)) {
 			throw std::runtime_error("Error: input is empty.");
 		}
@@ -65,46 +114,96 @@ void	PmergeMe::fillContainers(int argc, char** argv) {
 			}
 
 			int value = atoi(element.c_str());
-			_vec.push_back(value);
-			_deq.push_back(value);
+
+			if (_pairedVector.empty() || _pairedVector.back()._smaller != -1) {
+				// Start new pair
+				t_pair newPair;
+				newPair._larger = value;
+				newPair._smaller = -1;  // Mark as incomplete
+				_pairedVector.push_back(newPair);
+			} else {
+				// Complete existing pair
+				if (value > _pairedVector.back()._larger) {
+					_pairedVector.back()._smaller = _pairedVector.back()._larger;
+					_pairedVector.back()._larger = value;
+				} else {
+					_pairedVector.back()._smaller = value;
+				}
+			}
+			// _deq.push_back(value);  // Keep this if you still want it
+
 		}
 	}
-
-	if (isSorted(_vec)) {
-		throw std::runtime_error("Error: sequence is already sorted.");
-	}
+	
+	// // Handle odd length (last pair might be incomplete)
+	// int	straggler = 0;
+	// if (_pairedVector.back()._smaller == -1) {
+	// 	_pairedVector.back()._smaller = _pairedVector.back()._larger;
+	// }
 }
+
+// void	PmergeMe::setStraggler(std::vector<t_pair> & pairedSeq) {
+
+// 	if (pairedSeq.back()._smaller == -1) {
+// 		_vecStraggler = pairedSeq.back()._larger;
+// 		pairedSeq.pop_back();
+// 	}
+// 	// return straggler;
+// }
 
 /* --- Member methods for a VECTOR container ------------------------------- */
 
-void	PmergeMe::sortPairs(std::vector<int> & seq) {
-	if (seq.size() <= 1)
+// void	PmergeMe::sortPairs(std::vector<t_pair> & seq) {
+// 	if (seq.size() <= 1)
+// 		return;
+// 	for (size_t i = 0; i < seq.size() - 1; i += 2) {
+// 		if (seq[i] > seq[i + 1]) {
+// 			std::swap(seq[i], seq[i + 1]);
+// 		}
+// 	}
+// }
+
+void	PmergeMe::sortPairs(std::vector<t_pair> & pairedSeq) {
+	if (pairedSeq.size() <= 1)
 		return;
-	for (size_t i = 0; i < seq.size() - 1; i += 2) {
-		if (seq[i] > seq[i + 1]) {
-			std::swap(seq[i], seq[i + 1]);
+	for (size_t i = 0; i < pairedSeq.size() - 1; i += 2) {
+		if (pairedSeq[i]._smaller > pairedSeq[i]._larger) {
+			std::swap(pairedSeq[i]._smaller, pairedSeq[i]._larger);
 		}
 	}
 }
 
-void	PmergeMe::divideSequence(std::vector<int> &seq, std::vector<int> &smaller) {
-    if (seq.size() <= 1) 
+void	PmergeMe::sortSeqByPairs(std::vector<t_pair>& pairedSeq) {
+	// Sort pairs based on larger value
+	for (size_t i = 0; i < pairedSeq.size() - 1; i++) {
+		for (size_t j = 0; j < pairedSeq.size() - i - 1; j++) {
+			if (pairedSeq[j]._larger > pairedSeq[j + 1]._larger) {
+				// Pair temp = pairedSeq[j];
+				// pairedSeq[j] = pairedSeq[j + 1];
+				// pairedSeq[j + 1] = temp;
+				std::swap(pairedSeq[j]._larger, pairedSeq[j + 1]._larger);
+			}
+		}
+	}
+}
+
+void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
+    if (pairedSeq.size() <= 1) 
         return;
-
-    std::vector<int> larger;
-    for (size_t i = 0; i < seq.size() - 1; i += 2) {
-        smaller.push_back(seq[i]);
-        larger.push_back(seq[i + 1]);
+std::cout << "pairedSeq.size() = " << pairedSeq.size() << std::endl; 
+    for (size_t i = 0; i < pairedSeq.size(); i++) {
+std::cout << "inserting pairedSeq[" << i << "]" << std::endl;
+        mainChain.push_back(pairedSeq[i]._larger);
+		pending.push_back(pairedSeq[i]._smaller); 
     }
-    if (seq.size() % 2 == 1) {
-        larger.push_back(seq.back());
-    }
-
-    seq = larger;
+	// // STRAGGLER (No porque lo que encuentra es un solo par, no un solo numero; el par puede tener uno o dos elementos)
+    // if (pairedSeq.size() % 2 == 1) {
+    //     mainChain.push_back(pairedSeq.back());
+    // }
 
     // Debugging
-    printContainer("Debug larger  = ", seq);
-    printContainer("Debug smaller = ", smaller);
+    printContainer("Debug main chain = ", mainChain);
+    printContainer("Debug pending    = ", pending);
 }
 
 
@@ -129,7 +228,7 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
 size_t PmergeMe::binarySearch(const std::vector<int> & seq, int value, size_t end) {
     size_t left = 0;
     size_t right = end;
-    while (left < right) {
+    while (left < right) { 
         size_t mid = (left + right) / 2;
         if (seq[mid] > value)
             right = mid;
@@ -208,59 +307,68 @@ std::cout << "\t\t\t\tcurrent = " << i << " | smallerSize = " << smallerSize << 
     return result;
 }
 
-void PmergeMe::fordJohnsonSort(std::vector<int> &seq) {
-    if (seq.size() <= 1)
+void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
+    if (pairedSeq.size() <= 1)
         return;
-    if (seq.size() == 2) {
-        if (seq[0] > seq[1])
-            std::swap(seq[0], seq[1]);
-        return;
-    }
+    // if (pairedSeq.size() == 2) {
+    //     if (seq[0] > seq[1])
+    //         std::swap(seq[0], seq[1]);
+    //     return;
+    // }
 
     // Step 1: Pair and sort
-    std::vector<int> smaller;
-    sortPairs(seq);
-    divideSequence(seq, smaller);
-    fordJohnsonSort(seq);
+    std::vector<int> pending;
+	std::vector<int> mainChain;
+
+    sortPairs(pairedSeq);
+	fordJohnsonSort(pairedSeq);
+    divideSequence(pairedSeq, pending, mainChain);
+    // fordJohnsonSort(pairedSeq);
 
     // Step 2: Generate insertion order using Jacobsthal sequence
-    std::vector<int> jacobsthalSeq = buildJacobsthalVec(smaller.size());
-    std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, smaller.size());
+    std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
+    std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
 
-	printContainer("\tLarger sequence  = ", seq);
-	printContainer("\tSmaller sequence = ", smaller);
-	printContainer("\tJacobthal sequence = ", jacobsthalSeq);
-	printContainer("\tInsertion indexes  = ", insertionIndexes);
+	printContainer("\tpaired vector      = ", pairedSeq);
+	printContainer("\tMain chain        = ", mainChain);
+	printContainer("\tPending           = ", pending);
+	printContainer("\tJacobthal nums    = ", jacobsthalSeq);
+	printContainer("\tInsertion indexes = ", insertionIndexes);
 
-    // Step 3: Insert smaller elements into seq based on insertionIndexes
-    std::vector<bool> inserted(smaller.size(), false); // Track inserted elements
-    for (size_t i = 0; i < insertionIndexes.size(); ++i) {
-        size_t insertIndex = insertionIndexes[i];
-        if (insertIndex < smaller.size() && !inserted[insertIndex]) {
-            int valueToInsert = smaller[insertIndex];
-            size_t position = binarySearch(seq, valueToInsert, seq.size());
+    // // Step 3: Insert smaller elements into seq based on insertionIndexes
+    // std::vector<bool> inserted(pending.size(), false); // Track inserted elements
+    // for (size_t i = 0; i < insertionIndexes.size(); ++i) {
+    //     size_t insertIndex = insertionIndexes[i];
+    //     if (insertIndex < pending.size() && !inserted[insertIndex]) {
+    //         int valueToInsert = pending[insertIndex];
+    //         size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
-            // Debugging
-            std::cout << "Inserting smaller[" << insertionIndexes[i] << "] = " << valueToInsert << " at larger[" << position << "]" << std::endl;
+    //         // Debugging
+    //         std::cout << "Inserting smaller[" << insertionIndexes[i] << "] = " << valueToInsert << " at larger[" << position << "]" << std::endl;
 
-            seq.insert((seq.begin() + position), valueToInsert);
-            printContainer("Debug seq after insertion = ", seq);
+    //         mainChain.insert((mainChain.begin() + position), valueToInsert);
+    //         printContainer("Debug seq after insertion = ", mainChain);
 
-            inserted[insertIndex] = true;
-        }
-    }
+    //         inserted[insertIndex] = true;
+    //     }
+    // }
 
-    // Step 4: Insert any remaining elements from smaller
-    for (size_t i = 0; i < smaller.size(); ++i) {
-        if (!inserted[i]) {
-            int valueToInsert = smaller[i];
-            size_t position = binarySearch(seq, valueToInsert, seq.size());
+    // // Step 4: Insert any remaining elements from smaller
+    // for (size_t i = 0; i < pending.size(); ++i) {
+    //     if (!inserted[i]) {
+    //         int valueToInsert = pending[i];
+    //         size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
-            // Debugging
-            std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
+    //         // Debugging
+    //         std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
 
-            seq.insert((seq.begin() + position), valueToInsert);
-            printContainer("Debug seq after remaining insertion = ", seq);
-        }
-    }
+    //         mainChain.insert((mainChain.begin() + position), valueToInsert);
+    //         printContainer("Debug seq after remaining insertion = ", mainChain);
+    //     }
+    // }
+}
+
+std::ostream& operator<<(std::ostream& os, const t_pair& pair) {
+    os << "(" << pair._larger << ", " << pair._smaller << ")";
+    return os;
 }
