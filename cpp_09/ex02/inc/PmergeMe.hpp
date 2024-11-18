@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/17 21:26:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/18 23:29:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class PmergeMe {
 
 		void 				sortPairs(std::vector<t_pair> & pairedSeq);
 		void				sortSeqByPairs(std::vector<t_pair>& pairedSeq);
-		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
+		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				binarySearch(const std::vector<int> & seq, int value, size_t end);
 		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
@@ -61,18 +61,18 @@ class PmergeMe {
 
 		/* --- Getters ------------------------------------------------------ */
 
-		std::vector<t_pair> & getPairedVector();
-		std::deque<t_pair> & getPairedDeque();
+		std::vector<t_pair> & getPairSortedVector();
+		std::deque<t_pair> & getPairSortedDeque();
 		int		getVectorStraggler();			
 
 		/* --- Setters ------------------------------------------------------ */
 
+		void	setPairSortedVector(int value);
 		void	setVectorStraggler(std::vector<t_pair> & pairedSeq);
 
 	/* --- Public methods --------------------------------------------------- */
 
-		// int		findStraggler(std::vector<t_pair> & pairedSeq);
-		void	fillContainers(int argc, char** argv);
+		void	checkInputAndSetContainers(int argc, char** argv);
 		void	fordJohnsonSort(std::vector<t_pair> & seq);
 
 		// overloading for a list container

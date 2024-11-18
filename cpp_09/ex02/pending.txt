@@ -5,3 +5,4 @@
 - Implement watch
 - straggler
 - track comparisons
+- repeated numbers?

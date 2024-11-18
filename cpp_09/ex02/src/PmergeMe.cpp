@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/17 23:02:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/19 00:14:29 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ PmergeMe::~PmergeMe() {}
 
 /* --- Getters -------------------------------------------------------------- */
 
-std::vector<t_pair> & PmergeMe::getPairedVector() {
+std::vector<t_pair> & PmergeMe::getPairSortedVector() {
 	return this->_pairedVector;
 }
 
-std::deque<t_pair> & PmergeMe::getPairedDeque() {
+std::deque<t_pair> & PmergeMe::getPairSortedDeque() {
 	return this->_deqPairs;
 }
 
@@ -49,6 +49,24 @@ int	PmergeMe::getVectorStraggler() {
 }
 
 /* --- Setters -------------------------------------------------------------- */
+
+void	PmergeMe::setPairSortedVector(int value) {
+	if (_pairedVector.empty() || _pairedVector.back()._smaller != -1) {
+		// Start new pair
+		t_pair newPair;
+		newPair._larger = value;
+		newPair._smaller = -1;  // Mark as incomplete
+		_pairedVector.push_back(newPair);
+	} else {
+		// // Complete existing pair
+		// if (value > _pairedVector.back()._larger) {
+		// 	_pairedVector.back()._smaller = _pairedVector.back()._larger;
+		// 	_pairedVector.back()._larger = value;
+		// } else {
+			_pairedVector.back()._smaller = value;
+		// }
+	}
+}
 
 void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
 	// _vecStraggler = 0;
@@ -60,38 +78,7 @@ void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
 
 /* --- Common member methods ------------------------------------------------ */
 
-// void	PmergeMe::fillContainers(int argc, char** argv) {
-// 	for (int i = 1; i < argc; ++i) {
-// 		std::string input = argv[i];
-
-// 		if (input.empty() || onlyWhitespace(input)) {
-// 			throw std::runtime_error("Error: input is empty.");
-// 		}
-
-// 		std::istringstream argStream(input);
-// 		std::string element;
-
-// 		while (argStream >> element) {
-// 			if (!isPositiveNumber(element)) {
-// 				throw std::runtime_error("Error: sequence must be made up of positive integers.");
-// 			}
-
-// 			if (!isIntegerRange(element)) {
-// 				throw std::runtime_error("Error: value out of integer's range found.");
-// 			}
-
-// 			int value = atoi(element.c_str());
-// 			_vec.push_back(value);
-// 			_deq.push_back(value);
-// 		}
-// 	}
-
-// 	if (isSorted(_vec)) {
-// 		throw std::runtime_error("Error: sequence is already sorted.");
-// 	}
-// }
-
-void PmergeMe::fillContainers(int argc, char** argv) {
+void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 
 	for (int i = 1; i < argc; ++i) {
 		// input validation
@@ -114,24 +101,8 @@ void PmergeMe::fillContainers(int argc, char** argv) {
 			}
 
 			int value = atoi(element.c_str());
-
-			if (_pairedVector.empty() || _pairedVector.back()._smaller != -1) {
-				// Start new pair
-				t_pair newPair;
-				newPair._larger = value;
-				newPair._smaller = -1;  // Mark as incomplete
-				_pairedVector.push_back(newPair);
-			} else {
-				// Complete existing pair
-				if (value > _pairedVector.back()._larger) {
-					_pairedVector.back()._smaller = _pairedVector.back()._larger;
-					_pairedVector.back()._larger = value;
-				} else {
-					_pairedVector.back()._smaller = value;
-				}
-			}
-			// _deq.push_back(value);  // Keep this if you still want it
-
+			setPairSortedVector(value);
+			// setDeque(value);
 		}
 	}
 	
@@ -166,35 +137,36 @@ void PmergeMe::fillContainers(int argc, char** argv) {
 void	PmergeMe::sortPairs(std::vector<t_pair> & pairedSeq) {
 	if (pairedSeq.size() <= 1)
 		return;
-	for (size_t i = 0; i < pairedSeq.size() - 1; i += 2) {
+	for (size_t i = 0; i < pairedSeq.size(); i++) {
 		if (pairedSeq[i]._smaller > pairedSeq[i]._larger) {
+			std::cout << "Swapping smaller " << pairedSeq[i]._smaller << " and larger " << pairedSeq[i]._larger << std::endl; 
 			std::swap(pairedSeq[i]._smaller, pairedSeq[i]._larger);
 		}
 	}
 }
 
-void	PmergeMe::sortSeqByPairs(std::vector<t_pair>& pairedSeq) {
-	// Sort pairs based on larger value
-	for (size_t i = 0; i < pairedSeq.size() - 1; i++) {
-		for (size_t j = 0; j < pairedSeq.size() - i - 1; j++) {
-			if (pairedSeq[j]._larger > pairedSeq[j + 1]._larger) {
-				// Pair temp = pairedSeq[j];
-				// pairedSeq[j] = pairedSeq[j + 1];
-				// pairedSeq[j + 1] = temp;
-				std::swap(pairedSeq[j]._larger, pairedSeq[j + 1]._larger);
-			}
-		}
-	}
-}
+// void	PmergeMe::sortSeqByPairs(std::vector<t_pair>& pairedSeq) {
+// 	// Sort pairs based on larger value
+// 	for (size_t i = 0; i < pairedSeq.size() - 1; i++) {
+// 		for (size_t j = 0; j < pairedSeq.size() - i - 1; j++) {
+// 			if (pairedSeq[j]._larger > pairedSeq[j + 1]._larger) {
+// 				// Pair temp = pairedSeq[j];
+// 				// pairedSeq[j] = pairedSeq[j + 1];
+// 				// pairedSeq[j + 1] = temp;
+// 				std::swap(pairedSeq[j]._larger, pairedSeq[j + 1]._larger);
+// 			}
+// 		}
+// 	}
+// }
 
-void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
+void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<t_pair> & mainChain) {
     if (pairedSeq.size() <= 1) 
         return;
 std::cout << "pairedSeq.size() = " << pairedSeq.size() << std::endl; 
     for (size_t i = 0; i < pairedSeq.size(); i++) {
 std::cout << "inserting pairedSeq[" << i << "]" << std::endl;
-        mainChain.push_back(pairedSeq[i]._larger);
-		pending.push_back(pairedSeq[i]._smaller); 
+        mainChain.push_back(pairedSeq[i]); // In mainChain I keep the pairs because fordJohnsonSort() needs t_pairs for recursion
+		pending.push_back(pairedSeq[i]._smaller); // In pending I store the integer values
     }
 	// // STRAGGLER (No porque lo que encuentra es un solo par, no un solo numero; el par puede tener uno o dos elementos)
     // if (pairedSeq.size() % 2 == 1) {
@@ -241,8 +213,6 @@ size_t PmergeMe::binarySearch(const std::vector<int> & seq, int value, size_t en
 std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int>& jacobsthalSeq, size_t smallerSize) {
     std::vector<int> result;
     std::vector<bool> inserted(smallerSize, false); // Track inserted indices
-
-std::cout << "SMALLERSIZE = " << smallerSize << std::endl;
 
     // Always add index 0 first
     if (smallerSize > 0) {
@@ -317,21 +287,24 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
     // }
 
     // Step 1: Pair and sort
+	std::vector<t_pair> mainChain;
     std::vector<int> pending;
-	std::vector<int> mainChain;
 
     sortPairs(pairedSeq);
-	fordJohnsonSort(pairedSeq);
+	// printContainer("\tpaired vector      = ", pairedSeq);
     divideSequence(pairedSeq, pending, mainChain);
     // fordJohnsonSort(pairedSeq);
+	printContainer("Main chain = ", mainChain);
+	printContainer("Pending    = ", pending);
+	std::cout << "Pending size is " << pending.size() << std::endl;
 
     // Step 2: Generate insertion order using Jacobsthal sequence
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
     std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
 
-	printContainer("\tpaired vector      = ", pairedSeq);
-	printContainer("\tMain chain        = ", mainChain);
-	printContainer("\tPending           = ", pending);
+	// printContainer("\tpaired vector      = ", pairedSeq);
+	// printContainer("\tMain chain        = ", mainChain);
+	// printContainer("\tPending           = ", pending);
 	printContainer("\tJacobthal nums    = ", jacobsthalSeq);
 	printContainer("\tInsertion indexes = ", insertionIndexes);
 

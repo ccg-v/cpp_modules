@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/17 22:09:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:56:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int main(int argc, char* argv[]) {
 		if (argc > 1) {
 			PmergeMe pmergeme;
 			
-			pmergeme.fillContainers(argc, argv);
+			pmergeme.checkInputAndSetContainers(argc, argv);
 			
-			printContainer("Before:  ", pmergeme.getPairedVector());
+			printContainer("Before:  ", pmergeme.getPairSortedVector());
 
-			pmergeme.setVectorStraggler(pmergeme.getPairedVector());
+			pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
 
 			std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
 			
-			printContainer("After:  ", pmergeme.getPairedVector());			
+			printContainer("After:  ", pmergeme.getPairSortedVector());			
 			// clock_t	vecStart = clock();
-			pmergeme.fordJohnsonSort(pmergeme.getPairedVector());
+			pmergeme.fordJohnsonSort(pmergeme.getPairSortedVector());
 			// clock_t vecEnd = clock();
 			// printContainer("After :  ", pmergeme.getVector());
 
