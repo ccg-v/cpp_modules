@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/19 00:14:29 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/19 01:36:49 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
     sortPairs(pairedSeq);
 	// printContainer("\tpaired vector      = ", pairedSeq);
     divideSequence(pairedSeq, pending, mainChain);
-    // fordJohnsonSort(pairedSeq);
+    fordJohnsonSort(pairedSeq);
 	printContainer("Main chain = ", mainChain);
 	printContainer("Pending    = ", pending);
 	std::cout << "Pending size is " << pending.size() << std::endl;
@@ -308,23 +308,23 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 	printContainer("\tJacobthal nums    = ", jacobsthalSeq);
 	printContainer("\tInsertion indexes = ", insertionIndexes);
 
-    // // Step 3: Insert smaller elements into seq based on insertionIndexes
-    // std::vector<bool> inserted(pending.size(), false); // Track inserted elements
-    // for (size_t i = 0; i < insertionIndexes.size(); ++i) {
-    //     size_t insertIndex = insertionIndexes[i];
-    //     if (insertIndex < pending.size() && !inserted[insertIndex]) {
-    //         int valueToInsert = pending[insertIndex];
-    //         size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
+    // Step 3: Insert smaller elements into seq based on insertionIndexes
+    std::vector<bool> inserted(pending.size(), false); // Track inserted elements
+    for (size_t i = 0; i < insertionIndexes.size(); ++i) {
+        size_t insertIndex = insertionIndexes[i];
+        if (insertIndex < pending.size() && !inserted[insertIndex]) {
+            int valueToInsert = pending[insertIndex];
+            size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
-    //         // Debugging
-    //         std::cout << "Inserting smaller[" << insertionIndexes[i] << "] = " << valueToInsert << " at larger[" << position << "]" << std::endl;
+            // Debugging
+            std::cout << "Inserting smaller[" << insertionIndexes[i] << "] = " << valueToInsert << " at larger[" << position << "]" << std::endl;
 
-    //         mainChain.insert((mainChain.begin() + position), valueToInsert);
-    //         printContainer("Debug seq after insertion = ", mainChain);
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
+            printContainer("Debug seq after insertion = ", mainChain);
 
-    //         inserted[insertIndex] = true;
-    //     }
-    // }
+            inserted[insertIndex] = true;
+        }
+    }
 
     // // Step 4: Insert any remaining elements from smaller
     // for (size_t i = 0; i < pending.size(); ++i) {
