@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/18 18:56:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:25:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,23 @@ int main(int argc, char* argv[]) {
 			
 			printContainer("Before:  ", pmergeme.getPairSortedVector());
 
-			pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
+			// pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
 
-			std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+			// std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+
+
 			
-			printContainer("After:  ", pmergeme.getPairSortedVector());			
-			// clock_t	vecStart = clock();
+			// printContainer("After:  ", pmergeme.getPairSortedVector());			
+			// // clock_t	vecStart = clock();
 			pmergeme.fordJohnsonSort(pmergeme.getPairSortedVector());
-			// clock_t vecEnd = clock();
-			// printContainer("After :  ", pmergeme.getVector());
+			std::vector<int> pending;
+			std::vector<int> mainChain;
+			pmergeme.extractPendingAndMainChain(pmergeme.getPairSortedVector(), pending, mainChain);
+			printContainer("Paired seq = ", pmergeme.getPairSortedVector());
+			printContainer("Main chain = ", mainChain);
+			printContainer("Pending    = ", pending);
+			// // clock_t vecEnd = clock();
+			// // printContainer("After :  ", pmergeme.getVector());
 
 			// // std::cout << "\n===========================================\n" << std::endl;
 

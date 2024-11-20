@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/18 23:29:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:21:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include "Utils.hpp"
 
 typedef struct s_pair {
-	int	_larger;
-	int _smaller;
+	int	_smaller;
+	int _larger;
 } t_pair;
 
 class PmergeMe {
@@ -35,19 +35,22 @@ class PmergeMe {
 
 		// for a vector container
 
-		void 				sortPairs(std::vector<t_pair> & pairedSeq);
+		void 				sortAdjacentNumbers(std::vector<t_pair> & pairedSeq);
+		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
 		void				sortSeqByPairs(std::vector<t_pair>& pairedSeq);
-		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<t_pair> & mainChain);
+		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
-		size_t				binarySearch(const std::vector<int> & seq, int value, size_t end);
+		size_t				binarySearch(const std::vector<t_pair> & seq, t_pair value, size_t end);
 		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
 
+
+
 		// overloading for a deque container
-		void				sortPairs(std::deque<t_pair> & pairedSeq);
+		// void				sortPairs(std::deque<t_pair> & pairedSeq);
 		// void				sortSeqByPairs(std::deque<t_pair>& pairedSeq);
 		void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
 		std::deque<int> 	buildJacobsthalDeq(size_t len);
-		size_t				binarySearch(const std::deque<int> & seq, int value, size_t end);
+		// size_t				binarySearch(const std::deque<int> & seq, int value, size_t end);
 		std::deque<int>		getInsertionOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
 	public:
@@ -75,6 +78,8 @@ class PmergeMe {
 		void	checkInputAndSetContainers(int argc, char** argv);
 		void	fordJohnsonSort(std::vector<t_pair> & seq);
 
+		void				extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
+		
 		// overloading for a list container
 		void	fordJohnsonSort(std::deque<t_pair> & seq);		
 };
