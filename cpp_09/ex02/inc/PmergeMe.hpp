@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/22 00:25:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/22 22:37:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class PmergeMe {
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				binarySearch(const std::vector<t_pair> & seq, t_pair value, size_t end);
+		size_t				intBinarySearch(const std::vector<int> & seq, int value, size_t end);
 		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
 
 
@@ -82,7 +83,7 @@ class PmergeMe {
 		void	fordJohnsonSort(std::vector<t_pair> & seq);
 
 		void				extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
-		
+		void				intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);		
 		// overloading for a list container
 		void	fordJohnsonSort(std::deque<t_pair> & seq);		
 };

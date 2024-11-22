@@ -6,4 +6,8 @@
 - straggler
 - track comparisons
 - repeated numbers?
-- 
+- initialize _vecPairStraggler (0,0) -> how?
+- is already sorted
+- sequences of 2 or 3 elements fail
+- sequence of 6 elements ignores straggler pair, sequence of 10 duplicates it
+- check how first straggler found is inserted

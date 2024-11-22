@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/22 01:14:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:17:41 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PmergeMe::PmergeMe() : _vecStraggler(0) {}
+PmergeMe::PmergeMe() : _vecStraggler(0) {
+	_vecPairStraggler._smaller = 0;
+    _vecPairStraggler._larger = 0;
+}
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), _vecStraggler(source._vecStraggler) {}
+	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), 
+	_vecStraggler(source._vecStraggler), _vecPairStraggler(source._vecPairStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
@@ -27,6 +31,7 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 		this->_pairedVector = source._pairedVector;
 		this->_deqPairs = source._deqPairs;
 		this->_vecStraggler = source._vecStraggler;
+		this->_vecPairStraggler = source._vecPairStraggler;
 	}
 	return *this;
 }
@@ -121,6 +126,10 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 	// 	_vecStraggler = _pairedVector.back()._larger;
 	// 	_pairedVector.pop_back();
 	// }
+	
+	// if (isSorted(_vec)) {
+	// 	throw std::runtime_error("Error: sequence is already sorted.");
+	// }
 }
 
 // bool	PmergeMe::hasStraggler(std::vector<t_pair> & pairedSeq) {
@@ -158,15 +167,8 @@ void	PmergeMe::sortAdjacentPairs(std::vector<t_pair> & pairedSeq) {
 }
 
 void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
-    if (pairedSeq.size() <= 1) 
-        return;
-std::cout << "divideSequence: pairedSeq.size() = " << pairedSeq.size() << std::endl; 
-
-	if (pairedSeq.size() % 2 > 0) {
-		_vecPairStraggler = pairedSeq.back();
-		pairedSeq.pop_back();
-	}
-	std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
+    // if (pairedSeq.size() <= 1) 
+    //     return;
 
     for (size_t i = 0; (i + 1) < pairedSeq.size(); i +=2) {
         pending.push_back(pairedSeq[i]); // In mainChain I keep the pairs because fordJohnsonSort() needs t_pairs for recursion
@@ -176,6 +178,13 @@ std::cout << "divideSequence: pairedSeq.size() = " << pairedSeq.size() << std::e
     // if (pairedSeq.size() % 2 == 1) {
     //     mainChain.push_back(pairedSeq.back());
     // }
+
+	if (pairedSeq.size() % 2 > 0) {
+		_vecPairStraggler = pairedSeq.back();
+		std::cout << "\t\tADDING _vecPairStraggler = " << _vecPairStraggler << std::endl;
+		pairedSeq.pop_back();
+	}
+	std::cout << "divideSequence: _vecPairStraggler = " << _vecPairStraggler << std::endl;
 
     // Debugging
     printContainer("divideSequence(): Debug main chain = ", mainChain);
@@ -219,6 +228,20 @@ size_t PmergeMe::binarySearch(const std::vector<t_pair> & seq, t_pair value, siz
     while (left < right) { 
         size_t mid = (left + right) / 2;
         if (seq[mid]._larger > value._larger)
+            right = mid;
+        else
+            left = mid + 1;
+    }
+    return left;
+}
+
+
+size_t PmergeMe::intBinarySearch(const std::vector<int> & seq, int value, size_t end) {
+    size_t left = 0;
+    size_t right = end;
+    while (left < right) { 
+        size_t mid = (left + right) / 2;
+        if (seq[mid] > value)
             right = mid;
         else
             left = mid + 1;
@@ -273,14 +296,14 @@ std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthal
 }
 
 void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
-    if (pairedSeq.size() <= 1) {
+    if (pairedSeq.size() < 1) {
         return;
 	}
-    // if (pairedSeq.size() == 2) {
-    //     if (seq[0] > seq[1])
-    //         std::swap(seq[0], seq[1]);
-    //     return;
-    // }
+    if (pairedSeq.size() == 1) {
+        if (pairedSeq[0]._smaller > pairedSeq[0]._larger)
+            std::swap(pairedSeq[0]._smaller, pairedSeq[0]._larger);
+        return;
+    }
 
     // Step 1: Pair and sort
 	std::vector<t_pair> mainChain;
@@ -289,18 +312,23 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 	sortAdjacentPairs(pairedSeq);
     divideSequence(pairedSeq, pending, mainChain);
 
-	if (mainChain.size() % 2 > 0) {
-
+	if (mainChain.size() > 1 && mainChain.size() % 2 > 0) {
 		_vecPairStraggler = mainChain.back();
+		std::cout << "\t\tSAVING _vecPairStraggler = " << _vecPairStraggler << std::endl;
 		mainChain.pop_back();
 	}
 	std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
 
+// // ERROR:
+// // SI ' mainChain.size() >  1 ', NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
+// // SI ' mainchain.size() >= 1 ', ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
     fordJohnsonSort(mainChain);
-	pending.push_back(_vecPairStraggler);
-	// printContainer("Main chain = ", mainChain);
-	// printContainer("Pending    = ", pending);
-	// std::cout << "Pending size is " << pending.size() << std::endl;
+	if (mainChain.size() == 1 ) {
+		pending.push_back(_vecPairStraggler);
+	}
+	printContainer("FJ: Main chain = ", mainChain);
+	// printContainer("FJ: Pending    = ", pending);
+	// std::cout << "FJ: Pending size is " << pending.size() << std::endl;
 
     // Step 2: Generate insertion order using Jacobsthal sequence
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
@@ -330,21 +358,60 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
         }
     }
 
-    // // Step 4: Insert any remaining elements from smaller
-    // for (size_t i = 0; i < pending.size(); ++i) {
-    //     if (!inserted[i]) {
-    //         int valueToInsert = pending[i];
-    //         size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
+    // Step 4: Insert any remaining elements from smaller
+    for (size_t i = 0; i < pending.size(); ++i) {
+        if (!inserted[i]) {
+            t_pair valueToInsert = pending[i];
+			if (pending[i]._smaller != 0 && pending[i]._larger != 0) {
+				size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
-    //         // Debugging
-    //         std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
+				// Debugging
+				std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
 
-    //         mainChain.insert((mainChain.begin() + position), valueToInsert);
-    //         printContainer("Debug seq after remaining insertion = ", mainChain);
-    //     }
-    // }
+				mainChain.insert((mainChain.begin() + position), valueToInsert);
+			}
+            printContainer("Debug seq after remaining insertion = ", mainChain);
+        }
+    }
 	
 	pairedSeq = mainChain;
+}
+
+void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain) {
+
+    std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
+    std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
+    // Step 3: Insert smaller elements into seq based on insertionIndexes
+    std::vector<bool> inserted(pending.size(), false); // Track inserted elements
+    for (size_t i = 0; i < insertionIndexes.size(); ++i) {
+        size_t insertIndex = insertionIndexes[i];
+        if (insertIndex < pending.size() && !inserted[insertIndex]) {
+            int valueToInsert = pending[insertIndex];
+            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
+
+            // Debugging
+            std::cout << "intMergeInsertion: Inserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
+
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
+            printContainer("intMergeInsertion: Debug seq after insertion = ", mainChain);
+
+            inserted[insertIndex] = true;
+        }
+    }
+
+    // Step 4: Insert any remaining elements from smaller
+    for (size_t i = 0; i < pending.size(); ++i) {
+        if (!inserted[i]) {
+            int valueToInsert = pending[i];
+            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
+
+            // Debugging
+            std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
+
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
+            printContainer("Debug seq after remaining insertion = ", mainChain);
+        }
+    }	
 }
 
 std::ostream& operator<<(std::ostream& os, const t_pair& pair) {
