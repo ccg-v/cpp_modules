@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/20 22:25:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:11:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,27 @@ int main(int argc, char* argv[]) {
 			
 			printContainer("Before:  ", pmergeme.getPairSortedVector());
 
-			// pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
+			pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
 
-			// std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+			std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
 
+			printContainer("After:  ", pmergeme.getPairSortedVector());
+			std::cout << std::endl;
 
-			
 			// printContainer("After:  ", pmergeme.getPairSortedVector());			
 			// // clock_t	vecStart = clock();
+
 			pmergeme.fordJohnsonSort(pmergeme.getPairSortedVector());
 			std::vector<int> pending;
 			std::vector<int> mainChain;
+std::cout << "Last Straggler to add = " << pmergeme.getVectorPairStraggler() << std::endl;
+ 			// mainChain.push_back(pmergeme.getVectorPairStraggler());
+
 			pmergeme.extractPendingAndMainChain(pmergeme.getPairSortedVector(), pending, mainChain);
-			printContainer("Paired seq = ", pmergeme.getPairSortedVector());
-			printContainer("Main chain = ", mainChain);
-			printContainer("Pending    = ", pending);
+			printContainer("Main(): Paired seq = ", pmergeme.getPairSortedVector());
+			printContainer("Main(): Main chain = ", mainChain);
+			printContainer("Main(): Pending    = ", pending);
+
 			// // clock_t vecEnd = clock();
 			// // printContainer("After :  ", pmergeme.getVector());
 

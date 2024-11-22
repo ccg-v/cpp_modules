@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/20 22:21:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:25:44 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class PmergeMe {
 		std::vector<t_pair>	_pairedVector;
 		std::deque<t_pair>	_deqPairs;
 		int					_vecStraggler;
+		t_pair				_vecPairStraggler;
 
 		/* --- Private methods ---------------------------------------------- */
 
@@ -66,12 +67,14 @@ class PmergeMe {
 
 		std::vector<t_pair> & getPairSortedVector();
 		std::deque<t_pair> & getPairSortedDeque();
-		int		getVectorStraggler();			
+		int		getVectorStraggler();	
+		t_pair	getVectorPairStraggler();		
 
 		/* --- Setters ------------------------------------------------------ */
 
 		void	setPairSortedVector(int value);
 		void	setVectorStraggler(std::vector<t_pair> & pairedSeq);
+		void	setVectorPairStraggler(std::vector<t_pair> & mainChain);
 
 	/* --- Public methods --------------------------------------------------- */
 
