@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/22 22:37:41 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:13:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class PmergeMe {
 		std::deque<t_pair>	_deqPairs;
 		int					_vecStraggler;
 		t_pair				_vecPairStraggler;
+		bool				_hasStraggler;
 
 		/* --- Private methods ---------------------------------------------- */
 
@@ -69,7 +70,9 @@ class PmergeMe {
 		std::vector<t_pair> & getPairSortedVector();
 		std::deque<t_pair> & getPairSortedDeque();
 		int		getVectorStraggler();	
-		t_pair	getVectorPairStraggler();		
+		t_pair	getVectorPairStraggler();
+
+		bool	getHasStraggler();		
 
 		/* --- Setters ------------------------------------------------------ */
 

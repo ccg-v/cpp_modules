@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/23 00:17:41 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:27:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PmergeMe::PmergeMe() : _vecStraggler(0) {
+PmergeMe::PmergeMe() : _vecStraggler(0), _hasStraggler(0) {
 	_vecPairStraggler._smaller = 0;
     _vecPairStraggler._larger = 0;
 }
@@ -23,7 +23,8 @@ PmergeMe::PmergeMe() : _vecStraggler(0) {
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
 	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), 
-	_vecStraggler(source._vecStraggler), _vecPairStraggler(source._vecPairStraggler) {}
+	_vecStraggler(source._vecStraggler), _vecPairStraggler(source._vecPairStraggler),
+	_hasStraggler(source._hasStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
@@ -32,6 +33,7 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 		this->_deqPairs = source._deqPairs;
 		this->_vecStraggler = source._vecStraggler;
 		this->_vecPairStraggler = source._vecPairStraggler;
+		this->_hasStraggler = source._hasStraggler;
 	}
 	return *this;
 }
@@ -55,6 +57,10 @@ int	PmergeMe::getVectorStraggler() {
 
 t_pair PmergeMe::getVectorPairStraggler() {
 	return this->_vecPairStraggler;
+}
+
+bool	PmergeMe::getHasStraggler() {
+	return this->_hasStraggler;
 }
 
 /* --- Setters -------------------------------------------------------------- */
@@ -169,6 +175,18 @@ void	PmergeMe::sortAdjacentPairs(std::vector<t_pair> & pairedSeq) {
 void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
     // if (pairedSeq.size() <= 1) 
     //     return;
+	t_pair pairStraggler;
+	if (pairedSeq.size() % 2 == 1) {
+		_hasStraggler = 1;
+		pairStraggler = pairedSeq.back();
+		pairedSeq.pop_back();
+	}
+	if (_hasStraggler == 1) {
+		std::cout << "\t******************* THE PAIRED SEQUENCE HAS STRAGGLER **************************" << std::endl;
+		std::cout << "\t******************* pairStraggler = " << pairStraggler <<  "**************************" << std::endl;
+	} else {
+		std::cout << "\t******************* THE PAIRED SEQUENCE DOESN'T HAVE STRAGGLER **************************" << std::endl;
+	}
 
     for (size_t i = 0; (i + 1) < pairedSeq.size(); i +=2) {
         pending.push_back(pairedSeq[i]); // In mainChain I keep the pairs because fordJohnsonSort() needs t_pairs for recursion
@@ -179,12 +197,14 @@ void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pai
     //     mainChain.push_back(pairedSeq.back());
     // }
 
-	if (pairedSeq.size() % 2 > 0) {
-		_vecPairStraggler = pairedSeq.back();
-		std::cout << "\t\tADDING _vecPairStraggler = " << _vecPairStraggler << std::endl;
-		pairedSeq.pop_back();
-	}
-	std::cout << "divideSequence: _vecPairStraggler = " << _vecPairStraggler << std::endl;
+	// if (pairedSeq.size() % 2 > 0) {
+	// 	_vecPairStraggler = pairedSeq.back();
+	// 	std::cout << "\t\tADDING _vecPairStraggler = " << _vecPairStraggler << std::endl;
+	// 	pairedSeq.pop_back();
+	// }
+	// std::cout << "divideSequence: _vecPairStraggler = " << _vecPairStraggler << std::endl;
+
+
 
     // Debugging
     printContainer("divideSequence(): Debug main chain = ", mainChain);
@@ -312,20 +332,21 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 	sortAdjacentPairs(pairedSeq);
     divideSequence(pairedSeq, pending, mainChain);
 
-	if (mainChain.size() > 1 && mainChain.size() % 2 > 0) {
-		_vecPairStraggler = mainChain.back();
-		std::cout << "\t\tSAVING _vecPairStraggler = " << _vecPairStraggler << std::endl;
-		mainChain.pop_back();
-	}
+	// if (mainChain.size() > 1 && mainChain.size() % 2 == 1) {
+	// 	// _vecPairStraggler = mainChain.back();
+	// 	_hasStraggler = 1;
+	// 	std::cout << "\t\tSAVING _vecPairStraggler = " << _vecPairStraggler << std::endl;
+	// 	// mainChain.pop_back();
+	// }
 	std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
 
 // // ERROR:
 // // SI ' mainChain.size() >  1 ', NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
 // // SI ' mainchain.size() >= 1 ', ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
     fordJohnsonSort(mainChain);
-	if (mainChain.size() == 1 ) {
-		pending.push_back(_vecPairStraggler);
-	}
+	// if (mainChain.size() == 1 ) {
+	// 	pending.push_back(_vecPairStraggler);
+	// }
 	printContainer("FJ: Main chain = ", mainChain);
 	// printContainer("FJ: Pending    = ", pending);
 	// std::cout << "FJ: Pending size is " << pending.size() << std::endl;

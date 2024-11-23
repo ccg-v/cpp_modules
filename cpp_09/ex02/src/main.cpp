@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/23 00:03:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:43:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,40 @@ int main(int argc, char* argv[]) {
 			
 			printContainer("Before:  ", pmergeme.getPairSortedVector());
 
-			pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
+			// pmergeme.setVectorStraggler(pmergeme.getPairSortedVector());
 
-			std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+			// std::cout << "Straggler = " << pmergeme.getVectorStraggler() << std::endl;
+
+	if (pmergeme.getHasStraggler() == 1) {
+		std::cout << "/t******************* THE INTEGER SEQUENCE HAS STRAGGLER **************************" << std::endl;
+	} else {
+		std::cout << "/t******************* THE INTEGER SEQUENCE DOESN'T HAVE STRAGGLER **************************" << std::endl;
+	}
+
 
 			printContainer("After:  ", pmergeme.getPairSortedVector());
 			std::cout << std::endl;
-
-			// printContainer("After:  ", pmergeme.getPairSortedVector());			
+		
 			// // clock_t	vecStart = clock();
 std::cout << " --- Starting recursion ----------------------------------------------- " << std::endl;
 			pmergeme.fordJohnsonSort(pmergeme.getPairSortedVector());
 std::cout << " --- End of recursion ------------------------------------------------- " << std::endl;
 			std::vector<int> pending;
 			std::vector<int> mainChain;
-std::cout << "Main: last vecPairStraggler to add = " << pmergeme.getVectorPairStraggler() << std::endl;
-std::cout << "Main: last intStraggler to add = " << pmergeme.getVectorStraggler() << std::endl;
+std::cout << "Main(): last vecPairStraggler to add = " << pmergeme.getVectorPairStraggler() << std::endl;
+std::cout << "Main(): last intStraggler to add = " << pmergeme.getVectorStraggler() << std::endl;
 
-// // ERROR:
-// // SI DESHABILITO ESTA CONDICION, NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
-// // SI HABILITO ESTA CONDICION, ANADE EL PAR DE STRAGGLER EN LA SECUENCA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
+// ERROR:
+// SI DESHABILITO ESTA CONDICION, NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
+// SI HABILITO ESTA CONDICION, ANADE EL PAR DE STRAGGLER EN LA SECUENCA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
 // t_pair pair = pmergeme.getVectorPairStraggler();
 // if (pair._smaller != 0 && pair._larger != 0) {
-//     // The pair is (0, 0)
 // 	pmergeme.getPairSortedVector().push_back(pmergeme.getVectorPairStraggler()); //ERROR: NADA DE PUSHBACK, BINARYINSERT del par
 // }
 
- 			if (pmergeme.getVectorStraggler() > 0) {
-				pending.push_back(pmergeme.getVectorStraggler());
-			}
+ 			// if (pmergeme.getVectorStraggler() > 0) {
+			// 	pending.push_back(pmergeme.getVectorStraggler());
+			// }
 			
 			pmergeme.extractPendingAndMainChain(pmergeme.getPairSortedVector(), pending, mainChain);
 			printContainer("Main(): Paired seq = ", pmergeme.getPairSortedVector());
