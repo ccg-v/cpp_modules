@@ -6,16 +6,17 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 13:59:11 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:09:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include "Utils.hpp"
+#include "debug.hpp"
 #include <iostream>	// For std::cout(), std::cerr()
 #include <ctime>	// For clock()
 
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv) {
 
 	try {
 		if (argc > 1) {
@@ -69,6 +70,19 @@ int main(int argc, char* argv[]) {
 				std::cout << "The sequence is sorted" << std::endl;
 			else
 				std::cout << "THE SEQUENCE IS NOT SORTED!!!" << std::endl;
+
+			DEBUG_PRINT("This should be displayed only in debug mode")
+			DEBUG_PRINT(
+				(isSorted(mainChain) 
+					? "The sequence is sorted" 
+					: "THE SEQUENCE IS NOT SORTED!!!")
+			)
+			#ifdef DEBUG_MODE
+				std::cout << "DEBUG_MODE is ON" << std::endl;
+			#else
+				std::cout << "DEBUG_MODE is OFF" << std::endl;
+			#endif
+			
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}

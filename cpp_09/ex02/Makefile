@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/11/13 18:15:13 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/11/25 00:09:58 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	PmergeMe
 
 # --- Compiler --------------------------------------------------------------- #
 CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address
+FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-DDEBUG_MODE #-fsanitize=address
 
 # --- Folders ---------------------------------------------------------------- #
 INC_DIR		=	inc/
@@ -36,7 +36,7 @@ OBJ			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 DEP			=	$(addprefix $(DEP_DIR), $(DEP_FILES))
 
 # --- Build rules ------------------------------------------------------------ #
-all: $(OBJ_DIR) $(NAME) 
+all: $(OBJ_DIR) $(NAME) Makefile
 
 # --- Object build rules ----------------------------------------------------- #
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
