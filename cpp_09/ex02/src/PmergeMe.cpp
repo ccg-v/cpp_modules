@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 11:33:53 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:06:24 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@
 
 // Default constructor
 PmergeMe::PmergeMe() {
-	_vecPairStraggler._smaller = 0;
-    _vecPairStraggler._larger = 0;
+	// _vecPairStraggler._smaller = 0;
+    // _vecPairStraggler._larger = 0;
 }
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _intsVector(source._intsVector), _pairsVector(source._pairsVector), _vecPairStraggler(source._vecPairStraggler) {}
+	: _intsVector(source._intsVector), _pairsVector(source._pairsVector) {} //, _vecPairStraggler(source._vecPairStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 	if (this != &source) {
 		this->_intsVector = source._intsVector;
 		this->_pairsVector = source._pairsVector;
-		this->_vecPairStraggler = source._vecPairStraggler;
+		// this->_vecPairStraggler = source._vecPairStraggler;
 	}
 	return *this;
 }
@@ -85,9 +85,9 @@ std::vector<t_pair> & PmergeMe::getPairsVector() {
 // 	return this->_vecStraggler;=
 // }
 
-t_pair PmergeMe::getVecPairStraggler() {
-	return this->_vecPairStraggler;
-}
+// t_pair PmergeMe::getVecPairStraggler() {
+// 	return this->_vecPairStraggler;
+// }
 
 // bool	PmergeMe::getHasStraggler() {
 // 	return this->_hasStraggler;
@@ -310,11 +310,13 @@ void PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pai
 }
 
 void	PmergeMe::extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
-    if (pairedSeq.size() <= 1) 
+    if (pairedSeq.size() <= 1) {
         return;
+	}
+
     for (size_t i = 0; i < pairedSeq.size(); i ++) {
-		std::cout << "extracting " << pairedSeq[i]._smaller  << std::endl;
-		std::cout << "extracting " << pairedSeq[i]._larger  << std::endl;
+		std::cout << "\tAppending " << pairedSeq[i]._larger  << " to main chain" << std::endl;
+		std::cout << "\tAppending " << pairedSeq[i]._smaller << " to pending" << std::endl;
         pending.push_back(pairedSeq[i]._smaller);
 		mainChain.push_back(pairedSeq[i]._larger);
     }	
@@ -412,7 +414,7 @@ std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthal
 }
 
 
-void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
+void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq) {
     if (pairedSeq.size() < 1) {
         return;
 	}
@@ -426,63 +428,33 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 	std::vector<t_pair> mainChain;
     std::vector<t_pair> pending;
 
+	std::cout << "sortAdjacentPairs():" << std::endl;
 	sortAdjacentPairs(pairedSeq);
 
 t_pair currentStraggler = {0, 0};
 if (pairedSeq.size() % 2 == 1) {
 	currentStraggler = pairedSeq.back();
 	pairedSeq.pop_back();
-std::cout << "\t***** EXTRACTING " << currentStraggler << " from mainChain" << std::endl;
+std::cout << "\t<<<<< EXTRACTING " << currentStraggler << " from mainChain" << std::endl;
 }
 
     divideSequence(pairedSeq, pending, mainChain);
 
-	// if (mainChain.size() > 1 && mainChain.size() % 2 == 1) {
-	// 	// _vecPairStraggler = mainChain.back();
-	// 	_hasStraggler = 1;
-	// 	std::cout << "\t\tSAVING _vecPairStraggler = " << _vecPairStraggler << std::endl;
-	// 	// mainChain.pop_back();
-	// }
-	// std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
-
-// // ERROR:
-// // SI ' mainChain.size() >  1 ', NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
-// // SI ' mainchain.size() >= 1 ', ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
-
-    fordJohnsonSort(mainChain);
-
-// // After recursive sort, first reattach current level's straggler if it exists
-// if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
-// 	mainChain.push_back(currentStraggler);
-// std::cout << "***** INSERTING " << currentStraggler << " in mainChain" << std::endl;
-// }
+    recursiveSort(mainChain);
 
 if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
     // Insert straggler in the correct position in mainChain instead of pending
     size_t position = binarySearch(mainChain, currentStraggler, mainChain.size());
     mainChain.insert(mainChain.begin() + position, currentStraggler);
-	std::cout << "\t***** INSERTING " << currentStraggler << " in mainChain" << std::endl;
+	std::cout << "\t>>>>> INSERTING " << currentStraggler << " in mainChain" << std::endl;
 }
-
-	// if (_hasStraggler) {
-	// 	pending.push_back(_vecPairStraggler);
-	// 	_hasStraggler = 0;
-	// }
 
 	std::cout << "fordJohnson():" << std::endl;
 	printContainer("\tMain chain = ", mainChain);
-	// printContainer("FJ: Pending    = ", pending);
-	// std::cout << "FJ: Pending size is " << pending.size() << std::endl;
 
     // Step 2: Generate insertion order using Jacobsthal sequence
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
     std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
-
-	// printContainer("\tpaired vector      = ", pairedSeq);
-	// printContainer("\tMain chain        = ", mainChain);
-	// printContainer("\tPending           = ", pending);
-	// printContainer("\tJacobthal nums    = ", jacobsthalSeq);
-	// printContainer("\tInsertion indexes = ", insertionIndexes);
 
     // Step 3: Insert smaller elements into seq based on insertionIndexes
     std::vector<bool> inserted(pending.size(), false); // Track inserted elements
@@ -493,11 +465,10 @@ if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
             size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
             // Debugging
-
             std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
 
             mainChain.insert((mainChain.begin() + position), valueToInsert);
-            printContainer("\tmain chain = ", mainChain);
+            printContainer("\tMain chain = ", mainChain);
 
             inserted[insertIndex] = true;
         }
@@ -515,13 +486,18 @@ if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
 
 				mainChain.insert((mainChain.begin() + position), valueToInsert);
 			}
-            printContainer("\tmain chain = ", mainChain);
+            printContainer("\tMain chain = ", mainChain);
         }
     }
 	
 	pairedSeq = mainChain;
 }
-
+ /* 
+  *	intMergeInsertion()
+  *
+  * We pick integers from a vector of integers (pending) and insert them in
+  *	another vector of integers (main chain).
+  */
 void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain) {
 
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
@@ -535,10 +511,10 @@ void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & 
             size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
 
             // Debugging
-            std::cout << "intMergeInsertion: Inserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
+            std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
 
             mainChain.insert((mainChain.begin() + position), valueToInsert);
-            printContainer("intMergeInsertion: Debug seq after insertion = ", mainChain);
+            printContainer("\tMain chain = ", mainChain);
 
             inserted[insertIndex] = true;
         }
@@ -551,10 +527,10 @@ void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & 
             size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
 
             // Debugging
-            std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
+            std::cout << "\n\tInserting remaining value " << valueToInsert << " at position " << position << std::endl;
 
             mainChain.insert((mainChain.begin() + position), valueToInsert);
-            printContainer("Debug seq after remaining insertion = ", mainChain);
+            printContainer("\tMain chain = ", mainChain);
         }
     }	
 }

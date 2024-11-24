@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 02:30:12 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:31:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ class PmergeMe {
 		std::vector<t_pair>	_pairsVector;
 		// std::deque<t_pair>	_deqPairs;
 		// int					_vecIntStraggler;
-		t_pair				_vecPairStraggler;
-		bool				_hasStraggler;
+		// t_pair				_vecPairStraggler;
+		// bool				_hasStraggler;
 
 		/* --- Private methods ---------------------------------------------- */
 
@@ -90,13 +90,15 @@ class PmergeMe {
 	/* --- Public methods --------------------------------------------------- */
 
 		void	checkInputAndSetContainers(int argc, char** argv);
-		void	fordJohnsonSort(std::vector<t_pair> & seq);
+		void	recursiveSort(std::vector<t_pair> & seq);
 	
 
 		void				extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
-		void				intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);		
+		void				intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);
+		
+			
 		// overloading for a list container
-		void	fordJohnsonSort(std::deque<t_pair> & seq);		
+		// void	fordJohnsonSort(std::deque<t_pair> & seq);		
 };
 
 // Generic function to print container contents
