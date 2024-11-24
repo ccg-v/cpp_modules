@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/23 11:27:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/24 11:33:53 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,49 @@
 
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
+// // Default constructor
+// PmergeMe::PmergeMe() : _vecStraggler(0), _hasStraggler(0) {
+// 	_vecPairStraggler._smaller = 0;
+//     _vecPairStraggler._larger = 0;
+// }
+
+// // Copy constructor
+// PmergeMe::PmergeMe(const PmergeMe & source) 
+// 	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), 
+// 	_vecStraggler(source._vecStraggler), _vecPairStraggler(source._vecPairStraggler),
+// 	_hasStraggler(source._hasStraggler) {}
+
+// // Copy assignment operator
+// PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
+// 	if (this != &source) {
+// 		this->_pairedVector = source._pairedVector;
+// 		this->_deqPairs = source._deqPairs;
+// 		this->_vecStraggler = source._vecStraggler;
+// 		this->_vecPairStraggler = source._vecPairStraggler;
+// 		this->_hasStraggler = source._hasStraggler;
+// 	}
+// 	return *this;
+// }
+
+// // Default destructor
+// PmergeMe::~PmergeMe() {}
+
 // Default constructor
-PmergeMe::PmergeMe() : _vecStraggler(0), _hasStraggler(0) {
+PmergeMe::PmergeMe() {
 	_vecPairStraggler._smaller = 0;
     _vecPairStraggler._larger = 0;
 }
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _pairedVector(source._pairedVector), _deqPairs(source._deqPairs), 
-	_vecStraggler(source._vecStraggler), _vecPairStraggler(source._vecPairStraggler),
-	_hasStraggler(source._hasStraggler) {}
+	: _intsVector(source._intsVector), _pairsVector(source._pairsVector), _vecPairStraggler(source._vecPairStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 	if (this != &source) {
-		this->_pairedVector = source._pairedVector;
-		this->_deqPairs = source._deqPairs;
-		this->_vecStraggler = source._vecStraggler;
+		this->_intsVector = source._intsVector;
+		this->_pairsVector = source._pairsVector;
 		this->_vecPairStraggler = source._vecPairStraggler;
-		this->_hasStraggler = source._hasStraggler;
 	}
 	return *this;
 }
@@ -43,59 +66,95 @@ PmergeMe::~PmergeMe() {}
 
 /* --- Getters -------------------------------------------------------------- */
 
-std::vector<t_pair> & PmergeMe::getPairSortedVector() {
-	return this->_pairedVector;
+std::vector<int> & PmergeMe::getIntsVector() {
+	return this->_intsVector;
 }
 
-std::deque<t_pair> & PmergeMe::getPairSortedDeque() {
-	return this->_deqPairs;
+std::vector<t_pair> & PmergeMe::getPairsVector() {
+	return this->_pairsVector;
 }
+// std::vector<t_pair> & PmergeMe::getPairSortedVector() {
+// 	return this->_pairedVector;
+// }
 
-int	PmergeMe::getVectorStraggler() {
-	return this->_vecStraggler;
-}
+// std::deque<t_pair> & PmergeMe::getPairSortedDeque() {
+// 	return this->_deqPairs;
+// }
 
-t_pair PmergeMe::getVectorPairStraggler() {
+// int	PmergeMe::getVectorStraggler() {
+// 	return this->_vecStraggler;=
+// }
+
+t_pair PmergeMe::getVecPairStraggler() {
 	return this->_vecPairStraggler;
 }
 
-bool	PmergeMe::getHasStraggler() {
-	return this->_hasStraggler;
-}
+// bool	PmergeMe::getHasStraggler() {
+// 	return this->_hasStraggler;
+// }
 
 /* --- Setters -------------------------------------------------------------- */
 
-void	PmergeMe::setPairSortedVector(int value) {
-	if (_pairedVector.empty() || _pairedVector.back()._smaller != -1) {
-		// Start new pair
-		t_pair newPair;
-		newPair._larger = value;
-		newPair._smaller = -1;  // Mark as incomplete
-		_pairedVector.push_back(newPair);
-	} else {
-		// Complete existing pair
-		if (value > _pairedVector.back()._larger) {
-			_pairedVector.back()._smaller = _pairedVector.back()._larger;
-			_pairedVector.back()._larger = value;
-		} else {
-			_pairedVector.back()._smaller = value;
-		}
-	}
+void	PmergeMe::setIntsVector(int value) {
+	_intsVector.push_back(value);
 }
 
-void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
-	if (pairedSeq.back()._smaller == -1) {
-		_vecStraggler = pairedSeq.back()._larger;
-		pairedSeq.pop_back();
-	}
+// void	PmergeMe::setPairSortedVector(int value) {
+// 	if (_pairedVector.empty() || _pairedVector.back()._smaller != -1) {
+// 		// Start new pair
+// 		t_pair newPair;
+// 		newPair._larger = value;
+// 		newPair._smaller = -1;  // Mark as incomplete
+// 		_pairedVector.push_back(newPair);
+// 	} else {
+// 		// Complete existing pair
+// 		if (value > _pairedVector.back()._larger) {
+// 			_pairedVector.back()._smaller = _pairedVector.back()._larger;
+// 			_pairedVector.back()._larger = value;
+// 		} else {
+// 			_pairedVector.back()._smaller = value;
+// 		}
+// 	}
+// }
+
+void PmergeMe::setPairsVector(void) {
+	
+    for (size_t i = 0; (i + 1) < _intsVector.size(); i += 2) {
+        t_pair newPair;
+        // if (_intsVector[i] > _intsVector[i + 1]) {
+            newPair._larger = _intsVector[i];
+            newPair._smaller = _intsVector[i + 1];
+        // } else {
+        //     newPair._larger = _intsVector[i + 1];
+        //     newPair._smaller = _intsVector[i];
+        // }
+		if (newPair._smaller > newPair._larger)
+			std::swap(newPair._smaller, newPair._larger);
+		_pairsVector.push_back(newPair);   
+    }
 }
 
-void	PmergeMe::setVectorPairStraggler(std::vector<t_pair> & mainChain) {
-	if (mainChain.size() % 2 > 0) {
-		_vecPairStraggler = mainChain.back();
-		mainChain.pop_back();
-	}
-}
+
+// void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
+// 	if (pairedSeq.back()._smaller == -1) {
+// 		_vecStraggler = pairedSeq.back()._larger;
+// 		pairedSeq.pop_back();
+// 	}
+// }
+
+// void	PmergeMe::setVectorPairStraggler(std::vector<t_pair> & mainChain) {
+// 	if (mainChain.size() % 2 > 0) {
+// 		_vecPairStraggler = mainChain.back();
+// 		mainChain.pop_back();
+// 	}
+// }
+
+// void	PmergeMe::setIntStraggler(std::vector<int> & inputSeq) {
+// 	if (inputSeq.size() % 2 == 1) {
+// 		_vecIntStraggler = inputSeq.back();
+// 		inputSeq.pop_back();
+// 	}
+// }
 
 /* --- Common member methods ------------------------------------------------ */
 
@@ -122,7 +181,8 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 			}
 
 			int value = atoi(element.c_str());
-			setPairSortedVector(value);
+			// setPairSortedVector(value);
+			setIntsVector(value);
 			// setDeque(value);
 		}
 	}
@@ -163,35 +223,55 @@ void	PmergeMe::sortAdjacentNumbers(std::vector<t_pair> & pairedSeq) {
 void	PmergeMe::sortAdjacentPairs(std::vector<t_pair> & pairedSeq) {
 	if (pairedSeq.size() <= 1)
 		return;
+
+	std::cout << "sortAdjacentPairs():" << std::endl;
+	
 	for (size_t i = 0; (i + 1) < pairedSeq.size(); i += 2) {
 		if (pairedSeq[i]._larger > pairedSeq[i + 1]._larger) {
-			std::cout << "Swapping  " << pairedSeq[i] << " and larger " << pairedSeq[i + 1] << std::endl; 
+			std::cout << "\tSwapping  " << pairedSeq[i] << " and larger " << pairedSeq[i + 1] << std::endl; 
 			std::swap(pairedSeq[i], pairedSeq[i + 1]);
 		}		
 	}
-	printContainer("*****sortAdjacentPairs: pairedSeq = ", pairedSeq);
+
+	printContainer("\tpairedSeq = ", pairedSeq);
 }
 
+
+/*
 void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
-    // if (pairedSeq.size() <= 1) 
-    //     return;
-	t_pair pairStraggler;
+    if (pairedSeq.size() <= 1) {
+        return;
+	}
+
+	// t_pair pairStraggler;
+	// if (pairedSeq.size() % 2 == 1) {
+	// 	_hasStraggler = 1;
+	// 	pairStraggler = pairedSeq.back();
+	// 	pairedSeq.pop_back();
+	// }
+	// if (_hasStraggler == 1) {
+	// 	std::cout << "\t******************* THE PAIRED SEQUENCE HAS STRAGGLER" << std::endl;
+	// 	std::cout << "\t******************* pairStraggler = " << pairStraggler << std::endl;
+	// } else {
+	// 	std::cout << "\t******************* THE PAIRED SEQUENCE DOESN'T HAVE STRAGGLER" << std::endl;
+	// }
+
 	if (pairedSeq.size() % 2 == 1) {
 		_hasStraggler = 1;
-		pairStraggler = pairedSeq.back();
+		_vecPairStraggler = pairedSeq.back();
 		pairedSeq.pop_back();
 	}
 	if (_hasStraggler == 1) {
-		std::cout << "\t******************* THE PAIRED SEQUENCE HAS STRAGGLER **************************" << std::endl;
-		std::cout << "\t******************* pairStraggler = " << pairStraggler <<  "**************************" << std::endl;
+		std::cout << "\t******************* THE PAIRED SEQUENCE HAS STRAGGLER " << _vecPairStraggler << std::endl;
 	} else {
-		std::cout << "\t******************* THE PAIRED SEQUENCE DOESN'T HAVE STRAGGLER **************************" << std::endl;
+		std::cout << "\t******************* THE PAIRED SEQUENCE DOESN'T HAVE STRAGGLER" << std::endl;
 	}
 
     for (size_t i = 0; (i + 1) < pairedSeq.size(); i +=2) {
         pending.push_back(pairedSeq[i]); // In mainChain I keep the pairs because fordJohnsonSort() needs t_pairs for recursion
 		mainChain.push_back(pairedSeq[i + 1]); // In pending I store the integer values
     }
+
 	// STRAGGLER (No porque lo que encuentra es un solo par, no un solo numero; el par puede tener uno o dos elementos)
     // if (pairedSeq.size() % 2 == 1) {
     //     mainChain.push_back(pairedSeq.back());
@@ -204,13 +284,29 @@ void	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pai
 	// }
 	// std::cout << "divideSequence: _vecPairStraggler = " << _vecPairStraggler << std::endl;
 
-
-
     // Debugging
     printContainer("divideSequence(): Debug main chain = ", mainChain);
     printContainer("divideSequence(): Debug pending    = ", pending);
 
-	// pairedSeq = mainChain;
+	pairedSeq = mainChain;
+}
+*/
+
+void PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
+    if (pairedSeq.size() <= 1) {
+        return;
+    }
+
+    for (size_t i = 0; (i + 1) < pairedSeq.size(); i +=2) {
+        pending.push_back(pairedSeq[i]); 
+        mainChain.push_back(pairedSeq[i + 1]); 
+    }
+
+    pairedSeq = mainChain;
+
+	std::cout << "divideSequence():" << std::endl;
+	printContainer("\tmain chain = ", pairedSeq);
+	printContainer("\tpending    = ", pending);
 }
 
 void	PmergeMe::extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
@@ -315,6 +411,7 @@ std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthal
     return result;
 }
 
+
 void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
     if (pairedSeq.size() < 1) {
         return;
@@ -330,6 +427,14 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
     std::vector<t_pair> pending;
 
 	sortAdjacentPairs(pairedSeq);
+
+t_pair currentStraggler = {0, 0};
+if (pairedSeq.size() % 2 == 1) {
+	currentStraggler = pairedSeq.back();
+	pairedSeq.pop_back();
+std::cout << "\t***** EXTRACTING " << currentStraggler << " from mainChain" << std::endl;
+}
+
     divideSequence(pairedSeq, pending, mainChain);
 
 	// if (mainChain.size() > 1 && mainChain.size() % 2 == 1) {
@@ -338,16 +443,34 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 	// 	std::cout << "\t\tSAVING _vecPairStraggler = " << _vecPairStraggler << std::endl;
 	// 	// mainChain.pop_back();
 	// }
-	std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
+	// std::cout << "########## _vecPairStraggler = " << _vecPairStraggler << " ##########" << std::endl;
 
 // // ERROR:
 // // SI ' mainChain.size() >  1 ', NO ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6
 // // SI ' mainchain.size() >= 1 ', ANADE EL PAR STRAGGLER EN LA SECUENCIA DE 6 PERO LO DUPLICA EN LA SECUENCIA DE 10
+
     fordJohnsonSort(mainChain);
-	// if (mainChain.size() == 1 ) {
+
+// // After recursive sort, first reattach current level's straggler if it exists
+// if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
+// 	mainChain.push_back(currentStraggler);
+// std::cout << "***** INSERTING " << currentStraggler << " in mainChain" << std::endl;
+// }
+
+if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
+    // Insert straggler in the correct position in mainChain instead of pending
+    size_t position = binarySearch(mainChain, currentStraggler, mainChain.size());
+    mainChain.insert(mainChain.begin() + position, currentStraggler);
+	std::cout << "\t***** INSERTING " << currentStraggler << " in mainChain" << std::endl;
+}
+
+	// if (_hasStraggler) {
 	// 	pending.push_back(_vecPairStraggler);
+	// 	_hasStraggler = 0;
 	// }
-	printContainer("FJ: Main chain = ", mainChain);
+
+	std::cout << "fordJohnson():" << std::endl;
+	printContainer("\tMain chain = ", mainChain);
 	// printContainer("FJ: Pending    = ", pending);
 	// std::cout << "FJ: Pending size is " << pending.size() << std::endl;
 
@@ -370,10 +493,11 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
             size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
             // Debugging
-            std::cout << "Inserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
+
+            std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl;
 
             mainChain.insert((mainChain.begin() + position), valueToInsert);
-            printContainer("Debug seq after insertion = ", mainChain);
+            printContainer("\tmain chain = ", mainChain);
 
             inserted[insertIndex] = true;
         }
@@ -387,11 +511,11 @@ void PmergeMe::fordJohnsonSort(std::vector<t_pair> & pairedSeq) {
 				size_t position = binarySearch(mainChain, valueToInsert, mainChain.size());
 
 				// Debugging
-				std::cout << "Inserting remaining value " << valueToInsert << " at position " << position << std::endl;
+				std::cout << "\tInserting remaining value " << valueToInsert << " at position " << position << std::endl;
 
 				mainChain.insert((mainChain.begin() + position), valueToInsert);
 			}
-            printContainer("Debug seq after remaining insertion = ", mainChain);
+            printContainer("\tmain chain = ", mainChain);
         }
     }
 	
@@ -439,3 +563,4 @@ std::ostream& operator<<(std::ostream& os, const t_pair& pair) {
     os << "(" << pair._larger << ", " << pair._smaller << ")";
     return os;
 }
+

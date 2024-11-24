@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 02:30:12 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/24 00:53:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,17 @@ class PmergeMe {
 	private:
 		std::vector<int>	_intsVector;
 		std::vector<t_pair>	_pairsVector;
-		// std::deque<t_pair>	_deqPairs;
-		// int					_vecIntStraggler;
 		t_pair				_vecPairStraggler;
 		bool				_hasStraggler;
 
 		/* --- Private methods ---------------------------------------------- */
 
-		// for a vector container
-
-		void 				sortAdjacentNumbers(std::vector<t_pair> & pairedSeq);
 		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
-		void				sortSeqByPairs(std::vector<t_pair>& pairedSeq);
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				binarySearch(const std::vector<t_pair> & seq, t_pair value, size_t end);
 		size_t				intBinarySearch(const std::vector<int> & seq, int value, size_t end);
 		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-
-
-
-		// overloading for a deque container
-		// void				sortPairs(std::deque<t_pair> & pairedSeq);
-		// void				sortSeqByPairs(std::deque<t_pair>& pairedSeq);
-		void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
-		std::deque<int> 	buildJacobsthalDeq(size_t len);
-		// size_t				binarySearch(const std::deque<int> & seq, int value, size_t end);
-		std::deque<int>		getInsertionOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
 	public:
 
@@ -71,32 +55,17 @@ class PmergeMe {
 		std::vector<int> & getIntsVector();
 		std::vector<t_pair> & getPairsVector();
 
-		std::vector<t_pair> & getPairSortedVector();
-		std::deque<t_pair> & getPairSortedDeque();
-		int		getVectorStraggler();	
-		t_pair	getVecPairStraggler();
-
-		bool	getHasStraggler();		
-
 		/* --- Setters ------------------------------------------------------ */
 
 		void	setIntsVector(int value);
 		void	setPairsVector(void);
-		
-		void	setPairSortedVector(int value);
-		void	setVectorStraggler(std::vector<t_pair> & pairedSeq);
-		void	setVectorPairStraggler(std::vector<t_pair> & mainChain);
 
 	/* --- Public methods --------------------------------------------------- */
 
 		void	checkInputAndSetContainers(int argc, char** argv);
 		void	fordJohnsonSort(std::vector<t_pair> & seq);
+		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 	
-
-		void				extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
-		void				intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);		
-		// overloading for a list container
-		void	fordJohnsonSort(std::deque<t_pair> & seq);		
 };
 
 // Generic function to print container contents
@@ -111,13 +80,6 @@ void printContainer(const std::string msg, const T& container) {
 	}
 }
 
-/*
- * The function template 'printContainer()' works for standard containers of
- * primitive types or types that overload the << operator.
- * However, for std::vector<t_pair> and std::deque<t_pair>, we need to define
- * how to print a t_pair since the std::ostream << operator is not defined for
- * custom types like t_pair.
- */
 std::ostream& operator<<(std::ostream& os, const t_pair& pair);
 
 #endif
