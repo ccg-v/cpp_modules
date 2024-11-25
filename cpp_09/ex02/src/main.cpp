@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/25 00:09:23 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:38:18 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ int main(int argc, char** argv) {
 			pmergeme.setPairsVector();
 			printContainer("pairsVector = ", pmergeme.getPairsVector());
 
+			// std::vector<t_pair> pairedSeq = pmergeme.getPairsVector();
+			// if (pairedSeq.size() == 1) {
+			// 	std::cout << "smaller value = " << pairedSeq[0]._smaller << std::endl;
+			// 	std::cout << "larger value  = " << pairedSeq[0]._larger << std::endl;
+			// 	if (pairedSeq[0]._smaller < pairedSeq[0]._larger)
+            // 		std::swap(pairedSeq[0]._smaller, pairedSeq[0]._larger);
+			// 	if (intStraggler)
+			// 	printContainer("++++++++++++++++ HERE = ", pairedSeq);
+			// 	return 0;
+			// }
+			
 			// Recursively sort main chain
 			std::cout << " --- Start recursive sorting of main chain --- " << std::endl;
 			pmergeme.recursiveSort(pmergeme.getPairsVector());
@@ -71,17 +82,17 @@ int main(int argc, char** argv) {
 			else
 				std::cout << "THE SEQUENCE IS NOT SORTED!!!" << std::endl;
 
-			DEBUG_PRINT("This should be displayed only in debug mode")
-			DEBUG_PRINT(
-				(isSorted(mainChain) 
-					? "The sequence is sorted" 
-					: "THE SEQUENCE IS NOT SORTED!!!")
-			)
-			#ifdef DEBUG_MODE
-				std::cout << "DEBUG_MODE is ON" << std::endl;
-			#else
-				std::cout << "DEBUG_MODE is OFF" << std::endl;
-			#endif
+			// DEBUG_PRINT("This should be displayed only in debug mode")
+			// DEBUG_PRINT(
+			// 	(isSorted(mainChain) 
+			// 		? "The sequence is sorted" 
+			// 		: "THE SEQUENCE IS NOT SORTED!!!")
+			// )
+			// #ifdef DEBUG_MODE
+			// 	std::cout << "DEBUG_MODE is ON" << std::endl;
+			// #else
+			// 	std::cout << "DEBUG_MODE is OFF" << std::endl;
+			// #endif
 			
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			

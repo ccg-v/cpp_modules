@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 23:23:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:38:52 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,9 +311,9 @@ void PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pai
 }
 
 void	PmergeMe::extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
-    if (pairedSeq.size() <= 1) {
-        return;
-	}
+    // if (pairedSeq.size() <= 1) {
+    //     return;
+	// }
 
     for (size_t i = 0; i < pairedSeq.size(); i ++) {
 		std::cout << "\tAppending " << pairedSeq[i]._larger  << " to main chain" << std::endl;
@@ -419,11 +419,11 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq) {
     if (pairedSeq.size() < 1) {
         return;
 	}
-    if (pairedSeq.size() == 1) {
-        if (pairedSeq[0]._smaller > pairedSeq[0]._larger)
-            std::swap(pairedSeq[0]._smaller, pairedSeq[0]._larger);
-        return;
-    }
+    // if (pairedSeq.size() == 1) {
+    //     if (pairedSeq[0]._smaller > pairedSeq[0]._larger)
+    //         std::swap(pairedSeq[0]._smaller, pairedSeq[0]._larger);
+    //     return;
+    // }
 
     // Step 1: Pair and sort
 	std::vector<t_pair> mainChain;
