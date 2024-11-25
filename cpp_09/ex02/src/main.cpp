@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/25 19:38:18 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:24:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,6 @@ int main(int argc, char** argv) {
 			// Pair adjacent elements in the vector of integers and load them in a vector of pairs
 			pmergeme.setPairsVector();
 			printContainer("pairsVector = ", pmergeme.getPairsVector());
-
-			// std::vector<t_pair> pairedSeq = pmergeme.getPairsVector();
-			// if (pairedSeq.size() == 1) {
-			// 	std::cout << "smaller value = " << pairedSeq[0]._smaller << std::endl;
-			// 	std::cout << "larger value  = " << pairedSeq[0]._larger << std::endl;
-			// 	if (pairedSeq[0]._smaller < pairedSeq[0]._larger)
-            // 		std::swap(pairedSeq[0]._smaller, pairedSeq[0]._larger);
-			// 	if (intStraggler)
-			// 	printContainer("++++++++++++++++ HERE = ", pairedSeq);
-			// 	return 0;
-			// }
 			
 			// Recursively sort main chain
 			std::cout << " --- Start recursive sorting of main chain --- " << std::endl;
@@ -65,10 +54,7 @@ int main(int argc, char** argv) {
 			std::vector<int> mainChain;
 
 			// Divide sequence of pairs into main chain (storing larger values, sorted) and pending
-			std::cout << "extractPendingAndMainChain():" << std::endl;					
 			pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
-			printContainer("\tMain chain = ", mainChain);
-			printContainer("\tPending    = ", pending);
 
 			std::cout << "intMergeInsertion():" << std::endl;
 			pmergeme.intMergeInsertion(pending, mainChain);
@@ -77,23 +63,12 @@ int main(int argc, char** argv) {
 			pmergeme.intMergeInsertion(intStraggler, mainChain);
 			printContainer("Sorted sequence = ", mainChain);
 			std::cout << "Sequence length = " << mainChain.size() << std::endl;
-			if (isSorted(mainChain))
-				std::cout << "The sequence is sorted" << std::endl;
+			DEBUG_PRINT((if (isSorted(mainChain))
+				std::cout << "The sequence is sorted" << std::endl
 			else
-				std::cout << "THE SEQUENCE IS NOT SORTED!!!" << std::endl;
+				std::cout << "THE SEQUENCE IS NOT SORTED!!!" << std::endl))
+			// DEBUG_PRINT((isSorted(mainChain) ? "The sequence is sorted" : "THE SEQUENCE IS NOT SORTED!!!"));
 
-			// DEBUG_PRINT("This should be displayed only in debug mode")
-			// DEBUG_PRINT(
-			// 	(isSorted(mainChain) 
-			// 		? "The sequence is sorted" 
-			// 		: "THE SEQUENCE IS NOT SORTED!!!")
-			// )
-			// #ifdef DEBUG_MODE
-			// 	std::cout << "DEBUG_MODE is ON" << std::endl;
-			// #else
-			// 	std::cout << "DEBUG_MODE is OFF" << std::endl;
-			// #endif
-			
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}

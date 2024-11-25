@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2024/11/25 00:09:58 by ccarrace         ###   ########.fr        #
+#    Updated: 2024/11/25 22:23:29 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 NAME 		= 	PmergeMe
 
 # --- Compiler --------------------------------------------------------------- #
-CC 			= 	c++
-FLAGS 		=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-DDEBUG_MODE #-fsanitize=address
+CXX 		= 	c++
+CXXFLAGS 	=	-MMD -Wall -Wextra -Werror -std=c++98 -g -DDEBUG_MODE #-fsanitize=address
 
 # --- Folders ---------------------------------------------------------------- #
 INC_DIR		=	inc/
@@ -36,11 +36,11 @@ OBJ			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 DEP			=	$(addprefix $(DEP_DIR), $(DEP_FILES))
 
 # --- Build rules ------------------------------------------------------------ #
-all: $(OBJ_DIR) $(NAME) Makefile
+all: $(OBJ_DIR) $(NAME)
 
 # --- Object build rules ----------------------------------------------------- #
-$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
-	$(CC) $(FLAGS) $(INCLUDES) -MMD -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp Makefile | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -48,8 +48,8 @@ $(OBJ_DIR):
 -include $(DEP)
 
 # --- Program build rules ---------------------------------------------------- #
-$(NAME): $(OBJ) Makefile
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $@
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJ) -o $@
 
 # --- Cleaning rules --------------------------------------------------------- #
 

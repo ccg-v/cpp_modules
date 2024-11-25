@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/25 19:38:52 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:43:23 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,16 +311,18 @@ void PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pai
 }
 
 void	PmergeMe::extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain) {
-    // if (pairedSeq.size() <= 1) {
-    //     return;
-	// }
+
+	std::cout << "extractPendingAndMainChain():" << std::endl;
 
     for (size_t i = 0; i < pairedSeq.size(); i ++) {
 		std::cout << "\tAppending " << pairedSeq[i]._larger  << " to main chain" << std::endl;
 		std::cout << "\tAppending " << pairedSeq[i]._smaller << " to pending" << std::endl;
         pending.push_back(pairedSeq[i]._smaller);
 		mainChain.push_back(pairedSeq[i]._larger);
-    }	
+    }
+	
+	printContainer("\tMain chain = ", mainChain);
+	printContainer("\tPending    = ", pending);
 }
 
 std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
