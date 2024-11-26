@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/24 21:02:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:41:00 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ class PmergeMe {
 
 		void	setIntsVector(int value);
 		void	setPairsVector(void);
+
+		void	setIntStraggler(void);
 
 		/* --- Public methods ----------------------------------------------- */
 
