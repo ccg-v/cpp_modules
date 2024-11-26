@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/27 00:10:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/27 00:33:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,6 +396,25 @@ void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & 
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
         }
     }
+}
+
+void	PmergeMe::vecFordJohnsonSort() {
+
+	setIntStraggler();
+	setPairsVector();
+	recursiveSort(getPairsVector());
+
+	std::vector<int> pending;
+	std::vector<int> mainChain;
+
+	extractPendingAndMainChain(getPairsVector(), pending, mainChain);
+	intMergeInsertion(pending, mainChain);
+	intMergeInsertion(getIntStraggler(), mainChain);
+	
+	printContainer("Sorted sequence = ", mainChain);
+	std::cout << "Sequence length = " << mainChain.size() << std::endl;
+	DEBUG_PRINT(std::cout << (isSorted(mainChain) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+	
 }
 
 std::ostream& operator<<(std::ostream& os, const t_pair& pair) {

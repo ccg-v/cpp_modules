@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/27 00:16:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/27 00:33:54 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ int main(int argc, char** argv) {
 			PmergeMe pmergeme;
 
 			pmergeme.checkInputAndSetContainers(argc, argv);
-			pmergeme.setIntStraggler();
-			pmergeme.setPairsVector();
-			pmergeme.recursiveSort(pmergeme.getPairsVector());
+			// pmergeme.setIntStraggler();
+			// pmergeme.setPairsVector();
+			// pmergeme.recursiveSort(pmergeme.getPairsVector());
 
-			std::vector<int> pending;
-			std::vector<int> mainChain;
+			// std::vector<int> pending;
+			// std::vector<int> mainChain;
 
-			pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
-			pmergeme.intMergeInsertion(pending, mainChain);
-			pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
+			// pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
+			// pmergeme.intMergeInsertion(pending, mainChain);
+			// pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
+			pmergeme.vecFordJohnsonSort();
 			
-			printContainer("Sorted sequence = ", mainChain);
-			std::cout << "Sequence length = " << mainChain.size() << std::endl;
-			DEBUG_PRINT(std::cout << (isSorted(mainChain) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+			// printContainer("Sorted sequence = ", mainChain);
+			// std::cout << "Sequence length = " << mainChain.size() << std::endl;
+			// DEBUG_PRINT(std::cout << (isSorted(mainChain) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
 
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
