@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/26 20:41:00 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:52:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ class PmergeMe {
 	private:
 		std::vector<int>	_intsVector;
 		std::vector<t_pair>	_pairsVector;
+
+		std::vector<int>	_intStraggler;
 
 		/* --- Private methods ---------------------------------------------- */
 
@@ -60,6 +62,8 @@ class PmergeMe {
 
 		std::vector<int> 	& getIntsVector();
 		std::vector<t_pair> & getPairsVector();	
+
+		std::vector<int>	& getIntStraggler();
 
 		/* --- Setters ------------------------------------------------------ */
 

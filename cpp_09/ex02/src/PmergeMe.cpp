@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/26 20:21:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/27 00:10:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PmergeMe::PmergeMe() {
-	// _vecPairStraggler._smaller = 0;
-    // _vecPairStraggler._larger = 0;
-}
+PmergeMe::PmergeMe() {}
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _intsVector(source._intsVector), _pairsVector(source._pairsVector) {} //, _vecPairStraggler(source._vecPairStraggler) {}
+	: _intsVector(source._intsVector), _pairsVector(source._pairsVector), 
+	_intStraggler(source._intStraggler) {}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source) {
 	if (this != &source) {
 		this->_intsVector = source._intsVector;
 		this->_pairsVector = source._pairsVector;
-		// this->_vecPairStraggler = source._vecPairStraggler;
+		this->_intStraggler = source._intStraggler;
 	}
 	return *this;
 }
@@ -47,25 +45,10 @@ std::vector<int> & PmergeMe::getIntsVector() {
 std::vector<t_pair> & PmergeMe::getPairsVector() {
 	return this->_pairsVector;
 }
-// std::vector<t_pair> & PmergeMe::getPairSortedVector() {
-// 	return this->_pairedVector;
-// }
 
-// std::deque<t_pair> & PmergeMe::getPairSortedDeque() {
-// 	return this->_deqPairs;
-// }
-
-// int	PmergeMe::getVectorStraggler() {
-// 	return this->_vecStraggler;=
-// }
-
-// t_pair PmergeMe::getVecPairStraggler() {
-// 	return this->_vecPairStraggler;
-// }
-
-// bool	PmergeMe::getHasStraggler() {
-// 	return this->_hasStraggler;
-// }
+std::vector<int> & PmergeMe::getIntStraggler() {
+	return this->_intStraggler;
+}
 
 /* --- Setters -------------------------------------------------------------- */
 
@@ -77,13 +60,8 @@ void PmergeMe::setPairsVector(void) {
 	
     for (size_t i = 0; (i + 1) < _intsVector.size(); i += 2) {
         t_pair newPair;
-        // if (_intsVector[i] > _intsVector[i + 1]) {
             newPair._larger = _intsVector[i];
             newPair._smaller = _intsVector[i + 1];
-        // } else {
-        //     newPair._larger = _intsVector[i + 1];
-        //     newPair._smaller = _intsVector[i];
-        // }
 		if (newPair._smaller > newPair._larger)
 			std::swap(newPair._smaller, newPair._larger);
 		_pairsVector.push_back(newPair);   
@@ -94,33 +72,22 @@ void PmergeMe::setPairsVector(void) {
 }
 
 
-// void	PmergeMe::setVectorStraggler(std::vector<t_pair> & pairedSeq) {
-// 	if (pairedSeq.back()._smaller == -1) {
-// 		_vecStraggler = pairedSeq.back()._larger;
-// 		pairedSeq.pop_back();
-// 	}
-// }
-
-// void	PmergeMe::setVectorPairStraggler(std::vector<t_pair> & mainChain) {
-// 	if (mainChain.size() % 2 > 0) {
-// 		_vecPairStraggler = mainChain.back();
-// 		mainChain.pop_back();
-// 	}
-// }
-
-// void	PmergeMe::setIntStraggler(std::vector<int> & inputSeq) {
-// 	if (inputSeq.size() % 2 == 1) {
-// 		_vecIntStraggler = inputSeq.back();
-// 		inputSeq.pop_back();
-// 	}
-// }
+void	PmergeMe::setIntStraggler() {
+if (_intsVector.size() % 2 == 1)
+	{
+		_intStraggler.push_back(_intsVector.back());
+		_intsVector.pop_back();
+		DEBUG_PRINT(printContainer("intStraggler = ", _intStraggler));
+		DEBUG_PRINT(printContainer("intsVector without straggler = ", _intsVector));
+	}
+}
 
 /* --- Common member methods ------------------------------------------------ */
 
 void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 
 	for (int i = 1; i < argc; ++i) {
-		// input validation
+
 		std::string input = argv[i];
 		
 		if (input.empty() || onlyWhitespace(input)) {
@@ -132,7 +99,7 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 
 		while (argStream >> element) {
 			if (!isPositiveNumber(element)) {
-				throw std::runtime_error("Error: sequence must be made up of positive integers.");
+				throw std::runtime_error("Error: sequence values must be positive integers.");
 			}
 
 			if (!isIntegerRange(element)) {
@@ -140,37 +107,24 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv) {
 			}
 
 			int value = atoi(element.c_str());
-			// setPairSortedVector(value);
+			
 			setIntsVector(value);
 			// setDeque(value);
 		}
 	}
 
+	if (isSorted(getIntsVector()))
+		throw std::runtime_error("Error: the input sequence is already sorted.");
+
 	DEBUG_PRINT(printContainer("intsVector = ", _intsVector));
 
 }
 
-// bool	PmergeMe::hasStraggler(std::vector<t_pair> & pairedSeq) {
-// 	if (_pairedVector.back()._smaller == -1) {
-// 		_vecStraggler = _pairedVector.back()._larger;
-// 		_pairedVector.pop_back();
-// 		return true;
-// 	}
-// 	return false;
-// }
+/* ===========================================================================
 
-/* --- Member methods for a VECTOR container ------------------------------- */
+   Member methods for a VECTOR container
 
-// void	PmergeMe::sortAdjacentNumbers(std::vector<t_pair> & pairedSeq) {
-// 	if (pairedSeq.size() <= 1)
-// 		return;
-// 	for (size_t i = 0; i < pairedSeq.size(); i++) {
-// 		if (pairedSeq[i]._smaller > pairedSeq[i]._larger) {
-// 			std::cout << "Swapping smaller " << pairedSeq[i]._smaller << " and larger " << pairedSeq[i]._larger << std::endl; 
-// 			std::swap(pairedSeq[i]._smaller, pairedSeq[i]._larger);
-// 		}
-// 	}
-// }
+   ===========================================================================*/
 
 void	PmergeMe::sortAdjacentPairs(std::vector<t_pair> & pairedSeq) {
 
@@ -350,13 +304,19 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq) {
 
 }
 
-
+/* 
+ *	PAIRMergeInsertion()
+ *
+ * We pick PAIRS of integers from a vector of PAIRS of integers (pending) and insert them in
+ *	another vector of PAIRS of integers (main chain).
+ */
 void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
-    // Step 2: Generate insertion order using Jacobsthal sequence
+
+    // Generate insertion order using Jacobsthal sequence
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
     std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
 
-    // Step 3: Insert smaller elements into seq based on insertionIndexes
+    // Insert smaller elements into seq based on insertionIndexes
     std::vector<bool> inserted(pending.size(), false); // Track inserted elements
     for (size_t i = 0; i < insertionIndexes.size(); ++i) {
         size_t insertIndex = insertionIndexes[i];
@@ -373,7 +333,7 @@ void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_p
         }
     }
 
-    // Step 4: Insert any remaining elements from smaller
+    // Insert any remaining elements from smaller
     for (size_t i = 0; i < pending.size(); ++i) {
         if (!inserted[i]) {
             t_pair valueToInsert = pending[i];
@@ -389,44 +349,50 @@ void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_p
     }
 }
 
- /* 
-  *	intMergeInsertion()
-  *
-  * We pick integers from a vector of integers (pending) and insert them in
-  *	another vector of integers (main chain).
-  */
+/* 
+ *	intMergeInsertion()
+ *
+ * We pick INTEGERS from a vector of INTEGERS (pending) and insert them in
+ *	another vector of INTEGERS (main chain).
+ */
 void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain) {
 
-	DEBUG_PRINT(std::cout << "intMergeInsertion():" << std::endl);
+	DEBUG_PRINT({
+		if(pending.size() > 1)
+			std::cout << "intMergeInsertion():" << std::endl;
+	});
+	DEBUG_PRINT({
+		if (pending.size() == 1 && _intStraggler.size() > 0)
+			printContainer("\n\tintStraggler = ", _intStraggler);
+	});
 	
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
     std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
-    // Step 3: Insert smaller elements into seq based on insertionIndexes
-    std::vector<bool> inserted(pending.size(), false); // Track inserted elements
+
+    // Insert smaller elements into seq based on insertionIndexes
+    std::vector<bool> inserted(pending.size(), false);
     for (size_t i = 0; i < insertionIndexes.size(); ++i) {
         size_t insertIndex = insertionIndexes[i];
         if (insertIndex < pending.size() && !inserted[insertIndex]) {
             int valueToInsert = pending[insertIndex];
             size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
 
             DEBUG_PRINT(std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl);
-
-            mainChain.insert((mainChain.begin() + position), valueToInsert);
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
 
             inserted[insertIndex] = true;
         }
     }
 
-    // Step 4: Insert any remaining elements from smaller
+    // Insert any remaining elements from smaller
     for (size_t i = 0; i < pending.size(); ++i) {
         if (!inserted[i]) {
             int valueToInsert = pending[i];
             size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
 
             DEBUG_PRINT(std::cout << "\n\tInserting remaining value " << valueToInsert << " at position " << position << std::endl);
-
-            mainChain.insert((mainChain.begin() + position), valueToInsert);
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
         }
     }
