@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/27 00:33:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:29:04 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ class PmergeMe {
 		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
-		size_t				intBinarySearch(const std::vector<int> & seq, int value, size_t end);
-		size_t				pairBinarySearch(const std::vector<t_pair> & seq, t_pair value, size_t end);
-		std::vector<int>	getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-
-		void	recursiveSort(std::vector<t_pair> & seq);
-		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);	
+		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
+		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
+		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
+		void				recursiveSort(std::vector<t_pair> & seq, size_t & comparisons);
+		
+		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
+		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
+		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);	
 
 		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 
@@ -53,7 +54,7 @@ class PmergeMe {
 
 		void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
 		std::deque<int> 	buildJacobsthalDeq(size_t len);
-		std::deque<int>		getInsertionOrder(const std::deque<int> & jacobsthalSeq, size_t size);
+		std::deque<int>		getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
 	public:
 

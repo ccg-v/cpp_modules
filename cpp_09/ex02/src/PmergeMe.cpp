@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/27 00:33:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/11/28 23:53:15 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,34 +192,50 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
     return JacobsthalSeq;
 }
 
-size_t PmergeMe::pairBinarySearch(const std::vector<t_pair> & seq, t_pair value, size_t end) {
+// size_t	PmergeMe::intBubbleSort(const std::vector<int> & seq, int value, size_t end, size_t & comparisons) {
+// 	size_t len = seq.size();
+// 	for (size_t i = 0; i < len; i++) {
+// 		if (seq)
+// 	}
+// }
+
+size_t PmergeMe::pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons) {
+	// size_t partial_comp = comparisons;
     size_t left = 0;
     size_t right = end;
     while (left < right) { 
         size_t mid = (left + right) / 2;
-        if (seq[mid]._larger > value._larger)
+        if (mainChain[mid]._larger > value._larger)
             right = mid;
         else
             left = mid + 1;
+		comparisons++;
+		// std::cout << "\t\t...comparing value " << value._larger << " with " << mainChain[mid]._larger << " in position [" << mid << "]..." << std::endl;
+		
     }
+	// std::cout << "\tcomparisons made = " << comparisons - partial_comp << " | total = " << comparisons << std::endl;
     return left;
 }
 
-
-size_t PmergeMe::intBinarySearch(const std::vector<int> & seq, int value, size_t end) {
+size_t PmergeMe::intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons) {
+	size_t partial_comp = comparisons;
+	std::cout << "\t\tupperBound search is mainChain[" << end << "] = " << mainChain[end] << std::endl; 
     size_t left = 0;
     size_t right = end;
     while (left < right) { 
         size_t mid = (left + right) / 2;
-        if (seq[mid] > value)
+        if (mainChain[mid] > value)
             right = mid;
         else
             left = mid + 1;
+		comparisons++;
+		std::cout << "\t\t...comparing pending " << value << " with " << mainChain[mid] << " in position [" << mid << "]..." << std::endl;
     }
+	std::cout << "\t\tcomparisons made = " << comparisons - partial_comp << " | total = " << comparisons << std::endl;
     return left;
 }
 
-std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize) {
+std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize) {
     std::vector<int> result;
     std::vector<bool> inserted(smallerSize, false); // Track inserted indices
 
@@ -265,7 +281,7 @@ std::vector<int> PmergeMe::getInsertionOrder(const std::vector<int> & jacobsthal
     return result;
 }
 
-void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq) {
+void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & comparisons) {
 
     if (pairedSeq.size() < 1) {
         return;
@@ -286,50 +302,50 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq) {
 
     divideSequence(pairedSeq, pending, mainChain);
 
-    recursiveSort(mainChain);
+    recursiveSort(mainChain, comparisons);
 
 	if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
-		size_t position = pairBinarySearch(mainChain, currentStraggler, mainChain.size());
-		mainChain.insert(mainChain.begin() + position, currentStraggler);
 
 		DEBUG_PRINT(std::cout << "\t>>>>> INSERTING " << currentStraggler << " in mainChain" << std::endl);
+		
+		size_t position = pairBinarySearch(mainChain, currentStraggler, mainChain.size(), comparisons);
+		mainChain.insert(mainChain.begin() + position, currentStraggler);
 	}
 
-	DEBUG_PRINT(std::cout << "recursiveSort() unwinding" << std::endl);
+	DEBUG_PRINT(std::cout << "recursiveSort() unwinding: " << std::endl);
 	DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
 
-	pairMergeInsertion(pending, mainChain);
+	pairMergeInsertion(pending, mainChain, comparisons);
 	
 	pairedSeq = mainChain;
 
 }
 
 /* 
- *	PAIRMergeInsertion()
+ *	pairMergeInsertion()
  *
- * We pick PAIRS of integers from a vector of PAIRS of integers (pending) and insert them in
+ *	We pick PAIRS of integers from a vector of PAIRS of integers (pending) and insert them in
  *	another vector of PAIRS of integers (main chain).
  */
-void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
+void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons) {
 
     // Generate insertion order using Jacobsthal sequence
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
-    std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
+    std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, pending.size());
 
-    // Insert smaller elements into seq based on insertionIndexes
+    // Insert smaller elements into seq based on pickingIndexes
     std::vector<bool> inserted(pending.size(), false); // Track inserted elements
-    for (size_t i = 0; i < insertionIndexes.size(); ++i) {
-        size_t insertIndex = insertionIndexes[i];
-        if (insertIndex < pending.size() && !inserted[insertIndex]) {
-            t_pair valueToInsert = pending[insertIndex];
-            size_t position = pairBinarySearch(mainChain, valueToInsert, mainChain.size());
-
-            DEBUG_PRINT(std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl);
-
+    for (size_t i = 0; i < pickingIndexes.size(); ++i) {
+        size_t pickingIndex = pickingIndexes[i];
+        if (pickingIndex < pending.size() && !inserted[pickingIndex]) {
+            t_pair valueToInsert = pending[pickingIndex];
+            size_t position = pairBinarySearch(mainChain, valueToInsert, mainChain.size(), comparisons);
             mainChain.insert((mainChain.begin() + position), valueToInsert);
-            DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
+            inserted[pickingIndex] = true;
 
-            inserted[insertIndex] = true;
+            DEBUG_PRINT(std::cout << "\tInserting pending[" << pickingIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl);
+			std::cout << "\t--> partial comparisons = " << comparisons << std::endl;
+            DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
         }
     }
 
@@ -338,7 +354,7 @@ void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_p
         if (!inserted[i]) {
             t_pair valueToInsert = pending[i];
 			if (pending[i]._smaller != 0 && pending[i]._larger != 0) {
-				size_t position = pairBinarySearch(mainChain, valueToInsert, mainChain.size());
+				size_t position = pairBinarySearch(mainChain, valueToInsert, mainChain.size(), comparisons);
 
 				DEBUG_PRINT(std::cout << "\tInserting remaining value " << valueToInsert << " at position " << position << std::endl);
 
@@ -355,62 +371,97 @@ void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_p
  * We pick INTEGERS from a vector of INTEGERS (pending) and insert them in
  *	another vector of INTEGERS (main chain).
  */
-void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain) {
+void	PmergeMe::intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons) {
 
-	DEBUG_PRINT({
-		if(pending.size() > 1)
-			std::cout << "intMergeInsertion():" << std::endl;
-	});
-	DEBUG_PRINT({
-		if (pending.size() == 1 && _intStraggler.size() > 0)
-			printContainer("\n\tintStraggler = ", _intStraggler);
-	});
+	DEBUG_PRINT({if(pending.size() > 1) std::cout << "intMergeInsertion():" << std::endl;});
+	DEBUG_PRINT({if (pending.size() == 1 && _intStraggler.size() > 0) printContainer("\n\tintStraggler = ", _intStraggler);});
 	
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(pending.size());
-    std::vector<int> insertionIndexes = getInsertionOrder(jacobsthalSeq, pending.size());
+    std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, pending.size());
+	std::vector<size_t> pairPositions;
 
-    // Insert smaller elements into seq based on insertionIndexes
+    // Initialize pair positions
+    for (size_t i = 0; i < pending.size(); ++i) {
+        pairPositions.push_back(i); // Assume pending[i] ↔ mainChain[i]
+    }
+printContainer("initial pairPositions = ", pairPositions);
+printContainer("picking indexes = ", pickingIndexes);
+
+    // Insert smaller elements into seq based on pickingIndexes
     std::vector<bool> inserted(pending.size(), false);
-    for (size_t i = 0; i < insertionIndexes.size(); ++i) {
-        size_t insertIndex = insertionIndexes[i];
-        if (insertIndex < pending.size() && !inserted[insertIndex]) {
-            int valueToInsert = pending[insertIndex];
-            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
-            mainChain.insert((mainChain.begin() + position), valueToInsert);
+    for (size_t i = 0; i < pending.size(); i++) {
 
-            DEBUG_PRINT(std::cout << "\tInserting pending[" << insertionIndexes[i] << "] = " << valueToInsert << " at mainChain[" << position << "]" << std::endl);
+		// size_t upperBound = pairPositions[i]; // Use the paired element's position
+        size_t pickingIndex = pickingIndexes[i];
+		size_t upperBound = pairPositions[pickingIndex];
+		
+
+// std::cout << "\ninserting pending[" << pickingIndex << "] = " << pending[pickingIndex];
+// std::cout << " | UPPERBOUND index is [" << upperBound << "] | UPPERBOUND value is " << mainChain[upperBound] << std::endl;
+
+        if (pickingIndex < pending.size() && !inserted[pickingIndex]) {
+            int valueToInsert = pending[pickingIndex];
+            // size_t position = intBinarySearch(mainChain, valueToInsert, upperBound, comparisons);
+
+			DEBUG_PRINT(std::cout << "\tinserting pending[" << pickingIndexes[i] << "] = " << valueToInsert << std::endl);
+
+            size_t position;
+			if (pending.size() == 1 && _intStraggler.size() > 0) {
+             	position = intBinarySearch(mainChain, valueToInsert, mainChain.size() - 1, comparisons);				
+			} else {
+            	position = intBinarySearch(mainChain, valueToInsert, upperBound, comparisons);
+			}
+
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
+            inserted[pickingIndex] = true;
+
+            
+
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
 
-            inserted[insertIndex] = true;
+			// update pairPositions after the insertion
+			for (size_t j = 0; j < pending.size(); ++j) {
+				pairPositions[j] = pairPositions[j] + 1;
+			}
+// printContainer("\t\tupdated pairPositions = ", pairPositions);
         }
     }
 
     // Insert any remaining elements from smaller
-    for (size_t i = 0; i < pending.size(); ++i) {
+    for (size_t i = 0; i < pending.size(); i++) {
         if (!inserted[i]) {
             int valueToInsert = pending[i];
-            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
+
+			DEBUG_PRINT(std::cout << "\tinserting remaining pending[" << pickingIndexes[i] << "] = " << valueToInsert << std::endl);
+						
+            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size() - 1, comparisons);
             mainChain.insert((mainChain.begin() + position), valueToInsert);
 
-            DEBUG_PRINT(std::cout << "\n\tInserting remaining value " << valueToInsert << " at position " << position << std::endl);
+            // DEBUG_PRINT(std::cout << "\n\tInserting remaining value " << valueToInsert << " at position " << position << std::endl);
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
         }
     }
 }
 
+
+/* Is it necessary to keep getters and setters out from main??????????????????????????
+*/
 void	PmergeMe::vecFordJohnsonSort() {
 
 	setIntStraggler();
 	setPairsVector();
-	recursiveSort(getPairsVector());
+
+	size_t	comparisons = 0;
+	recursiveSort(getPairsVector(), comparisons);
 
 	std::vector<int> pending;
 	std::vector<int> mainChain;
 
 	extractPendingAndMainChain(getPairsVector(), pending, mainChain);
-	intMergeInsertion(pending, mainChain);
-	intMergeInsertion(getIntStraggler(), mainChain);
+	intMergeInsertion(pending, mainChain, comparisons);
+	intMergeInsertion(getIntStraggler(), mainChain, comparisons);
 	
+	std::cout << "COMPARISONS = " << comparisons << std::endl;
 	printContainer("Sorted sequence = ", mainChain);
 	std::cout << "Sequence length = " << mainChain.size() << std::endl;
 	DEBUG_PRINT(std::cout << (isSorted(mainChain) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
