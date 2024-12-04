@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/03 14:56:42 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:29:37 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,18 +157,15 @@ void	PmergeMe::sortAdjacentPairs(std::vector<t_pair> & pairedSeq) {
 	DEBUG_PRINT(printContainer("\tpairedSeq = ", pairedSeq));
 }
 
-void PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
-
+void 	PmergeMe::divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain) {
+	
 	DEBUG_PRINT(std::cout << "\ndivideSequence():" << std::endl);
-
-    for (size_t i = 0; (i + 1) < pairedSeq.size(); i +=2) {
-        pending.push_back(pairedSeq[i]); 
-        mainChain.push_back(pairedSeq[i + 1]); 
+	
+    for (size_t i = 0; i < pairedSeq.size(); i += 2) {
+        mainChain.push_back(pairedSeq[i + 1]);
+        pending.push_back(pairedSeq[i]);
     }
-
-    // pairedSeq = mainChain;
-
-	// DEBUG_PRINT(printContainer("\tpairedSeq = ", pairedSeq));
+	
 	DEBUG_PRINT(printContainer("\tmain chain = ", mainChain));
 	DEBUG_PRINT(printContainer("\tpending    = ", pending));
 }
@@ -188,7 +185,7 @@ void	PmergeMe::extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::
 		mainChain.push_back(pairedSeq[i]._larger);
     }
 	
-	DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
+	DEBUG_PRINT(printContainer("\tc Main chain = ", mainChain));
 	DEBUG_PRINT(printContainer("\tPending    = ", pending));
 }
 
@@ -298,7 +295,7 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
     return result;
 }
 
-void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & comparisons) {
+void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & comparisons, size_t & level) {
 
     if (pairedSeq.size() < 1) {
         return;
@@ -321,8 +318,13 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & compariso
 	}
 
     divideSequence(pairedSeq, pending, mainChain);
+	setPairsUpperBounds(pairedSeq);
 
-    recursiveSort(mainChain, comparisons);
+std::cout << "\n === RECURSION LEVEL = " << ++level << " ===========================================" << std::endl;
+
+    recursiveSort(mainChain, comparisons, level);
+
+
 
 	// Insert back first straggler
 	if (currentStraggler._larger != 0 && currentStraggler._smaller != 0) {
@@ -336,7 +338,7 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & compariso
 	DEBUG_PRINT(std::cout << "\nrecursiveSort() unwinding: " << std::endl);
 	DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
 
-	pairMergeInsertion(pending, mainChain, comparisons);
+	pairMergeInsertion(pending, mainChain, comparisons, level);
 	
 	pairedSeq = mainChain;
 
@@ -348,7 +350,9 @@ void PmergeMe::recursiveSort(std::vector<t_pair> & pairedSeq, size_t & compariso
  *	We pick PAIRS of integers from a vector of PAIRS of integers (pending) and insert them in
  *	another vector of PAIRS of integers (main chain).
  */
-void	PmergeMe::pairMergeInsertion(std::vector<t_pair> pending, std::vector<t_pair> & mainChain, size_t & comparisons) {
+void	PmergeMe::pairMergeInsertion(std::vector<t_pair> pending, std::vector<t_pair> & mainChain, size_t & comparisons, size_t & level) {
+
+std::cout << "\n === RECURSION LEVEL = " << level-- << " ===========================================" << std::endl;
 
 	DEBUG_PRINT({if(pending.size() > 1) std::cout << "\npairMergeInsertion():" << std::endl;});
 	DEBUG_PRINT({if (pending.size() == 1 && _intStraggler.size() > 0) printContainer("\n\tintStraggler = ", _intStraggler);});
@@ -445,8 +449,8 @@ printContainer("picking indexes = ", pickingIndexes);
             mainChain.insert((mainChain.begin() + position), valueToInsert);
             inserted[pickingIndex] = true;
 
-            DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
-			DEBUG_PRINT(printContainer("\tPending    = ", pending));
+            DEBUG_PRINT(printContainer("\ty Main chain = ", mainChain));
+			DEBUG_PRINT(printContainer("\ty Pending    = ", pending));
 
 			// update (shift) upperBoundIndexes after the insertion
 			for (size_t j = 0; j < pending.size(); ++j) {
@@ -465,7 +469,7 @@ printContainer("picking indexes = ", pickingIndexes);
             size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size(), comparisons);
             mainChain.insert((mainChain.begin() + position), valueToInsert);
 
-            DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
+            DEBUG_PRINT(printContainer("\tb Main chain = ", mainChain));
         }
     }
 }
@@ -480,9 +484,8 @@ void	PmergeMe::vecFordJohnsonSort() {
 	// setPairsUpperBounds();
 
 	size_t	comparisons = 0;
-
-	recursiveSort(getPairsVector(), comparisons);
-
+	size_t	level = 0;
+	recursiveSort(getPairsVector(), comparisons, level);
 
 	std::vector<int> intPending;
 	std::vector<int> intMainChain;
