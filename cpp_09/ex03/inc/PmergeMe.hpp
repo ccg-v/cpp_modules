@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/04 13:52:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:48:38 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@
 #include <sstream>	// for std::istringstream()
 #include "Utils.hpp"
 
-typedef struct s_pair {
-	int	_smaller;
-	int	_larger;
-	int _adjacentIndex;
-} t_pair;
+struct t_pair {
+    int _larger;
+    int _smaller;
+    t_pair* _ptrAdjacent; // Pointer to adjacent pair in mainChain
+
+    t_pair(int larger = 0, int smaller = 0, t_pair* ptr = NULL)
+        : _larger(larger), _smaller(smaller), _ptrAdjacent(ptr) {}
+};
+
 
 class PmergeMe {
 
@@ -43,11 +47,11 @@ class PmergeMe {
 		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
 		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
 		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-		void				recursiveSort(std::vector<t_pair> & seq, size_t & comparisons, size_t & level);		
+		void				recursiveSort(std::vector<t_pair> &pairedSeq, size_t &comparisons);		
 		
 		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
 		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> pending, std::vector<t_pair> & mainChain, size_t & comparisons, size_t & level);	
+		void	pairMergeInsertion(std::vector<t_pair> pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
 
 		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 
