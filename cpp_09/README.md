@@ -2,7 +2,7 @@
 
 * How Binary Search Works:
     Binary search divides the sequence into halves at each step.
-    For a sequence of size *n*, the maximum number of comparisons is $$⌊log⁡_{2}(n)⌋+1$$.
+    For a sequence of size *n*, the maximum number of comparisons is `$$⌊log⁡_{2}(n)⌋+1$$`.
     This is efficient compared to a linear search, which could require nn comparisons.
 
     Why $$2k−12k−1$$ is Special:
