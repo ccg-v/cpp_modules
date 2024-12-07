@@ -22,7 +22,7 @@ Example:
 	- If the sequence size is **7**, binary search will take:
     	- **At most 3 comparisons**.
 	- For sequences slightly larger (e.g., size 8 to 15), the maximum number of comparisons is still 4:
-        - **Range**: [$$2_{k}−1$$, $$2^{k+1}−1$$], i.e., [7,15].
+        - **Range**: $$[2^{k}−1, 2^{k+1}−1]$$, i.e., [7,15].
         - **Maximum comparisons**: $$⌊log^{⁡2}(15)⌋+1=$$ **4**.
 
 ## Implications for Ford-Johnson Algorithm:
