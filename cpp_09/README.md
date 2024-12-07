@@ -2,17 +2,15 @@
 
 1. How Binary Search Works:
 
-	Binary search divides the sequence into halves at each step.
-
-	For a sequence of size *n*, the maximum number of comparisons is $$⌊log⁡_{2}(n)⌋+1$$.
-
-	This is efficient compared to a linear search, which could require nn comparisons.
+- Binary search divides the sequence into halves at each step.
+- For a sequence of size *n*, the maximum number of comparisons is $$⌊log⁡_{2}(n)⌋+1$$.
+- This is efficient compared to a linear search, which could require nn comparisons.
 
 2. Why $$2^{k}−1$$ is special:
 
 - When the size of the sorted sequence is $$2^{k}−1$$ (where *k* is an integer), the structure of binary search is perfectly balanced:
-- Each level of the search splits the sequence into two equal parts, except at the final step.
-- The search depth and the number of comparisons are minimal and predictable.
+	- Each level of the search splits the sequence into two equal parts, except at the final step.
+	- The search depth and the number of comparisons are minimal and predictable.
 
 ## Comparison Efficiency and Power-of-Two Alignment:
 
