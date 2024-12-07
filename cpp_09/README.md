@@ -18,29 +18,31 @@ The efficiency of binary search holds across a range of sequence sizes, but sequ
 
 Example:
 
-For $$2^{3}−1=7$$:
-	If the sequence size is **7**, binary search will take:
-    	At most 3 comparisons.
-	For sequences slightly larger (e.g., size 8 to 15), the maximum number of comparisons is still 4:
-            Range: [$$2_{k}−1, 2^{k+1}−1$$], i.e., [7,15].
-            Maximum comparisons: $$⌊log^{⁡2}(15)⌋+1=4$$.
+- For $$2^{3}−1=7$$:
+	- If the sequence size is **7**, binary search will take:
+    	- **At most 3 comparisons**.
+	- For sequences slightly larger (e.g., size 8 to 15), the maximum number of comparisons is still 4:
+        - **Range**: [$$2_{k}−1, 2^{k+1}−1$$], i.e., [7,15].
+        - **Maximum comparisons**: $$⌊log^{⁡2}(15)⌋+1=4$$.
 
-Implications for Ford-Johnson Algorithm:
+## Implications for Ford-Johnson Algorithm:
 
 The Ford-Johnson algorithm relies on:
 
-    Insertion Points Determined by Jacobsthal Numbers:
-        Jacobsthal indices ensure that pending values are inserted at the most efficient positions.
+1. Insertion Points Determined by Jacobsthal Numbers:
+	- Jacobsthal indices ensure that pending values are inserted at the most efficient positions.
 
-    Balanced Sequence Growth:
-        By maintaining the sorted sequence size near 2k−12k−1, the algorithm ensures the minimal number of comparisons for inserting new elements.
+2. Balanced Sequence Growth:
+    - By maintaining the sorted sequence size near $$2^{k}−1$$, the algorithm ensures the minimal number of comparisons for inserting new elements.
 
-    Dynamic Alternation Between Pending and Larger Values:
-        Larger values are appended to stabilize the sequence size, while pending values are inserted strategically to maintain balance.
+3. Dynamic Alternation Between Pending and Larger Values:
+    - Larger values are appended to stabilize the sequence size, while pending values are inserted strategically to maintain balance.
 
-Summary:
+## Summary:
 
-    Binary search works "optimally" near 2k−12k−1 because:
-        It splits the sequence into halves efficiently.
-        The number of comparisons remains consistent across a predictable range.
-    In Ford-Johnson, this property reduces the number of comparisons, aligning with the algorithm’s goal of minimizing computational cost.
+- Binary search works "optimally" near $$2^{k}−1$$ because:
+
+    - It splits the sequence into halves efficiently.
+    - The number of comparisons remains consistent across a predictable range.
+
+- In Ford-Johnson, this property reduces the number of comparisons, aligning with the algorithm’s goal of minimizing computational cost.
