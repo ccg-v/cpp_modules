@@ -1,26 +1,27 @@
 ## Key Facts About Binary Search:
 
 1. How Binary Search Works:
-    Binary search divides the sequence into halves at each step.
-    For a sequence of size *n*, the maximum number of comparisons is $$⌊log⁡_{2}(n)⌋+1$$.
-    This is efficient compared to a linear search, which could require nn comparisons.
+Binary search divides the sequence into halves at each step.
+For a sequence of size *n*, the maximum number of comparisons is $$⌊log⁡_{2}(n)⌋+1$$.
+This is efficient compared to a linear search, which could require nn comparisons.
 
-2. Why $$2^{k}−1$$ is Special:
-    When the size of the sorted sequence is $$2^{k}−1$$ (where *k* is an integer), the structure of binary search is perfectly balanced:
-    Each level of the search splits the sequence into two equal parts, except at the final step.
-        The search depth and the number of comparisons are minimal and predictable.
+2. Why $$2^{k}−1$$ is special:
+When the size of the sorted sequence is $$2^{k}−1$$ (where *k* is an integer), the structure of binary search is perfectly balanced:
+Each level of the search splits the sequence into two equal parts, except at the final step.
+The search depth and the number of comparisons are minimal and predictable.
 
 ## Comparison Efficiency and Power-of-Two Alignment:
 
 The efficiency of binary search holds across a range of sequence sizes, but sequences with sizes near $$2^{k}−1$$ provide consistent comparison counts for specific ranges.
+
 Example:
 
-    For 23−1=723−1=7:
-        If the sequence size is 7, binary search will take:
-            At most 3 comparisons.
-        For sequences slightly larger (e.g., size 8 to 15), the maximum number of comparisons is still 4:
-            Range: [2k−1,2k+1−1][2k−1,2k+1−1], i.e., [7,15][7,15].
-            Maximum comparisons: ⌊log⁡2(15)⌋+1=4⌊log2​(15)⌋+1=4.
+For $$2^{3}−1=7$$:
+	If the sequence size is **7**, binary search will take:
+    	At most 3 comparisons.
+	For sequences slightly larger (e.g., size 8 to 15), the maximum number of comparisons is still 4:
+            Range: [$$2^{k}−1$$,$$2^{k+1}−1$$], i.e., [7,15].
+            Maximum comparisons: $$⌊log^{⁡2}(15)⌋+1=4$$.
 
 Implications for Ford-Johnson Algorithm:
 
