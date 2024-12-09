@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/06 23:36:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/07 13:48:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,24 @@ class PmergeMe {
 
 		// methods for a vector container
 
-		std::vector<bool>	sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
-		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
+		void				sortAdjacentPairs(std::vector<t_pair*> & pairedSeq);
+		void divideSequence(std::vector<t_pair*> &mainChain, 
+                              std::vector<t_pair*> &pending, 
+                              std::vector<t_pair*> &nextMainChain);
 		// void				swapPending(std::vector<t_pair> & pending, std::vector<bool> & swappedValues);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
-		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
+		size_t				pairBinarySearch(const std::vector<t_pair*> & mainChain, t_pair & value, size_t end, size_t & comparisons);
 		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-		void				recursiveSort(std::vector<t_pair> &pairedSeq, size_t &comparisons);		
+		void				recursiveSort(std::vector<t_pair*> & pairedSeq, size_t & comparisons);		
 		
 		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
 		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
-
-		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
+		// void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
+		void	pairMergeInsertion(std::vector<t_pair*> &pending, 
+                                  std::vector<t_pair*> &mainChain, 
+                                  size_t &comparisons);
+		void 	extractPendingAndMainChain(std::vector<t_pair*> &pairedSeq, std::vector<int> &pending, std::vector<int> &mainChain);
 
 		// overloaded methods for a deque container
 
@@ -63,6 +67,7 @@ class PmergeMe {
 		std::deque<int>		getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
 	public:
+
 
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
@@ -74,7 +79,7 @@ class PmergeMe {
 		/* --- Getters ------------------------------------------------------ */
 
 		std::vector<int> 	& getIntsVector();
-		std::vector<t_pair> & getPairsVector();	
+		std::vector<t_pair*> & getPairsVector();	
 
 		std::vector<int>	& getIntStraggler();
 
@@ -88,24 +93,59 @@ class PmergeMe {
 		/* --- Public methods ----------------------------------------------- */
 
 		void	checkInputAndSetContainers(int argc, char** argv);
-
+		void 	recursiveSortWrapper(std::vector<t_pair> &pairedSeq, size_t &comparisons);
 		void	vecFordJohnsonSort();
 		
 		// overloading for a list container
 		// void	fordJohnsonSort(std::deque<t_pair> & seq);		
 };
 
-// Generic function to print container contents
+// // Generic function to print container contents
+// template <typename T>
+// void printContainer(const std::string msg, const T& container) {
+// 	if (container.size() > 0) {
+// 		std::cout << msg << "{ ";
+// 		for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
+// 			std::cout << *it << " ";
+// 		}
+// 		std::cout << "}" << std::endl;
+// 	}
+// }
+
+// Generic function to print container contents (for objects)
 template <typename T>
-void printContainer(const std::string msg, const T& container) {
-	if (container.size() > 0) {
-		std::cout << msg << "{ ";
-		for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
-			std::cout << *it << " ";
-		}
-		std::cout << "}" << std::endl;
-	}
+void printContainer(const std::string msg, const std::vector<T>& container) {
+    if (container.size() > 0) {
+        std::cout << msg << "{ ";
+        for (typename std::vector<T>::const_iterator it = container.begin(); it != container.end(); ++it) {
+            // Assume T has _larger and _smaller members
+            std::cout << "(" << it->_larger << ", " << it->_smaller << ") ";
+        }
+        std::cout << "}" << std::endl;
+    } else {
+        std::cout << msg << "{}" << std::endl;
+    }
 }
+
+// Generic function to print container contents (for pointers to objects)
+template <typename T>
+void printContainer(const std::string msg, const std::vector<T*>& container) {
+    if (container.size() > 0) {
+        std::cout << msg << "{ ";
+        for (typename std::vector<T*>::const_iterator it = container.begin(); it != container.end(); ++it) {
+            if (*it != NULL) {
+                std::cout << "(" << (*it)->_larger << ", " << (*it)->_smaller << ") ";
+            } else {
+                std::cout << "(NULL) ";
+            }
+        }
+        std::cout << "}" << std::endl;
+    } else {
+        std::cout << msg << "{}" << std::endl;
+    }
+}
+
+
 
 /*
  * The function template 'printContainer()' works for standard containers of

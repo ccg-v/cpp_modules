@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/06 23:36:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/05 00:13:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ class PmergeMe {
 
 		// methods for a vector container
 
-		std::vector<bool>	sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
+		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
-		// void				swapPending(std::vector<t_pair> & pending, std::vector<bool> & swappedValues);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
 		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
@@ -52,7 +51,7 @@ class PmergeMe {
 		
 		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
 		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
+		void	pairMergeInsertion(std::vector<t_pair> pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
 
 		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 

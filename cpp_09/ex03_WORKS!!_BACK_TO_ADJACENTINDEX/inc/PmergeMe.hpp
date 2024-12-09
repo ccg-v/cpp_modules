@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/06 23:36:56 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:05:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 #include <sstream>	// for std::istringstream()
 #include "Utils.hpp"
 
-struct t_pair {
-    int _larger;
+typedef struct s_pair {
     int _smaller;
-    t_pair* _ptrAdjacent; // Pointer to adjacent pair in mainChain
+    int _larger;
+    int _adjacentIndex;
 
-    t_pair(int larger = 0, int smaller = 0, t_pair* ptr = NULL)
-        : _larger(larger), _smaller(smaller), _ptrAdjacent(ptr) {}
-};
+    // Constructor declaration
+    s_pair(int smaller = -1, int larger = -1, int adjacentIndex = -1);
+} t_pair;
 
 
 class PmergeMe {
@@ -41,24 +41,23 @@ class PmergeMe {
 
 		// methods for a vector container
 
-		std::vector<bool>	sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
+		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
-		// void				swapPending(std::vector<t_pair> & pending, std::vector<bool> & swappedValues);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
 		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
 		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-		void				recursiveSort(std::vector<t_pair> &pairedSeq, size_t &comparisons);		
+		void				recursiveSort(std::vector<t_pair> & seq, size_t & comparisons);
 		
 		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
 		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);// size_t & level);	
+		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);	
 
 		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 
 		// overloaded methods for a deque container
 
-		// void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
+		void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
 		std::deque<int> 	buildJacobsthalDeq(size_t len);
 		std::deque<int>		getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t size);
 
@@ -82,7 +81,7 @@ class PmergeMe {
 
 		void	setIntsVector(int value);
 		void	setPairsVector(void);
-		void	setPairsUpperBounds(std::vector<t_pair> pairedSeq);
+
 		void	setIntStraggler(void);
 
 		/* --- Public methods ----------------------------------------------- */

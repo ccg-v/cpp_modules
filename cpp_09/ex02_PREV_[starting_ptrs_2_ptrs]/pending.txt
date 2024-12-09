@@ -1,0 +1,11 @@
+
+- Review generateJacobsthal()
+- Binary search optimization
+- Implement watch
+- track comparisons
+- repeated numbers?
+- deque
+- move public methods to private? 
+- add FJ()
+- implement alternate algorithm
+- init _vecStraggler and _pairStraggler in default constructor?
