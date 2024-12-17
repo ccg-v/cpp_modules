@@ -96,3 +96,51 @@ This is why Ford-Johnson creates subsequences of length 2ⁿ - 1 when possible: 
 This connects to the Jacobsthal numbers because they help create these optimal-length subsequences while maintaining the correct relative ordering of elements. Each group size in the Ford-Johnson algorithm is carefully chosen so that when combined with previous groups, it creates these optimal-length subsequences for binary search.
 
 -------------------------------------------
+
+# New approach
+
+- Key Features of Your Approach:
+
+    Virtual Pairing and Grouping:
+        Instead of dividing the sequence physically, you're logically defining "pairs" and "groups" at each recursion level.
+        Sorting is done based on the larger values of these pairs or groups.
+
+    Dynamic Grouping:
+        At each recursion step, you group adjacent pairs into larger units while only tracking the largest values to decide order.
+        This preserves the logical structure of the sequence, making it easier to trace relationships back during unwinding.
+
+    Unwinding With Jacobsthal Sequence:
+        During unwinding, you're reinserting elements using binary insertion based on the Jacobsthal order, leveraging the relationships established during recursion.
+
+- Unwinding Process:
+
+During unwinding:
+
+    Pick groups based on the Jacobsthal sequence.
+    Insert elements into the sorted sequence using binary insertion:
+        Restrict the binary search range using relationships established during recursion.
+
+Is This Ford-Johnson?
+
+Yes, this approach adheres to the core principles of the Ford-Johnson algorithm:
+
+    It minimizes comparisons by working with logical groupings and only using the larger values for decisions.
+    It ensures efficient insertion during unwinding by preserving relationships.
+
+Further Improvements:
+
+    Tracking Relationships:
+        To implement this with a std::vector, you can maintain indices or pointers that track which elements belong to which group at each level of recursion.
+    Debugging Jacobsthal Insertion:
+        Validate that the Jacobsthal sequence is used correctly for reinsertion.
+
+- Key Fix: Recursing on Groups
+
+    Form "groups" rather than just pairs of integers:
+    At each step of the recursion, adjacent groups are treated as pairs, and their larger elements determine the order. Groups double in size at every level of recursion.
+
+    Preserve the structure of groups:
+    We'll work with indices instead of splitting the sequence physically, so each recursion level simply tracks the group boundaries.
+
+    Track relationships:
+    Use a vector of pairs to store which smaller group corresponds to which larger group. This allows us to efficiently retrieve relationships during unwinding.
