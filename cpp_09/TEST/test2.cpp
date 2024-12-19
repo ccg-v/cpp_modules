@@ -1,29 +1,6 @@
 #include <deque>
 #include <iostream>
 
-// void printContainer(std::string msg, int groupSize, std::deque<int> sequence) {
-//     std::cout << msg << ": " << groupSize << std::endl;
-
-//     size_t fullGroups = sequence.size() / groupSize; // Number of full groups
-//     size_t remainder = sequence.size() % groupSize; // Remaining elements
-
-//     size_t index = 0;
-//     for (size_t group = 0; group < fullGroups; ++group) {
-//         std::cout << "[ ";
-//         for (size_t i = 0; i < groupSize; ++i, ++index) {
-//             std::cout << sequence[index] << " ";
-//         }
-//         std::cout << "] ";
-//     }
-
-//     // Print remaining elements (not part of a full group)
-//     if (remainder > 0) {
-//         for (size_t i = 0; i < remainder; ++i, ++index) {
-//             std::cout << sequence[index] << " ";
-//         }
-//     }
-//     std::cout << std::endl;
-// }
 
 void printContainer(std::string msg, int groupSize, std::deque<int> sequence) {
     // std::cout << msg << ": " << groupSize << std::endl;
@@ -85,6 +62,10 @@ void sortPairs(std::deque<int>& src, size_t groupSize) {
 void binarySearchInsertion(std::deque<int>& src, size_t groupSize) {
     // Placeholder for binary search insertion logic
     std::cout << "Performing binary search insertion for group size: " << groupSize << "\n";
+    size_t fullGroups = sequence.size() / groupSize; // Number of full groups
+	for (int i = 0; i <= fullGroups; ++i) {
+		int left = 
+	}
 }
 
 void mergeInsertionSort(std::deque<int>& sequence, size_t depth) {
