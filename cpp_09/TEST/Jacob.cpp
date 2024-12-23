@@ -16,7 +16,7 @@ void printContainer(const std::string msg, const T& container) {
 std::vector<int> buildJacobsthalVec(size_t len)
 {
     std::vector<int>    JacobsthalSeq;
-    size_t                num;
+    size_t				num;
 
     JacobsthalSeq.push_back(0);
     JacobsthalSeq.push_back(1);

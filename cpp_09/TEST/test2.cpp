@@ -9,6 +9,7 @@ void printContainer(std::string msg, int groupSize, std::deque<int> sequence) {
     size_t remainder = sequence.size() % groupSize; // Remaining elements
 
     size_t index = 0;
+	std::cout << msg;
     for (size_t group = 0; group < fullGroups; ++group) {
         std::cout << "[ ";
         for (size_t i = 0; i < groupSize; ++i, ++index) {
@@ -59,13 +60,86 @@ void sortPairs(std::deque<int>& src, size_t groupSize) {
     }
 }
 
-void binarySearchInsertion(std::deque<int>& src, size_t groupSize) {
+std::deque<int> buildJacobsthalVec(size_t len)
+{
+    std::deque<int>	JacobsthalSeq;
+    size_t			num;
+std::cout << "buildJacobsthal(): len received is " << len << std::endl;
+    JacobsthalSeq.push_back(0);
+    JacobsthalSeq.push_back(1);
+    for (size_t i = 2; i < len; i++) {
+        num = JacobsthalSeq[i - 1] + (2 * JacobsthalSeq[i - 2]);
+        JacobsthalSeq.push_back(num);
+    }
+    // Remove the first two elements if the sequence has at least two elements
+    if (JacobsthalSeq.size() > 2) {
+        JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
+    }
+    return JacobsthalSeq;
+}
+
+std::deque<int> getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t seqSize) {
+    std::deque<int> result;
+    std::deque<bool> inserted(seqSize, false); // Track inserted indices
+
+    // Always add index 0 first
+    if (seqSize > 0) {
+        result.push_back(0);
+        inserted[0] = true;
+    }
+
+    size_t current = 1; // Start interleaving from index 1
+
+    // Process each Jacobsthal boundary
+    for (size_t i = 0; i < jacobsthalSeq.size(); ++i) {
+        int boundary = jacobsthalSeq[i];
+
+        if (boundary >= static_cast<int>(seqSize)) {
+            break; // Ignore out-of-bounds Jacobsthal indices
+        }
+
+        // Add the current boundary
+        if (!inserted[boundary]) {
+            result.push_back(boundary);
+            inserted[boundary] = true;
+        }
+
+        // Insert interleaved indices between `current` and `boundary` in descending order
+        for (size_t j = boundary; j >= static_cast<size_t>(current); --j) {
+            if (!inserted[j]) {
+                result.push_back(j);
+                inserted[j] = true;
+            }
+        }
+
+        current = boundary + 1; // Move to the next range
+    }
+
+    for (size_t i = seqSize; i > current; --i) {
+        if (!inserted[i]) {
+            result.push_back(i);
+        }
+    }
+
+    return result;
+}
+
+void binarySearchInsertion(std::deque<int> & sequence, size_t groupSize) {
     // Placeholder for binary search insertion logic
-    std::cout << "Performing binary search insertion for group size: " << groupSize << "\n";
-    size_t fullGroups = sequence.size() / groupSize; // Number of full groups
-	for (int i = 0; i <= fullGroups; ++i) {
-		int left = 
+	size_t numberOfGroups = sequence.size() / groupSize;
+	
+	if (numberOfGroups > 1) {
+		std::cout << "\nPerforming binary search insertion for group size: " << groupSize;
+		std::cout << " | Number of groups: " << numberOfGroups << std::endl;
+
 	}
+
+	// Generate insertion order using Jacobsthal sequence
+	std::deque<int> jacobsthalSeq = buildJacobsthalVec(numberOfGroups);
+	std::deque<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numberOfGroups);
+	std::cout << "Number of groups =  " << numberOfGroups << std::endl;
+	printContainer("Jacobsthal sequence = ", numberOfGroups, jacobsthalSeq);
+	printContainer("Picking order seq   = ", numberOfGroups, pickingIndexes);
 }
 
 void mergeInsertionSort(std::deque<int>& sequence, size_t depth) {
@@ -77,7 +151,7 @@ void mergeInsertionSort(std::deque<int>& sequence, size_t depth) {
 
     // Step 1: Sort pairs of elements at this depth
     sortPairs(sequence, groupSize);
-	printContainer("Group size", groupSize, sequence);
+	printContainer("", groupSize, sequence);
 
     // Step 2: Recursively sort larger groups
     mergeInsertionSort(sequence, depth + 1);

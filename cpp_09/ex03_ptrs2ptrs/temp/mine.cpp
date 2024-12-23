@@ -2,6 +2,11 @@
 #include <algorithm>
 #include <iostream>
 
+// std::ostream& operator<<(std::ostream& os, const t_pair& pair) {
+//     os << "(" << pair._larger << ", " << pair._smaller << ")";
+//     return os;
+// }
+
 void printContainer(std::vector<int> container) {
 	if (container.size() > 0) {
 		std::cout << "{ ";
@@ -52,6 +57,7 @@ printContainer(smaller);
     size_t findInsertionPos(const std::vector<int>& seq, int value, size_t end) {
         size_t left = 0, right = end;
 printContainer(seq);
+std::cout << "\ninserting " << value << ":" << std::endl;
         while (left < right) {
             size_t mid = (left + right) / 2;
 std::cout << "left = " << left << "; right = " << right << "; mid = " << mid << std::endl;
@@ -93,16 +99,16 @@ public:
 
 int main() {
     std::vector<int> numbers;
-    numbers.push_back(5);
-    numbers.push_back(3);
-    numbers.push_back(9);
-    numbers.push_back(2);
-    numbers.push_back(1);
-    numbers.push_back(7);
-    numbers.push_back(8);
-    numbers.push_back(0);
-    numbers.push_back(4);
-    numbers.push_back(6);
+    numbers.push_back(15);
+    numbers.push_back(13);
+    numbers.push_back(19);
+    numbers.push_back(20);
+    numbers.push_back(11);
+    numbers.push_back(17);
+    numbers.push_back(18);
+    numbers.push_back(12);
+    numbers.push_back(14);
+    numbers.push_back(16);
 
     PmergeMe sorter;
     sorter.fordJohnsonSort(numbers);
