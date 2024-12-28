@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/12/28 02:29:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/28 03:10:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,7 +371,7 @@ void	PmergeMe::pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_p
             t_pair valueToInsert = pending[pickingIndex];
 
             DEBUG_PRINT(std::cout << "\tInserting pending[" << pickingIndexes[i] << "] = " << valueToInsert 
-				<< " | upper bound is mainChain[" << mainChain.size() - 1 << "] = " << mainChain[mainChain.size() - 1] << std::endl);
+				<< " | upper bound is mainChain[" << mainChain.size() - 1 << "] = " << mainChain[mainChain.size()] << std::endl);
 				
             size_t position = pairBinarySearch(mainChain, valueToInsert, mainChain.size());
             mainChain.insert((mainChain.begin() + position), valueToInsert);
@@ -445,7 +445,8 @@ printContainer("picking indexes = ", pickingIndexes);
 			// but to insert the straggler we binary search in the whole mainChain
             size_t position;
 			if (pending.size() == 1 && _intStraggler.size() > 0) {
-             	position = intBinarySearch(mainChain, valueToInsert, mainChain.size() - 1);				
+std::cout << "INSERTING STRAGGLER......................................" << std::endl;
+             	position = intBinarySearch(mainChain, valueToInsert, mainChain.size());				
 			} else {
             	position = intBinarySearch(mainChain, valueToInsert, upperBound);
 			}
@@ -478,7 +479,7 @@ printContainer("picking indexes = ", pickingIndexes);
 
 			DEBUG_PRINT(std::cout << "\tinserting remaining pending[" << pickingIndexes[i] << "] = " << valueToInsert);
 						
-            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size() - 1);
+            size_t position = intBinarySearch(mainChain, valueToInsert, mainChain.size());
             mainChain.insert((mainChain.begin() + position), valueToInsert);
 
             DEBUG_PRINT(printContainer("\tMain chain = ", mainChain));
