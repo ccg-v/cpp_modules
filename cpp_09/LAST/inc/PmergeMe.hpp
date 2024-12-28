@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/30 01:15:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:51:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,23 @@ class PmergeMe {
 		std::vector<t_pair>	_pairsVector;
 
 		std::vector<int>	_intStraggler;
+		size_t				_comparisons;
 
 		/* --- Private methods ---------------------------------------------- */
 
 		// methods for a vector container
 
-		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq);
+		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending);
 		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
-		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
-		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
+		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end);
+		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end);
 		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-		void				recursiveSort(std::vector<t_pair> & seq, size_t & comparisons);
+		void				recursiveSort(std::vector<t_pair> & seq);
 		
 		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
-		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);	
+		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain);
+		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);	
 
 		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
 
