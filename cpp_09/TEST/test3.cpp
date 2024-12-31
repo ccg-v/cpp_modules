@@ -1,8 +1,8 @@
-#include <deque>
+#include <vector>
 #include <iostream>
 
 
-void printContainer(std::string msg, int groupSize, std::deque<int> sequence) {
+void printContainer(std::string msg, int groupSize, std::vector<int> sequence) {
     // std::cout << msg << ": " << groupSize << std::endl;
 
     size_t fullGroups = sequence.size() / groupSize; // Number of full groups
@@ -36,21 +36,21 @@ std::cout << "groupSize = " << groupSize << std::endl;
     return groupSize;
 }
 
-void sortPairs(std::deque<int>& src, size_t groupSize) {
+void sortPairs(std::vector<int>& src, size_t groupSize) {
     size_t tail = groupSize - 1;
 
     while (tail + groupSize < src.size()) {
-        std::deque<int>::iterator first = src.begin();
+        std::vector<int>::iterator first = src.begin();
         std::advance(first, tail);
 
-        std::deque<int>::iterator second = src.begin();
+        std::vector<int>::iterator second = src.begin();
         std::advance(second, tail + groupSize);
 
         if (*first > *second) {
-            std::deque<int>::iterator trueFirst = src.begin();
+            std::vector<int>::iterator trueFirst = src.begin();
             std::advance(trueFirst, tail - groupSize + 1);
 
-            std::deque<int>::iterator trueSecond = src.begin();
+            std::vector<int>::iterator trueSecond = src.begin();
             std::advance(trueSecond, tail + 1);
 
             std::advance(first, 1);
@@ -60,15 +60,17 @@ void sortPairs(std::deque<int>& src, size_t groupSize) {
     }
 }
 
-std::deque<int> buildJacobsthalVec(size_t len)
+std::vector<int> buildJacobsthalVec(size_t len)
 {
-    std::deque<int>	JacobsthalSeq;
+    std::vector<int>	JacobsthalSeq;
     size_t			num;
 std::cout << "buildJacobsthal(): len received is " << len << std::endl;
     JacobsthalSeq.push_back(0);
     JacobsthalSeq.push_back(1);
     for (size_t i = 2; i < len; i++) {
         num = JacobsthalSeq[i - 1] + (2 * JacobsthalSeq[i - 2]);
+		if (num > len)
+			break;
         JacobsthalSeq.push_back(num);
     }
     // Remove the first two elements if the sequence has at least two elements
@@ -78,9 +80,9 @@ std::cout << "buildJacobsthal(): len received is " << len << std::endl;
     return JacobsthalSeq;
 }
 
-std::deque<int> getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t seqSize) {
-    std::deque<int> result;
-    std::deque<bool> inserted(seqSize, false); // Track inserted indices
+std::vector<int> getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t seqSize) {
+    std::vector<int> result;
+    std::vector<bool> inserted(seqSize, false); // Track inserted indices
 
     // Always add index 0 first
     if (seqSize > 0) {
@@ -124,25 +126,46 @@ std::deque<int> getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t se
     return result;
 }
 
-void binarySearchInsertion(std::deque<int> & sequence, size_t groupSize) {
+void binarySearchInsertion(std::vector<int> & sequence, size_t groupSize) {
     // Placeholder for binary search insertion logic
 	size_t numberOfGroups = sequence.size() / groupSize;
 	
 	if (numberOfGroups > 1) {
 		std::cout << "\nPerforming binary search insertion for group size: " << groupSize;
 		std::cout << " | Number of groups: " << numberOfGroups << std::endl;
-
 	}
 
+	printContainer("sequence    = ", groupSize, sequence);
+	std::vector<int> mainChain;
+	std::vector<int> pending;
+
+	for (size_t j = 1; j < numberOfGroups; j++) {
+		size_t start = (j - 1) * groupSize; // Start index of the current group
+		size_t end = j * groupSize;         // End index (exclusive) of the current group
+
+		if (j % 2 != 0) { // Odd group, values go to pending
+			for (size_t k = start; k < end; k++) {
+				pending.push_back(k);
+			}
+		} else {          // Even group, values go to mainChain
+			for (size_t k = start; k < end; k++) {
+				mainChain.push_back(k);
+			}
+		}
+	}
+	
 	// Generate insertion order using Jacobsthal sequence
-	std::deque<int> jacobsthalSeq = buildJacobsthalVec(numberOfGroups);
-	std::deque<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numberOfGroups);
+	std::vector<int> jacobsthalSeq = buildJacobsthalVec(numberOfGroups);
+	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numberOfGroups);
 	std::cout << "Number of groups =  " << numberOfGroups << std::endl;
 	printContainer("Jacobsthal sequence = ", numberOfGroups, jacobsthalSeq);
 	printContainer("Picking order seq   = ", numberOfGroups, pickingIndexes);
+
+	printContainer("Main chain = ", groupSize, mainChain);
+	printContainer("Pending    = ", groupSize, pending);
 }
 
-void mergeInsertionSort(std::deque<int>& sequence, size_t depth) {
+void mergeInsertionSort(std::vector<int>& sequence, size_t depth) {
     size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
 
     if (groupSize >= sequence.size()) {
@@ -179,8 +202,9 @@ void mergeInsertionSort(std::deque<int>& sequence, size_t depth) {
 // }
 
 int main() {
-    // std::deque<int> sequence = {6, 14, 17, 5, 12, 1, 3, 7, 13, 8, 2, 11, 15, 4, 10, 9, 16, 18};
-    std::deque<int> sequence = {1, 7, 4, 11, 5, 16, 19, 8, 14, 20, 23, 9, 15, 22, 24, 2, 10, 3, 12, 13, 18, 17, 25, 21};
+	std::vector<int> sequence = {3, 1, 2, 5, 4};
+    // std::vector<int> sequence = {6, 14, 17, 5, 12, 1, 3, 7, 13, 8, 2, 11, 15, 4, 10, 9, 16, 18};
+    // std::vector<int> sequence = {1, 7, 4, 11, 5, 16, 6, 19, 8, 14, 20, 23, 9, 15, 22, 24, 2, 10, 3, 12, 13, 18, 17, 25, 21};
 
     std::cout << "Original sequence: ";
     for (size_t i = 0; i < sequence.size(); ++i) {
