@@ -4,13 +4,12 @@
 
 void printContainer(std::string msg, int groupSize, std::vector<int> sequence) {
     // std::cout << msg << ": " << groupSize << std::endl;
-
-    size_t fullGroups = sequence.size() / groupSize; // Number of full groups
+    size_t numberOfGroups = sequence.size() / groupSize; // Number of full groups
     size_t remainder = sequence.size() % groupSize; // Remaining elements
 
     size_t index = 0;
 	std::cout << msg;
-    for (size_t group = 0; group < fullGroups; ++group) {
+    for (size_t group = 0; group < numberOfGroups; ++group) {
         std::cout << "[ ";
         for (size_t i = 0; i < groupSize; ++i, ++index) {
             std::cout << sequence[index] << " ";
@@ -146,6 +145,23 @@ void	divideSequence(std::vector<int> sequence, std::vector<int> & mainChain,
 	}
 }
 
+size_t	binarySearch(const std::vector<int> & mainChain, int value, size_t end)
+{
+	std::cout << " | upper bound is mainChain[" << end << "] = " << mainChain[end] << std::endl; 
+    size_t left = 0;
+    size_t right = end;
+    while (left < right) {
+		// _comparisons++;
+        size_t mid = (left + right) / 2;
+        if (mainChain[mid] > value)
+            right = mid;
+        else
+            left = mid + 1;
+		std::cout << "\t\t...comparing pending " << value << " with " << mainChain[mid] << " in position [" << mid << "]..." << std::endl;
+    }
+    return left;
+}
+
 void binarySearchInsertion(std::vector<int> & sequence, size_t groupSize) {
     // Placeholder for binary search insertion logic
 	size_t numberOfGroups = sequence.size() / groupSize;
@@ -164,12 +180,49 @@ void binarySearchInsertion(std::vector<int> & sequence, size_t groupSize) {
 	// Generate insertion order using Jacobsthal sequence
 	std::vector<int> jacobsthalSeq = buildJacobsthalVec(numberOfGroups);
 	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numberOfGroups);
-	std::cout << "Number of groups =  " << numberOfGroups << std::endl;
-	printContainer("Jacobsthal sequence = ", numberOfGroups, jacobsthalSeq);
-	printContainer("Picking order seq   = ", numberOfGroups, pickingIndexes);
+	std::vector<int> upperBoundsPositions;
+
+    // Initialize upper bounds positions
+    for (size_t i = 0; i < pending.size(); ++i) {
+        upperBoundsPositions.push_back(i);
+    }
 
 	printContainer("Main chain = ", groupSize, mainChain);
 	printContainer("Pending    = ", groupSize, pending);
+	printContainer("Jacobsthal sequence = ", numberOfGroups, jacobsthalSeq);
+	printContainer("Picking order seq   = ", numberOfGroups, pickingIndexes);
+
+    std::vector<bool> inserted(pending.size(), false);
+    for (size_t i = 0 ; i < pending.size(); i++)
+	{
+		std::cout << "groupSize - 1 = " << groupSize - 1;
+		std::cout << " | pending.size() = " << pending.size();
+		std::cout << " | i += groupSize = " << i + groupSize << std::endl;
+        size_t pickingIndex = pickingIndexes[i];
+		size_t upperBound = upperBoundsPositions[pickingIndex + (groupSize - 1)];
+
+        if (pickingIndex < pending.size() && !inserted[pickingIndex])
+		{
+            int valueToInsert = pending[pickingIndex + (groupSize - 1)];
+			std::cout << "groupSize is " << groupSize << std::endl;
+			std::cout << "\tinserting pending[" << pickingIndexes[i] << "] = " << valueToInsert;
+
+            size_t position;
+           	position = binarySearch(mainChain, valueToInsert, upperBound);
+
+            mainChain.insert((mainChain.begin() + position), valueToInsert);
+            inserted[pickingIndex] = true;
+
+			for (size_t j = 0; j < upperBoundsPositions.size(); ++j) {
+				if (upperBoundsPositions[j] >= position)
+					upperBoundsPositions[j] = upperBoundsPositions[j] + 1;
+			}
+			printContainer("\tupperBoundsPositions = ", upperBoundsPositions.size(), upperBoundsPositions);
+			// std::cout << "....... COMPARISONS = " << _comparisons << "\n" << std::endl;
+        }
+		printContainer("Main chain = ", groupSize, mainChain);
+		printContainer("Pending    = ", groupSize, pending);
+	}
 }
 
 void mergeInsertionSort(std::vector<int>& sequence, size_t depth) {
