@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 14:39:05 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:15:49 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int main(int argc, char** argv) {
 	try {
 		if (argc > 1) {
 			PmergeMe pmergeme;
-
+			
 			pmergeme.checkInputAndSetContainers(argc, argv);
-			pmergeme.setVector();
 			// pmergeme.recursiveSort(pmergeme.getPairsVector());
 
 			// std::vector<int> pending;
@@ -47,7 +46,8 @@ int main(int argc, char** argv) {
 			// pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
 			// pmergeme.intMergeInsertion(pending, mainChain);
 			// pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
-			pmergeme.vecFordJohnsonSort();
+			size_t	recursionDepth = 0;
+			pmergeme.mergeInsertionSort(pmergeme.getVector(), recursionDepth);
 			
 			// printContainer("Sorted sequence = ", mainChain);
 			// std::cout << "Sequence length = " << mainChain.size() << std::endl;

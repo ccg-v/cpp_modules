@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 14:41:38 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:57:59 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ PmergeMe::PmergeMe() : _comparisons(0) {}
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _vecSequence(source._vecSequence), _straggler(source.straggler),
+	: _vecSequence(source._vecSequence), _straggler(source._straggler),
 	  _comparisons(source._comparisons) {}
 
 // Copy assignment operator
@@ -28,7 +28,7 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & source)
 {
 	if (this != &source) {
 		this->_vecSequence = source._vecSequence;
-		this->_straggler = source._vecStraggler;
+		this->_straggler = source._straggler;
 		this->_comparisons = source._comparisons;
 	}
 	return *this;
@@ -44,9 +44,9 @@ std::vector<int> & PmergeMe::getVector()
 	return this->_vecSequence;
 }
 
-std::vector<int> & PmergeMe::getStraggler()
+int	PmergeMe::getStraggler()
 {
-	return this->_vecStraggler;
+	return this->_straggler;
 }
 
 /* --- Setters -------------------------------------------------------------- */
@@ -56,10 +56,54 @@ void	PmergeMe::setVector(int value)
 	_vecSequence.push_back(value);
 }
 
-// void	PmergeMe::setStraggler(int value)
-// {
-// 	_vecStraggler.push_back(value);
-// }
+void	PmergeMe::setStraggler()
+{
+	if (_vecSequence.size() % 2 == 1) {
+		_straggler = _vecSequence.back();
+		_vecSequence.pop_back();
+	}
+}
+
+/* --- Common member methods ------------------------------------------------ */
+
+void PmergeMe::checkInputAndSetContainers(int argc, char** argv)
+{
+	for (int i = 1; i < argc; ++i)
+	{
+		std::string input = argv[i];
+		
+		if (input.empty() || onlyWhitespace(input))
+			throw std::runtime_error("Error: input is empty.");
+
+		std::istringstream argStream(input);
+		std::string element;
+
+		while (argStream >> element)
+		{
+			if (!isPositiveNumber(element))
+				throw std::runtime_error("Error: sequence values must be positive integers.");
+
+			if (!isIntegerRange(element))
+				throw std::runtime_error("Error: value out of integer's range found.");
+
+			int value = atoi(element.c_str());
+			
+			setVector(value);
+			// setDeque(value);
+		}
+	}
+
+	if (isSorted(getVector()))
+		throw std::runtime_error("The input sequence is already sorted.");
+
+	// DEBUG_PRINT(printContainer("intsVector = ", _intsVector));
+}
+
+/* ===========================================================================
+
+   Member methods for a VECTOR container
+
+   ===========================================================================*/
 
 size_t PmergeMe::calculateGroupSize(size_t depth)
 {
@@ -69,24 +113,24 @@ size_t PmergeMe::calculateGroupSize(size_t depth)
     return groupSize;
 }
 
-void Pmerge::sortAdjacentPairs(std::vector<int>& sequence, size_t groupSize)
+void PmergeMe::sortAdjacentPairs(std::vector<int>& sequence, size_t groupSize)
 {
     size_t tail = groupSize - 1;
 
-    while (tail + groupSize < src.size())
+    while (tail + groupSize < sequence.size())
 	{
-        std::vector<int>::iterator first = src.begin();
+        std::vector<int>::iterator first = sequence.begin();
         std::advance(first, tail);
 
-        std::vector<int>::iterator second = src.begin();
+        std::vector<int>::iterator second = sequence.begin();
         std::advance(second, tail + groupSize);
 
         if (*first > *second)
 		{
-            std::vector<int>::iterator trueFirst = src.begin();
+            std::vector<int>::iterator trueFirst = sequence.begin();
             std::advance(trueFirst, tail - groupSize + 1);
 
-            std::vector<int>::iterator trueSecond = src.begin();
+            std::vector<int>::iterator trueSecond = sequence.begin();
             std::advance(trueSecond, tail + 1);
 
             std::advance(first, 1);
@@ -96,8 +140,8 @@ void Pmerge::sortAdjacentPairs(std::vector<int>& sequence, size_t groupSize)
     }
 }
 
-void PmergeMe::divideSequence(const std::vector<int> &sequence, std::vector<int> &mainChain, 
-                    std::vector<int> &pending, size_t groupSize)
+void PmergeMe::divideSequence(std::vector<int> & sequence, std::vector<int> & mainChain, 
+                    std::vector<int> & pending, size_t groupSize)
 {
     size_t numberOfGroups = sequence.size() / groupSize;
     for (size_t j = 1; j <= numberOfGroups; j++) {
@@ -116,7 +160,6 @@ void PmergeMe::divideSequence(const std::vector<int> &sequence, std::vector<int>
     if (stragglerStart < sequence.size()) {
         pending.insert(pending.end(), sequence.begin() + stragglerStart, sequence.end());
     }
-
 	printContainer("\tdivideSequence(): Main chain = ", groupSize, mainChain);
 	printContainer("\tdivideSequence(): Pending    = ", groupSize, pending);
 }
@@ -270,7 +313,7 @@ void PmergeMe::binaryInsertion(std::vector<int> & sequence, size_t groupSize)
 			printContainer("\tAfter BSinsertion: Pending    = ", groupSize, pending);
 		}
     }
-
+	
     // Handle remaining stragglers
     size_t stragglersStartIdx = numberOfGroups * groupSize;
     for (size_t i = stragglersStartIdx; i < pending.size(); ++i) {
@@ -291,6 +334,7 @@ void PmergeMe::binaryInsertion(std::vector<int> & sequence, size_t groupSize)
     //         mainChain.insert(mainChain.begin() + position, remainingValue);
     //     }
     // }
+
 }
 
 void PmergeMe::mergeInsertionSort(std::vector<int>& sequence, size_t depth)
@@ -336,31 +380,31 @@ void PmergeMe::mergeInsertionSort(std::vector<int>& sequence, size_t depth)
 //     return 0;
 // }
 
-int main() {
-	// std::vector<int> sequence = {3, 1, 2, 5, 4};
-    // std::vector<int> sequence = {6, 14, 17, 5, 12, 1, 3, 7, 13, 8, 2, 11, 15, 4, 10, 9, 16, 18};
-    std::vector<int> sequence = {1, 7, 4, 11, 5, 16, 6, 19, 8, 14, 20, 23, 9, 15, 22, 24, 2, 10, 3, 12, 13, 18, 17, 25, 21};
+// int main() {
+// 	// std::vector<int> sequence = {3, 1, 2, 5, 4};
+//     // std::vector<int> sequence = {6, 14, 17, 5, 12, 1, 3, 7, 13, 8, 2, 11, 15, 4, 10, 9, 16, 18};
+//     std::vector<int> sequence = {1, 7, 4, 11, 5, 16, 6, 19, 8, 14, 20, 23, 9, 15, 22, 24, 2, 10, 3, 12, 13, 18, 17, 25, 21};
 
-    std::cout << "Original sequence: ";
-    for (size_t i = 0; i < sequence.size(); ++i) {
-        std::cout << sequence[i] << " ";
-    }
-    std::cout << "\n";
+//     std::cout << "Original sequence: ";
+//     for (size_t i = 0; i < sequence.size(); ++i) {
+//         std::cout << sequence[i] << " ";
+//     }
+//     std::cout << "\n";
 
-	size_t	recursionDepth = 0;
+// 	size_t	recursionDepth = 0;
 
-	// In each recursive call we calculate the group size as 2^depth
-	// Recursion stops when the group size becomes larger than sequence size
-    mergeInsertionSort(sequence, recursionDepth);
+// 	// In each recursive call we calculate the group size as 2^depth
+// 	// Recursion stops when the group size becomes larger than sequence size
+//     mergeInsertionSort(sequence, recursionDepth);
 
-    std::cout << "Sorted sequence: ";
-    for (size_t i = 0; i < sequence.size(); ++i) {
-        std::cout << sequence[i] << " ";
-    }
-    std::cout << "\n";
+//     std::cout << "Sorted sequence: ";
+//     for (size_t i = 0; i < sequence.size(); ++i) {
+//         std::cout << sequence[i] << " ";
+//     }
+//     std::cout << "\n";
 
-	// for (int i = 1; i < sequence.size(); i *= 2) 
-	// 	printContainer("Group size", i, sequence);
+// 	// for (int i = 1; i < sequence.size(); i *= 2) 
+// 	// 	printContainer("Group size", i, sequence);
 
-    return 0;
-}
+//     return 0;
+// }
