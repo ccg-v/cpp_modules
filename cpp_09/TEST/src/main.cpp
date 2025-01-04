@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 19:15:49 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:35:57 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "debug.hpp"
 #include <iostream>	// For std::cout(), std::cerr()
 #include <ctime>	// For clock()
+
+/*
+ *	Bash command to generate random sequences of integers:
+ *
+ *	./PmergeMe `shuf -i 1-100000 -n 3000 | tr "\n" " "`
+ */
 
 /*
  *	Program steps:
@@ -47,11 +53,11 @@ int main(int argc, char** argv) {
 			// pmergeme.intMergeInsertion(pending, mainChain);
 			// pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
 			size_t	recursionDepth = 0;
-			pmergeme.mergeInsertionSort(pmergeme.getVector(), recursionDepth);
+			pmergeme.mergeInsertionSort(recursionDepth);
 			
-			// printContainer("Sorted sequence = ", mainChain);
-			// std::cout << "Sequence length = " << mainChain.size() << std::endl;
-			// DEBUG_PRINT(std::cout << (isSorted(mainChain) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+			printContainer("Sorted sequence = ", 1, pmergeme.getMainChain());
+			std::cout << "Sequence length = " << pmergeme.getMainChain().size() << std::endl;
+			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getMainChain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
 
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
