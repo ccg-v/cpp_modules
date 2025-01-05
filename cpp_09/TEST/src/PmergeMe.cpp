@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 23:58:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 01:06:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,42 +272,51 @@ size_t PmergeMe::binarySearch(int value, size_t end, size_t groupSize)
 
 void PmergeMe::binaryInsertion(size_t groupSize)
 {
-	printContainer("sequence    = ", groupSize, _vecSequence);
+	size_t numOfPendingGroups = _pending.size() / groupSize;
 
-    // Determine the number of complete groups
-    size_t numberOfGroups = _vecSequence.size() / groupSize;
+	std::cout << "\nPerforming binary search insertion" << std::endl;
+	std::cout << "pending.size() is " << _pending.size() << std::endl;
 
-	std::cout << "sequence.size() = " << _vecSequence.size() << " | groupSize = " << groupSize << " | Number of groups = " << numberOfGroups << std::endl;
+    std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
+	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
+	std::vector<size_t> pairPositions;
 
-		std::cout << "\nPerforming binary search insertion for group size: " << groupSize;
-		std::cout << " | Number of groups: " << numberOfGroups << std::endl;
-	
-	std::cout << "Dividing sequence: numberOfGroups = " << numberOfGroups << " | groupSize = " << groupSize << std::endl;
-	divideSequence(groupSize);
+    // Initialize pair positions
+    for (size_t i = 0; i < numOfPendingGroups; ++i) {
+        pairPositions.push_back(i);
+    }
+
+	printContainer("binaryInsertion: sequence to divide = ", groupSize, _vecSequence);
+	printContainer("\tBefore BSinsertion: Main chain = ", groupSize, _mainChain);
+	printContainer("\tBefore BSinsertion: Pending    = ", groupSize, _pending);
+	std::cout << "pending.size() is " << _pending.size() << std::endl;
+	printContainer("jacobsthalSeq = ", groupSize, jacobsthalSeq);
+	printContainer("picking indexes = ", groupSize, pickingIndexes);
+	printContainer("initial pairPositions = ", groupSize, pairPositions);
+
+	// divideSequence(groupSize);
 
 	size_t pendingGroups = _pending.size() / groupSize;
-	for (size_t groupIndex = 0; groupIndex < pendingGroups; ++groupIndex) {
+	for (size_t groupIndex = 0; groupIndex < pendingGroups; ++groupIndex)
+	{
         size_t startIdx = groupIndex * groupSize;
         size_t endIdx = startIdx + groupSize;
 
-		std::cout << ">>> >>> >>> groupIndex = " << groupIndex << " < " << " numberOfGroups = " << numberOfGroups << std::endl;
-		std::cout << ">>> >>> >>> group startIdx = " << startIdx << " | endIdx = " << endIdx << std::endl;
         // Identify the "larger" value (rightmost in the group)
         int largerValue = _pending[endIdx - 1];
   
         // Find the insertion position for the "larger" value
-		// if (numberOfGroups > 1 ) {
-        	size_t position = binarySearch(largerValue, _mainChain.size(), groupSize);
 
-			// Insert the entire group at the determined position
-			_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
-			for (size_t i = 0; i < groupSize; i++) {
-				std::cout << *(_pending.begin() + startIdx + i) << " ";
-			}
-			std::cout << std::endl;
-			printContainer("\tAfter BSinsertion: Main chain = ", groupSize, _mainChain);
-			printContainer("\tAfter BSinsertion: Pending    = ", groupSize, _pending);
-		// }
+		size_t position = binarySearch(largerValue, _mainChain.size(), groupSize);
+
+		// Insert the entire group at the determined position
+		_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
+		for (size_t i = 0; i < groupSize; i++) {
+			std::cout << *(_pending.begin() + startIdx + i) << " ";
+		}
+		std::cout << std::endl;
+		printContainer("\tAfter BSinsertion: Main chain = ", groupSize, _mainChain);
+		printContainer("\tAfter BSinsertion: Pending    = ", groupSize, _pending);
     }
 	
     // // Handle remaining stragglers
@@ -319,11 +328,9 @@ void PmergeMe::binaryInsertion(size_t groupSize)
     // }
 
 	// inserting remains AT THE END OF MAIN CHAIN (no binary insertion)
-    // size_t stragglersStartIdx = numberOfGroups * groupSize;
 	size_t	remainsStartIdx = _pending.size() - (_pending.size() % groupSize);
     for (size_t i = remainsStartIdx; i < _pending.size(); ++i) {
         int valueToInsert = _pending[i];
-        // size_t position = binarySearch(valueToInsert, _mainChain.size(), groupSize);
         _mainChain.insert(_mainChain.end(), valueToInsert);
     }
 
@@ -355,6 +362,8 @@ void PmergeMe::mergeInsertionSort(size_t depth)
     // Step 2: Recursively sort larger groups
     mergeInsertionSort(depth + 1);
 
+	divideSequence(groupSize);
+	
     // Step 3: Insert remaining elements into the sorted sequence
     binaryInsertion(groupSize);
 
