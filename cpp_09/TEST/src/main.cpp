@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 23:35:57 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:30:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
 			PmergeMe pmergeme;
 			
 			pmergeme.checkInputAndSetContainers(argc, argv);
+			printContainer("******************************************Original sequence = ", 1, pmergeme.getVector());
 			// pmergeme.recursiveSort(pmergeme.getPairsVector());
 
 			// std::vector<int> pending;

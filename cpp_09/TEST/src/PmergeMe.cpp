@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 01:06:16 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:50:44 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
     for (size_t i = 2; i < len; i++)
 	{
         num = JacobsthalSeq[i - 1] + (2 * JacobsthalSeq[i - 2]);
-		if (num > len)
+		if (num >= len)
 			break;
         JacobsthalSeq.push_back(num);
     }
@@ -239,7 +239,7 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
 
         current = boundary + 1; // Move to the next range
     }
-    for (size_t i = seqSize; i > current; --i)
+    for (size_t i = seqSize - 1; i >= current; --i)
 	{
         if (!inserted[i]) {
             result.push_back(i);
@@ -299,22 +299,28 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 	size_t pendingGroups = _pending.size() / groupSize;
 	for (size_t groupIndex = 0; groupIndex < pendingGroups; ++groupIndex)
 	{
-        size_t startIdx = groupIndex * groupSize;
-        size_t endIdx = startIdx + groupSize;
+		size_t	pickingIndex = pickingIndexes[groupIndex];
+        size_t	startIdx = pickingIndex * groupSize;
+        size_t 	endIdx = startIdx + groupSize;
 
         // Identify the "larger" value (rightmost in the group)
         int largerValue = _pending[endIdx - 1];
+		std::cout << "--------- Inserting group[" << pickingIndex << "] | largerValue = " << largerValue << std::endl;
   
-        // Find the insertion position for the "larger" value
+        // Find the insertion position for the "larger" value  
+		// if (pickingIndex < static_cast<size_t>(jacobsthalSeq[pickingIndex]))
+		// {
+			size_t position = binarySearch(largerValue, _mainChain.size(), groupSize);
 
-		size_t position = binarySearch(largerValue, _mainChain.size(), groupSize);
+			// Insert the entire group at the determined position
+			_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
+		// }
 
-		// Insert the entire group at the determined position
-		_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
 		for (size_t i = 0; i < groupSize; i++) {
 			std::cout << *(_pending.begin() + startIdx + i) << " ";
 		}
 		std::cout << std::endl;
+
 		printContainer("\tAfter BSinsertion: Main chain = ", groupSize, _mainChain);
 		printContainer("\tAfter BSinsertion: Pending    = ", groupSize, _pending);
     }
@@ -336,7 +342,9 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 
 		printContainer("\tAfter remains insertion: Main chain = ", groupSize, _mainChain);
 		printContainer("\tAfter remains insertion: Pending    = ", groupSize, _pending);
+
 	_vecSequence = _mainChain;
+
 	printContainer("\tdivideSequence(): SEQUENCE UPDATED = ", groupSize, _mainChain);
 }
 
