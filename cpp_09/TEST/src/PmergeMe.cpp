@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 13:50:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:37:03 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,11 +279,11 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
 	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
-	std::vector<size_t> pairPositions;
+	std::vector<size_t> upperBoundsTrack;
 
     // Initialize pair positions
     for (size_t i = 0; i < numOfPendingGroups; ++i) {
-        pairPositions.push_back(i);
+        upperBoundsTrack.push_back(i);
     }
 
 	printContainer("binaryInsertion: sequence to divide = ", groupSize, _vecSequence);
@@ -292,7 +292,7 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 	std::cout << "pending.size() is " << _pending.size() << std::endl;
 	printContainer("jacobsthalSeq = ", groupSize, jacobsthalSeq);
 	printContainer("picking indexes = ", groupSize, pickingIndexes);
-	printContainer("initial pairPositions = ", groupSize, pairPositions);
+	printContainer("upperBoundsTrack = ", groupSize, upperBoundsTrack);
 
 	// divideSequence(groupSize);
 
