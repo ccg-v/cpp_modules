@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/04 23:28:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 23:12:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ class PmergeMe {
 		std::vector<int>	_mainChain;
 		std::vector<int>	_pending;
 		int					_straggler;
-		size_t				_comparisons;
 
 		/* --- Private methods ---------------------------------------------- */
 
@@ -43,6 +42,8 @@ class PmergeMe {
 
 	public:
 
+		size_t				_comparisons;
+		
 		/* --- Orthodox Canonical Form -------------------------------------- */
 
 		PmergeMe();										// Default constructor
@@ -70,32 +71,75 @@ class PmergeMe {
 
 };
 
-// Generic function to print container contents
-template <typename T>
-void printContainer(std::string msg, int groupSize, T & sequence) {
+// // Generic function to print container contents
+// template <typename T>
+// void printContainer(std::string msg, int groupSize, T & sequence) {
 
+//     size_t numberOfGroups = sequence.size() / groupSize;
+//     size_t remainder = sequence.size() % groupSize;
+
+//     size_t index = 0;
+// 	std::cout << msg;
+//     for (size_t group = 0; group < numberOfGroups; ++group) {
+//         if (groupSize > 1)
+// 			std::cout << "[ ";
+//         for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index) {
+//             std::cout << sequence[index] << " ";
+//         }
+// 		if (groupSize > 1)
+//         	std::cout << "] ";
+//     }
+
+//     // Print remaining elements (not part of a full group)
+//     if (remainder > 0) {
+//         for (size_t i = 0; i < remainder; ++i, ++index) {
+//             std::cout << sequence[index] << " ";
+//         }
+//     }
+//     std::cout << std::endl;
+// }
+
+// #include <iostream>
+// #include <string>
+
+// Define ANSI color codes
+const std::string RESET = "\033[0m";  // Reset to default color
+const std::string GREEN = "\033[92m";  // Green color for highlighting
+
+template <typename T>
+void printContainer(std::string msg, int groupSize, T &sequence) {
     size_t numberOfGroups = sequence.size() / groupSize;
     size_t remainder = sequence.size() % groupSize;
 
     size_t index = 0;
-	std::cout << msg;
+    std::cout << msg;
     for (size_t group = 0; group < numberOfGroups; ++group) {
         if (groupSize > 1)
-			std::cout << "[ ";
+            std::cout << "[ ";
         for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index) {
-            std::cout << sequence[index] << " ";
+            if (i == static_cast<size_t>(groupSize - 1)) {  // Last element in the group
+                std::cout << GREEN << sequence[index] << RESET << " ";
+            } else {
+                std::cout << sequence[index] << " ";
+            }
         }
-		if (groupSize > 1)
-        	std::cout << "] ";
+        if (groupSize > 1)
+            std::cout << "] ";
     }
 
     // Print remaining elements (not part of a full group)
     if (remainder > 0) {
         for (size_t i = 0; i < remainder; ++i, ++index) {
-            std::cout << sequence[index] << " ";
+            if (i == remainder - 1) {  // Last remaining element
+                std::cout << GREEN << sequence[index] << RESET << " ";
+            } else {
+                std::cout << sequence[index] << " ";
+            }
         }
     }
+
     std::cout << std::endl;
 }
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 13:30:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:50:12 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 			printContainer("Sorted sequence = ", 1, pmergeme.getMainChain());
 			std::cout << "Sequence length = " << pmergeme.getMainChain().size() << std::endl;
 			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getMainChain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
-
+			std::cout << "COMPARISONS = " << pmergeme._comparisons << std::endl;
 		} else {
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 14:37:03 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/06 03:48:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,9 @@ void PmergeMe::sortAdjacentPairs(size_t groupSize)
             std::swap_ranges(trueFirst, first, trueSecond);
         }
         tail += groupSize * 2;
+		
+		_comparisons++;
+		DEBUG_PRINT(std::cout << "sortAdjacentPairs: COMPARISONS = " << _comparisons << "\n" << std::endl);
     }
 }
 
@@ -173,8 +176,8 @@ void PmergeMe::divideSequence(size_t groupSize)
         _pending.insert(_pending.end(), _vecSequence.begin() + stragglerStart, _vecSequence.end());
     }
 
-	printContainer("\tdivideSequence(): Main chain = ", groupSize, _mainChain);
-	printContainer("\tdivideSequence(): Pending    = ", groupSize, _pending);
+	// printContainer("\tdivideSequence(): Main chain = ", groupSize, _mainChain);
+	// printContainer("\tdivideSequence(): Pending    = ", groupSize, _pending);
 }
 
 std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
@@ -248,33 +251,128 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
     return result;
 }
 
+// // binarySearch             (largerValue, upperBoundIndex * groupSize,    groupSize);
+// size_t PmergeMe::binarySearch(int value, size_t end, size_t groupSize)
+// {
+//     // size_t left = 0;       // Start at the first element
+//     // size_t right = end;    // End at the last valid index
+// 	size_t	left = groupSize - 1;
+// 	size_t	right = left + (end * groupSize);
+
+// 	printContainer("binarySearch: input mainChain = ", groupSize, _mainChain);
+// 	printContainer("binarySearch: input pending   = ", groupSize, _pending);
+
+//     while (left < right)
+// 	{
+//         size_t mid = (left + right) / 2;
+// std::cout << "\t\t...comparing pending " << value << " with " << _mainChain[mid] << " in position [" << mid << "]..." << std::endl;
+//         // Check only the larger value (end of group) for comparison
+//         size_t groupEnd = ((mid / groupSize) + 1) * groupSize - 1;
+//         groupEnd = std::min(groupEnd, end - 1); // Avoid out-of-bounds access
+
+//         if (_mainChain[groupEnd] > value)
+//             right = mid;
+//         else
+//             left = groupEnd + 1; // Move to the next group
+		
+// 		_comparisons++;
+//     }
+// 	DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
+//     return left;
+// }
+
+// size_t PmergeMe::binarySearch(int value, size_t end, size_t groupSize)
+// {
+//     // Initialize 'left' and 'right' to the first and last valid group boundaries
+//     size_t left = groupSize - 1;                    // First group boundary
+//     size_t right = (end / groupSize) * groupSize - 1; // Last complete group's boundary
+//     right = std::min(right, end - 1);              // Ensure 'right' is within bounds
+
+// 	printContainer("binarySearch: input mainChain = ", groupSize, _mainChain);
+// 	printContainer("binarySearch: input pending   = ", groupSize, _pending);
+
+//     while (left <= right)
+//     {
+//         // Calculate 'mid' as the middle group's boundary
+//         size_t mid = left + (right - left) / (2 * groupSize) * groupSize;
+// std::cout << "\t\t...comparing pending " << value << " with " << _mainChain[mid] << " in position [" << mid << "]..." << std::endl;
+
+//         // Compare 'value' with the rightmost value of the group at 'mid'
+//         if (_mainChain[mid] > value)
+//         {
+//             right = mid - groupSize; // Move 'right' to the previous group boundary
+//         }
+//         else
+//         {
+//             left = mid + groupSize; // Move 'left' to the next group boundary
+//         }
+
+//         _comparisons++;
+//     }
+// std::cout << "\t\tLeft value returned for insertion is " << left << std::endl;
+// 	DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
+//     // Return the insertion index, which is 'left' adjusted to group boundaries
+//     return left - groupSize;
+// }
+
 size_t PmergeMe::binarySearch(int value, size_t end, size_t groupSize)
 {
-    size_t left = 0;       // Start at the first element
-    size_t right = end;    // End at the last valid index
+    // Initialize 'left' and 'right' to the first and last valid group boundaries
+    size_t left = groupSize - 1;                    // First group boundary
+    size_t right = (end / groupSize) * groupSize - 1; // Last complete group's boundary
+    right = std::min(right, end - 1);              // Ensure 'right' is within bounds
 
-    while (left < right)
-	{
-        size_t mid = (left + right) / 2;
+	printContainer("binarySearch: input mainChain = ", groupSize, _mainChain);
+	printContainer("binarySearch: input pending   = ", groupSize, _pending);
 
-        // Check only the larger value (end of group) for comparison
-        size_t groupEnd = ((mid / groupSize) + 1) * groupSize - 1;
-        groupEnd = std::min(groupEnd, end - 1); // Avoid out-of-bounds access
+    while (left <= right)
+    {
+        // Calculate 'mid' as the middle group's boundary
+        size_t mid = left + (right - left) / (2 * groupSize) * groupSize;
+		mid = std::min(mid, right); // Ensure 'mid' does not exceed 'right'
+std::cout << "\t\t...comparing pending " << value << " with " << _mainChain[mid] << " in mainChain [" << mid << "]..." << std::endl;
 
-        if (_mainChain[groupEnd] > value)
-            right = mid;
+        // Compare 'value' with the rightmost value of the group at 'mid'
+        if (_mainChain[mid] > value)
+        {
+			if (mid < groupSize){
+				_comparisons++;
+				break; // Prevent underflow
+			}
+            right = mid - groupSize; // Move 'right' to the previous group boundary
+        }
         else
-            left = groupEnd + 1; // Move to the next group
+        {
+            left = mid + groupSize; // Move 'left' to the next group boundary
+        }
+
+        _comparisons++;
     }
 
-    return left;
+    // Translate 'left' to the correct position for insertion
+    size_t insertionIndex = left;
+    if (left > end)
+    {
+        // If 'left' exceeds 'end', set it to 'end'
+        insertionIndex = end;
+    }
+    else if (left % groupSize != 0)
+    {
+        // Adjust 'left' to align with the start of the next group
+        insertionIndex = (left / groupSize) * groupSize;
+    }
+std::cout << "\t\tValue returned for insertion is " << insertionIndex << std::endl;
+	DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
+    return insertionIndex;
 }
+
 
 void PmergeMe::binaryInsertion(size_t groupSize)
 {
 	size_t numOfPendingGroups = _pending.size() / groupSize;
+	// size_t numOfMainGroups = _mainChain.size() / groupSize;
 
-	std::cout << "\nPerforming binary search insertion" << std::endl;
+	std::cout << "\nPerforming binary search insertion ---------------------------------------------- " << std::endl;
 	std::cout << "pending.size() is " << _pending.size() << std::endl;
 
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
@@ -303,15 +401,25 @@ void PmergeMe::binaryInsertion(size_t groupSize)
         size_t	startIdx = pickingIndex * groupSize;
         size_t 	endIdx = startIdx + groupSize;
 
+		size_t	upperBoundIndex = upperBoundsTrack[pickingIndex];
+
         // Identify the "larger" value (rightmost in the group)
         int largerValue = _pending[endIdx - 1];
 		std::cout << "--------- Inserting group[" << pickingIndex << "] | largerValue = " << largerValue << std::endl;
+		std::cout << "--------- upperBound index is " << upperBoundIndex << std::endl;
   
+		size_t position;
         // Find the insertion position for the "larger" value  
-		// if (pickingIndex < static_cast<size_t>(jacobsthalSeq[pickingIndex]))
-		// {
-			size_t position = binarySearch(largerValue, _mainChain.size(), groupSize);
 
+		if (upperBoundIndex == 0) 
+			position = 0;
+		else
+			position = binarySearch(largerValue, upperBoundIndex * groupSize, groupSize);
+			
+		std::cout << "--------- position is " << position << std::endl;
+		std::cout << "--------- group size is " << groupSize << std::endl;
+		printContainer("********* upperBoundsTrack = ", groupSize, upperBoundsTrack);
+		
 			// Insert the entire group at the determined position
 			_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
 		// }
@@ -321,8 +429,18 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 		}
 		std::cout << std::endl;
 
-		printContainer("\tAfter BSinsertion: Main chain = ", groupSize, _mainChain);
-		printContainer("\tAfter BSinsertion: Pending    = ", groupSize, _pending);
+		// this is the key to avoid having to perform searches to find the upper bound
+		// pairPositions holds the position of all larger values in main chain (ONLY
+		// the larger) and updates them every time an insertion is made (values after
+		// the inserted one are shifted, hence their index in pairPositions will be 
+		// incremented)
+		for (size_t j = 0; j < upperBoundsTrack.size(); ++j) {
+			if (upperBoundsTrack[j] >= (position / groupSize))
+				upperBoundsTrack[j] = upperBoundsTrack[j] + 1;
+		}
+
+		// printContainer("\tAfter BSinsertion: Main chain = ", groupSize, _mainChain);
+		// printContainer("\tAfter BSinsertion: Pending    = ", groupSize, _pending);
     }
 	
     // // Handle remaining stragglers
@@ -340,12 +458,12 @@ void PmergeMe::binaryInsertion(size_t groupSize)
         _mainChain.insert(_mainChain.end(), valueToInsert);
     }
 
-		printContainer("\tAfter remains insertion: Main chain = ", groupSize, _mainChain);
-		printContainer("\tAfter remains insertion: Pending    = ", groupSize, _pending);
+		// printContainer("\tAfter remains insertion: Main chain = ", groupSize, _mainChain);
+		// printContainer("\tAfter remains insertion: Pending    = ", groupSize, _pending);
 
 	_vecSequence = _mainChain;
-
-	printContainer("\tdivideSequence(): SEQUENCE UPDATED = ", groupSize, _mainChain);
+	DEBUG_PRINT(std::cout << "binaryInsertion: COMPARISONS = " << _comparisons << "\n" << std::endl);
+	// printContainer("\tdivideSequence(): SEQUENCE UPDATED = ", groupSize, _mainChain);
 }
 
 void PmergeMe::mergeInsertionSort(size_t depth)
@@ -359,6 +477,8 @@ void PmergeMe::mergeInsertionSort(size_t depth)
 
 	if (_vecSequence.size() % 2 == 1)
 	{
+		std::cout << "\n ........................ POPPING STRAGGLER .......................................\n" << std::endl;
+
 		_straggler = _vecSequence.back();
 		_vecSequence.pop_back();
 	}
@@ -375,10 +495,12 @@ void PmergeMe::mergeInsertionSort(size_t depth)
     // Step 3: Insert remaining elements into the sorted sequence
     binaryInsertion(groupSize);
 
-	if (_straggler > 0)
+	if (groupSize == 1 && _straggler > 0)
 	{
+		std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>> INSERTING STRAGGLER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << std::endl;
 		size_t position = binarySearch(_straggler,_mainChain.size(), groupSize);
-		_mainChain.insert(_mainChain.begin() + position, _straggler);		
+		_mainChain.insert(_mainChain.begin() + position, _straggler);
+		_comparisons++;		
 	}
 }
 
