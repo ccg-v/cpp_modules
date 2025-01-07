@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/06 03:48:32 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:38:14 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,7 +500,6 @@ void PmergeMe::mergeInsertionSort(size_t depth)
 		std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>> INSERTING STRAGGLER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << std::endl;
 		size_t position = binarySearch(_straggler,_mainChain.size(), groupSize);
 		_mainChain.insert(_mainChain.begin() + position, _straggler);
-		_comparisons++;		
 	}
 }
 
