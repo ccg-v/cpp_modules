@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/08 02:45:14 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/01/09 23:19:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,12 +261,17 @@ size_t PmergeMe::binarySearch(int value, size_t end, size_t groupSize)
 	printContainer("binarySearch: input mainChain = ", groupSize, _mainChain);
 	printContainer("binarySearch: input pending   = ", groupSize, _pending);
 
+std::cout << "\t\t...END  : upperBound is mainChain[" << end + (groupSize - 1) << "] = " << _mainChain[end + (groupSize - 1)] << std::endl;
+std::cout << "\t\t...RIGHT: upperBound is mainChain[" << right + groupSize << "] = " << _mainChain[right + groupSize] << std::endl;
+std::cout << "\t\t...GROUP: upperBound is in  group[" << (right + groupSize) / groupSize << "]" << std::endl;
+
     while (left <= right)
     {
         // Calculate 'mid' as the middle group's boundary
         size_t mid = left + (right - left) / (2 * groupSize) * groupSize;
 		mid = std::min(mid, right); // Ensure 'mid' does not exceed 'right'
-std::cout << "\t\t...comparing pending " << value << " with " << _mainChain[mid] << " in mainChain [" << mid << "]..." << std::endl;
+std::cout << "\t\tMID VALUE should be " << ((left + right) / 2) / groupSize << ", value to compare with is " << _mainChain[((left + right) / 2) / groupSize] << std::endl;		
+std::cout << "\t\t...comparing pending " << value << " with mid value " << _mainChain[mid] << " located at mainChain [" << mid << "]..." << std::endl;
 
         // Compare 'value' with the rightmost value of the group at 'mid'
         if (_mainChain[mid] > value)

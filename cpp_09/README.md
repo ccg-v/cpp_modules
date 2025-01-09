@@ -144,3 +144,9 @@ Further Improvements:
 
     Track relationships:
     Use a vector of pairs to store which smaller group corresponds to which larger group. This allows us to efficiently retrieve relationships during unwinding.
+
+---------------------------------------------
+
+# Relationship Between the Subsequence and the Jacobsthal Sequence
+
+The Jacobsthal sequence does not directly determine the size of the subsequence being searched. Instead, it determines the order in which the pending elements (y[i]) are inserted. This insertion order indirectly affects the sizes of the subsequences being searched at each step.
