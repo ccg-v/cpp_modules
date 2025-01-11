@@ -24,9 +24,9 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Uncounted insertions",
-			"program": "/home/ccarrace/Documents/42Cursus/cpp_modules/cpp_09/TEST/PmergeMe",
-			"args": ["13 3 5 14 12 6 16 11 15 2 19 17 9 4 18 20 21 7 10 8 1"],
-			"cwd": "/home/ccarrace/Documents/42Cursus/cpp_modules/cpp_09/TEST"
+			"program": "/home/carlos/Documentos/42Cursus/cpp_modules/cpp_09/TEST/PmergeMe",
+			"args": ["7 17 16 15 9 2 12 13 20 10 21 18 3 1 5 8 6 4 11 14 19"],
+			"cwd": "/home/carlos/Documentos/42Cursus/cpp_modules/cpp_09/TEST"
 		}
 	]
 }
