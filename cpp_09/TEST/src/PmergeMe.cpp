@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/12 00:19:33 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:37:06 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void PmergeMe::sortAdjacentPairs(size_t groupSize)
             std::advance(trueSecond, tail + 1);
 
             std::advance(first, 1);
+			// swap_ranges args: (range start, range end, place to insert)
             std::swap_ranges(trueFirst, first, trueSecond);
         }
         tail += groupSize * 2;
@@ -159,20 +160,25 @@ void PmergeMe::divideSequence(size_t groupSize)
 	_pending.clear();
 	
     size_t numberOfGroups = _vecSequence.size() / groupSize;
-    for (size_t j = 1; j <= numberOfGroups; j++) {
+    for (size_t j = 1; j <= numberOfGroups; j++)
+	{
         size_t start = (j - 1) * groupSize;
         size_t end = std::min(j * groupSize, _vecSequence.size()); // Safeguard against out-of-bounds
 
-        if (j % 2 != 0) { // Odd group, values go to pending
+        if (j % 2 != 0) // Odd group, values go to pending
+		{ 
             _pending.insert(_pending.end(), _vecSequence.begin() + start, _vecSequence.begin() + end);
-        } else {          // Even group, values go to mainChain
+        }
+		else // Even group, values go to mainChain
+		{          
             _mainChain.insert(_mainChain.end(), _vecSequence.begin() + start, _vecSequence.begin() + end);
         }
     }
 
     // Handle remaining stragglers (if any)
     size_t stragglerStart = numberOfGroups * groupSize;
-    if (stragglerStart < _vecSequence.size()) {
+    if (stragglerStart < _vecSequence.size())
+	{
         _pending.insert(_pending.end(), _vecSequence.begin() + stragglerStart, _vecSequence.end());
     }
 
@@ -257,7 +263,15 @@ std::cout << "\t\tEND is " << end << std::endl;
 
 	size_t	numOfMainGroups = _mainChain.size() / groupSize;
 	size_t	leftGroup = 0;
-	size_t	rightGroup = (((end + 1) / groupSize) - 1);
+	
+	// I substract 1 to rightGroup to initialize it as the group at the 
+	// left of the upperBound to avoid unnecessary comparisons with the
+	// upperBound (we already know its always greater than the value to
+	// be inserted)
+	// --> The progression of the number of comparisons performed turns
+	// 		unbalanced (0 + 2 + 3 + 2 + ...) which is strange
+	size_t	rightGroup = (((end + 1) / groupSize) - 1) - 1;
+	// size_t	rightGroup = (((end + 1) / groupSize) - 1);
 	if (rightGroup >= numOfMainGroups)
 		rightGroup = numOfMainGroups - 1;
 
@@ -280,10 +294,11 @@ std::cout << "\t\tEND is " << end << std::endl;
 			  << upperBoundGroup << "]" << std::endl;
 
     while (leftGroup <= rightGroup)
-    {
-		size_t midGroup = (leftGroup + rightGroup) / 2;
-		size_t midIndex = (groupSize - 1) + (midGroup * groupSize);
-		size_t midValue = _mainChain[(groupSize - 1) + (midGroup * groupSize)];
+    {	
+
+		size_t	midGroup = (leftGroup + rightGroup) / 2;
+		size_t	midIndex = (groupSize - 1) + (midGroup * groupSize);
+		size_t	midValue = _mainChain[(groupSize - 1) + (midGroup * groupSize)];
 
 		std::cout << "\t\tleftGroup = " << leftGroup
 				  << " | rightGroup = " << rightGroup
@@ -291,6 +306,12 @@ std::cout << "\t\tEND is " << end << std::endl;
 				  << " | mid index is " << (groupSize - 1) + (midGroup * groupSize)
 				  << " | mid value is " << _mainChain[(groupSize - 1) + (midGroup * groupSize)] << std::endl;
 
+		if (midValue == static_cast<size_t>(_mainChain[end])) {
+			std::cout << "\t\t\tmidValue : " << midValue << " ?= " << _mainChain[end] << " : end" << std::endl;
+			std::cout << "UNNECESSARY COMPARISON AMONG VALUE TO INSERT AND UPPERBOUND?????????????????????" << std::endl;
+			_comparisons++;
+			break;
+		}
         if (midValue > static_cast<size_t>(valueToInsert))
         { 
 			if (midIndex < groupSize) { // midIndex points to the leftmost value to be compared with, I break to prevent underflow
@@ -507,7 +528,6 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 		std::cout << "--------- position is " << position << std::endl;
 		std::cout << "--------- group size is " << groupSize << std::endl;
 		printContainer("********* upperBoundsTrack = ", groupSize, upperBoundsTrack);
-std::cout << "binarySearch(): UPPER BOUND MAIN INDEX is " << upperBoundMainIndex << "(should not be greater than main size!!!!!!!!!)" << std::endl;
 
 			// Insert the entire group at the determined position
 			_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
