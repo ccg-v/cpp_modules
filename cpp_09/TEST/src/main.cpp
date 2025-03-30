@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 22:50:12 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/30 11:10:44 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@
  *	7. Insert straggler saved in step 2 if it exists
  */
 
-int main(int argc, char** argv) {
-
-	try {
-		if (argc > 1) {
+int main(int argc, char** argv)
+{
+	try
+	{
+		if (argc > 1)
+		{
 			PmergeMe pmergeme;
 			
 			pmergeme.checkInputAndSetContainers(argc, argv);
@@ -56,14 +58,18 @@ int main(int argc, char** argv) {
 			size_t	recursionDepth = 0;
 			pmergeme.mergeInsertionSort(recursionDepth);
 			
+			printContainer("Input  sequence = ", 1, pmergeme.getInput());
 			printContainer("Sorted sequence = ", 1, pmergeme.getMainChain());
 			std::cout << "Sequence length = " << pmergeme.getMainChain().size() << std::endl;
 			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getMainChain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
 			std::cout << "COMPARISONS = " << pmergeme._comparisons << std::endl;
-		} else {
+		} else
+		{
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}
-	} catch (const std::runtime_error & e) {
+	}
+	catch (const std::runtime_error & e)
+	{
 		std::cerr << e.what() << std::endl;
 		return 1;
 	}

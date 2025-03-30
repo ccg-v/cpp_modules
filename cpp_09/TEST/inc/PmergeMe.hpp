@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/01/05 23:12:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/30 11:10:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 class PmergeMe {
 
 	private:
+		std::vector<int>	_inputSequence;
 		std::vector<int>	_vecSequence;
 		std::vector<int>	_mainChain;
 		std::vector<int>	_pending;
@@ -53,12 +54,14 @@ class PmergeMe {
 
 		/* --- Getters ------------------------------------------------------ */
 
+		std::vector<int>	& getInput();
 		std::vector<int>	& getVector();
 		std::vector<int>	& getMainChain();
 		int					getStraggler();
 
 		/* --- Setters ------------------------------------------------------ */
 
+		void	setInput(int value);
 		void	setVector(int value);
 		void	setStraggler();
 

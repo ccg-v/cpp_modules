@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/28 20:37:06 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/30 14:34:34 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,24 @@
 /* --- Orthodox Canonical Form ---------------------------------------------- */
 
 // Default constructor
-PmergeMe::PmergeMe() : _straggler(-1), _comparisons(0) {}
+PmergeMe::PmergeMe() : _straggler(-1), _comparisons(0)
+{
+}
 
 // Copy constructor
 PmergeMe::PmergeMe(const PmergeMe & source) 
-	: _vecSequence(source._vecSequence), _mainChain(source._mainChain), 
-	  _pending(source._mainChain), _straggler(source._straggler), 
-	  _comparisons(source._comparisons) {}
+	: _inputSequence(source._inputSequence),_vecSequence(source._vecSequence),
+	  _mainChain(source._mainChain), _pending(source._mainChain),
+	  _straggler(source._straggler), _comparisons(source._comparisons)
+{
+}
 
 // Copy assignment operator
 PmergeMe & PmergeMe::operator=(const PmergeMe & source)
 {
-	if (this != &source) {
+	if (this != &source)
+	{
+		this->_inputSequence = source._inputSequence;
 		this->_vecSequence = source._vecSequence;
 		this->_mainChain = source._mainChain;
 		this->_pending = source._pending;
@@ -41,6 +47,11 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & source)
 PmergeMe::~PmergeMe() {}
 
 /* --- Getters -------------------------------------------------------------- */
+
+std::vector<int> & PmergeMe::getInput()
+{
+	return this->_inputSequence;
+}
 
 std::vector<int> & PmergeMe::getVector()
 {
@@ -58,6 +69,11 @@ int	PmergeMe::getStraggler()
 }
 
 /* --- Setters -------------------------------------------------------------- */
+
+void	PmergeMe::setInput(int value)
+{
+	_inputSequence.push_back(value);
+}
 
 void	PmergeMe::setVector(int value)
 {
@@ -96,6 +112,7 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv)
 
 			int value = atoi(element.c_str());
 			
+			setInput(value);
 			setVector(value);
 			// setDeque(value);
 		}
@@ -119,7 +136,7 @@ size_t PmergeMe::calculateGroupSize(size_t depth)
     for (size_t i = 0; i < depth; ++i) {
         groupSize *= 2; // Multiply by 2 for each level of depth
 	}
-	std::cout << "groupSize = " << groupSize << std::endl;
+	std::cout << "calculateGroupSize(): groupSize = " << groupSize << std::endl;
     return groupSize;
 }
 
@@ -189,7 +206,7 @@ void PmergeMe::divideSequence(size_t groupSize)
 std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
 {
     std::vector<int>	JacobsthalSeq;
-    size_t			num;
+    size_t				num;
 
     JacobsthalSeq.push_back(0);
     JacobsthalSeq.push_back(1);
@@ -197,7 +214,7 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
 	{
         num = JacobsthalSeq[i - 1] + (2 * JacobsthalSeq[i - 2]);
 		if (num >= len)
-			break;
+			break ;
         JacobsthalSeq.push_back(num);
     }
 
@@ -214,7 +231,8 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
     std::vector<bool> inserted(seqSize, false); // Track inserted indices
 
     // Always add index 0 first
-    if (seqSize > 0) {
+    if (seqSize > 0)
+	{
         result.push_back(0);
         inserted[0] = true;
     }
@@ -227,7 +245,7 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
         int boundary = jacobsthalSeq[i];
 
         if (boundary >= static_cast<int>(seqSize))
-            break; // Ignore out-of-bounds Jacobsthal indices
+            break ; // Ignore out-of-bounds Jacobsthal indices
 
         // Add the current boundary
         if (!inserted[boundary])
@@ -250,9 +268,8 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
     }
     for (size_t i = seqSize - 1; i >= current; --i)
 	{
-        if (!inserted[i]) {
+        if (!inserted[i])
             result.push_back(i);
-        }
     }
     return result;
 }
@@ -306,17 +323,21 @@ std::cout << "\t\tEND is " << end << std::endl;
 				  << " | mid index is " << (groupSize - 1) + (midGroup * groupSize)
 				  << " | mid value is " << _mainChain[(groupSize - 1) + (midGroup * groupSize)] << std::endl;
 
-		if (midValue == static_cast<size_t>(_mainChain[end])) {
+		if (midValue == static_cast<size_t>(_mainChain[end]))
+		{
 			std::cout << "\t\t\tmidValue : " << midValue << " ?= " << _mainChain[end] << " : end" << std::endl;
 			std::cout << "UNNECESSARY COMPARISON AMONG VALUE TO INSERT AND UPPERBOUND?????????????????????" << std::endl;
 			_comparisons++;
-			break;
+			break ;
 		}
+		
         if (midValue > static_cast<size_t>(valueToInsert))
         { 
-			if (midIndex < groupSize) { // midIndex points to the leftmost value to be compared with, I break to prevent underflow
+			if (midIndex < groupSize) // midIndex points to the leftmost value to be compared with, I break to prevent underflow
+			{ 
+				
 				_comparisons++;
-				break;
+				break ;
 			}
             rightGroup = midGroup - 1; // Move 'right' to the previous group index
         }
@@ -334,7 +355,7 @@ std::cout << "\t\tEND is " << end << std::endl;
 	std::cout << "\t\tValue returned for insertion is " << insertionIndex << std::endl;
 	DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
 	
-    return insertionIndex;
+    return (insertionIndex);
 }
 
 // // Claude version to save unnecessary last comparisons with upperBound (not working)
@@ -482,7 +503,8 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 	std::vector<size_t> upperBoundsTrack;
 
     // Initialize pair positions
-    for (size_t i = 0; i < numOfPendingGroups; ++i) {
+    for (size_t i = 0; i < numOfPendingGroups; ++i)
+	{
         upperBoundsTrack.push_back(i);
     }
 
@@ -533,7 +555,8 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 			_mainChain.insert(_mainChain.begin() + position, _pending.begin() + startIdx, _pending.begin() + endIdx);
 		// }
 
-		for (size_t i = 0; i < groupSize; i++) {
+		for (size_t i = 0; i < groupSize; i++)
+		{
 			std::cout << *(_pending.begin() + startIdx + i) << " ";
 		}
 		std::cout << std::endl;
@@ -554,7 +577,8 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 
 	// inserting remains AT THE END OF MAIN CHAIN (no binary insertion)
 	size_t	remainsStartIdx = _pending.size() - (_pending.size() % groupSize);
-    for (size_t i = remainsStartIdx; i < _pending.size(); ++i) {
+    for (size_t i = remainsStartIdx; i < _pending.size(); ++i) 
+	{
         int valueToInsert = _pending[i];
         _mainChain.insert(_mainChain.end(), valueToInsert);
     }
@@ -764,14 +788,6 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 // 	// printContainer("\tdivideSequence(): SEQUENCE UPDATED = ", groupSize, _mainChain);
 // }
 
-
-
-
-
-
-
-
-
 void PmergeMe::mergeInsertionSort(size_t depth)
 {
     size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
@@ -804,8 +820,17 @@ void PmergeMe::mergeInsertionSort(size_t depth)
 	if (groupSize == 1 && _straggler > 0)
 	{
 		std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>> INSERTING STRAGGLER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << std::endl;
-		size_t position = binarySearch(_straggler,_mainChain.size(), groupSize);
-		_mainChain.insert(_mainChain.begin() + position, _straggler);
+		if (_straggler > _mainChain.back())
+		{
+			std::cout << "straggler value (" << _straggler << ") is bigger than end value (" << _mainChain.back() << "), we insert it at the end" << std::endl;
+        	_mainChain.push_back(_straggler);
+			_comparisons++;
+		}
+		else
+		{
+			size_t position = binarySearch(_straggler,_mainChain.size() - 1, groupSize);
+			_mainChain.insert(_mainChain.begin() + position, _straggler);
+		}
 	}
 }
 
