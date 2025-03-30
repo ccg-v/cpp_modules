@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/30 11:10:02 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:49:11 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ class PmergeMe {
 // #include <string>
 
 // Define ANSI color codes
-const std::string RESET = "\033[0m";  // Reset to default color
-const std::string GREEN = "\033[92m";  // Green color for highlighting
+const std::string RESET = "\033[0m";  			// Reset to default color
+const std::string GREEN = "\033[92m";  			// Green color for highlighting
+const std::string BOLDYELLOW = "\033[1;93m";	// Bold yellow 
 
 template <typename T>
 void printContainer(std::string msg, int groupSize, T &sequence) {

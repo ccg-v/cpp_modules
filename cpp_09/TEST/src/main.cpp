@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/30 11:10:44 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:49:26 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 			PmergeMe pmergeme;
 			
 			pmergeme.checkInputAndSetContainers(argc, argv);
-			printContainer("******************************************Original sequence = ", 1, pmergeme.getVector());
+			printContainer("****************************************** Input sequence = ", 1, pmergeme.getInput());
 			// pmergeme.recursiveSort(pmergeme.getPairsVector());
 
 			// std::vector<int> pending;
@@ -62,8 +62,9 @@ int main(int argc, char** argv)
 			printContainer("Sorted sequence = ", 1, pmergeme.getMainChain());
 			std::cout << "Sequence length = " << pmergeme.getMainChain().size() << std::endl;
 			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getMainChain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
-			std::cout << "COMPARISONS = " << pmergeme._comparisons << std::endl;
-		} else
+			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
+		}
+		else
 		{
 			throw std::runtime_error("Error: Wrong number of arguments");			
 		}
@@ -73,6 +74,5 @@ int main(int argc, char** argv)
 		std::cerr << e.what() << std::endl;
 		return 1;
 	}
-
     return 0;
 }
