@@ -225,7 +225,7 @@ void binarySearchInsertion(std::vector<int> & sequence, size_t groupSize) {
 	}
 }
 
-void mergeInsertionSort(std::vector<int>& sequence, size_t depth) {
+void mergeInsertionSort_vector(std::vector<int>& sequence, size_t depth) {
     size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
 
     if (groupSize >= sequence.size()) {
@@ -237,7 +237,7 @@ void mergeInsertionSort(std::vector<int>& sequence, size_t depth) {
 	printContainer("", groupSize, sequence);
 
     // Step 2: Recursively sort larger groups
-    mergeInsertionSort(sequence, depth + 1);
+    mergeInsertionSort_vector(sequence, depth + 1);
 
     // Step 3: Insert remaining elements into the sorted sequence
     binarySearchInsertion(sequence, groupSize);
@@ -255,7 +255,7 @@ void mergeInsertionSort(std::vector<int>& sequence, size_t depth) {
 // 		// In each recursive call we calculate the group size as 2^depth
 // 		// Recursion stops when the group size becomes larger than sequence size
 // 		// 
-// 		mergeInsertionSort(sequence, recursionDepth);
+// 		mergeInsertionSort_vector(sequence, recursionDepth);
 // 	}
 
 //     return 0;
@@ -276,7 +276,7 @@ int main() {
 
 	// In each recursive call we calculate the group size as 2^depth
 	// Recursion stops when the group size becomes larger than sequence size
-    mergeInsertionSort(sequence, recursionDepth);
+    mergeInsertionSort_vector(sequence, recursionDepth);
 
     std::cout << "Sorted sequence: ";
     for (size_t i = 0; i < sequence.size(); ++i) {

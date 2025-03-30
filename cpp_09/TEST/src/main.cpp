@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/30 21:49:26 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/03/31 01:18:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,29 @@ int main(int argc, char** argv)
 			PmergeMe pmergeme;
 			
 			pmergeme.checkInputAndSetContainers(argc, argv);
-			printContainer("****************************************** Input sequence = ", 1, pmergeme.getInput());
-			// pmergeme.recursiveSort(pmergeme.getPairsVector());
 
-			// std::vector<int> pending;
-			// std::vector<int> mainChain;
+			// Vector container sorting
+			printContainer("Before: ", 1, pmergeme.getInput());	
 
-			// pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
-			// pmergeme.intMergeInsertion(pending, mainChain);
-			// pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
 			size_t	recursionDepth = 0;
-			pmergeme.mergeInsertionSort(recursionDepth);
-			
-			printContainer("Input  sequence = ", 1, pmergeme.getInput());
-			printContainer("Sorted sequence = ", 1, pmergeme.getMainChain());
-			std::cout << "Sequence length = " << pmergeme.getMainChain().size() << std::endl;
-			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getMainChain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
-			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
+			clock_t	timerStart = clock();
+			pmergeme.mergeInsertionSort_vector(recursionDepth);
+			clock_t	timerStop = clock();
+			double elapsedTime = static_cast<double>(timerStart - timerStop) / CLOCKS_PER_SEC * 1000000.0;
+
+			printContainer("After: ", 1, pmergeme.getVectorMain());
+			std::cout << "Time to process a range of " << pmergeme.getVectorMain().size() << " elements with std::vector<int> : " << elapsedTime << " us" << std::endl;
+
+			// DEBUG_PRINT(std::cout << (isSorted(pmergeme.getVectorMain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+			// DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
+
+			// Deque container sorting
+			recursionDepth = 0;
+			timerStart = clock();
+			pmergeme.mergeInsertionSort_deque(recursionDepth);
+			timerStop = clock();
+			elapsedTime = static_cast<double>(timerStart - timerStop) / CLOCKS_PER_SEC * 1000000.0;
+			std::cout << "Time to process a range of " << pmergeme.getVectorMain().size() << " elements with std::deque<int> : " << elapsedTime << " us" << std::endl;
 		}
 		else
 		{
@@ -76,3 +82,43 @@ int main(int argc, char** argv)
 	}
     return 0;
 }
+
+// int main(int argc, char** argv)
+// {
+// 	try
+// 	{
+// 		if (argc > 1)
+// 		{
+// 			PmergeMe pmergeme;
+			
+// 			pmergeme.checkInputAndSetContainers(argc, argv);
+// 			printContainer("****************************************** Input sequence = ", 1, pmergeme.getInput());
+// 			// pmergeme.recursiveSort(pmergeme.getPairsVector());
+
+// 			// std::vector<int> pending;
+// 			// std::vector<int> mainChain;
+
+// 			// pmergeme.extractPendingAndMainChain(pmergeme.getPairsVector(), pending, mainChain);
+// 			// pmergeme.intMergeInsertion(pending, mainChain);
+// 			// pmergeme.intMergeInsertion(pmergeme.getIntStraggler(), mainChain);
+// 			size_t	recursionDepth = 0;
+// 			pmergeme.mergeInsertionSort_vector(recursionDepth);
+			
+// 			printContainer("Input  sequence = ", 1, pmergeme.getInput());
+// 			printContainer("Sorted sequence = ", 1, pmergeme.getVectorMain());
+// 			std::cout << "Sequence length = " << pmergeme.getVectorMain().size() << std::endl;
+// 			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getVectorMain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+// 			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
+// 		}
+// 		else
+// 		{
+// 			throw std::runtime_error("Error: Wrong number of arguments");			
+// 		}
+// 	}
+// 	catch (const std::runtime_error & e)
+// 	{
+// 		std::cerr << e.what() << std::endl;
+// 		return 1;
+// 	}
+//     return 0;
+// }
