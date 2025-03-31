@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/31 22:45:33 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:45:56 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ size_t PmergeMe::calculateGroupSize(size_t depth)
     for (size_t i = 0; i < depth; ++i) {
         groupSize *= 2; // Multiply by 2 for each level of depth
 	}
-	// std::cout << "calculateGroupSize(): groupSize = " << groupSize << std::endl;
-    return groupSize;
+
+    return (groupSize);
 }
 
 /* ===========================================================================
@@ -181,6 +181,12 @@ size_t PmergeMe::calculateGroupSize(size_t depth)
 
 void PmergeMe::sortAdjacentPairs(size_t groupSize)
 {
+	if (groupSize > _vectorSeq.size())
+		return;
+
+	DEBUG_PRINT(std::cout << "\nSorting adjacent pairs -------------------------------------------------" << std::endl);
+	DEBUG_PRINT(std::cout << "   · groupSize = " << groupSize << std::endl);
+		
     size_t tail = groupSize - 1;
 
     while (tail + groupSize < _vectorSeq.size())
@@ -199,9 +205,10 @@ void PmergeMe::sortAdjacentPairs(size_t groupSize)
         tail += groupSize * 2;
         
         _comparisons++;
-		
-        DEBUG_PRINT(std::cout << "sortAdjacentPairs: COMPARISONS = " << _comparisons << "\n" << std::endl);
+			
+        DEBUG_PRINT(std::cout << "\tComparisons = " << YELLOW << _comparisons << RESET << std::endl);
     }
+	DEBUG_PRINT(printContainer("     After pair sorting: ", groupSize, _vectorSeq));
 }
 
 void PmergeMe::divideSequence(size_t groupSize)
@@ -210,6 +217,7 @@ void PmergeMe::divideSequence(size_t groupSize)
 	_vectorPending.clear();
 	
     size_t numberOfGroups = _vectorSeq.size() / groupSize;
+
     for (size_t j = 1; j <= numberOfGroups; j++)
 	{
         size_t start = (j - 1) * groupSize;
@@ -231,8 +239,14 @@ void PmergeMe::divideSequence(size_t groupSize)
 	{
         _vectorPending.insert(_vectorPending.end(), _vectorSeq.begin() + stragglerStart, _vectorSeq.end());
     }
-	printContainer("_vectorPending = ", 1, _vectorPending);
-	printContainer("_vectorMain = ", 1, _vectorMain);
+
+	if (numberOfGroups != 1)
+	{
+		DEBUG_PRINT(std::cout << "\nDividing sequence ---------------------------------------------------------" << std::endl);
+		DEBUG_PRINT(std::cout << "     numberOfGroups = " << numberOfGroups << std::endl);
+		DEBUG_PRINT(printContainer("     Pending    = ", 1, _vectorPending));
+		DEBUG_PRINT(printContainer("     Main chain = ", 1, _vectorMain));
+	}
 }
 
 std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
@@ -308,8 +322,6 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
 
 size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 {
-std::cout << "\t\tEND is " << end << std::endl;
-
 	size_t	numOfMainGroups = _vectorMain.size() / groupSize;
 	size_t	leftGroup = 0;
 	
@@ -324,8 +336,8 @@ std::cout << "\t\tEND is " << end << std::endl;
 	if (rightGroup >= numOfMainGroups)
 		rightGroup = numOfMainGroups - 1;
 
-	printContainer("binarySearch: input mainChain = ", groupSize, _vectorMain);
-	printContainer("binarySearch: input pending   = ", groupSize, _vectorPending);
+	DEBUG_PRINT(printContainer("binarySearch: input mainChain = ", groupSize, _vectorMain));
+	DEBUG_PRINT(printContainer("binarySearch: input pending   = ", groupSize, _vectorPending));
 
 	size_t	upperBoundIndex = end;
 	if (upperBoundIndex >= _vectorMain.size()) 
@@ -335,12 +347,9 @@ std::cout << "\t\tEND is " << end << std::endl;
 	if (upperBoundGroup >= numOfMainGroups)
 		upperBoundGroup = numOfMainGroups - 1;
 
-//	size_t upperBoundIndex = std::min(end, _vectorMain.size() - 1);
-// 	size_t upperBoundGroup = std::min(end / groupSize, numOfMainGroups - 1);
-
-	std::cout << "\t\t... upperBound is mainChain[" << upperBoundIndex << "] = " 
+	DEBUG_PRINT(std::cout << "\t\t... upperBound is mainChain[" << upperBoundIndex << "] = " 
 			  << _vectorMain[upperBoundIndex] << " in group[" 
-			  << upperBoundGroup << "]" << std::endl;
+			  << upperBoundGroup << "]" << std::endl);
 
     while (leftGroup <= rightGroup)
     {	
@@ -349,16 +358,15 @@ std::cout << "\t\tEND is " << end << std::endl;
 		size_t	midIndex = (groupSize - 1) + (midGroup * groupSize);
 		size_t	midValue = _vectorMain[(groupSize - 1) + (midGroup * groupSize)];
 
-		std::cout << "\t\tleftGroup = " << leftGroup
+		DEBUG_PRINT(std::cout << "\t\tleftGroup = " << leftGroup
 				  << " | rightGroup = " << rightGroup
 				  << " | midGroup index  = " << midGroup
 				  << " | mid index is " << (groupSize - 1) + (midGroup * groupSize)
-				  << " | mid value is " << _vectorMain[(groupSize - 1) + (midGroup * groupSize)] << std::endl;
+				  << " | mid value is " << _vectorMain[(groupSize - 1) + (midGroup * groupSize)] << std::endl);
 
 		if (midValue == static_cast<size_t>(_vectorMain[end]))
 		{
-			std::cout << "\t\t\tmidValue : " << midValue << " ?= " << _vectorMain[end] << " : end" << std::endl;
-			std::cout << "UNNECESSARY COMPARISON AMONG VALUE TO INSERT AND UPPERBOUND?????????????????????" << std::endl;
+			DEBUG_PRINT(std::cout << "\t\t\tmidValue : " << midValue << " ?= " << _vectorMain[end] << " : end" << std::endl);
 			_comparisons++;
 			break ;
 		}
@@ -367,7 +375,6 @@ std::cout << "\t\tEND is " << end << std::endl;
         { 
 			if (midIndex < groupSize) // midIndex points to the leftmost value to be compared with, I break to prevent underflow
 			{ 
-				
 				_comparisons++;
 				break ;
 			}
@@ -384,7 +391,7 @@ std::cout << "\t\tEND is " << end << std::endl;
     // Translate 'left' to the correct position for insertion
     size_t insertionIndex = (leftGroup * groupSize);
 
-	std::cout << "\t\tValue returned for insertion is " << insertionIndex << std::endl;
+	DEBUG_PRINT(std::cout << "\t\tValue returned for insertion is " << insertionIndex << std::endl);
 	DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
 	
     return (insertionIndex);
@@ -395,7 +402,6 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 	size_t numOfPendingGroups = _vectorPending.size() / groupSize;
 	size_t numOfMainGroups = _vectorMain.size() / groupSize;
 
-	std::cout << "groupSize =  " << groupSize << std::endl;
 	std::cout << "\nPerforming binary search insertion ---------------------------------------------- " << std::endl;
 	std::cout << "pending.size() is " << _vectorPending.size() << std::endl;
 	std::cout << "numOfPendingGroups = " << numOfPendingGroups << " | numOfMainGroups = " << numOfMainGroups << std::endl;
@@ -493,6 +499,13 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 
 void PmergeMe::mergeInsertionSort_vector(size_t depth)
 {
+	if (_vectorSeq.size() % 2 == 1)
+	{
+		_vectorStraggler = _vectorSeq.back();
+		_vectorSeq.pop_back();
+		DEBUG_PRINT(std::cout << "Even elements, popping straggler = " << _vectorStraggler << std::endl);
+	}
+	
     size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
 
     if (groupSize >= _vectorSeq.size())
@@ -500,17 +513,8 @@ void PmergeMe::mergeInsertionSort_vector(size_t depth)
         return; // Base case: No more groups to sort
     }
 
-	if (_vectorSeq.size() % 2 == 1)
-	{
-		std::cout << "\n ........................ POPPING STRAGGLER .......................................\n" << std::endl;
-
-		_vectorStraggler = _vectorSeq.back();
-		_vectorSeq.pop_back();
-	}
-
     // Step 1: Sort pairs of elements at this depth
     sortAdjacentPairs(groupSize);
-	printContainer("", groupSize, _vectorSeq);
 
     // Step 2: Recursively sort larger groups
     mergeInsertionSort_vector(depth + 1);

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/03/31 22:39:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/01 00:56:02 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,30 @@ int main(int argc, char** argv)
 			PmergeMe pmergeme;
 			
 			pmergeme.checkInputAndSetContainers(argc, argv);
+			DEBUG_PRINT(printContainer("\nInput sequence = ", 1, pmergeme.getInput()));
 
 			// Vector container sorting
-	
-
 			size_t	recursionDepth = 0;
 			clock_t	timerStart = clock();
 			pmergeme.mergeInsertionSort_vector(recursionDepth);
-			// pmergeme.mergeInsertionSort_deque(recursionDepth);
 			clock_t	timerStop = clock();
-			double vectorElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC; // * 1000000.0;
+			double vectorElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC;
 
 			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getVectorMain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
 			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
 
-			// Deque container sorting
-			recursionDepth = 0;
-			timerStart = clock();
-			pmergeme.mergeInsertionSort_deque(recursionDepth);
-			timerStop = clock();
-			double dequeElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC; // * 1000000.0;
+			// // Deque container sorting
+			// recursionDepth = 0;
+			// timerStart = clock();
+			// pmergeme.mergeInsertionSort_deque(recursionDepth);
+			// timerStop = clock();
+			// double dequeElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC;
 
 			printContainer("Before: ", 1, pmergeme.getInput());
 			printContainer("After: ", 1, pmergeme.getVectorMain());
 			std::cout << "Time to process a range of " << pmergeme.getVectorMain().size() << " elements with std::vector<int> : " << vectorElapsedTime << " ms." << std::endl;
-			std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int> : " << dequeElapsedTime << " ms." << std::endl;
-
+			// std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int> : " << dequeElapsedTime << " ms." << std::endl;
+			DEBUG_PRINT(std::cout << "Bye!" << std::endl);
 		}
 		else
 		{
