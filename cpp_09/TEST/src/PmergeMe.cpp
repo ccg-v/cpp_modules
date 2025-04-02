@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 12:49:22 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:39:35 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,12 +499,16 @@ void PmergeMe::mergeInsertionSort_vector(size_t depth)
         return; // Base case: No more groups to sort, stop recursion forwarding and start rewinding
     }
 
+	DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
+	
     // Step 1: Sort pairs of elements at this depth
     sortAdjacentPairs(groupSize);
 
     // Step 2: Recursively sort larger groups
     mergeInsertionSort_vector(depth + 1);
 
+	DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
+	
 	// Step 3: Divide sequence in main and pending at every rewinding recursion step
 	divideSequence(groupSize);
 	

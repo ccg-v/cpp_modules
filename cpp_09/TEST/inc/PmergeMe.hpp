@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 19:59:34 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:19:39 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ class PmergeMe
 	public:
 
 		size_t				_comparisons;
-		
 		
 		/* --- Orthodox Canonical Form -------------------------------------- */
 		PmergeMe();										// Default constructor
