@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 02:08:48 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:31:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,9 +266,9 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
         JacobsthalSeq.push_back(num);
     }
 
-    // Remove the first two elements if the sequence has at least two elements
-    if (JacobsthalSeq.size() > 2)
-        JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
+    // // Remove the first two elements if the sequence has at least two elements
+    // if (JacobsthalSeq.size() > 2)
+    //     JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
 
     return (JacobsthalSeq);
 }
@@ -338,9 +338,6 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 	if (rightGroup >= numOfMainGroups)
 		rightGroup = numOfMainGroups - 1;
 
-	// DEBUG_PRINT(printContainer("binarySearch: input mainChain = ", groupSize, _vectorMain));
-	// DEBUG_PRINT(printContainer("binarySearch: input pending   = ", groupSize, _vectorPending));
-
 	size_t	upperBoundIndex = end;
 	if (upperBoundIndex >= _vectorMain.size()) 
 		upperBoundIndex = _vectorMain.size() - 1;
@@ -349,7 +346,6 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 	if (upperBoundGroup >= numOfMainGroups)
 		upperBoundGroup = numOfMainGroups - 1;
 
-	// DEBUG_PRINT(std::cout << "\n\t... upperBoundMainIndex is ")
 	DEBUG_PRINT(std::cout << "\t... upperBound is mainChain[" << upperBoundIndex << "] = " 
 			  << GREEN << _vectorMain[upperBoundIndex] << RESET << " in group[" 
 			  << upperBoundGroup << "]" << std::endl);
@@ -360,8 +356,6 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 		size_t	midGroup = (leftGroup + rightGroup) / 2;
 		size_t	midIndex = (groupSize - 1) + (midGroup * groupSize);
 		size_t	midValue = _vectorMain[(midGroup * groupSize) + (groupSize - 1)];
-		// size_t	leftValue = _vectorMain[(leftGroup * groupSize) + groupSize - 1];
-		// size_t	rightValue = _vectorMain[(rightGroup * groupSize) + groupSize - 1];
 
 		DEBUG_PRINT(std::cout << "\t    ... left bound is " << _vectorMain[(leftGroup * groupSize) + groupSize - 1] << " | ");
 		DEBUG_PRINT(std::cout << "right bound is " << _vectorMain[(rightGroup * groupSize) + groupSize - 1] << " -> ");
@@ -371,12 +365,12 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 		else
 			DEBUG_PRINT(std::cout << valueToInsert << " < " << midValue << std::endl);
 
-		if (midValue == static_cast<size_t>(_vectorMain[end]))
-		{
-			_comparisons++;
-			DEBUG_PRINT(std::cout << "\t\tComparisons = " << YELLOW << _comparisons << RESET << std::endl);
-			break ;
-		}
+		// if (midValue == static_cast<size_t>(_vectorMain[end]))
+		// {
+		// 	_comparisons++;
+		// 	DEBUG_PRINT(std::cout << "\t\tComparisons = " << YELLOW << _comparisons << RESET << std::endl);
+		// 	break ;
+		// }
 		
         if (midValue > static_cast<size_t>(valueToInsert))
         { 
@@ -400,8 +394,6 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
     // Translate 'left' to the correct position for insertion
     size_t insertionIndex = (leftGroup * groupSize);
 	DEBUG_PRINT(std::cout << "\t\t--> insertion position is " << insertionIndex << std::endl);
-	// DEBUG_PRINT(std::cout << "\t\tValue returned for insertion is " << insertionIndex << std::endl);
-	// DEBUG_PRINT(std::cout << "binarySearch: COMPARISONS = " << _comparisons << "\n" << std::endl);
 	
     return (insertionIndex);
 }
@@ -439,7 +431,7 @@ void PmergeMe::binaryInsertion(size_t groupSize)
         int largerValue = _vectorPending[endIdx - 1];
 
 		DEBUG_PRINT(std::cout << "\n     Inserting group[" << pickingIndex << "] | largerValue = " 
-							  << GREEN << largerValue << RESET << " -----------------------------------" << std::endl);
+							  << GREEN << largerValue << RESET << " ----------------------------------" << std::endl);
 
         // Find the insertion position for the "larger" value 
 		size_t position;
@@ -489,8 +481,6 @@ void PmergeMe::binaryInsertion(size_t groupSize)
     }
 
 	_vectorSeq = _vectorMain;
-
-	// printContainer("\tdivideSequence(): SEQUENCE UPDATED = ", groupSize, _vectorMain);
 }
 
 void PmergeMe::mergeInsertionSort_vector(size_t depth)
@@ -580,11 +570,6 @@ void PmergeMe::divideSequence_deque(size_t groupSize)
 	{
         size_t start = (j - 1) * groupSize;
         size_t end = std::min(j * groupSize, _dequeSeq.size()); // Safeguard against out-of-bounds
-
-    // for (size_t j = 0; j < numberOfGroups; ++j)
-    // {
-    //     size_t start = j * groupSize;
-    //     size_t end = start + groupSize;
 		
         if (j % 2 != 0) // Odd group, values go to pending
 		{ 
@@ -733,6 +718,10 @@ void PmergeMe::binaryInsertion_deque(size_t groupSize)
     std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
 	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
 	std::vector<size_t> upperBoundsTrack;
+
+    // std::deque<int> jacobsthalSeq = buildJacobsthalDeque(numOfPendingGroups);
+	// std::deque<int> pickingIndexes = getPickingOrder_deque(jacobsthalSeq, numOfPendingGroups);
+	// std::deque<size_t> upperBoundsTrack;
 
     // Initialize pair positions
     for (size_t i = 0; i < numOfPendingGroups; ++i)
