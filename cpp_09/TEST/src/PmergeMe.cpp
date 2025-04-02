@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 12:31:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:49:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -715,13 +715,13 @@ void PmergeMe::binaryInsertion_deque(size_t groupSize)
 {
 	size_t numOfPendingGroups = _dequePending.size() / groupSize;
 
-    std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
-	std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
-	std::vector<size_t> upperBoundsTrack;
+    // std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
+	// std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
+	// std::vector<size_t> upperBoundsTrack;
 
-    // std::deque<int> jacobsthalSeq = buildJacobsthalDeque(numOfPendingGroups);
-	// std::deque<int> pickingIndexes = getPickingOrder_deque(jacobsthalSeq, numOfPendingGroups);
-	// std::deque<size_t> upperBoundsTrack;
+    std::deque<int> jacobsthalSeq = buildJacobsthalDeque(numOfPendingGroups);
+	std::deque<int> pickingIndexes = getPickingOrder_deque(jacobsthalSeq, numOfPendingGroups);
+	std::deque<size_t> upperBoundsTrack;
 
     // Initialize pair positions
     for (size_t i = 0; i < numOfPendingGroups; ++i)

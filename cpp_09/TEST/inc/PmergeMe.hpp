@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 02:37:28 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:59:34 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 #include <time.h>	// clock_t, clock(), CLOCK_PER_SEC
 #include "Utils.hpp"
 
-class PmergeMe {
-
+class PmergeMe
+{
 	public:
 
 		size_t				_comparisons;
+		
 		
 		/* --- Orthodox Canonical Form -------------------------------------- */
 		PmergeMe();										// Default constructor
@@ -107,34 +108,39 @@ class PmergeMe {
 
 // Generic function to print container contents
 template <typename T>
-void printContainer(std::string msg, int groupSize, T &sequence) {
+void printContainer(std::string msg, int groupSize, T &sequence)
+{
     size_t numberOfGroups = sequence.size() / groupSize;
     size_t remainder = sequence.size() % groupSize;
-
     size_t index = 0;
+
     std::cout << msg;
-    for (size_t group = 0; group < numberOfGroups; ++group) {
+
+    for (size_t group = 0; group < numberOfGroups; ++group)
+	{
         if (groupSize > 1)
             std::cout << "[ ";
-        for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index) {
-            if (i == static_cast<size_t>(groupSize - 1)) {  // Last element in the group
+
+        for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index)
+		{
+            // if (i == static_cast<size_t>(groupSize - 1)) // Last element in the group
+            //     std::cout << sequence[index] << " ";
+            // else 
                 std::cout << sequence[index] << " ";
-            } else {
-                std::cout << sequence[index] << " ";
-            }
         }
         if (groupSize > 1)
             std::cout << "] ";
     }
 
     // Print remaining elements (not part of a full group)
-    if (remainder > 0) {
-        for (size_t i = 0; i < remainder; ++i, ++index) {
-            if (i == remainder - 1) {  // Last remaining element
+    if (remainder > 0)
+	{
+        for (size_t i = 0; i < remainder; ++i, ++index)
+		{
+            // if (i == remainder - 1) // Last remaining element
+            //     std::cout << sequence[index] << " ";
+            // else
                 std::cout << sequence[index] << " ";
-            } else {
-                std::cout << sequence[index] << " ";
-            }
         }
     }
 
