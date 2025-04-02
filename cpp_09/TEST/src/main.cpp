@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/01 00:56:02 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 02:01:05 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,35 @@ int main(int argc, char** argv)
 			clock_t	timerStop = clock();
 			double vectorElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC;
 
-			DEBUG_PRINT(std::cout << (isSorted(pmergeme.getVectorMain()) ? "The sequence is sorted" : "Error: The sequence is NOT sorted") << std::endl);
+			// Deque container sorting
+			recursionDepth = 0;
+			timerStart = clock();
+			pmergeme.mergeInsertionSort_deque(recursionDepth);
+			timerStop = clock();
+			double dequeElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC;
+
+			printContainer("\nBefore: ", 1, pmergeme.getInput());
+			printContainer("After : ", 1, pmergeme.getVectorMain());
+
+			// DEBUG_PRINT(std::cout << (isSorted(pmergeme.getVectorMain()) 
+			// 	? std::string(BRIGHTGREEN) + "✔ The sequence is sorted" + RESET
+			// 	: std::string(RED) + "✘ The sequence is not sorted" + RESET)
+			// 	<< std::endl);
+			// if (pmergeme.getInput().size() != pmergeme.getVectorMain().size())
+			// 	DEBUG_PRINT(std::cout << RED << "✘ The length of input and output sequences do not match" << RESET << std::endl);
+
+			if  (isSorted(pmergeme.getVectorMain())) 
+				std::cout << BRIGHTGREEN << "✔ The sequence is sorted" << RESET << std::endl;
+			else
+				std::cout << (RED) << "✘ The sequence is not sorted" << RESET << std::endl;
+
+			if (pmergeme.getInput().size() != pmergeme.getVectorMain().size())
+				std::cout << RED << "✘ The length of input and output sequences do not match" << RESET << std::endl;
+
 			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
 
-			// // Deque container sorting
-			// recursionDepth = 0;
-			// timerStart = clock();
-			// pmergeme.mergeInsertionSort_deque(recursionDepth);
-			// timerStop = clock();
-			// double dequeElapsedTime = static_cast<double>(timerStop - timerStart) * 1000 / CLOCKS_PER_SEC;
-
-			printContainer("Before: ", 1, pmergeme.getInput());
-			printContainer("After: ", 1, pmergeme.getVectorMain());
 			std::cout << "Time to process a range of " << pmergeme.getVectorMain().size() << " elements with std::vector<int> : " << vectorElapsedTime << " ms." << std::endl;
-			// std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int> : " << dequeElapsedTime << " ms." << std::endl;
+			std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int> : " << dequeElapsedTime << " ms." << std::endl;
 			DEBUG_PRINT(std::cout << "Bye!" << std::endl);
 		}
 		else

@@ -6,7 +6,7 @@
 #    By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/08 21:59:21 by ccarrace          #+#    #+#              #
-#    Updated: 2025/04/01 00:29:02 by ccarrace         ###   ########.fr        #
+#    Updated: 2025/04/02 02:32:17 by ccarrace         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	PmergeMe
 
 # --- Compiler --------------------------------------------------------------- #
 CXX 		= 	c++
-CXXFLAGS 	=	-MMD -Wall -Wextra -Werror -std=c++98 -g -DDEBUG_MODE -fPIE
+CXXFLAGS 	=	-MMD -Wall -Wextra -Werror -std=c++98 -g #-DDEBUG_MODE
 
 # --- Folders ---------------------------------------------------------------- #
 INC_DIR		=	inc/

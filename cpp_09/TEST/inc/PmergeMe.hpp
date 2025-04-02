@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/01 01:36:46 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 02:37:28 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,12 @@ class PmergeMe {
 };
 
 // Define ANSI color codes
-const std::string RESET = "\033[0m";  			// Reset to default color
-const std::string GREEN = "\033[92m";  			// Green color for highlighting
-const std::string YELLOW = "\033[93m";			// Yellow 
-const std::string BOLDYELLOW = "\033[1;93m";	// Bold yellow 
+#define RESET "\033[0m"					// Reset to default color
+#define GREEN "\033[92m"				// Green
+#define BRIGHTGREEN "\033[38;5;120m"	// Pastel green
+#define	RED "\033[38;5;203m"			// Coral red
+#define YELLOW "\033[93m"				// Yellow 
+#define BOLDYELLOW "\033[1;93m"			// Bold yellow
 
 // Generic function to print container contents
 template <typename T>
@@ -116,7 +118,7 @@ void printContainer(std::string msg, int groupSize, T &sequence) {
             std::cout << "[ ";
         for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index) {
             if (i == static_cast<size_t>(groupSize - 1)) {  // Last element in the group
-                std::cout << GREEN << sequence[index] << RESET << " ";
+                std::cout << sequence[index] << " ";
             } else {
                 std::cout << sequence[index] << " ";
             }
@@ -129,7 +131,7 @@ void printContainer(std::string msg, int groupSize, T &sequence) {
     if (remainder > 0) {
         for (size_t i = 0; i < remainder; ++i, ++index) {
             if (i == remainder - 1) {  // Last remaining element
-                std::cout << GREEN << sequence[index] << RESET << " ";
+                std::cout << sequence[index] << " ";
             } else {
                 std::cout << sequence[index] << " ";
             }
