@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:50:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/23 22:02:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:50:25 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,22 @@
  *	-	Hyphens must be in positions 4 and 7 of the string
  *	-	The characters (except hyphens) must be digits
  */
-bool isValidDateFormat(const std::string& date) {
-
+bool isValidDateFormat(const std::string& date)
+{
     if (date.length() != 10)
         return false;
 
     if (date[4] != '-' || date[7] != '-')
         return false;
 
-    for (int i = 0; i < 10; ++i) {
-        if (i == 4 || i == 7) {
+    for (int i = 0; i < 10; ++i)
+	{
+        if (i == 4 || i == 7)
+		{
             continue; // Skip the hyphens
         }
-        if (!std::isdigit(date[i])) {
+        if (!std::isdigit(date[i]))
+		{
             return false;
         }
     }
@@ -52,7 +55,8 @@ bool isValidDateFormat(const std::string& date) {
  *	-	it cannot be divided by 100...
  *	-	...except if it can be divided by 400
  */
-bool isLeapYear(int year) {
+bool isLeapYear(int year)
+{
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
@@ -66,8 +70,8 @@ bool isLeapYear(int year) {
  *	-	Check if the month is valid
  *	-	Check if the day is valid for the given month
  */
-bool isValidDate(int year, int month, int day) {
-
+bool isValidDate(int year, int month, int day)
+{
     int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     if (month == 2 && isLeapYear(year))
@@ -89,8 +93,8 @@ bool isValidDate(int year, int month, int day) {
  *	- Extracts year, month, and day from the string
  *	- Validates  the extracted year, month, and day
  */
-bool validateDate(const std::string& date) {
-
+bool validateDate(const std::string& date)
+{
     if (!isValidDateFormat(date))
         return false;
 

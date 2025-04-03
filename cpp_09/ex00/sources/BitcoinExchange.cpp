@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/03 12:37:30 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:47:01 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,44 +36,50 @@ BitcoinExchange::~BitcoinExchange() {}
 
 /* --- Member methods ------------------------------------------------------- */
 
-void	BitcoinExchange::checkInputFile(const std::string & argv) {
-	
+void	BitcoinExchange::checkInputFile(const std::string & argv)
+{
     struct stat path_stat;
 
     // Check if the path is a directory	(5)
-    if (stat(argv.c_str(), &path_stat) == 0 && S_ISDIR(path_stat.st_mode)) {
+    if (stat(argv.c_str(), &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
         throw std::runtime_error("Error: '" + argv + "' is a directory, not a file.");
     }
 
     // Check if the path is an executable (5)
-    if (stat(argv.c_str(), &path_stat) == 0 && (path_stat.st_mode & S_IXUSR)) {
+    if (stat(argv.c_str(), &path_stat) == 0 && (path_stat.st_mode & S_IXUSR))
+	{
         throw std::runtime_error("Error: '" + argv + "' is an executable.");
     }
 
     std::ifstream inputFile(argv.c_str());	// (3)
 
     // Check if file is opened successfully
-    if (!inputFile.is_open()) {
+    if (!inputFile.is_open())
+	{
 		throw std::runtime_error("Error: could not open '" + argv + "'.");
     }
 
     // Check if file is empty
-    if (inputFile.peek() == std::ifstream::traits_type::eof()) {
+    if (inputFile.peek() == std::ifstream::traits_type::eof())
+	{
 		throw std::runtime_error("Error: '" + argv + "' is empty.");
     }
 }
 
-void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
-
+void	BitcoinExchange::fillMap(const std::string & dataBase) // (2)
+{	
     std::ifstream dbFile(dataBase.c_str());	// (3)
 
-    if (!dbFile.is_open()) {
+    if (!dbFile.is_open())
+	{
 		throw std::runtime_error("Error: could not open database '" + dataBase + "'.");
     }
 
 	std::string	line;
 
-    while (std::getline(dbFile, line)) {
+    while (std::getline(dbFile, line))
+	{
         std::stringstream	ss(line);
         std::string 		rateDate;
         float				rate;
@@ -86,43 +92,53 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) {	// (2)
     dbFile.close();
 }
 
-void BitcoinExchange::trimAndvalidateDate(std::string & valueDate) {
+void BitcoinExchange::trimAndvalidateDate(std::string & valueDate)
+{
     // Trim whitespaces
     valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
 
 	// Validate the date
-	if (validateDate(valueDate) == false) {
+	if (validateDate(valueDate) == false)
+	{
 		throw std::runtime_error("Error: bad input => " + valueDate);
 	}
 }
 
-void BitcoinExchange::validateValue(float value) {
-	if (value < 0) {
+void BitcoinExchange::validateValue(float value)
+{
+	if (value < 0)
+	{
 		throw std::runtime_error("Error: not a positive number.");
 	}
-	if (value > 1000) {
+	if (value > 1000)
+	{
 		throw std::runtime_error("Error: too large a number.");		
 	}
 }
 
-float BitcoinExchange::findExchangeRate(const std::string & valueDate) {
+float BitcoinExchange::findExchangeRate(const std::string &valueDate)
+{
+    std::map<std::string, float>::iterator it = _exchangeRates.find(valueDate);
 
-    std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(valueDate);	// (6)
-
-    // No exact match, move to the closest earlier date
-    if (it == _exchangeRates.end() || it->first != valueDate) {
-        if (it != _exchangeRates.begin()) {
-            --it;
-        } else {
-            throw std::runtime_error("Error: no exchange rate available for " + valueDate);
-        }
+    // If an exact match is found, return it
+    if (it != _exchangeRates.end())
+	{
+        return it->second;
     }
 
+    // If no exact match, find the closest earlier date (6)
+    it = _exchangeRates.lower_bound(valueDate);
+    if (it == _exchangeRates.begin())
+	{
+        throw std::runtime_error("Error: no exchange rate available for " + valueDate);
+    }
+    
+    --it; // Move to the closest earlier date (6)
     return it->second;
 }
 
-void	BitcoinExchange::calculateExchanges(const std::string & argv) {
-
+void	BitcoinExchange::calculateExchanges(const std::string & argv)
+{
     std::ifstream inputFile(argv.c_str());	// (3)
 	std::string	line;
 
@@ -155,12 +171,10 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 		catch (const std::runtime_error& e) {
 			std::cerr << e.what() << std::endl;
 		}
-
 	}
 	while (std::getline(inputFile, line));  // Continue reading lines until the end
 
 	inputFile.close();
-
 }
 
 /*
