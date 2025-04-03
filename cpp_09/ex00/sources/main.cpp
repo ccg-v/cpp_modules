@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:47:31 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/23 23:14:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:32:32 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv) {
 			
 			return 0;
 		} else {
-			throw std::runtime_error("Error: Wrong number of arguments");
+			throw std::runtime_error("Error: Wrong number of arguments (usage: ./btc <input file>)");
 		}
 
 	} catch (const std::runtime_error& e) {

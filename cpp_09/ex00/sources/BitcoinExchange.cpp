@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/31 19:18:20 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:37:30 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,22 +127,23 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 	std::string	line;
 
 	// Check and skip the header if it exists
-    if (std::getline(inputFile, line)) {
+    if (std::getline(inputFile, line))
+	{
 		if (line == "date | value")
 			std::getline(inputFile, line);
     }
 
-	do {	// (4)
-
+	do // (4)
+	{
         std::stringstream	ss(line);
         std::string 		valueDate;
         float				value;
 		
-        std::getline(ss, valueDate, '|');	// Extract the date
-        ss >> value;                  		// Extract the value
+        std::getline(ss, valueDate, '|'); // Moves chars from ss to valueDate till '|' is found (and removed)
+        ss >> value;                  	  // Moves remaining characters from ss to value 
 
-		try {	// (7)
-			
+		try // (7)
+		{
 			trimAndvalidateDate(valueDate);
 			validateValue(value);
 			float exchangeRate = findExchangeRate(valueDate);
@@ -150,11 +151,13 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
 			float result = value * exchangeRate;
 			std::cout << valueDate << " => " << value << " = " << result << std::endl;
 
-		} catch (const std::runtime_error& e) {
+		}
+		catch (const std::runtime_error& e) {
 			std::cerr << e.what() << std::endl;
 		}
-		
-	} while (std::getline(inputFile, line));  // Continue reading lines until the end
+
+	}
+	while (std::getline(inputFile, line));  // Continue reading lines until the end
 
 	inputFile.close();
 
@@ -236,7 +239,6 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv) {
  * 		'if (stat(argv.c_str(), &path_stat) == 0)' checks whether the stat 
  * 		system call was able to retrieve information about the file or path
  * 		referenced by argv
- *
  *
  *	-	S_ISDIR(path_stat.st_mode):
  *
