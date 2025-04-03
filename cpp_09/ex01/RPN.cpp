@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/03 00:22:40 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 20:28:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,33 @@ RPN::~RPN() {}
 /* --- Member functions ----------------------------------------------------- */
 
 void	RPN::doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token) {
-	if (token == "+") {
+	if (token == "+")
+	{
         // Check for overflow in addition
-        if (operand2 > 0 && operand1 > (INT_MAX - operand2)) {
+        if (operand2 > 0 && operand1 > (INT_MAX - operand2))
+		{
             throw std::runtime_error("Error: integer overflow in addition.");
         }
 		stack.push(operand1 + operand2);
 	}
-	else if (token == "-") {
+	else if (token == "-")
+	{
         // No overflow check needed for subtraction with non-negative single digits
 		stack.push(operand1 - operand2);
 	}
-	else if (token == "*") {
+	else if (token == "*")
+	{
         // Check for overflow in multiplication
-        if (operand2 > 0 && operand1 > (INT_MAX / operand2)) {
+        if (operand2 > 0 && operand1 > (INT_MAX / operand2))
+		{
             throw std::runtime_error("Integer overflow in multiplication.");
         }
 		stack.push(operand1 * operand2);
 	}
-	else if (token == "/") {
-		if (operand2 == 0) {
+	else if (token == "/")
+	{
+		if (operand2 == 0)
+		{
 			throw std::runtime_error("Invalid RPN expression: division by zero.");
 		}
 		stack.push(operand1 / operand2);
@@ -70,13 +77,16 @@ int RPN::evaluateRPN(const std::string & expression) {
     int operandCount = 0;
 	int	operatorCount = 0;
 
-    while (input >> token) {
+    while (input >> token)
+	{
 		// Check if token is a single-digit number
-        if (isdigit(token[0]) && token.size() == 1) {
+        if (isdigit(token[0]) && token.size() == 1)
+		{
             stack.push(std::atoi(token.c_str()));
             operandCount++;
 			
-            if (operandCount > 2) {
+            if (operandCount > 2)
+			{
                 throw std::runtime_error("Invalid RPN expression: more than two consecutive operands.");
             }
 		} else if (token.size() > 1) {
