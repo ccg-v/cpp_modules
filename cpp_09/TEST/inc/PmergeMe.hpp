@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 20:19:39 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:35:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,24 @@ class PmergeMe
 		size_t 				calculateGroupSize(size_t depth);
 		
 		// Vector-based methods
+		void				popStraggler();
 		void				sortAdjacentPairs(size_t groupSize);
 		void				divideSequence(size_t groupSize);
 		std::vector<int> 	buildJacobsthalVec(size_t len);
 		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
 		size_t 				binarySearch(int value, size_t end, size_t groupSize);
 		void 				binaryInsertion(size_t groupSize);
+		void				insertStraggler(size_t groupSize);
 		
 		// Deque-based methods
+		void				popStraggler_deque();
 		void				sortAdjacentPairs_deque(size_t groupSize);
 		void				divideSequence_deque(size_t groupSize);
 		std::deque<int> 	buildJacobsthalDeque(size_t len);
 		std::deque<int>		getPickingOrder_deque(const std::deque<int> & jacobsthalSeq, size_t smallerSize);
 		size_t 				binarySearch_deque(int value, size_t end, size_t groupSize);
 		void 				binaryInsertion_deque(size_t groupSize);
+		void				insertStraggler_deque(size_t groupSize);
 };
 
 // Define ANSI color codes

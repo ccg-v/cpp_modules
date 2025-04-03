@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 19:59:31 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:29:14 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 			DEBUG_PRINT(std::cout << "Total comparisons = " << BOLDYELLOW << pmergeme._comparisons << RESET << std::endl);
 
 			std::cout << "Time to process a range of " << pmergeme.getVectorMain().size() << " elements with std::vector<int> : " << vectorElapsedTime << " ms." << std::endl;
-			std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int> : " << dequeElapsedTime << " ms." << std::endl;
+			std::cout << "Time to process a range of " << pmergeme.getDequeMain().size() << " elements with std::deque<int>  : " << dequeElapsedTime << " ms." << std::endl;
 			DEBUG_PRINT(std::cout << "Bye!" << std::endl);
 		}
 		else

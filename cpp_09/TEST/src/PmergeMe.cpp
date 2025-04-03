@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 20:39:35 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:07:45 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,54 @@ size_t PmergeMe::calculateGroupSize(size_t depth)
 
    ===========================================================================*/
 
+/*
+ *	mergeInsertionSort_vector()
+ *
+ *	1. Pop straggler if sequence length is even
+ *  2. Calculate the size of the groups to pair (size increasing by power of 2: 1 2 4 8...)
+ *	3. Sort pairs of adjacent groups of elements
+ *	4. Recursively repeat previous steps until group size is bigger than the sequence length
+ *	5. While recursion rewinds, split the sequence generated in the recursion level into 
+ *		pending and main sequences
+ *	6. In the current recursion level, insert pending elements into main sequence
+ *		- To pick elements from pending, follow Jacobshthal numbers
+ *		- To insert pending elements into main chain, perform binary insertions using the 
+ *			paired value as the search upper bound
+ *	7. Insert straggler popped in step 1
+ */
+ void PmergeMe::mergeInsertionSort_vector(size_t depth)
+ {
+	 popStraggler();
+	 
+	 size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
+ 
+	 if (groupSize >= _vectorSeq.size())
+	 {
+		 return ; // Base case: No more groups to sort, stop recursion forwarding and start rewinding
+	 }
+ 
+	 DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
+	 
+	 sortAdjacentPairs(groupSize);
+	 mergeInsertionSort_vector(depth + 1);
+ 
+	 DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
+	 
+	 divideSequence(groupSize);
+	 binaryInsertion(groupSize);
+	 insertStraggler(groupSize);
+ }
+
+void	PmergeMe::popStraggler()
+{
+	if (_vectorSeq.size() % 2 == 1)
+	{
+		_vectorStraggler = _vectorSeq.back();
+		_vectorSeq.pop_back();
+		DEBUG_PRINT(std::cout << "Even elements, popping straggler = " << _vectorStraggler << std::endl);
+	}	
+}
+
 void PmergeMe::sortAdjacentPairs(size_t groupSize)
 {
 	if (groupSize > _vectorSeq.size())
@@ -266,9 +314,9 @@ std::vector<int> PmergeMe::buildJacobsthalVec(size_t len)
         JacobsthalSeq.push_back(num);
     }
 
-    // // Remove the first two elements if the sequence has at least two elements
-    // if (JacobsthalSeq.size() > 2)
-    //     JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
+    // Remove the first two elements if the sequence has at least two elements
+    if (JacobsthalSeq.size() > 2)
+        JacobsthalSeq.erase(JacobsthalSeq.begin(), JacobsthalSeq.begin() + 2);
 
     return (JacobsthalSeq);
 }
@@ -364,13 +412,6 @@ size_t PmergeMe::binarySearch(int valueToInsert, size_t end, size_t groupSize)
 			DEBUG_PRINT(std::cout << valueToInsert << " > " << midValue << std::endl);
 		else
 			DEBUG_PRINT(std::cout << valueToInsert << " < " << midValue << std::endl);
-
-		// if (midValue == static_cast<size_t>(_vectorMain[end]))
-		// {
-		// 	_comparisons++;
-		// 	DEBUG_PRINT(std::cout << "\t\tComparisons = " << YELLOW << _comparisons << RESET << std::endl);
-		// 	break ;
-		// }
 		
         if (midValue > static_cast<size_t>(valueToInsert))
         { 
@@ -456,11 +497,10 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 		// Insert the entire group at the determined position
 		_vectorMain.insert(_vectorMain.begin() + position, _vectorPending.begin() + startIdx, _vectorPending.begin() + endIdx);
 
-		// this is the key to avoid having to perform searches to find the upper bound
-		// pairPositions holds the position of all larger values in main chain (ONLY
-		// the larger) and updates them every time an insertion is made (values after
-		// the inserted one are shifted, hence their index in pairPositions will be 
-		// incremented)
+		// --> This is the key to avoid having to perform searches to find the upper bound!
+		// 'pairPositions' holds the position of all larger values in main chain (ONLY the
+		// the larger) and updates them every time an insertion is made (values after the
+		// inserted one are shifted, hence their index in pairPositions will be incremented
 		for (size_t j = 0; j < upperBoundsTrack.size(); ++j)
 		{
 			if (upperBoundsTrack[j] >= (position / groupSize))
@@ -483,39 +523,8 @@ void PmergeMe::binaryInsertion(size_t groupSize)
 	_vectorSeq = _vectorMain;
 }
 
-void PmergeMe::mergeInsertionSort_vector(size_t depth)
+void	PmergeMe::insertStraggler(size_t groupSize)
 {
-	if (_vectorSeq.size() % 2 == 1)
-	{
-		_vectorStraggler = _vectorSeq.back();
-		_vectorSeq.pop_back();
-		DEBUG_PRINT(std::cout << "Even elements, popping straggler = " << _vectorStraggler << std::endl);
-	}
-	
-    size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
-
-    if (groupSize >= _vectorSeq.size())
-	{
-        return; // Base case: No more groups to sort, stop recursion forwarding and start rewinding
-    }
-
-	DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
-	
-    // Step 1: Sort pairs of elements at this depth
-    sortAdjacentPairs(groupSize);
-
-    // Step 2: Recursively sort larger groups
-    mergeInsertionSort_vector(depth + 1);
-
-	DEBUG_PRINT(std::cout << "\n============================ Recursion depth = " << depth << " ============================" << std::endl);
-	
-	// Step 3: Divide sequence in main and pending at every rewinding recursion step
-	divideSequence(groupSize);
-	
-    // Step 4: Insert pending into main at every rewinding recursion step
-    binaryInsertion(groupSize);
-
-	// Step 5: Insert the straggler, if there is one
 	if (groupSize == 1 && _vectorStraggler > 0)
 	{
 		DEBUG_PRINT(std::cout << "\n     Inserting straggler = " << GREEN << _vectorStraggler << RESET << " ------------------------------------------------" << std::endl);
@@ -540,8 +549,40 @@ void PmergeMe::mergeInsertionSort_vector(size_t depth)
 
    ===========================================================================*/
 
+void	PmergeMe::mergeInsertionSort_deque(size_t depth)
+{
+	popStraggler_deque();
 
-void PmergeMe::sortAdjacentPairs_deque(size_t groupSize)
+    size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
+
+    if (groupSize >= _dequeSeq.size())
+	{
+        return; // Base case: No more groups to sort
+    }
+
+	if (_dequeSeq.size() % 2 == 1)
+	{
+		_dequeStraggler = _dequeSeq.back();
+		_dequeSeq.pop_back();
+	}
+
+    sortAdjacentPairs_deque(groupSize);
+    mergeInsertionSort_deque(depth + 1);
+
+	divideSequence_deque(groupSize);
+    binaryInsertion_deque(groupSize);
+}
+
+void	PmergeMe::popStraggler_deque()
+{
+	if (_dequeSeq.size() % 2 == 1)
+	{
+		_dequeStraggler = _dequeSeq.back();
+		_dequeSeq.pop_back();
+	}	
+}
+
+void	PmergeMe::sortAdjacentPairs_deque(size_t groupSize)
 {
     size_t tail = groupSize - 1;
 
@@ -776,32 +817,8 @@ void PmergeMe::binaryInsertion_deque(size_t groupSize)
 	_dequeSeq = _dequeMain;
 }
 
-void PmergeMe::mergeInsertionSort_deque(size_t depth)
+void	PmergeMe::insertStraggler_deque(size_t groupSize)
 {
-    size_t groupSize = calculateGroupSize(depth); // Calculate group size as 2^depth
-
-    if (groupSize >= _dequeSeq.size())
-	{
-        return; // Base case: No more groups to sort
-    }
-
-	if (_dequeSeq.size() % 2 == 1)
-	{
-		_dequeStraggler = _dequeSeq.back();
-		_dequeSeq.pop_back();
-	}
-
-    // Step 1: Sort pairs of elements at this depth
-    sortAdjacentPairs_deque(groupSize);
-
-    // Step 2: Recursively sort larger groups
-    mergeInsertionSort_deque(depth + 1);
-
-	divideSequence_deque(groupSize);
-
-    // Step 3: Insert remaining elements into the sorted sequence
-    binaryInsertion_deque(groupSize);
-
 	if (groupSize == 1 && _dequeStraggler > 0)
 	{
 		if (_dequeStraggler > _dequeMain.back())
