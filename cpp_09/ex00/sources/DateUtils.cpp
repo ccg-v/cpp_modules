@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:50:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/03 18:50:25 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/03 23:12:13 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ bool isValidDate(int year, int month, int day)
  *	- Extracts year, month, and day from the string
  *	- Validates  the extracted year, month, and day
  */
-bool validateDate(const std::string& date)
+bool validateDate(std::string& date)
 {
+	// Trim whitespaces
+	date.erase(date.find_last_not_of(" \n\r\t") + 1);
+	
     if (!isValidDateFormat(date))
         return false;
 

@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/03 19:47:01 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 01:34:08 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,7 @@ void	BitcoinExchange::fillMap(const std::string & dataBase) // (2)
     dbFile.close();
 }
 
-void BitcoinExchange::trimAndvalidateDate(std::string & valueDate)
-{
-    // Trim whitespaces
-    valueDate.erase(valueDate.find_last_not_of(" \n\r\t") + 1);
-
-	// Validate the date
-	if (validateDate(valueDate) == false)
-	{
-		throw std::runtime_error("Error: bad input => " + valueDate);
-	}
-}
-
-void BitcoinExchange::validateValue(float value)
+void BitcoinExchange::validateValue(float &value)
 {
 	if (value < 0)
 	{
@@ -137,44 +125,52 @@ float BitcoinExchange::findExchangeRate(const std::string &valueDate)
     return it->second;
 }
 
-void	BitcoinExchange::calculateExchanges(const std::string & argv)
+void BitcoinExchange::calculateExchanges(const std::string &argv)
 {
-    std::ifstream inputFile(argv.c_str());	// (3)
-	std::string	line;
+    std::ifstream inputFile(argv.c_str());  // Open the file
+    std::string line;
 
-	// Check and skip the header if it exists
+    // Check and skip the header if it exists
     if (std::getline(inputFile, line))
-	{
-		if (line == "date | value")
-			std::getline(inputFile, line);
+    {
+        if (line == "date | value")
+            std::getline(inputFile, line);
     }
 
-	do // (4)
-	{
-        std::stringstream	ss(line);
-        std::string 		valueDate;
-        float				value;
+    do // (4)
+    {
+        std::stringstream ss(line);
+        std::string date;
+        float value;
+
+        std::getline(ss, date, '|'); // Moves chars from 'ss' to 'date' till '|' is found (and removed)
+		ss >> value;				 // Moves remaining characters from ss to value ()
 		
-        std::getline(ss, valueDate, '|'); // Moves chars from ss to valueDate till '|' is found (and removed)
-        ss >> value;                  	  // Moves remaining characters from ss to value 
+        try
+        {
+            if (!validateDate(date))
+            {
+                throw std::runtime_error("Error: bad input => " + date);
+            }
 
-		try // (7)
-		{
-			trimAndvalidateDate(valueDate);
-			validateValue(value);
-			float exchangeRate = findExchangeRate(valueDate);
+            if (ss.fail() || !(ss.eof())) // Check for valid rate (must be a float) (8)
+            {
+                throw std::runtime_error("Error: Not a decimal number");
+            }
 
-			float result = value * exchangeRate;
-			std::cout << valueDate << " => " << value << " = " << result << std::endl;
+            validateValue(value);
+            float exchangeRate = findExchangeRate(date);
+            float result = value * exchangeRate;
+            std::cout << date << " => " << value << " = " << result << std::endl;
+        }
+        catch (const std::runtime_error &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
 
-		}
-		catch (const std::runtime_error& e) {
-			std::cerr << e.what() << std::endl;
-		}
-	}
-	while (std::getline(inputFile, line));  // Continue reading lines until the end
+    } while (std::getline(inputFile, line));  // Continue reading lines until the end
 
-	inputFile.close();
+    inputFile.close();
 }
 
 /*
@@ -302,4 +298,16 @@ void	BitcoinExchange::calculateExchanges(const std::string & argv)
  *		This would stop processing entirely upon encountering the first error
  *		in a line, which contradicts the requirement to read through to the
  *		last line.
+ */
+
+/*
+ *	(8) if (ss.fail() || !(ss.eof()))
+ *
+ * 	- ss.fail() checks if extraction from 'ss' to 'rate' failed. It will 
+ * 		happen when 'ss' contains a string (e.g. 'abc') and not a float
+ * 		as we want 'rate' to be.
+ * 
+ *  - ss.eof() checks if there are leftover characters, ensuring that 
+ *		invalid inputs like 12.34.56 or 12a34 are correctly detected and
+ *		refused.
  */

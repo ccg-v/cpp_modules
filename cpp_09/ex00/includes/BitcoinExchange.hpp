@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:13:00 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/24 21:00:04 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 01:04:16 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ class	BitcoinExchange {
 		void	checkInputFile(const std::string & argv);
 		void	fillMap(const std::string & dataBase);	// (1)
 		void	calculateExchanges(const std::string & argv);	// (1)
-
 		void	trimAndvalidateDate(std::string & valueDate);
-		void	validateValue(float value);
+		void	validateValue(float &value);
 		float	findExchangeRate(const std::string & valueDate);
 };
 
