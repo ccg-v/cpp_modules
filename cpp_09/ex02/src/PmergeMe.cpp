@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/03 11:07:45 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:49:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -759,10 +759,6 @@ size_t PmergeMe::binarySearch_deque(int valueToInsert, size_t end, size_t groupS
 void PmergeMe::binaryInsertion_deque(size_t groupSize)
 {
 	size_t numOfPendingGroups = _dequePending.size() / groupSize;
-
-    // std::vector<int> jacobsthalSeq = buildJacobsthalVec(numOfPendingGroups);
-	// std::vector<int> pickingIndexes = getPickingOrder(jacobsthalSeq, numOfPendingGroups);
-	// std::vector<size_t> upperBoundsTrack;
 
     std::deque<int> jacobsthalSeq = buildJacobsthalDeque(numOfPendingGroups);
 	std::deque<int> pickingIndexes = getPickingOrder_deque(jacobsthalSeq, numOfPendingGroups);

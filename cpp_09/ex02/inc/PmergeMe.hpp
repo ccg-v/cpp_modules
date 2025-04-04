@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/02 21:35:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:40:34 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ void printContainer(std::string msg, int groupSize, T &sequence)
 
         for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index)
 		{
-            // if (i == static_cast<size_t>(groupSize - 1)) // Last element in the group
-            //     std::cout << sequence[index] << " ";
-            // else 
+            if (i == static_cast<size_t>(groupSize - 1)) // Last element in the group
+                std::cout << GREEN << sequence[index] << RESET << " ";
+            else 
                 std::cout << sequence[index] << " ";
         }
         if (groupSize > 1)
@@ -140,9 +140,9 @@ void printContainer(std::string msg, int groupSize, T &sequence)
 	{
         for (size_t i = 0; i < remainder; ++i, ++index)
 		{
-            // if (i == remainder - 1) // Last remaining element
-            //     std::cout << sequence[index] << " ";
-            // else
+            if (i == remainder - 1) // Last remaining element
+                std::cout << GREEN << sequence[index] << RESET << " ";
+            else
                 std::cout << sequence[index] << " ";
         }
     }
