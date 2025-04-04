@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:47:04 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/11/30 19:48:36 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:35:43 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,100 +15,139 @@
 
 #include <vector>
 #include <deque>
-#include <iostream>	// for std::cout, std::cerr
-#include <sstream>	// for std::istringstream()
+#include <iostream>	// std::cout, std::cerr
+#include <sstream>	// std::istringstream()
+#include <time.h>	// clock_t, clock(), CLOCK_PER_SEC
 #include "Utils.hpp"
 
-typedef struct s_pair {
-	int	_smaller;
-	int _larger;
-} t_pair;
-
-class PmergeMe {
-
-	private:
-		std::vector<int>	_intsVector;
-		std::vector<t_pair>	_pairsVector;
-
-		std::vector<int>	_intStraggler;
-
-		/* --- Private methods ---------------------------------------------- */
-
-		// methods for a vector container
-
-		void				sortAdjacentPairs(std::vector<t_pair> & pairedSeq, std::vector<size_t> & indexes, std::vector<t_pair> & pending);
-		// void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<size_t> & indexes, std::vector<t_pair> & pending, std::vector<t_pair> & mainChain);
-		void 				divideSequence(std::vector<t_pair> & pairedSeq, std::vector<size_t> & indexes, std::vector<t_pair> & newpending, std::vector<t_pair> & mainChain);
-		std::vector<int> 	buildJacobsthalVec(size_t len);
-		size_t				intBinarySearch(const std::vector<int> & mainChain, int value, size_t end, size_t & comparisons);
-		size_t				pairBinarySearch(const std::vector<t_pair> & mainChain, t_pair value, size_t end, size_t & comparisons);
-		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
-		void				recursiveSort(std::vector<t_pair> & seq, std::vector<t_pair> pending, size_t & comparisons);
-		
-		//////////////////// rename as pairPendingInsertion(), pairInsertPending(), insertPendingPairs() ??????
-		void	intMergeInsertion(std::vector<int> & pending, std::vector<int> & mainChain, size_t & comparisons);
-		void	pairMergeInsertion(std::vector<t_pair> & pending, std::vector<t_pair> & mainChain, size_t & comparisons);	
-
-		void	extractPendingAndMainChain(std::vector<t_pair> & pairedSeq, std::vector<int> & pending, std::vector<int> & mainChain);
-
-		// overloaded methods for a deque container
-
-		void				divideSequence(std::deque<t_pair> & seq, std::deque<int> & pending, std::deque<int> & mainChain);
-		std::deque<int> 	buildJacobsthalDeq(size_t len);
-		std::deque<int>		getPickingOrder(const std::deque<int> & jacobsthalSeq, size_t size);
-
+class PmergeMe
+{
 	public:
 
+		size_t				_comparisons;
+		
 		/* --- Orthodox Canonical Form -------------------------------------- */
-
 		PmergeMe();										// Default constructor
 		PmergeMe(const PmergeMe & source);				// Copy constructor
 		PmergeMe & operator=(const PmergeMe & source);	// Copy assignment operator
 		~PmergeMe();									// Default destructor
 
 		/* --- Getters ------------------------------------------------------ */
+		std::vector<int>	&getInput();
 
-		std::vector<int> 	& getIntsVector();
-		std::vector<t_pair> & getPairsVector();	
+		// For vector
+		std::vector<int>	&getVector();
+		std::vector<int>	&getVectorMain();
+		int					getVectorStraggler();
 
-		std::vector<int>	& getIntStraggler();
+		// For deque 
+		std::deque<int>		&getDeque();
+		std::deque<int>		&getDequeMain();
+		int					getDequeStraggler();
 
 		/* --- Setters ------------------------------------------------------ */
+		void				setInput(int value);
 
-		void	setIntsVector(int value);
-		void	setPairsVector(void);
+		// For vector
+		void				setVector(int value);
+		void				setVectorStraggler();
 
-		void	setIntStraggler(void);
+		// For deque
+		void				setDeque(int value);
+		void				setDequeStraggler();
 
 		/* --- Public methods ----------------------------------------------- */
+		void				checkInputAndSetContainers(int argc, char** argv);
+		void 				mergeInsertionSort_vector(size_t depth);
+		void 				mergeInsertionSort_deque(size_t depth);
 
-		void	checkInputAndSetContainers(int argc, char** argv);
+	private:
 
-		void	vecFordJohnsonSort();
+		std::vector<int>	_inputSeq;
+
+		/* --- Attributes for vector-based sorting -------------------------- */
+		std::vector<int>	_vectorSeq;
+		std::vector<int>	_vectorMain;
+		std::vector<int>	_vectorPending;
+		int					_vectorStraggler;
+
+		/* --- Attributes for deque-based sorting --------------------------- */
+		std::deque<int>		_dequeSeq;
+		std::deque<int>		_dequeMain;
+		std::deque<int>		_dequePending;
+		int					_dequeStraggler;
+
+		/* --- Private methods ---------------------------------------------- */
+		size_t 				calculateGroupSize(size_t depth);
 		
-		// overloading for a list container
-		// void	fordJohnsonSort(std::deque<t_pair> & seq);		
+		// Vector-based methods
+		void				popStraggler();
+		void				sortAdjacentPairs(size_t groupSize);
+		void				divideSequence(size_t groupSize);
+		std::vector<int> 	buildJacobsthalVec(size_t len);
+		std::vector<int>	getPickingOrder(const std::vector<int> & jacobsthalSeq, size_t smallerSize);
+		size_t 				binarySearch(int value, size_t end, size_t groupSize);
+		void 				binaryInsertion(size_t groupSize);
+		void				insertStraggler(size_t groupSize);
+		
+		// Deque-based methods
+		void				popStraggler_deque();
+		void				sortAdjacentPairs_deque(size_t groupSize);
+		void				divideSequence_deque(size_t groupSize);
+		std::deque<int> 	buildJacobsthalDeque(size_t len);
+		std::deque<int>		getPickingOrder_deque(const std::deque<int> & jacobsthalSeq, size_t smallerSize);
+		size_t 				binarySearch_deque(int value, size_t end, size_t groupSize);
+		void 				binaryInsertion_deque(size_t groupSize);
+		void				insertStraggler_deque(size_t groupSize);
 };
+
+// Define ANSI color codes
+#define RESET "\033[0m"					// Reset to default color
+#define GREEN "\033[92m"				// Green
+#define BRIGHTGREEN "\033[38;5;120m"	// Pastel green
+#define	RED "\033[38;5;203m"			// Coral red
+#define YELLOW "\033[93m"				// Yellow 
+#define BOLDYELLOW "\033[1;93m"			// Bold yellow
 
 // Generic function to print container contents
 template <typename T>
-void printContainer(const std::string msg, const T& container) {
-	if (container.size() > 0) {
-		std::cout << msg << "{ ";
-		for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
-			std::cout << *it << " ";
-		}
-		std::cout << "}" << std::endl;
-	}
-}
+void printContainer(std::string msg, int groupSize, T &sequence)
+{
+    size_t numberOfGroups = sequence.size() / groupSize;
+    size_t remainder = sequence.size() % groupSize;
+    size_t index = 0;
 
-/*
- * The function template 'printContainer()' works for standard containers of
- * primitive types or types that overload the << operator.
- * However, for std::vector<t_pair> and std::deque<t_pair>, we need to define
- * how to print a t_pair since the std::ostream << operator is not defined for
- * custom types like t_pair.
- */
-std::ostream& operator<<(std::ostream& os, const t_pair& pair);
+    std::cout << msg;
+
+    for (size_t group = 0; group < numberOfGroups; ++group)
+	{
+        if (groupSize > 1)
+            std::cout << "[ ";
+
+        for (size_t i = 0; i < static_cast<size_t>(groupSize); ++i, ++index)
+		{
+            // if (i == static_cast<size_t>(groupSize - 1)) // Last element in the group
+            //     std::cout << sequence[index] << " ";
+            // else 
+                std::cout << sequence[index] << " ";
+        }
+        if (groupSize > 1)
+            std::cout << "] ";
+    }
+
+    // Print remaining elements (not part of a full group)
+    if (remainder > 0)
+	{
+        for (size_t i = 0; i < remainder; ++i, ++index)
+		{
+            // if (i == remainder - 1) // Last remaining element
+            //     std::cout << sequence[index] << " ";
+            // else
+                std::cout << sequence[index] << " ";
+        }
+    }
+
+    std::cout << std::endl;
+}
 
 #endif
