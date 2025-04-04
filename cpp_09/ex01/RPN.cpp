@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/04 13:17:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:02:51 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int RPN::evaluateRPN(const std::string & expression) {
 			{
                 throw std::runtime_error("Invalid RPN expression: more than two consecutive operands.");
             }
-		} else if (token.size() > 1)
+		}
+		else if (token.size() > 1)
 		{
 			throw std::runtime_error("Invalid RPN expression: operands must be a single digit (0-9)");
         }
