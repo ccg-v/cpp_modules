@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:21:09 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/04 01:34:08 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:50:10 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	BitcoinExchange::checkInputFile(const std::string & argv)
 {
     struct stat path_stat;
 
-    // Check if the path is a directory	(5)
+    // Check if the path is a directory	(4)
     if (stat(argv.c_str(), &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
         throw std::runtime_error("Error: '" + argv + "' is a directory, not a file.");
     }
 
-    // Check if the path is an executable (5)
+    // Check if the path is an executable (4)
     if (stat(argv.c_str(), &path_stat) == 0 && (path_stat.st_mode & S_IXUSR))
 	{
         throw std::runtime_error("Error: '" + argv + "' is an executable.");
@@ -114,14 +114,14 @@ float BitcoinExchange::findExchangeRate(const std::string &valueDate)
         return it->second;
     }
 
-    // If no exact match, find the closest earlier date (6)
+    // If no exact match, find the closest earlier date (5)
     it = _exchangeRates.lower_bound(valueDate);
     if (it == _exchangeRates.begin())
 	{
         throw std::runtime_error("Error: no exchange rate available for " + valueDate);
     }
     
-    --it; // Move to the closest earlier date (6)
+    --it; // Move to the closest earlier date (5)
     return it->second;
 }
 
@@ -131,14 +131,11 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
     std::string line;
 
     // Check and skip the header if it exists
-    if (std::getline(inputFile, line))
+    while (std::getline(inputFile, line))
     {
         if (line == "date | value")
-            std::getline(inputFile, line);
-    }
+            continue ;
 
-    do // (4)
-    {
         std::stringstream ss(line);
         std::string date;
         float value;
@@ -153,7 +150,7 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
                 throw std::runtime_error("Error: bad input => " + date);
             }
 
-            if (ss.fail() || !(ss.eof())) // Check for valid rate (must be a float) (8)
+            if (ss.fail() || !(ss.eof())) // Check for valid rate (must be a float) (6)
             {
                 throw std::runtime_error("Error: Not a decimal number");
             }
@@ -168,7 +165,7 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
             std::cerr << e.what() << std::endl;
         }
 
-    } while (std::getline(inputFile, line));  // Continue reading lines until the end
+    }
 
     inputFile.close();
 }
@@ -211,32 +208,7 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
  */
 
 /*
- *	(4) Why a do-while loop?
- *
- *		Each time we call std::getline(inputFile, line), the line is read
- *		and the pointer is moved to the next line.
- *
- *		If there is a header, the program will skip it and 'line' will be
- *		the second line:
- *
- *			if (std::getline(inputFile, line)) {	// 'line' is the 1st
- *				if (line == "date | value")
- *				std::getline(inputFile, line);		// 'line' is the 2nd
- *			}
- * 		
- * 		Now, if we start reading the file with a while loop:
- * 
- * 			while (std::getline(inputFile, line)) {...}	// 'line' is 3rd
- * 
- * 		we are skipping the second line, and we don't want to.
- * 		
- * 		A 'do-while' loop solves the problem, because it doesn't start 
- * 		reading with 'std::getline()', but processing the current line
- * 		instead.
- */
-
-/*
- *	(5) stat():
+ *	(4) stat():
  *
  *	-	'stat(const char *path, struct stat *buf)' is a system call that
  *		retrieves information about the file specified by path and stores
@@ -265,7 +237,7 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
  */
 
 /*
- *	(6)	'lower_bound()' and 'upper_bound()'
+ *	(5)	'lower_bound()' and 'upper_bound()'
  *
  *		'lower_bound(key)' returns an iterator pointing to:
  *			- The key itself if it exists.
@@ -286,22 +258,7 @@ void BitcoinExchange::calculateExchanges(const std::string &argv)
  */
 
 /*
- *	(7)	This inner try-catch block allows each line in the database file
- *		to be processed independently: if one line causes an error, the
- *		exception is caught locally, logged, and then the loop can continue
- *		to the next line.
- *
- *		Without this inner block, any exception thrown by functions like 
- *		trimAndvalidateDate(), validateValue(), or findExchangeRate() would
- *		terminate the entire loop prematurely, as the exception would 
- *		propagate up and be caught by the outer try-catch block in main. 
- *		This would stop processing entirely upon encountering the first error
- *		in a line, which contradicts the requirement to read through to the
- *		last line.
- */
-
-/*
- *	(8) if (ss.fail() || !(ss.eof()))
+ *	(6) if (ss.fail() || !(ss.eof()))
  *
  * 	- ss.fail() checks if extraction from 'ss' to 'rate' failed. It will 
  * 		happen when 'ss' contains a string (e.g. 'abc') and not a float
