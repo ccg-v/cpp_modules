@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/03 20:28:21 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:17:47 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int RPN::evaluateRPN(const std::string & expression) {
         throw std::runtime_error("Expression cannot be empty.");
     }
 
-    std::istringstream input(expression); 	// WHY IS CONVERSION NECESSARY?
+    std::istringstream input(expression);
     std::string token;
     std::stack<int> stack;
     int operandCount = 0;
@@ -89,11 +89,15 @@ int RPN::evaluateRPN(const std::string & expression) {
 			{
                 throw std::runtime_error("Invalid RPN expression: more than two consecutive operands.");
             }
-		} else if (token.size() > 1) {
+		} else if (token.size() > 1)
+		{
 			throw std::runtime_error("Invalid RPN expression: operands must be a single digit (0-9)");
-        } else if (isOperator(token)) {
+        }
+		else if (isOperator(token))
+		{
             // Check if there are at least two operands in the stack
-            if (stack.size() < 2) {
+            if (stack.size() < 2)
+			{
                 throw std::runtime_error("Invalid RPN expression: not enough operands for operator.");
             }
             int operand2 = stack.top();
@@ -105,12 +109,16 @@ int RPN::evaluateRPN(const std::string & expression) {
 			operatorCount++;
             // Reset operand count after processing an operator
             operandCount = 0;  
-        } else {
+        }
+		else
+		{
             throw std::runtime_error("Invalid RPN expression: unknown token.");
         }
     }
+	
     // Final validation: there must be exactly one result on the stack
-    if (stack.size() != 1) {
+    if (stack.size() != 1)
+	{
 		if (operatorCount == 0)
 			throw std::runtime_error("Invalid RPN expression: operator missing.");
 		else
@@ -122,16 +130,19 @@ int RPN::evaluateRPN(const std::string & expression) {
 
 /* --- Non-member utility functions ----------------------------------------- */
 
-bool	onlyWhitespace(const std::string & expression) {
+bool	onlyWhitespace(const std::string & expression)
+{
 	std::string::const_iterator it;
-	for (it = expression.begin(); it != expression.end(); ++it) {
+	for (it = expression.begin(); it != expression.end(); ++it)
+	{
 		if (!std::isspace(*it))
 			return false;
 	}
 	return true;
 }
 
-bool	isOperator(std::string token) {
+bool	isOperator(std::string token)
+{
 	return token == "+" || token == "-" || token == "*" || token == "/";
 }
 
