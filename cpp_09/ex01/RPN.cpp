@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:33:34 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/04 14:02:51 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:20:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int RPN::evaluateRPN(const std::string & expression) {
 
 			doOperation(stack, operand1, operand2, token);
 			operatorCount++;
-            // Reset operand count after processing an operator
             operandCount = 0;  
         }
 		else
@@ -117,7 +116,7 @@ int RPN::evaluateRPN(const std::string & expression) {
         }
     }
 	
-    // Final validation: there must be exactly one result on the stack
+    // Final validation: there must be exactly one result on the stack!
     if (stack.size() != 1)
 	{
 		if (operatorCount == 0)

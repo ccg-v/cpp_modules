@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:57:30 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/10/30 21:12:07 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:21:17 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class RPN {
 
 		/* --- Private member functions ------------------------------------- */
 
-		void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token); // (1)
+		void	doOperation(std::stack<int> & stack, int operand1, int operand2, std::string token);
 
 	public:
 
@@ -54,11 +54,3 @@ class RPN {
 	std::ostream & operator<<(std::ostream & os, RPN & rpn);
 
 #endif
-
-/*
- * (1) Why is 'doOperation()' private?
- *
- *		The main reason to make 'doOperation()' private is to preserve encapsulation 
- *		and prevent misuse. It’s a helper function meant only for the internal use of
- *		'evaluateRPN()', not for external access.
- */
