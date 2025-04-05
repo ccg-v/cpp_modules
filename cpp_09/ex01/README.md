@@ -45,5 +45,5 @@ RPN can be conveniently evaluated using a stack structure. Reading the expressio
 -----------------------------------
 ## Flow chart
 <p align="center">
-	<img src="assets/RPN.png" />
+	<img src="assets/RPN2.png" />
 </p>
