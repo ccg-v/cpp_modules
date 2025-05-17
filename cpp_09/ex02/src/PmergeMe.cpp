@@ -6,7 +6,7 @@
 /*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:16:24 by ccarrace          #+#    #+#             */
-/*   Updated: 2025/04/04 19:49:43 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/05/17 02:48:22 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,10 @@ void PmergeMe::checkInputAndSetContainers(int argc, char** argv)
 	}
 
 	if (isSorted(getInput()))
+	{
+		printContainer("Input sequence: ", 1, getInput());
 		throw std::runtime_error("The input sequence is already sorted.");
+	}
 }
 
 size_t PmergeMe::calculateGroupSize(size_t depth)
@@ -336,9 +339,9 @@ std::vector<int> PmergeMe::getPickingOrder(const std::vector<int> & jacobsthalSe
     size_t current = 1; // Start interleaving from index 1
 
     // Process each Jacobsthal boundary
-    for (size_t i = 0; i < jacobsthalSeq.size(); ++i)
+    for (size_t i = 1; i < jacobsthalSeq.size(); ++i)
 	{
-        int boundary = jacobsthalSeq[i];
+        int boundary = jacobsthalSeq[i] - 1;
 
         if (boundary >= static_cast<int>(seqSize))
             break ; // Ignore out-of-bounds Jacobsthal indices
@@ -560,17 +563,12 @@ void	PmergeMe::mergeInsertionSort_deque(size_t depth)
         return; // Base case: No more groups to sort
     }
 
-	if (_dequeSeq.size() % 2 == 1)
-	{
-		_dequeStraggler = _dequeSeq.back();
-		_dequeSeq.pop_back();
-	}
-
     sortAdjacentPairs_deque(groupSize);
     mergeInsertionSort_deque(depth + 1);
 
 	divideSequence_deque(groupSize);
     binaryInsertion_deque(groupSize);
+	insertStraggler_deque(groupSize);
 }
 
 void	PmergeMe::popStraggler_deque()
@@ -584,6 +582,9 @@ void	PmergeMe::popStraggler_deque()
 
 void	PmergeMe::sortAdjacentPairs_deque(size_t groupSize)
 {
+	if (groupSize > _dequeSeq.size())
+		return;
+		
     size_t tail = groupSize - 1;
 
     while (tail + groupSize < _dequeSeq.size())
@@ -596,7 +597,6 @@ void	PmergeMe::sortAdjacentPairs_deque(size_t groupSize)
             size_t trueFirstIdx = tail - groupSize + 1;
             size_t trueSecondIdx = tail + 1;
 
-            // Swap elements manually
             for (size_t i = 0; i < groupSize; ++i)
                 std::swap(_dequeSeq[trueFirstIdx + i], _dequeSeq[trueSecondIdx + i]);
         }
@@ -671,9 +671,9 @@ std::deque<int> PmergeMe::getPickingOrder_deque(const std::deque<int> & jacobsth
     size_t current = 1; // Start interleaving from index 1
 
     // Process each Jacobsthal boundary
-    for (size_t i = 0; i < jacobsthalSeq.size(); ++i)
+    for (size_t i = 1; i < jacobsthalSeq.size(); ++i)
 	{
-        int boundary = jacobsthalSeq[i];
+        int boundary = jacobsthalSeq[i] - 1;
 
         if (boundary >= static_cast<int>(seqSize))
             break ; // Ignore out-of-bounds Jacobsthal indices
@@ -697,13 +697,11 @@ std::deque<int> PmergeMe::getPickingOrder_deque(const std::deque<int> & jacobsth
 
         current = boundary + 1; // Move to the next range
     }
-
     for (size_t i = seqSize - 1; i >= current; --i)
 	{
         if (!inserted[i])
             result.push_back(i);
     }
-
     return result;
 }
 
@@ -823,7 +821,7 @@ void	PmergeMe::insertStraggler_deque(size_t groupSize)
 		}
 		else
 		{
-			size_t position = binarySearch(_dequeStraggler,_dequeMain.size() - 1, groupSize);
+			size_t position = binarySearch_deque(_dequeStraggler,_dequeMain.size() - 1, groupSize);
 			_dequeMain.insert(_dequeMain.begin() + position, _dequeStraggler);
 		}
 	}
