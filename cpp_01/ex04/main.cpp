@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccarrace <ccarrace@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccarrace <ccarrace@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:58:32 by ccarrace          #+#    #+#             */
-/*   Updated: 2024/04/17 21:22:47 by ccarrace         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:35:21 by ccarrace         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv) {
 	std::string	str2 = argv[3];
 
 	//	Declare an input file stream object for reading and try to open it
-	std::ifstream ifs(fileName);	// (1)
+	std::ifstream ifs(fileName.c_str());	// (1)
 	if (!ifs.is_open()) {			// (2)
 		std::cout << "Error opening input file" << std::endl;
 		return -1;
@@ -45,7 +45,7 @@ int	main(int argc, char **argv) {
 		newFileName = fileName.substr(0, found) + ".replace";
 
 	// Declare an output file stream object for writing and try to open it
-	std::ofstream ofs(newFileName);
+	std::ofstream ofs(newFileName.c_str());
 	if (!ofs.is_open()) {		// (2)
 		std::cout << "Error opening output file" << std::endl;
 		return 1;
