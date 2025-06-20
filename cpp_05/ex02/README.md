@@ -27,4 +27,7 @@ member function to the base form and implement a function to execute the form’
 
 # Flow chart
 
-![flow chart](assets/cpp05_ex03.png "Flow chart")
+<h2>Pseudocode flow chart</h2>
+<p align="center">
+	<img src="assets/cpp05_ex03.png" />
+</p>
