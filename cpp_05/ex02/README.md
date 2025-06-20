@@ -27,5 +27,5 @@ member function to the base form and implement a function to execute the form’
 
 <h2>Pseudocode flow chart</h2>
 <p align="center">
-	<img src="assets/cpp05_ex02.png" />
+	<img src="assets/cpp05_ex02_wht.png" />
 </p>
